@@ -1,5 +1,5 @@
 # 
-#   Copyright (c) 2017 CASM Organization
+#   Copyright (c) 2017 CASM Organization https://casm-lang.org
 #   All rights reserved.
 # 
 #   Developed by: Philipp Paulweber
@@ -48,7 +48,7 @@ TBD
 ** Copyright and License
 
 The copyright holder of 
-libtptp is the CASM organization (@casm-lang) 
+libtptp is the [[https://casm-lang.org][CASM organization]] ([[https://github.com/casm-lang][@casm-lang]]) 
 and the used license of 
 libtptp is a [[https://www.gnu.org/licenses/gpl-3.0.html][GNU GPLv3+]]
 with an additional "GPL Linking Exception" permission.
@@ -57,7 +57,7 @@ with an additional "GPL Linking Exception" permission.
 
 #+begin_src
 
-Copyright (c) 2017 CASM Organization
+Copyright (c) 2017 CASM Organization https://casm-lang.org
 All rights reserved.
 
 Developed by: Philipp Paulweber
@@ -77,6 +77,7 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with libtptp. If not, see <http://www.gnu.org/licenses/>.
+
 
 Additional permission under GNU GPL version 3 section 7
 
