@@ -48,8 +48,8 @@ using namespace libtptp;
 // Record
 //
 
-Record::Record( const Identifier::Ptr& name, const Record::Role role,
-    const Formula::Ptr& formula )
+Record::Record(
+    const Identifier::Ptr& name, const Role role, const Formula::Ptr& formula )
 : Node( Node::ID::RECORD )
 , m_name( name )
 , m_role( role )
@@ -62,7 +62,7 @@ const Identifier::Ptr& Record::name( void ) const
     return m_name;
 }
 
-const Record::Role Record::role( void ) const
+const Role Record::role( void ) const
 {
     return m_role;
 }
@@ -71,47 +71,47 @@ std::string Record::roleDescription( void ) const
 {
     switch( role() )
     {
-        case Record::Role::AXIOM:
+        case Role::AXIOM:
         {
             return "axiom";
         }
-        case Record::Role::HYPOTHESIS:
+        case Role::HYPOTHESIS:
         {
             return "hypothesis";
         }
-        case Record::Role::DEFINITION:
+        case Role::DEFINITION:
         {
             return "definition";
         }
-        case Record::Role::ASSUMPTION:
+        case Role::ASSUMPTION:
         {
             return "assumption";
         }
-        case Record::Role::LEMMA:
+        case Role::LEMMA:
         {
             return "lemma";
         }
-        case Record::Role::THEOREM:
+        case Role::THEOREM:
         {
             return "theorem";
         }
-        case Record::Role::CONJECTURE:
+        case Role::CONJECTURE:
         {
             return "conjecture";
         }
-        case Record::Role::NEGATED_CONJECTURE:
+        case Role::NEGATED_CONJECTURE:
         {
             return "negated_conjecture";
         }
-        case Record::Role::PLAIN:
+        case Role::PLAIN:
         {
             return "plain";
         }
-        case Record::Role::TYPE:
+        case Role::TYPE:
         {
             return "type";
         }
-        case Record::Role::UNKNOWN:
+        case Role::UNKNOWN:
         {
             return "unknown";
         }

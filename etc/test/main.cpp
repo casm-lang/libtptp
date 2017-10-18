@@ -51,6 +51,9 @@ using namespace libtptp;
 
 TEST( libtptp, example )
 {
+    DumpDebugVisitor dbg{ std::cout };
+    DumpSourceVisitor src{ std::cout };
+
     auto t = Trace();
 
     auto x = std::make_shared< Identifier >( "X" );
@@ -58,13 +61,11 @@ TEST( libtptp, example )
 
     auto y = std::make_shared< Identifier >( "y" );
     auto f = std::make_shared< FirstOrderFormula >( v );
-    auto r = Record( y, Record::Role::AXIOM, f );
 
-    DumpDebugVisitor dbg{ std::cout };
-    r.accept( dbg );
+    t.add< Record >( y, Role::AXIOM, f );
 
-    DumpSourceVisitor src{ std::cout };
-    r.accept( src );
+    t.accept( dbg );
+    t.accept( src );
 }
 
 //

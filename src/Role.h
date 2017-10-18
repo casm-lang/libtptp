@@ -40,11 +40,8 @@
 //  statement from your version.
 //
 
-#ifndef _LIBTPTP_TRACE_H_
-#define _LIBTPTP_TRACE_H_
-
-#include <libtptp/Node>
-#include <libtptp/Record>
+#ifndef _LIBTPTP_ROLE_H_
+#define _LIBTPTP_ROLE_H_
 
 /**
    @brief    TODO
@@ -57,30 +54,24 @@ namespace libtptp
     /**
        @extends TPTP
     */
-    class Trace final : public Node
+
+    enum class Role
     {
-      public:
-        using Ptr = std::shared_ptr< Trace >;
-
-        Trace( void );
-
-        template < class T, typename... Args >
-        void add( Args&&... args )
-        {
-            m_records->add(
-                std::make_shared< T >( std::forward< Args >( args )... ) );
-        }
-
-        const Records::Ptr& records( void ) const;
-
-        void accept( Visitor& visitor ) override;
-
-      private:
-        Records::Ptr m_records;
+        AXIOM,              //!<  TODO: PPA: FIXME: description
+        HYPOTHESIS,         //!<  TODO: PPA: FIXME: description
+        DEFINITION,         //!<  TODO: PPA: FIXME: description
+        ASSUMPTION,         //!<  TODO: PPA: FIXME: description
+        LEMMA,              //!<  TODO: PPA: FIXME: description
+        THEOREM,            //!<  TODO: PPA: FIXME: description
+        CONJECTURE,         //!<  TODO: PPA: FIXME: description
+        NEGATED_CONJECTURE, //!<  TODO: PPA: FIXME: description
+        PLAIN,              //!<  TODO: PPA: FIXME: description
+        TYPE,               //!<  TODO: PPA: FIXME: description
+        UNKNOWN,            //!<  TODO: PPA: FIXME: description
     };
 }
 
-#endif // _LIBTPTP_TRACE_H_
+#endif // _LIBTPTP_ROLE_H_
 
 //
 //  Local variables:

@@ -50,6 +50,7 @@ using namespace libtptp;
 
 Trace::Trace( void )
 : Node( Node::ID::TRACE )
+, m_records( std::make_shared< Records >() )
 {
 }
 

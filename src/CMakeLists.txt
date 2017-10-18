@@ -75,6 +75,7 @@ ecm_generate_headers( ${PROJECT}_HEADERS_CPP
     Formula
     Node
     Record
+    Role
     TPTP
     Term
     Trace
