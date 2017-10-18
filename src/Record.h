@@ -62,36 +62,44 @@ namespace libtptp
       public:
         using Ptr = std::shared_ptr< Record >;
 
-        Record( const Node::ID id, const Identifier::Ptr& identifier,
-            const Formula::Role role, const Formula::Ptr& formula );
+        enum class Role
+        {
+            AXIOM,              //!<  TODO: PPA: FIXME: description
+            HYPOTHESIS,         //!<  TODO: PPA: FIXME: description
+            DEFINITION,         //!<  TODO: PPA: FIXME: description
+            ASSUMPTION,         //!<  TODO: PPA: FIXME: description
+            LEMMA,              //!<  TODO: PPA: FIXME: description
+            THEOREM,            //!<  TODO: PPA: FIXME: description
+            CONJECTURE,         //!<  TODO: PPA: FIXME: description
+            NEGATED_CONJECTURE, //!<  TODO: PPA: FIXME: description
+            PLAIN,              //!<  TODO: PPA: FIXME: description
+            TYPE,               //!<  TODO: PPA: FIXME: description
+            UNKNOWN,            //!<  TODO: PPA: FIXME: description
+        };
+
+        Record( const Identifier::Ptr& identifier, const Role role,
+            const Formula::Ptr& formula );
 
         const Identifier::Ptr& name( void ) const;
 
-        Formula::Role role( void ) const;
+        const Role role( void ) const;
+
+        std::string roleDescription( void ) const;
 
         const Formula::Ptr& formula( void ) const;
 
+        void accept( Visitor& visitor ) override;
+
       private:
         Identifier::Ptr m_name;
-        Formula::Role m_role;
+        Role m_role;
         Formula::Ptr m_formula;
     };
 
     using Records = NodeList< Record >;
-
-    class FirstOrderFormulaRecord final : public Record
-    {
-      public:
-        using Ptr = std::shared_ptr< FirstOrderFormulaRecord >;
-
-        FirstOrderFormulaRecord( const Identifier::Ptr& identifier,
-            const Formula::Role role, const FirstOrderFormula::Ptr& formula );
-
-        void accept( Visitor& visitor ) override;
-    };
 }
 
-#endif // _LIBSTDHL_CPP_TPTP_FORMULA_H_
+#endif // _LIBTPTP_RECORD_H_
 
 //
 //  Local variables:

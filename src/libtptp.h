@@ -43,7 +43,17 @@
 #ifndef _LIBTPTP_H_
 #define _LIBTPTP_H_
 
-// #include <libtptp/HEADER>
+#include <libtptp/Atom>
+#include <libtptp/Formula>
+#include <libtptp/Logic>
+#include <libtptp/Node>
+#include <libtptp/Record>
+#include <libtptp/Term>
+#include <libtptp/Trace>
+#include <libtptp/Version>
+#include <libtptp/Visitor>
+#include <libtptp/analyze/DumpDebugPass>
+#include <libtptp/transform/DumpSourcePass>
 
 /**
    @brief    TODO

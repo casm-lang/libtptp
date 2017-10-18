@@ -47,6 +47,26 @@ TEST( libtptp, main )
     std::cout << libstdhl::REVTAG << "\n";
 }
 
+using namespace libtptp;
+
+TEST( libtptp, example )
+{
+    auto t = Trace();
+
+    auto x = std::make_shared< Identifier >( "X" );
+    auto v = std::make_shared< VariableTerm >( x );
+
+    auto y = std::make_shared< Identifier >( "y" );
+    auto f = std::make_shared< FirstOrderFormula >( v );
+    auto r = Record( y, Record::Role::AXIOM, f );
+
+    DumpDebugVisitor dbg{ std::cout };
+    r.accept( dbg );
+
+    DumpSourceVisitor src{ std::cout };
+    r.accept( src );
+}
+
 //
 //  Local variables:
 //  mode: c++

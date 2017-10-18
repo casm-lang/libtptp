@@ -42,37 +42,62 @@
 
 #include "Formula.h"
 
+#include "Logic.h"
+
 using namespace libtptp;
 
-Formula::Formula( const ID id )
-: m_id( id )
-{
-}
-
-Formula::ID Formula::id( void ) const
-{
-    return m_id;
-}
-
-// std::string Formula::accept( Log::Formatter& formatter )
-// {
-//     return ""; // formatter.visit( *this );
-// }
-
 //
-// TextFormula
+// Formula
 //
 
-FirstOrderFormula::FirstOrderFormula( void ) // const std::string& text )
-: Formula( Formula::ID::FOF )
-// , m_text( text )
+Formula::Formula( const ID id, const Logic::Ptr& logic )
+: Node( id )
+, m_logic( logic )
 {
 }
 
-// std::string FirstOrderFormula::text( void ) const
-// {
-//     return m_text;
-// }
+const Logic::Ptr& Formula::logic( void ) const
+{
+    return m_logic;
+}
+
+u1 Formula::isFOF( void ) const
+{
+    return id() == Node::ID::FOF_FORMULA;
+}
+
+u1 Formula::isTFF( void ) const
+{
+    return id() == Node::ID::TFF_FORMULA;
+}
+
+//
+// FirstOrderFormula
+//
+
+FirstOrderFormula::FirstOrderFormula( const Logic::Ptr& logic )
+: Formula( Node::ID::FOF_FORMULA, logic )
+{
+}
+
+void FirstOrderFormula::accept( Visitor& visitor )
+{
+    visitor.visit( *this );
+}
+
+//
+// TypedFirstOrderFormula
+//
+
+TypedFirstOrderFormula::TypedFirstOrderFormula( const Logic::Ptr& logic )
+: Formula( Node::ID::TFF_FORMULA, logic )
+{
+}
+
+void TypedFirstOrderFormula::accept( Visitor& visitor )
+{
+    visitor.visit( *this );
+}
 
 //
 //  Local variables:

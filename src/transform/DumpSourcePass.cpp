@@ -40,7 +40,7 @@
 //  statement from your version.
 //
 
-#include "Visitor.h"
+#include "DumpSourcePass.h"
 
 #include "Atom.h"
 #include "Formula.h"
@@ -50,162 +50,147 @@
 #include "Term.h"
 #include "Trace.h"
 
+#include <libpass/PassLogger>
+#include <libpass/PassRegistry>
+
+#include <iostream>
+
 using namespace libtptp;
 
+char DumpSourcePass::id = 0;
+
+static libpass::PassRegistration< DumpSourcePass > PASS( "TptpDumpSourcePass",
+    "translates the TPTP fromat to the ASCII source code representation",
+    "tptp-dump", 0 );
+
+void DumpSourcePass::usage( libpass::PassUsage& pu )
+{
+}
+
+u1 DumpSourcePass::run( libpass::PassResult& pr )
+{
+    libpass::PassLogger log( &id, stream() );
+
+    // const auto data = pr.result< X >();
+    // const auto tptp = data->tptp();
+
+    DumpSourceVisitor visitor{ std::cout };
+    // data->specification()->accept( visitor );
+
+    return true;
+}
+
 //
-// RecursiveVisitor
+// DumpSourceVisitor
 //
 
-void RecursiveVisitor::visit( Trace& node )
+DumpSourceVisitor::DumpSourceVisitor( std::ostream& stream )
+: m_stream( stream )
 {
+}
+
+void DumpSourceVisitor::visit( Trace& node )
+{
+    m_stream << "% " << node.description() << "\n";
+
     node.records()->accept( *this );
 }
-void RecursiveVisitor::visit( Record& node )
+void DumpSourceVisitor::visit( Record& node )
 {
+    m_stream << node.description();
+    m_stream << "( ";
     node.name()->accept( *this );
+    m_stream << ", ";
+    m_stream << node.roleDescription();
+    m_stream << ", ";
     node.formula()->accept( *this );
+    // m_stream << ", ";
+    // node.annotations()->accept( *this );
+    m_stream << " ).";
+    // node comments
+    m_stream << "\n";
 }
 
-void RecursiveVisitor::visit( FirstOrderFormula& node )
+void DumpSourceVisitor::visit( FirstOrderFormula& node )
 {
-    node.logic()->accept( *this );
+    RecursiveVisitor::visit( node );
 }
-void RecursiveVisitor::visit( TypedFirstOrderFormula& node )
+void DumpSourceVisitor::visit( TypedFirstOrderFormula& node )
 {
-    node.logic()->accept( *this );
+    RecursiveVisitor::visit( node );
 }
 
-void RecursiveVisitor::visit( UnaryLogic& node )
+void DumpSourceVisitor::visit( UnaryLogic& node )
 {
+    m_stream << node.connectiveToken();
     node.logic()->accept( *this );
 }
-void RecursiveVisitor::visit( BinaryLogic& node )
+void DumpSourceVisitor::visit( BinaryLogic& node )
 {
     node.left()->accept( *this );
+    m_stream << " ";
+    m_stream << node.connectiveToken();
+    m_stream << " ";
     node.right()->accept( *this );
 }
-void RecursiveVisitor::visit( QuantifiedLogic& node )
+void DumpSourceVisitor::visit( QuantifiedLogic& node )
 {
+    m_stream << node.connectiveToken();
+    m_stream << " ";
+    node.variables()->accept( *this );
+    m_stream << " : ";
     node.logic()->accept( *this );
 }
-void RecursiveVisitor::visit( SequentLogic& node )
+void DumpSourceVisitor::visit( SequentLogic& node )
 {
     node.left()->accept( *this );
+    m_stream << " ";
+    m_stream << node.connectiveToken();
+    m_stream << " ";
     node.right()->accept( *this );
 }
 
-void RecursiveVisitor::visit( FunctionTerm& node )
+void DumpSourceVisitor::visit( FunctionTerm& node )
 {
-    node.atom()->accept( *this );
+    RecursiveVisitor::visit( node );
 }
-void RecursiveVisitor::visit( VariableTerm& node )
+void DumpSourceVisitor::visit( VariableTerm& node )
 {
-    node.name()->accept( *this );
+    RecursiveVisitor::visit( node );
 }
-void RecursiveVisitor::visit( ConditionalTerm& node )
+void DumpSourceVisitor::visit( ConditionalTerm& node )
 {
+    m_stream << "$ite_t( ";
     node.condition()->accept( *this );
+    m_stream << ", ";
     node.left()->accept( *this );
+    m_stream << ", ";
     node.right()->accept( *this );
+    m_stream << " )";
 }
 
-void RecursiveVisitor::visit( FunctorAtom& node )
+void DumpSourceVisitor::visit( FunctorAtom& node )
 {
     node.name()->accept( *this );
-    node.arguments()->accept( *this );
-}
 
-void RecursiveVisitor::visit( Identifier& node )
-{
-}
+    m_stream << "( ";
 
-//
-// TraversalVisitor
-//
-
-TraversalVisitor::TraversalVisitor(
-    const Traversal order, std::function< void( Node& ) > callback )
-: m_order( order )
-, m_callback( callback )
-{
-}
-
-Traversal TraversalVisitor::order( void ) const
-{
-    return m_order;
-}
-
-std::function< void( Node& ) > TraversalVisitor::callback( void ) const
-{
-    return m_callback;
-}
-
-void TraversalVisitor::visit( Trace& node )
-{
-    if( order() == PREORDER )
+    u1 first = true;
+    assert( node.arguments() );
+    for( auto& argument : *node.arguments() )
     {
-        callback()( node );
+        m_stream << ( first ? "" : ", " );
+        first = false;
+
+        argument->accept( *this );
     }
 
-    node.records()->accept( *this );
-
-    if( order() == POSTORDER )
-    {
-        callback()( node );
-    }
-}
-void TraversalVisitor::visit( Record& node )
-{
-    callback()( node );
+    m_stream << " )";
 }
 
-void TraversalVisitor::visit( FirstOrderFormula& node )
+void DumpSourceVisitor::visit( Identifier& node )
 {
-    callback()( node );
-}
-void TraversalVisitor::visit( TypedFirstOrderFormula& node )
-{
-    callback()( node );
-}
-
-void TraversalVisitor::visit( UnaryLogic& node )
-{
-    callback()( node );
-}
-void TraversalVisitor::visit( BinaryLogic& node )
-{
-    callback()( node );
-}
-void TraversalVisitor::visit( QuantifiedLogic& node )
-{
-    callback()( node );
-}
-void TraversalVisitor::visit( SequentLogic& node )
-{
-    callback()( node );
-}
-
-void TraversalVisitor::visit( FunctionTerm& node )
-{
-    callback()( node );
-}
-void TraversalVisitor::visit( VariableTerm& node )
-{
-    callback()( node );
-}
-void TraversalVisitor::visit( ConditionalTerm& node )
-{
-    callback()( node );
-}
-
-void TraversalVisitor::visit( FunctorAtom& node )
-{
-    callback()( node );
-}
-
-void TraversalVisitor::visit( Identifier& node )
-{
-    callback()( node );
+    m_stream << node.name();
 }
 
 //

@@ -56,27 +56,37 @@ namespace libtptp
       public:
         enum class ID
         {
-            // records
-            TFF_RECORD,
-            FOF_RECORD,
-
-            // formulae
-            TFF_FORMULA,
-            FOF_FORMULA,
-
-            // expressions
-            // TODO
-
-            // other
-            TRACE,
+            // generic
             NODE_LIST,
             IDENTIFIER,
+            TRACE,
+            RECORD,
+
+            // formulae
+            FOF_FORMULA,
+            TFF_FORMULA,
+
+            // logics
+            UNITARY_LOGIC,
+            UNARY_LOGIC,
+            BINARY_LOGIC,
+            QUANTIFIED_LOGIC,
+            SEQUENT_LOGIC,
+
+            // terms
+            FUNCTION_TERM,
+            VARIABLE_TERM,
+            CONDITIONAL_TERM,
+
+            // atoms
+            FUNCTOR_ATOM,
         };
 
       public:
         using Ptr = std::shared_ptr< Node >;
 
         explicit Node( ID id );
+
         virtual ~Node() = default;
 
         ID id( void ) const;

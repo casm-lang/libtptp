@@ -40,46 +40,45 @@
 //  statement from your version.
 //
 
-#ifndef _LIBTPTP_TRACE_H_
-#define _LIBTPTP_TRACE_H_
+#include "Atom.h"
 
-#include <libtptp/Node>
-#include <libtptp/Record>
+using namespace libtptp;
 
-/**
-   @brief    TODO
+//
+// Atom
+//
 
-   TODO
-*/
-
-namespace libtptp
+Atom::Atom( const ID id )
+: Term( id )
 {
-    /**
-       @extends TPTP
-    */
-    class Trace final : public Node
-    {
-      public:
-        using Ptr = std::shared_ptr< Trace >;
-
-        Trace( void );
-
-        template < typename... Args >
-        void add( Args&&... args )
-        {
-            m_records->add( std::forward< Args >( args )... );
-        }
-
-        const Records::Ptr& records( void ) const;
-
-        void accept( Visitor& visitor ) override;
-
-      private:
-        Records::Ptr m_records;
-    };
 }
 
-#endif // _LIBTPTP_TRACE_H_
+//
+// FunctorAtom
+//
+
+FunctorAtom::FunctorAtom(
+    const Identifier::Ptr& name, const Terms::Ptr& arguments )
+: Atom( Node::ID::FUNCTOR_ATOM )
+, m_name( name )
+, m_arguments( arguments )
+{
+}
+
+const Identifier::Ptr& FunctorAtom::name( void ) const
+{
+    return m_name;
+}
+
+const Terms::Ptr& FunctorAtom::arguments( void ) const
+{
+    return m_arguments;
+}
+
+void FunctorAtom::accept( Visitor& visitor )
+{
+    visitor.visit( *this );
+}
 
 //
 //  Local variables:

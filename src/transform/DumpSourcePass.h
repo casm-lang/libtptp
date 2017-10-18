@@ -40,72 +40,38 @@
 //  statement from your version.
 //
 
-#ifndef _LIBTPTP_VISITOR_H_
-#define _LIBTPTP_VISITOR_H_
+#ifndef _LIBTPTP_DUMP_SOURCE_PASS_H_
+#define _LIBTPTP_DUMP_SOURCE_PASS_H_
 
-#include <libtptp/TPTP>
+#include <libpass/Pass>
+#include <libpass/PassResult>
+#include <libpass/PassUsage>
 
-#include <functional>
+#include <libtptp/Visitor>
+
+/**
+   @brief    TODO
+
+   TODO
+*/
 
 namespace libtptp
 {
-    class Node;
-    class Trace;
-    class Record;
-
-    class FirstOrderFormula;
-    class TypedFirstOrderFormula;
-
-    class UnaryLogic;
-    class BinaryLogic;
-    class QuantifiedLogic;
-    class SequentLogic;
-
-    class FunctionTerm;
-    class VariableTerm;
-    class ConditionalTerm;
-
-    class FunctorAtom;
-
-    class Identifier;
-
-    enum Traversal : u8
-    {
-        PREORDER = 0,
-        POSTORDER
-    };
-
-    /**
-       @extends TPTP
-    */
-    class Visitor
+    class DumpSourcePass final : public libpass::Pass
     {
       public:
-        virtual ~Visitor( void ) = default;
+        static char id;
 
-        virtual void visit( Trace& node ) = 0;
-        virtual void visit( Record& node ) = 0;
+        void usage( libpass::PassUsage& pu ) override;
 
-        virtual void visit( FirstOrderFormula& node ) = 0;
-        virtual void visit( TypedFirstOrderFormula& node ) = 0;
-
-        virtual void visit( UnaryLogic& node ) = 0;
-        virtual void visit( BinaryLogic& node ) = 0;
-        virtual void visit( QuantifiedLogic& node ) = 0;
-        virtual void visit( SequentLogic& node ) = 0;
-
-        virtual void visit( FunctionTerm& node ) = 0;
-        virtual void visit( VariableTerm& node ) = 0;
-        virtual void visit( ConditionalTerm& node ) = 0;
-
-        virtual void visit( FunctorAtom& node ) = 0;
-
-        virtual void visit( Identifier& node ) = 0;
+        u1 run( libpass::PassResult& pr ) override;
     };
 
-    class RecursiveVisitor : public Visitor
+    class DumpSourceVisitor final : public RecursiveVisitor
     {
       public:
+        DumpSourceVisitor( std::ostream& stream );
+
         void visit( Trace& node ) override;
         void visit( Record& node ) override;
 
@@ -124,46 +90,13 @@ namespace libtptp
         void visit( FunctorAtom& node ) override;
 
         void visit( Identifier& node ) override;
-    };
-
-    class TraversalVisitor : public Visitor
-    {
-      public:
-        TraversalVisitor(
-            const Traversal order, std::function< void( Node& ) > callback );
-
-        Traversal order( void ) const;
-
-        std::function< void( Node& ) > callback( void ) const;
 
       private:
-        Traversal m_order;
-
-        std::function< void( Node& ) > m_callback;
-
-      public:
-        void visit( Trace& node ) override;
-        void visit( Record& node ) override;
-
-        void visit( FirstOrderFormula& node ) override;
-        void visit( TypedFirstOrderFormula& node ) override;
-
-        void visit( UnaryLogic& node ) override;
-        void visit( BinaryLogic& node ) override;
-        void visit( QuantifiedLogic& node ) override;
-        void visit( SequentLogic& node ) override;
-
-        void visit( FunctionTerm& node ) override;
-        void visit( VariableTerm& node ) override;
-        void visit( ConditionalTerm& node ) override;
-
-        void visit( FunctorAtom& node ) override;
-
-        void visit( Identifier& node ) override;
+        std::ostream& m_stream;
     };
 }
 
-#endif // _LIBTPTP_VISITOR_H_
+#endif // _LIBTPTP_DUMP_SOURCE_PASS_H_
 
 //
 //  Local variables:

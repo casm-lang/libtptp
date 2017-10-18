@@ -40,11 +40,10 @@
 //  statement from your version.
 //
 
-#ifndef _LIBTPTP_TRACE_H_
-#define _LIBTPTP_TRACE_H_
+#ifndef _LIBTPTP_TERM_H_
+#define _LIBTPTP_TERM_H_
 
-#include <libtptp/Node>
-#include <libtptp/Record>
+#include <libtptp/Logic>
 
 /**
    @brief    TODO
@@ -57,29 +56,83 @@ namespace libtptp
     /**
        @extends TPTP
     */
-    class Trace final : public Node
+    class Term : public Logic
     {
       public:
-        using Ptr = std::shared_ptr< Trace >;
+        using Ptr = std::shared_ptr< Term >;
 
-        Trace( void );
+        Term( const Node::ID id );
+    };
 
-        template < typename... Args >
-        void add( Args&&... args )
-        {
-            m_records->add( std::forward< Args >( args )... );
-        }
+    using Terms = NodeList< Term >;
 
-        const Records::Ptr& records( void ) const;
+    class Atom;
 
-        void accept( Visitor& visitor ) override;
+    // <fof_function_term> ::= <fof_plain_term> | <fof_defined_term> |
+    // <fof_system_term>
+    class FunctionTerm final : public Term
+    {
+      public:
+        using Ptr = std::shared_ptr< FunctionTerm >;
+
+        FunctionTerm( const std::shared_ptr< Atom >& atom );
+
+        const std::shared_ptr< Atom >& atom( void ) const;
 
       private:
-        Records::Ptr m_records;
+        const std::shared_ptr< Atom > m_atom;
+
+      public:
+        void accept( Visitor& visitor ) override;
+    };
+
+    // <variable> ::= <upper_word>
+    class VariableTerm final : public Term
+    {
+      public:
+        using Ptr = std::shared_ptr< VariableTerm >;
+
+        VariableTerm( const Identifier::Ptr& name );
+
+        const Identifier::Ptr& name( void ) const;
+
+      private:
+        const Identifier::Ptr m_name;
+
+      public:
+        void accept( Visitor& visitor ) override;
+    };
+
+    // <tff_conditional_term> ::=
+    // $ite_t(<tff_logic_formula>,<fof_term>,<fof_term>)
+    // <fof_conditional_term> ::=
+    // $ite_t(<fof_logic_formula>,<fof_term>,<fof_term>)
+    class ConditionalTerm final : public Term
+    {
+      public:
+        using Ptr = std::shared_ptr< ConditionalTerm >;
+
+        ConditionalTerm( const Logic::Ptr& condition,
+            const Term::Ptr& left,
+            const Term::Ptr& right );
+
+        const Logic::Ptr& condition( void ) const;
+
+        const Term::Ptr& left( void ) const;
+
+        const Term::Ptr& right( void ) const;
+
+      private:
+        const Logic::Ptr m_condition;
+        const Term::Ptr m_left;
+        const Term::Ptr m_right;
+
+      public:
+        void accept( Visitor& visitor ) override;
     };
 }
 
-#endif // _LIBTPTP_TRACE_H_
+#endif // _LIBTPTP_TERM_H_
 
 //
 //  Local variables:

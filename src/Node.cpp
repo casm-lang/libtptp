@@ -42,6 +42,8 @@
 
 #include "Node.h"
 
+#include "Record.h"
+
 #include <cassert>
 
 using namespace libtptp;
@@ -60,14 +62,37 @@ std::string Node::description( void ) const
 {
     switch( m_id )
     {
-        case ID::FOF_RECORD:
+        // generic
+        case ID::NODE_LIST:
         {
-            return "fof_annotated";
+            return "node list";
         }
-        case ID::TFF_RECORD:
+        case ID::IDENTIFIER:
         {
-            return "tff_annotated";
+            return "identifier";
         }
+        case ID::TRACE:
+        {
+            return "trace";
+        }
+        case ID::RECORD:
+        {
+            auto record = static_cast< const Record* >( this );
+            if( record->formula()->isFOF() )
+            {
+                return "fof";
+            }
+            else if( record->formula()->isTFF() )
+            {
+                return "tff";
+            }
+            else
+            {
+                assert( not"invalid formula record found" );
+            }
+        }
+
+        // formulae
         case ID::FOF_FORMULA:
         {
             return "fof_formula";
@@ -76,17 +101,47 @@ std::string Node::description( void ) const
         {
             return "tff_formula";
         }
-        case ID::TRACE:
+
+        // logics
+        case ID::UNITARY_LOGIC:
         {
-            return "trace";
+            return "unitary logic";
         }
-        case ID::NODE_LIST:
+        case ID::UNARY_LOGIC:
         {
-            return "node list";
+            return "unary logic";
         }
-        case ID::IDENTIFIER:
+        case ID::BINARY_LOGIC:
         {
-            return "identifier";
+            return "binary logic";
+        }
+        case ID::QUANTIFIED_LOGIC:
+        {
+            return "quantified logic";
+        }
+        case ID::SEQUENT_LOGIC:
+        {
+            return "sequent logic";
+        }
+
+        // terms
+        case ID::FUNCTION_TERM:
+        {
+            return "function term";
+        }
+        case ID::VARIABLE_TERM:
+        {
+            return "variable term";
+        }
+        case ID::CONDITIONAL_TERM:
+        {
+            return "conditional term";
+        }
+
+        // atoms
+        case ID::FUNCTOR_ATOM:
+        {
+            return "functor atom";
         }
     }
 

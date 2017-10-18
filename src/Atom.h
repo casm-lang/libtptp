@@ -40,11 +40,10 @@
 //  statement from your version.
 //
 
-#ifndef _LIBTPTP_TRACE_H_
-#define _LIBTPTP_TRACE_H_
+#ifndef _LIBTPTP_ATOM_H_
+#define _LIBTPTP_ATOM_H_
 
-#include <libtptp/Node>
-#include <libtptp/Record>
+#include <libtptp/Term>
 
 /**
    @brief    TODO
@@ -57,29 +56,60 @@ namespace libtptp
     /**
        @extends TPTP
     */
-    class Trace final : public Node
+    class Atom : public Term
     {
       public:
-        using Ptr = std::shared_ptr< Trace >;
+        using Ptr = std::shared_ptr< Atom >;
 
-        Trace( void );
+        Atom( const Node::ID id );
+    };
 
-        template < typename... Args >
-        void add( Args&&... args )
+    using Atoms = NodeList< Atom >;
+
+    // <number> ::= <integer> | <rational> | <real>
+    // class NumberAtom final : public Atom
+
+    // <distinct_object> ::- <double_quote><do_char>*<double_quote>
+    // class DistinctObjectAtom final : public Atom
+
+    class FunctorAtom final : public Atom
+    {
+      public:
+        // <fof_plain_term>          ::= <constant>
+        //                             | <functor>(<fof_arguments>)
+        // <fof_defined_term>        ::= <defined_term>
+        //                             | <fof_defined_atomic_term>
+        // <fof_defined_atomic_term> ::= <fof_defined_plain_term>
+        // <fof_defined_plain_term>  ::= <defined_constant>
+        //                             | <defined_functor>(<fof_arguments>)
+        // <fof_system_term>         ::= <system_constant>
+        //                             | <system_functor>(<fof_arguments>)
+
+        enum class Kind
         {
-            m_records->add( std::forward< Args >( args )... );
-        }
+            PLAIN,
+            DEFINED,
+            SYSTEM,
+        };
 
-        const Records::Ptr& records( void ) const;
+        using Ptr = std::shared_ptr< FunctorAtom >;
 
-        void accept( Visitor& visitor ) override;
+        FunctorAtom( const Identifier::Ptr& name, const Terms::Ptr& arguments );
+
+        const Identifier::Ptr& name( void ) const;
+
+        const Terms::Ptr& arguments( void ) const;
 
       private:
-        Records::Ptr m_records;
+        const Identifier::Ptr m_name;
+        const Terms::Ptr m_arguments;
+
+      public:
+        void accept( Visitor& visitor ) override;
     };
 }
 
-#endif // _LIBTPTP_TRACE_H_
+#endif // _LIBTPTP_ATOM_H_
 
 //
 //  Local variables:

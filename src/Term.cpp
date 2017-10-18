@@ -40,46 +40,93 @@
 //  statement from your version.
 //
 
-#ifndef _LIBTPTP_TRACE_H_
-#define _LIBTPTP_TRACE_H_
+#include "Term.h"
 
-#include <libtptp/Node>
-#include <libtptp/Record>
+#include "Atom.h"
 
-/**
-   @brief    TODO
+using namespace libtptp;
 
-   TODO
-*/
+//
+// Term
+//
 
-namespace libtptp
+Term::Term( const ID id )
+: Logic( id )
 {
-    /**
-       @extends TPTP
-    */
-    class Trace final : public Node
-    {
-      public:
-        using Ptr = std::shared_ptr< Trace >;
-
-        Trace( void );
-
-        template < typename... Args >
-        void add( Args&&... args )
-        {
-            m_records->add( std::forward< Args >( args )... );
-        }
-
-        const Records::Ptr& records( void ) const;
-
-        void accept( Visitor& visitor ) override;
-
-      private:
-        Records::Ptr m_records;
-    };
 }
 
-#endif // _LIBTPTP_TRACE_H_
+//
+// FunctionTerm
+//
+
+FunctionTerm::FunctionTerm( const Atom::Ptr& atom )
+: Term( Node::ID::FUNCTION_TERM )
+, m_atom( atom )
+{
+}
+
+const Atom::Ptr& FunctionTerm::atom( void ) const
+{
+    return m_atom;
+}
+
+void FunctionTerm::accept( Visitor& visitor )
+{
+    visitor.visit( *this );
+}
+
+//
+// VariableTerm
+//
+
+VariableTerm::VariableTerm( const Identifier::Ptr& name )
+: Term( Node::ID::VARIABLE_TERM )
+, m_name( name )
+{
+}
+
+const Identifier::Ptr& VariableTerm::name( void ) const
+{
+    return m_name;
+}
+
+void VariableTerm::accept( Visitor& visitor )
+{
+    visitor.visit( *this );
+}
+
+//
+// ConditionalTerm
+//
+
+ConditionalTerm::ConditionalTerm(
+    const Logic::Ptr& condition, const Term::Ptr& left, const Term::Ptr& right )
+: Term( Node::ID::CONDITIONAL_TERM )
+, m_condition( condition )
+, m_left( left )
+, m_right( right )
+{
+}
+
+const Logic::Ptr& ConditionalTerm::condition( void ) const
+{
+    return m_condition;
+}
+
+const Term::Ptr& ConditionalTerm::left( void ) const
+{
+    return m_left;
+}
+
+const Term::Ptr& ConditionalTerm::right( void ) const
+{
+    return m_right;
+}
+
+void ConditionalTerm::accept( Visitor& visitor )
+{
+    visitor.visit( *this );
+}
 
 //
 //  Local variables:

@@ -53,24 +53,15 @@ Trace::Trace( void )
 {
 }
 
-// void Trace::flush( Log::Channel& channel )
-// {
-//     channel.process( *this );
-//     data().clear();
-// }
+const Records::Ptr& Trace::records( void ) const
+{
+    return m_records;
+}
 
-// void Trace::dump( void )
-// {
-//     // Log::StringFormatter f;
-//     // Log::OutputStreamSink s( std::cerr, f );
-//     // s.process( static_cast< Log::Stream >( *this ) );
-// }
-
-// void Trace::aggregate( const Log::Buffer< Formula >& trace )
-// {
-//     data().insert( std::end( data() ), std::begin( trace.data() ),
-//         std::end( trace.data() ) );
-// }
+void Trace::accept( Visitor& visitor )
+{
+    visitor.visit( *this );
+}
 
 //
 //  Local variables:

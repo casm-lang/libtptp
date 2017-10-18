@@ -43,8 +43,8 @@
 #ifndef _LIBTPTP_FORMULA_H_
 #define _LIBTPTP_FORMULA_H_
 
-#include <libstdhl/log/Data>
-#include <libstdhl/log/Formatter>
+#include <libtptp/Logic>
+#include <libtptp/Node>
 
 /**
    @brief    TODO
@@ -57,57 +57,48 @@ namespace libtptp
     /**
        @extends TPTP
     */
-    class Formula
+    class Formula : public Node
     {
       public:
         using Ptr = std::shared_ptr< Formula >;
 
-        enum class Role
-        {
-            AXIOM,              //!<  TODO: PPA: FIXME: description
-            HYPOTHESIS,         //!<  TODO: PPA: FIXME: description
-            DEFINITION,         //!<  TODO: PPA: FIXME: description
-            ASSUMPTION,         //!<  TODO: PPA: FIXME: description
-            LEMMA,              //!<  TODO: PPA: FIXME: description
-            THEOREM,            //!<  TODO: PPA: FIXME: description
-            CONJECTURE,         //!<  TODO: PPA: FIXME: description
-            NEGATED_CONJECTURE, //!<  TODO: PPA: FIXME: description
-            PLAIN,              //!<  TODO: PPA: FIXME: description
-            TYPE,               //!<  TODO: PPA: FIXME: description
-            UNKNOWN,            //!<  TODO: PPA: FIXME: description
-        };
+        Formula( const Node::ID id, const Logic::Ptr& logic );
 
-        enum class ID
-        {
-            TFF,
-            FOF,
-            // TFX, TCF, CNF
-        };
+        const Logic::Ptr& logic( void ) const;
 
-        Formula( const ID id );
-
-        ID id( void ) const;
-
-        // virtual void accept( Visitor& visitor ) = 0;
+        u1 isFOF( void ) const;
+        u1 isTFF( void ) const;
 
       private:
-        ID m_id;
+        const Logic::Ptr m_logic;
     };
 
-    // using Formulas = List< Formula >;
+    using Formulas = NodeList< Formula >;
 
+    class Logic;
+
+    // <fof_formula>          ::= <fof_logic_formula>  | <fof_sequent>
+    // <fof_logic_formula>    ::= <fof_binary_formula> | <fof_unitary_formula>
     class FirstOrderFormula final : public Formula
     {
       public:
-        FirstOrderFormula( void ); // const std::string& name );
+        using Ptr = std::shared_ptr< FirstOrderFormula >;
 
-        //   std::string name( void ) const;
+        FirstOrderFormula( const Logic::Ptr& logic );
 
-        // private:
-        //   std::string m_name;
+      public:
+        void accept( Visitor& visitor ) override;
+    };
 
-        // public:
-        //   void accept( Visitor& visitor ) override;
+    class TypedFirstOrderFormula final : public Formula
+    {
+      public:
+        using Ptr = std::shared_ptr< TypedFirstOrderFormula >;
+
+        TypedFirstOrderFormula( const Logic::Ptr& logic );
+
+      public:
+        void accept( Visitor& visitor ) override;
     };
 }
 

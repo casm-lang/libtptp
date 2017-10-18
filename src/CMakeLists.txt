@@ -42,15 +42,21 @@
 
 include_directories(
   ${LIBSTDHL_INCLUDE_DIR}
+  ${LIBPASS_INCLUDE_DIR}
   )
 
 
 add_library( ${PROJECT}-cpp OBJECT
+  Atom.cpp
+  Logic.cpp
   Formula.cpp
-  Record.cpp
-  Trace.cpp
   Node.cpp
+  Record.cpp
+  Term.cpp
+  Trace.cpp
   Visitor.cpp
+  analyze/DumpDebugPass.cpp
+  transform/DumpSourcePass.cpp
   )
 
 
@@ -64,10 +70,13 @@ ecm_generate_headers( ${PROJECT}_HEADERS_CPP
   ORIGINAL
     CAMELCASE
   HEADER_NAMES
+    Atom
+    Logic
     Formula
     Node
     Record
     TPTP
+    Term
     Trace
     Visitor
     libtptp
@@ -86,22 +95,43 @@ install(
   )
 
 
-# ecm_generate_headers( ${PROJECT}_ANALYZE_HEADERS_CPP
-#   ORIGINAL
-#     CAMELCASE
-#   HEADER_NAMES
-#     NameOfPass
-#   PREFIX
-#     ${PROJECT}/analyze
-#   RELATIVE
-#     analyze
-#   REQUIRED_HEADERS
-#     ${PROJECT}_ANALYZE_HEADERS
-# )
-# install(
-#   FILES
-#     ${${PROJECT}_ANALYZE_HEADERS}
-#     ${${PROJECT}_ANALYZE_HEADERS_CPP}
-#   DESTINATION
-#     "include/${PROJECT}/analyze"
-# )
+ecm_generate_headers( ${PROJECT}_ANALYZE_HEADERS_CPP
+  ORIGINAL
+    CAMELCASE
+  HEADER_NAMES
+    DumpDebugPass
+  PREFIX
+    ${PROJECT}/analyze
+  RELATIVE
+    analyze
+  REQUIRED_HEADERS
+    ${PROJECT}_ANALYZE_HEADERS
+)
+install(
+  FILES
+    ${${PROJECT}_ANALYZE_HEADERS}
+    ${${PROJECT}_ANALYZE_HEADERS_CPP}
+  DESTINATION
+    "include/${PROJECT}/analyze"
+)
+
+
+ecm_generate_headers( ${PROJECT}_TRANSFORM_HEADERS_CPP
+  ORIGINAL
+    CAMELCASE
+  HEADER_NAMES
+    DumpSourcePass
+  PREFIX
+    ${PROJECT}/transform
+  RELATIVE
+    transform
+  REQUIRED_HEADERS
+    ${PROJECT}_TRANSFORM_HEADERS
+)
+install(
+  FILES
+    ${${PROJECT}_TRANSFORM_HEADERS}
+    ${${PROJECT}_TRANSFORM_HEADERS_CPP}
+  DESTINATION
+    "include/${PROJECT}/transform"
+)
