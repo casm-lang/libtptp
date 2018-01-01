@@ -1,9 +1,9 @@
 //
-//  Copyright (c) 2017 CASM Organization https://casm-lang.org
+//  Copyright (C) 2017-2018 CASM Organization <https://casm-lang.org>
 //  All rights reserved.
 //
 //  Developed by: Philipp Paulweber
-//                https://github.com/casm-lang/libtptp
+//                <https://github.com/casm-lang/libtptp>
 //
 //  This file is part of libtptp.
 //
@@ -19,7 +19,6 @@
 //
 //  You should have received a copy of the GNU General Public License
 //  along with libtptp. If not, see <http://www.gnu.org/licenses/>.
-//
 //
 //  Additional permission under GNU GPL version 3 section 7
 //
