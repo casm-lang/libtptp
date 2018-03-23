@@ -122,8 +122,7 @@ void RecursiveVisitor::visit( Identifier& node )
 // TraversalVisitor
 //
 
-TraversalVisitor::TraversalVisitor(
-    const Traversal order, std::function< void( Node& ) > callback )
+TraversalVisitor::TraversalVisitor( const Traversal order, std::function< void( Node& ) > callback )
 : m_order( order )
 , m_callback( callback )
 {

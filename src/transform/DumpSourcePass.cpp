@@ -58,9 +58,11 @@ using namespace libtptp;
 
 char DumpSourcePass::id = 0;
 
-static libpass::PassRegistration< DumpSourcePass > PASS( "TptpDumpSourcePass",
+static libpass::PassRegistration< DumpSourcePass > PASS(
+    "TptpDumpSourcePass",
     "translates the TPTP fromat to the ASCII source code representation",
-    "tptp-dump", 0 );
+    "tptp-dump",
+    0 );
 
 void DumpSourcePass::usage( libpass::PassUsage& pu )
 {

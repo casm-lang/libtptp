@@ -101,7 +101,7 @@ namespace libtptp
     };
 }
 
-#endif // _LIBTPTP_FORMULA_H_
+#endif  // _LIBTPTP_FORMULA_H_
 
 //
 //  Local variables:

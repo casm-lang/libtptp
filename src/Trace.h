@@ -66,8 +66,7 @@ namespace libtptp
         template < class T, typename... Args >
         void add( Args&&... args )
         {
-            m_records->add(
-                std::make_shared< T >( std::forward< Args >( args )... ) );
+            m_records->add( std::make_shared< T >( std::forward< Args >( args )... ) );
         }
 
         const Records::Ptr& records( void ) const;
@@ -79,7 +78,7 @@ namespace libtptp
     };
 }
 
-#endif // _LIBTPTP_TRACE_H_
+#endif  // _LIBTPTP_TRACE_H_
 
 //
 //  Local variables:

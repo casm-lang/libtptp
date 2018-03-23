@@ -57,7 +57,7 @@ namespace libtptp
     constexpr const char* BRANCH = "@GIT_BRANCH@";
 }
 
-#endif // _LIBTPTP_VERSION_H_
+#endif  // _LIBTPTP_VERSION_H_
 
 //
 //  Local variables:

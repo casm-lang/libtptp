@@ -47,8 +47,7 @@ using namespace libtptp;
 // Record
 //
 
-Record::Record(
-    const Identifier::Ptr& name, const Role role, const Formula::Ptr& formula )
+Record::Record( const Identifier::Ptr& name, const Role role, const Formula::Ptr& formula )
 : Node( Node::ID::RECORD )
 , m_name( name )
 , m_role( role )

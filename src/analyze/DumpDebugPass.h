@@ -97,7 +97,7 @@ namespace libtptp
     };
 }
 
-#endif // _LIBTPTP_DUMP_DEBUG_PASS_H_
+#endif  // _LIBTPTP_DUMP_DEBUG_PASS_H_
 
 //
 //  Local variables:

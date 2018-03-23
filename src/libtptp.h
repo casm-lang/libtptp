@@ -64,7 +64,7 @@ namespace libtptp
 {
 }
 
-#endif // _LIBTPTP_H_
+#endif  // _LIBTPTP_H_
 
 //
 //  Local variables:

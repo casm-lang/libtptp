@@ -62,8 +62,7 @@ namespace libtptp
       public:
         using Ptr = std::shared_ptr< Record >;
 
-        Record( const Identifier::Ptr& identifier, const Role role,
-            const Formula::Ptr& formula );
+        Record( const Identifier::Ptr& identifier, const Role role, const Formula::Ptr& formula );
 
         const Identifier::Ptr& name( void ) const;
 
@@ -84,7 +83,7 @@ namespace libtptp
     using Records = NodeList< Record >;
 }
 
-#endif // _LIBTPTP_RECORD_H_
+#endif  // _LIBTPTP_RECORD_H_
 
 //
 //  Local variables:

@@ -56,8 +56,7 @@ Atom::Atom( const ID id )
 // FunctorAtom
 //
 
-FunctorAtom::FunctorAtom(
-    const Identifier::Ptr& name, const Terms::Ptr& arguments )
+FunctorAtom::FunctorAtom( const Identifier::Ptr& name, const Terms::Ptr& arguments )
 : Atom( Node::ID::FUNCTOR_ATOM )
 , m_name( name )
 , m_arguments( arguments )

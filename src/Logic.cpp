@@ -56,8 +56,7 @@ Logic::Logic( const ID id )
 // UnaryLogic
 //
 
-UnaryLogic::UnaryLogic(
-    const Logic::Ptr& logic, const UnaryLogic::Connective connective )
+UnaryLogic::UnaryLogic( const Logic::Ptr& logic, const UnaryLogic::Connective connective )
 : Logic( Node::ID::UNARY_LOGIC )
 , m_logic( logic )
 , m_connective( connective )
@@ -89,7 +88,6 @@ std::string UnaryLogic::connectiveDescription( void ) const
 {
     switch( connective() )
     {
-
         case UnaryLogic::Connective::NEGATION:
         {
             return "negation";
@@ -106,14 +104,15 @@ void UnaryLogic::accept( Visitor& visitor )
 // BinaryLogic
 //
 
-BinaryLogic::BinaryLogic( const Logic::Ptr& left, const Logic::Ptr& right,
-    const BinaryLogic::Connective connective )
+BinaryLogic::BinaryLogic(
+    const Logic::Ptr& left, const Logic::Ptr& right, const BinaryLogic::Connective connective )
 : Logic( Node::ID::BINARY_LOGIC )
 , m_left( left )
 , m_right( right )
 , m_connective( connective )
-, m_associative( connective == BinaryLogic::Connective::DISJUNCTION
-                 or connective == BinaryLogic::Connective::CONJUNCTION )
+, m_associative(
+      connective == BinaryLogic::Connective::DISJUNCTION or
+      connective == BinaryLogic::Connective::CONJUNCTION )
 {
 }
 
@@ -224,7 +223,8 @@ void BinaryLogic::accept( Visitor& visitor )
 // QuantifiedLogic
 //
 
-QuantifiedLogic::QuantifiedLogic( const Logic::Ptr& logic,
+QuantifiedLogic::QuantifiedLogic(
+    const Logic::Ptr& logic,
     const Identifiers::Ptr& variables,
     const QuantifiedLogic::Connective connective )
 : Logic( Node::ID::QUANTIFIED_LOGIC )
@@ -307,7 +307,7 @@ const Logics::Ptr& SequentLogic::right( void ) const
 
 std::string SequentLogic::connectiveToken( void ) const
 {
-    return "-->"; // gentzen arrow
+    return "-->";  // gentzen arrow
 }
 
 std::string SequentLogic::connectiveDescription( void ) const

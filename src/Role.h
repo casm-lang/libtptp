@@ -56,21 +56,21 @@ namespace libtptp
 
     enum class Role
     {
-        AXIOM,              //!<  TODO: PPA: FIXME: description
-        HYPOTHESIS,         //!<  TODO: PPA: FIXME: description
-        DEFINITION,         //!<  TODO: PPA: FIXME: description
-        ASSUMPTION,         //!<  TODO: PPA: FIXME: description
-        LEMMA,              //!<  TODO: PPA: FIXME: description
-        THEOREM,            //!<  TODO: PPA: FIXME: description
-        CONJECTURE,         //!<  TODO: PPA: FIXME: description
-        NEGATED_CONJECTURE, //!<  TODO: PPA: FIXME: description
-        PLAIN,              //!<  TODO: PPA: FIXME: description
-        TYPE,               //!<  TODO: PPA: FIXME: description
-        UNKNOWN,            //!<  TODO: PPA: FIXME: description
+        AXIOM,               //!<  TODO: PPA: FIXME: description
+        HYPOTHESIS,          //!<  TODO: PPA: FIXME: description
+        DEFINITION,          //!<  TODO: PPA: FIXME: description
+        ASSUMPTION,          //!<  TODO: PPA: FIXME: description
+        LEMMA,               //!<  TODO: PPA: FIXME: description
+        THEOREM,             //!<  TODO: PPA: FIXME: description
+        CONJECTURE,          //!<  TODO: PPA: FIXME: description
+        NEGATED_CONJECTURE,  //!<  TODO: PPA: FIXME: description
+        PLAIN,               //!<  TODO: PPA: FIXME: description
+        TYPE,                //!<  TODO: PPA: FIXME: description
+        UNKNOWN,             //!<  TODO: PPA: FIXME: description
     };
 }
 
-#endif // _LIBTPTP_ROLE_H_
+#endif  // _LIBTPTP_ROLE_H_
 
 //
 //  Local variables:

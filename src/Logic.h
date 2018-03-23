@@ -83,7 +83,7 @@ namespace libtptp
       public:
         enum class Connective
         {
-            NEGATION, //!< ~ (not)
+            NEGATION,  //!< ~ (not)
         };
 
         using Ptr = std::shared_ptr< UnaryLogic >;
@@ -111,20 +111,19 @@ namespace libtptp
       public:
         enum class Connective
         {
-            DISJUNCTION,         //!< associative | (or)
-            CONJUNCTION,         //!< associative & (and)
-            EQUIVALENCE,         //!< non-associative <=>
-            NON_EQUIVALENCE,     //!< non-associative <~> (xor)
-            IMPLICATION,         //!< non-associative =>
-            REVERSE_IMPLICATION, //!< non-associative <=
-            NEGATED_DISJUNCTION, //!< non-associative ~| (nor)
-            NEGATED_CONJUNCTION, //!< non-associative ~& (nand)
+            DISJUNCTION,          //!< associative | (or)
+            CONJUNCTION,          //!< associative & (and)
+            EQUIVALENCE,          //!< non-associative <=>
+            NON_EQUIVALENCE,      //!< non-associative <~> (xor)
+            IMPLICATION,          //!< non-associative =>
+            REVERSE_IMPLICATION,  //!< non-associative <=
+            NEGATED_DISJUNCTION,  //!< non-associative ~| (nor)
+            NEGATED_CONJUNCTION,  //!< non-associative ~& (nand)
         };
 
         using Ptr = std::shared_ptr< BinaryLogic >;
 
-        BinaryLogic( const Logic::Ptr& left, const Logic::Ptr& right,
-            const Connective connective );
+        BinaryLogic( const Logic::Ptr& left, const Logic::Ptr& right, const Connective connective );
 
         const Logic::Ptr& left( void ) const;
 
@@ -153,14 +152,16 @@ namespace libtptp
       public:
         enum class Connective
         {
-            UNIVERSAL,   //!< !
-            EXISTENTIAL, //!< ?
+            UNIVERSAL,    //!< !
+            EXISTENTIAL,  //!< ?
         };
 
         using Ptr = std::shared_ptr< QuantifiedLogic >;
 
-        QuantifiedLogic( const Logic::Ptr& logic,
-            const Identifiers::Ptr& variables, const Connective connective );
+        QuantifiedLogic(
+            const Logic::Ptr& logic,
+            const Identifiers::Ptr& variables,
+            const Connective connective );
 
         const Logic::Ptr& logic( void ) const;
 
@@ -205,7 +206,7 @@ namespace libtptp
     };
 }
 
-#endif // _LIBTPTP_LOGIC_H_
+#endif  // _LIBTPTP_LOGIC_H_
 
 //
 //  Local variables:

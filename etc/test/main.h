@@ -46,7 +46,7 @@
 
 #include <libtptp/libtptp>
 
-#endif // _LIBTPTP_TEST_MAIN_H_
+#endif  // _LIBTPTP_TEST_MAIN_H_
 
 //
 //  Local variables:

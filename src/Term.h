@@ -111,9 +111,8 @@ namespace libtptp
       public:
         using Ptr = std::shared_ptr< ConditionalTerm >;
 
-        ConditionalTerm( const Logic::Ptr& condition,
-            const Term::Ptr& left,
-            const Term::Ptr& right );
+        ConditionalTerm(
+            const Logic::Ptr& condition, const Term::Ptr& left, const Term::Ptr& right );
 
         const Logic::Ptr& condition( void ) const;
 
@@ -131,7 +130,7 @@ namespace libtptp
     };
 }
 
-#endif // _LIBTPTP_TERM_H_
+#endif  // _LIBTPTP_TERM_H_
 
 //
 //  Local variables:

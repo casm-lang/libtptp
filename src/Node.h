@@ -116,7 +116,9 @@ namespace libtptp
     };
 
     template < typename T >
-    class NodeList final : public Node, public libstdhl::List< T >
+    class NodeList final
+    : public Node
+    , public libstdhl::List< T >
     {
       public:
         using Ptr = std::shared_ptr< NodeList >;
@@ -153,7 +155,7 @@ namespace libtptp
     using Identifiers = NodeList< Identifier >;
 }
 
-#endif // _LIBTPTP_NODE_H_
+#endif  // _LIBTPTP_NODE_H_
 
 //
 //  Local variables:

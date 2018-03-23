@@ -128,8 +128,7 @@ namespace libtptp
     class TraversalVisitor : public Visitor
     {
       public:
-        TraversalVisitor(
-            const Traversal order, std::function< void( Node& ) > callback );
+        TraversalVisitor( const Traversal order, std::function< void( Node& ) > callback );
 
         Traversal order( void ) const;
 
@@ -162,7 +161,7 @@ namespace libtptp
     };
 }
 
-#endif // _LIBTPTP_VISITOR_H_
+#endif  // _LIBTPTP_VISITOR_H_
 
 //
 //  Local variables:
