@@ -154,6 +154,42 @@ $(INSTA):%-install: %
 	@$(MAKE) $(MFLAGS) --no-print-directory -C $(OBJ) install
 
 
+format: $(FORMAT:%=%-format-cpp)
+
+%-format-cpp:
+	@echo "-- Formatting Code C++: $(patsubst %-format-cpp,%,$@)"
+	@clang-format -i \
+	`ls $(patsubst %-format-cpp,%,$@)/*.h 2> /dev/null | grep -e .h` 2> /dev/null
+	@clang-format -i \
+	`ls $(patsubst %-format-cpp,%,$@)/*.cpp 2> /dev/null | grep -e .cpp` 2> /dev/null
+
+
+update: $(UPDATE_FILE:%=%-update)
+
+%-update:
+	@echo "-- Updating: $(patsubst %-update,%,$@)"
+	@for i in $(UPDATE_PATH); \
+	  do \
+	    cp -v \
+	    $(UPDATE_ROOT)/$(patsubst %-update,%,$@) \
+	    $$i/$(patsubst %-update,%,$@); \
+	  done
+
+
+license: $(UPDATE_ROOT:%=%-license) $(UPDATE_PATH:%=%-license)
+
+%-license:
+	@echo "-- Relicense: $(patsubst %-update,%,$@)"
+	@(cd $(patsubst %-update,%,$@); \
+	  python2 $(UPDATE_ROOT)/src/py/Licenser.py \
+	)
+
+license-info:
+	@grep LICENSE.txt -e "---:" | sed "s/---://g"
+	@head LICENSE.txt -n `grep -B1 -ne "---" LICENSE.txt | head -n 1 | sed "s/-//g"` > $(OBJ)/notice.txt
+	@cat $(OBJ)/notice.txt | sed "s/^/  /g" | sed "s/$$/\\\n/g" | tr -d '\n' > $(OBJ)/notice
+
+
 analyze: debug-analyze
 
 analyze-all: $(TYPES:%=%-analyze)
