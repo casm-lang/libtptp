@@ -41,13 +41,13 @@
 
 #include "DumpSourcePass.h"
 
-#include "Atom.h"
-#include "Formula.h"
-#include "Logic.h"
-#include "Node.h"
-#include "Record.h"
-#include "Term.h"
-#include "Trace.h"
+#include <libtptp/Atom>
+#include <libtptp/Formula>
+#include <libtptp/Logic>
+#include <libtptp/Node>
+#include <libtptp/Record>
+#include <libtptp/Term>
+#include <libtptp/Trace>
 
 #include <libpass/PassLogger>
 #include <libpass/PassRegistry>
