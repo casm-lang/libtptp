@@ -51,7 +51,7 @@ linux_task:
     env:
       B: "coverage"
       C: "gcc"
-      CODECOV_TOKEN: ENCRYPTED[TODO]
+      CODECOV_TOKEN: ENCRYPTED[08a2d3c286154b9462798747c4b6e3bda963a9210ffc1aa5aeded6234271ce71ee0ca5d222a63cb1da108c4dd252c65f]
   fetch_script:
     - make ci-fetch
   build_script:
