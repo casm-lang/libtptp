@@ -53,9 +53,9 @@ include( LibPackage )
 
 package_git( ${PROJECT} )
 package_git_submodule( libstdhl master REQUIRED obj   ../stdhl lib/stdhl )
+package_git_submodule( libpass  master REQUIRED obj   ../pass  lib/pass  )
 package_git_submodule( libgtest master REQUIRED build ../gtest lib/gtest )
 package_git_submodule( libhayai master REQUIRED build ../hayai lib/hayai )
-package_git_submodule( libpass  master REQUIRED obj   ../pass  lib/pass  )
 package_git_deps( libstdhl>libpass )
 
 find_package( Threads REQUIRED )
