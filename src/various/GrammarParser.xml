@@ -1,0 +1,245 @@
+<?xml version="1.0"?>
+
+<bison-xml-report version="3.0.5" bug-report="bug-bison@gnu.org" url="http://www.gnu.org/software/bison/">
+
+  <filename>../../obj/src/GrammarParser.yy</filename>
+
+  <grammar>
+    <rules>
+      <rule number="0" usefulness="useful">
+        <lhs>$accept</lhs>
+        <rhs>
+          <symbol>Specification</symbol>
+          <symbol>&quot;end of file&quot;</symbol>
+        </rhs>
+      </rule>
+      <rule number="1" usefulness="useful">
+        <lhs>Specification</lhs>
+        <rhs>
+          <symbol>&quot;dummy&quot;</symbol>
+          <symbol>Identifier</symbol>
+          <symbol>IntegerLiteral</symbol>
+        </rhs>
+      </rule>
+      <rule number="2" usefulness="useful">
+        <lhs>Specification</lhs>
+        <rhs>
+          <symbol>&quot;dummy&quot;</symbol>
+          <symbol>&quot;dummy&quot;</symbol>
+          <symbol>&quot;dummy&quot;</symbol>
+          <symbol>Identifier</symbol>
+          <symbol>IntegerLiteral</symbol>
+        </rhs>
+      </rule>
+      <rule number="3" usefulness="useful">
+        <lhs>Identifier</lhs>
+        <rhs>
+          <symbol>&quot;identifier&quot;</symbol>
+        </rhs>
+      </rule>
+      <rule number="4" usefulness="useful">
+        <lhs>IntegerLiteral</lhs>
+        <rhs>
+          <symbol>&quot;integer&quot;</symbol>
+        </rhs>
+      </rule>
+    </rules>
+    <terminals>
+      <terminal symbol-number="0" token-number="0" name="&quot;end of file&quot;" usefulness="useful"/>
+      <terminal symbol-number="1" token-number="256" name="error" usefulness="useful"/>
+      <terminal symbol-number="3" token-number="258" name="&quot;dummy&quot;" usefulness="useful"/>
+      <terminal symbol-number="4" token-number="259" name="&quot;integer&quot;" usefulness="useful"/>
+      <terminal symbol-number="5" token-number="260" name="&quot;identifier&quot;" usefulness="useful"/>
+    </terminals>
+    <nonterminals>
+      <nonterminal symbol-number="6" name="$accept" usefulness="useful"/>
+      <nonterminal symbol-number="7" name="Specification" usefulness="useful"/>
+      <nonterminal symbol-number="8" name="Identifier" usefulness="useful"/>
+      <nonterminal symbol-number="9" name="IntegerLiteral" usefulness="useful"/>
+    </nonterminals>
+  </grammar>
+
+  <automaton>
+
+    <state number="0">
+      <itemset>
+        <item rule-number="0" point="0"/>
+        <item rule-number="1" point="0"/>
+        <item rule-number="2" point="0"/>
+      </itemset>
+      <actions>
+        <transitions>
+          <transition type="shift" symbol="&quot;dummy&quot;" state="1"/>
+          <transition type="goto" symbol="Specification" state="2"/>
+        </transitions>
+        <errors/>
+        <reductions/>
+      </actions>
+      <solved-conflicts/>
+    </state>
+
+    <state number="1">
+      <itemset>
+        <item rule-number="1" point="1"/>
+        <item rule-number="2" point="1"/>
+        <item rule-number="3" point="0"/>
+      </itemset>
+      <actions>
+        <transitions>
+          <transition type="shift" symbol="&quot;dummy&quot;" state="3"/>
+          <transition type="shift" symbol="&quot;identifier&quot;" state="4"/>
+          <transition type="goto" symbol="Identifier" state="5"/>
+        </transitions>
+        <errors/>
+        <reductions/>
+      </actions>
+      <solved-conflicts/>
+    </state>
+
+    <state number="2">
+      <itemset>
+        <item rule-number="0" point="1"/>
+      </itemset>
+      <actions>
+        <transitions>
+          <transition type="shift" symbol="&quot;end of file&quot;" state="6"/>
+        </transitions>
+        <errors/>
+        <reductions/>
+      </actions>
+      <solved-conflicts/>
+    </state>
+
+    <state number="3">
+      <itemset>
+        <item rule-number="2" point="2"/>
+      </itemset>
+      <actions>
+        <transitions>
+          <transition type="shift" symbol="&quot;dummy&quot;" state="7"/>
+        </transitions>
+        <errors/>
+        <reductions/>
+      </actions>
+      <solved-conflicts/>
+    </state>
+
+    <state number="4">
+      <itemset>
+        <item rule-number="3" point="1"/>
+      </itemset>
+      <actions>
+        <transitions/>
+        <errors/>
+        <reductions>
+          <reduction symbol="$default" rule="3" enabled="true"/>
+        </reductions>
+      </actions>
+      <solved-conflicts/>
+    </state>
+
+    <state number="5">
+      <itemset>
+        <item rule-number="1" point="2"/>
+        <item rule-number="4" point="0"/>
+      </itemset>
+      <actions>
+        <transitions>
+          <transition type="shift" symbol="&quot;integer&quot;" state="8"/>
+          <transition type="goto" symbol="IntegerLiteral" state="9"/>
+        </transitions>
+        <errors/>
+        <reductions/>
+      </actions>
+      <solved-conflicts/>
+    </state>
+
+    <state number="6">
+      <itemset>
+        <item rule-number="0" point="2"/>
+      </itemset>
+      <actions>
+        <transitions/>
+        <errors/>
+        <reductions>
+          <reduction symbol="$default" rule="accept" enabled="true"/>
+        </reductions>
+      </actions>
+      <solved-conflicts/>
+    </state>
+
+    <state number="7">
+      <itemset>
+        <item rule-number="2" point="3"/>
+        <item rule-number="3" point="0"/>
+      </itemset>
+      <actions>
+        <transitions>
+          <transition type="shift" symbol="&quot;identifier&quot;" state="4"/>
+          <transition type="goto" symbol="Identifier" state="10"/>
+        </transitions>
+        <errors/>
+        <reductions/>
+      </actions>
+      <solved-conflicts/>
+    </state>
+
+    <state number="8">
+      <itemset>
+        <item rule-number="4" point="1"/>
+      </itemset>
+      <actions>
+        <transitions/>
+        <errors/>
+        <reductions>
+          <reduction symbol="$default" rule="4" enabled="true"/>
+        </reductions>
+      </actions>
+      <solved-conflicts/>
+    </state>
+
+    <state number="9">
+      <itemset>
+        <item rule-number="1" point="3"/>
+      </itemset>
+      <actions>
+        <transitions/>
+        <errors/>
+        <reductions>
+          <reduction symbol="$default" rule="1" enabled="true"/>
+        </reductions>
+      </actions>
+      <solved-conflicts/>
+    </state>
+
+    <state number="10">
+      <itemset>
+        <item rule-number="2" point="4"/>
+        <item rule-number="4" point="0"/>
+      </itemset>
+      <actions>
+        <transitions>
+          <transition type="shift" symbol="&quot;integer&quot;" state="8"/>
+          <transition type="goto" symbol="IntegerLiteral" state="11"/>
+        </transitions>
+        <errors/>
+        <reductions/>
+      </actions>
+      <solved-conflicts/>
+    </state>
+
+    <state number="11">
+      <itemset>
+        <item rule-number="2" point="5"/>
+      </itemset>
+      <actions>
+        <transitions/>
+        <errors/>
+        <reductions>
+          <reduction symbol="$default" rule="2" enabled="true"/>
+        </reductions>
+      </actions>
+      <solved-conflicts/>
+    </state>
+  </automaton>
+</bison-xml-report>

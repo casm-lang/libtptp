@@ -1,0 +1,127 @@
+Grammar
+
+    0 $accept: Specification "end of file"
+
+    1 Specification: "dummy" Identifier IntegerLiteral
+    2              | "dummy" "dummy" "dummy" Identifier IntegerLiteral
+
+    3 Identifier: "identifier"
+
+    4 IntegerLiteral: "integer"
+
+
+Terminals, with rules where they appear
+
+"end of file" (0) 0
+error (256)
+"dummy" (258) 1 2
+"integer" (259) 4
+"identifier" (260) 3
+
+
+Nonterminals, with rules where they appear
+
+$accept (6)
+    on left: 0
+Specification (7)
+    on left: 1 2, on right: 0
+Identifier (8)
+    on left: 3, on right: 1 2
+IntegerLiteral (9)
+    on left: 4, on right: 1 2
+
+
+State 0
+
+    0 $accept: . Specification "end of file"
+
+    "dummy"  shift, and go to state 1
+
+    Specification  go to state 2
+
+
+State 1
+
+    1 Specification: "dummy" . Identifier IntegerLiteral
+    2              | "dummy" . "dummy" "dummy" Identifier IntegerLiteral
+
+    "dummy"       shift, and go to state 3
+    "identifier"  shift, and go to state 4
+
+    Identifier  go to state 5
+
+
+State 2
+
+    0 $accept: Specification . "end of file"
+
+    "end of file"  shift, and go to state 6
+
+
+State 3
+
+    2 Specification: "dummy" "dummy" . "dummy" Identifier IntegerLiteral
+
+    "dummy"  shift, and go to state 7
+
+
+State 4
+
+    3 Identifier: "identifier" .
+
+    $default  reduce using rule 3 (Identifier)
+
+
+State 5
+
+    1 Specification: "dummy" Identifier . IntegerLiteral
+
+    "integer"  shift, and go to state 8
+
+    IntegerLiteral  go to state 9
+
+
+State 6
+
+    0 $accept: Specification "end of file" .
+
+    $default  accept
+
+
+State 7
+
+    2 Specification: "dummy" "dummy" "dummy" . Identifier IntegerLiteral
+
+    "identifier"  shift, and go to state 4
+
+    Identifier  go to state 10
+
+
+State 8
+
+    4 IntegerLiteral: "integer" .
+
+    $default  reduce using rule 4 (IntegerLiteral)
+
+
+State 9
+
+    1 Specification: "dummy" Identifier IntegerLiteral .
+
+    $default  reduce using rule 1 (Specification)
+
+
+State 10
+
+    2 Specification: "dummy" "dummy" "dummy" Identifier . IntegerLiteral
+
+    "integer"  shift, and go to state 8
+
+    IntegerLiteral  go to state 11
+
+
+State 11
+
+    2 Specification: "dummy" "dummy" "dummy" Identifier IntegerLiteral .
+
+    $default  reduce using rule 2 (Specification)

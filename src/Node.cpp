@@ -142,6 +142,12 @@ std::string Node::description( void ) const
         {
             return "functor atom";
         }
+
+        // token
+        case ID::TOKEN:
+        {
+            return "token";
+        }
     }
 
     assert( !" internal error! " );

@@ -42,7 +42,8 @@
 TARGET = libtptp
 
 FORMAT  = src
-FORMAT += src/*
+FORMAT += src/analyze
+FORMAT += src/transform
 FORMAT += etc
 FORMAT += etc/*
 FORMAT += etc/*/*
@@ -50,3 +51,61 @@ FORMAT += etc/*/*
 UPDATE_ROOT = ../stdhl
 
 include .cmake/config.mk
+
+
+LX  = flex
+YC  = bison
+YF  = -Wall -v -g -x
+
+GRAMMAR  = $(OBJ)/src/various/GrammarParser.cpp
+GRAMMAR += $(OBJ)/src/various/GrammarLexer.cpp
+GRAMMAR += $(OBJ)/src/various/GrammarToken.h
+# GRAMMAR += src/various/Grammar.txt
+
+grammar: $(GRAMMAR)
+.PHONY: grammar
+# src/various/Grammar.txt
+
+
+%/src/various/GrammarLexer.cpp: src/various/GrammarLexer.cpp
+	mkdir -p "`dirname $@`"
+	cp -f $< $@
+
+src/various/GrammarLexer.cpp: src/GrammarLexer.l src/GrammarToken.hpp
+	etc/script.sh generate-lexer "`pwd`/$<" "`pwd`/obj/$< $(filter %.hpp,$^)"
+	$(LX) $(LFLAGS) -o $@ obj/$<
+	sed -i "s/#define yyFlexLexer yyFlexLexer//g" $@
+	sed -i "s/#include <FlexLexer\.h>/#include \"FlexLexer\.h\"/g" $@
+
+
+%/src/various/GrammarParser.cpp: src/various/GrammarParser.cpp
+	mkdir -p "`dirname $@`"
+	cp -f $< $@
+
+src/various/GrammarParser.cpp: src/GrammarParser.yy src/GrammarToken.hpp
+	etc/script.sh generate-parser "`pwd`/$<" "`pwd`/obj/$< $(filter %.hpp,$^)"
+	cd src/various && $(YC) $(YF) -b src/various/ --output GrammarParser.cpp --defines=GrammarParser.tab.h ../../obj/$<
+
+
+%/src/various/GrammarToken.h: src/various/GrammarToken.h
+	mkdir -p "`dirname $@`"
+	cp -f "$<" "$@"
+
+src/various/GrammarToken.h: src/GrammarToken.hpp
+	etc/script.sh generate-token "`pwd`/$<" "`pwd`/$@"
+
+
+src/various/GrammarParser.output: src/various/GrammarParser.cpp
+src/various/GrammarParser.dot:    src/various/GrammarParser.cpp
+src/various/GrammarParser.xml:    src/various/GrammarParser.cpp
+
+# src/various/Grammar.txt: src/various/GrammarParser.xml src/GrammarLexer.l
+# 	@xsltproc ../stdhl/src/xsl/bison/xml2dw.xsl $< > $@
+# 	@sed -i "/ error/d" $@
+# 	@sed -i "s/\"binary\"/\"`grep BINARY src/GrammarLexer.l -B 1 | head -n 1 | sed 's/ {//g' | sed 's/\n//g' | sed 's/\r//g'`\"/g" $@
+# 	@sed -i "s/\"hexadecimal\"/\"`grep HEXADECIMAL src/GrammarLexer.l -B 1 | head -n 1 | sed 's/ {//g' | sed 's/\n//g' | sed 's/\r//g'`\"/g" $@
+# 	@sed -i "s/\"integer\"/\"`grep INTEGER src/GrammarLexer.l -B 1 | head -n 1 | sed 's/ {//g' | sed 's/\n//g' | sed 's/\r//g'`\"/g" $@
+# 	@sed -i "s/\"rational\"/\"`grep RATIONAL src/GrammarLexer.l -B 1 | head -n 1 | sed 's/ {//g' | sed 's/\n//g' | sed 's/\r//g'`\"/g" $@
+# 	@sed -i "s/\"decimal\"/\"`grep DECIMAL src/GrammarLexer.l -B 1 | head -n 1 | sed 's/ {//g' | sed 's/\n//g' | sed 's/\r//g'`\"/g" $@
+# 	@sed -i "s/\"identifier\"/\"`grep IDENTIFIER src/GrammarLexer.l -B 1 | head -n 1 | sed 's/ {//g' | sed 's/\n//g' | sed 's/\r//g'`\"/g" $@
+# 	@sed -i "s/\"string\"/'\"'.*'\"'/g" $@
