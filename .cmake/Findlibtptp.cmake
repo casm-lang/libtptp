@@ -40,7 +40,7 @@
 #
 
 # LIBTPTP_FOUND        - system has found the package
-# LIBTPTP_INCLUDE_DIRS - the package include directories
+# LIBTPTP_INCLUDE_DIR  - the package include directory
 # LIBTPTP_LIBRARY      - the package library
 
 include( LibPackage )
@@ -62,11 +62,7 @@ set( LIBTPTP_PROCESS_LIBS     LIBTPTP_LIBRARY )
 
 libfind_process( LIBTPTP )
 
-if( EXISTS "${LIBTPTP_INCLUDE_DIR}" AND
-    EXISTS "${LIBTPTP_LIBRARY}" AND
-    ${LIBTPTP_INCLUDE_DIR} AND
-    ${LIBTPTP_LIBRARY}
-    )
+if( EXISTS "${LIBTPTP_LIBRARY}" AND ${LIBTPTP_LIBRARY} )
   set( LIBTPTP_FOUND TRUE PARENT_SCOPE )
 else()
   set( LIBTPTP_FOUND FALSE PARENT_SCOPE )
