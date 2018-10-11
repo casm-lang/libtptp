@@ -496,7 +496,7 @@ using namespace libtptp;
 
 // Code run each time a token is matched, see GrammarToken.hpp.
 #define YY_TOKEN_ACTION( TOKEN ) \
-    return {}; // Parser::make_##TOKEN( Ast::make< Ast::Token >( m_loc, Grammar::Token:: TOKEN ), m_loc );
+    return Parser::make_##TOKEN( libtptp::make< Token >( m_loc, Grammar::Token:: TOKEN ), m_loc );
 
 #line 501 "src/various/GrammarLexer.cpp"
 /* %option debug */

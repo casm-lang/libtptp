@@ -57,6 +57,16 @@ Node::ID Node::id( void ) const
     return m_id;
 }
 
+void Node::setSourceLocation( const SourceLocation& sourceLocation )
+{
+    m_sourceLocation = sourceLocation;
+}
+
+const SourceLocation& Node::sourceLocation( void ) const
+{
+    return m_sourceLocation;
+}
+
 std::string Node::description( void ) const
 {
     switch( m_id )

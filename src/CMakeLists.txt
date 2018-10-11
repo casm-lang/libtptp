@@ -96,6 +96,7 @@ ecm_generate_headers( ${PROJECT}_HEADERS_CPP
     Record
     Role
     Specification
+    SourceLocation
     TPTP
     Term
     Token
