@@ -42,6 +42,7 @@
 #ifndef _LIBTPTP_TPTP_H_
 #define _LIBTPTP_TPTP_H_
 
+#include <libstdhl/Memory>
 #include <libstdhl/Type>
 
 /**

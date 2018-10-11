@@ -69,6 +69,8 @@
     #include <libtptp/Specification>
     #include <libtptp/Token>
 
+    #include "../../src/SourceLocation.h"
+
     using namespace libtptp;
 
     #define YY_NULLPTR nullptr
@@ -82,7 +84,7 @@
 {
     // #include <libtptp/ ... >
 
-    #include "../../src/SourceLocation.h"
+    //#include "../../src/SourceLocation.h"
     #include "../../src/Lexer.h"
     #include "../../src/various/GrammarToken.h"
 
@@ -100,6 +102,7 @@ END       0 "end of file"
 {{grammartoken}}
 
 %token <std::string> INTEGER     "integer"
+%token <std::string> STRING      "string"
 %token <std::string> IDENTIFIER  "identifier"
 
 %type <Specification::Ptr> Specification
