@@ -49,13 +49,14 @@
       <terminal symbol-number="1" token-number="256" name="error" usefulness="useful"/>
       <terminal symbol-number="3" token-number="258" name="&quot;dummy&quot;" usefulness="useful"/>
       <terminal symbol-number="4" token-number="259" name="&quot;integer&quot;" usefulness="useful"/>
-      <terminal symbol-number="5" token-number="260" name="&quot;identifier&quot;" usefulness="useful"/>
+      <terminal symbol-number="5" token-number="260" name="&quot;string&quot;" usefulness="unused-in-grammar"/>
+      <terminal symbol-number="6" token-number="261" name="&quot;identifier&quot;" usefulness="useful"/>
     </terminals>
     <nonterminals>
-      <nonterminal symbol-number="6" name="$accept" usefulness="useful"/>
-      <nonterminal symbol-number="7" name="Specification" usefulness="useful"/>
-      <nonterminal symbol-number="8" name="Identifier" usefulness="useful"/>
-      <nonterminal symbol-number="9" name="IntegerLiteral" usefulness="useful"/>
+      <nonterminal symbol-number="7" name="$accept" usefulness="useful"/>
+      <nonterminal symbol-number="8" name="Specification" usefulness="useful"/>
+      <nonterminal symbol-number="9" name="Identifier" usefulness="useful"/>
+      <nonterminal symbol-number="10" name="IntegerLiteral" usefulness="useful"/>
     </nonterminals>
   </grammar>
 

@@ -66,7 +66,7 @@ namespace libtptp
         void LexerError( const char* msg ) override;
 
       private:
-        Logger& m_log;
+        // Logger& m_log;
         SourceLocation m_loc;
         std::string m_strbuf;
     };

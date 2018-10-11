@@ -46,8 +46,6 @@
 
 // #include <libtptp/ ... >
 
-#include <libtptp/transform/SourceToAstPass>
-
 #include <libpass/PassRegistry>
 #include <libpass/PassResult>
 #include <libpass/PassUsage>

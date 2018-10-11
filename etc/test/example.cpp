@@ -41,7 +41,12 @@
 
 #include <libstdhl/Test>
 
+#include <libpass/libpass>
+
+#include "main.h"
+
 using namespace libtptp;
+using namespace libpass;
 
 TEST( libtptp, example )
 {
@@ -60,6 +65,39 @@ TEST( libtptp, example )
 
     t.accept( dbg );
     t.accept( src );
+}
+
+TEST( libtptp, example_from_a_source_file )
+{
+    PassManager pm;
+
+    libstdhl::Logger log( pm.stream() );
+    log.setSource( libstdhl::Memory::make< libstdhl::Log::Source >( TEST_NAME, TEST_NAME ) );
+
+    auto flush = [&pm]() {
+        libstdhl::Log::ApplicationFormatter f( TEST_NAME );
+        libstdhl::Log::OutputStreamSink c( std::cerr, f );
+        pm.stream().flush( c );
+    };
+
+    pm.add< SourceToAstPass >();
+    pm.setDefaultPass< SourceToAstPass >();
+
+    const std::string filename = TEST_NAME + ".tptp";
+    auto file = libstdhl::File::open( filename, std::fstream::out );
+    file << " dummy asdf 1234 ";
+    file.close();
+
+    const auto input = libstdhl::Memory::make< LoadFilePass::Input >( filename );
+    PassResult pr;
+    pr.setInputData< LoadFilePass >( input );
+    pm.setDefaultResult( pr );
+
+    EXPECT_EQ( pm.run( flush ), true );
+
+    pm.result().output< LoadFilePass >()->close();
+    libstdhl::File::remove( filename );
+    EXPECT_EQ( libstdhl::File::exists( filename ), false );
 }
 
 //

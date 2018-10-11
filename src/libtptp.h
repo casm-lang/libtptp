@@ -53,6 +53,7 @@
 #include <libtptp/Visitor>
 #include <libtptp/analyze/DumpDebugPass>
 #include <libtptp/transform/DumpSourcePass>
+#include <libtptp/transform/SourceToAstPass>
 
 /**
    @brief    TODO

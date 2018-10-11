@@ -57,9 +57,14 @@ add_library( ${PROJECT}-cpp OBJECT
   Token.cpp
   Trace.cpp
   Visitor.cpp
+
   analyze/DumpDebugPass.cpp
+
   transform/DumpSourcePass.cpp
   transform/SourceToAstPass.cpp
+
+  various/GrammarParser.cpp
+  various/GrammarLexer.cpp
   )
 
 

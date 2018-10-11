@@ -1,3 +1,8 @@
+Terminals unused in grammar
+
+   "string"
+
+
 Grammar
 
     0 $accept: Specification "end of file"
@@ -16,18 +21,19 @@ Terminals, with rules where they appear
 error (256)
 "dummy" (258) 1 2
 "integer" (259) 4
-"identifier" (260) 3
+"string" (260)
+"identifier" (261) 3
 
 
 Nonterminals, with rules where they appear
 
-$accept (6)
+$accept (7)
     on left: 0
-Specification (7)
+Specification (8)
     on left: 1 2, on right: 0
-Identifier (8)
+Identifier (9)
     on left: 3, on right: 1 2
-IntegerLiteral (9)
+IntegerLiteral (10)
     on left: 4, on right: 1 2
 
 
