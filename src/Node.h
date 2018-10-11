@@ -79,6 +79,9 @@ namespace libtptp
 
             // atoms
             FUNCTOR_ATOM,
+
+            // other
+            TOKEN,
         };
 
       public:

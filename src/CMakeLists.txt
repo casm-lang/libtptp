@@ -52,11 +52,14 @@ add_library( ${PROJECT}-cpp OBJECT
   Formula.cpp
   Node.cpp
   Record.cpp
+  Specification.cpp
   Term.cpp
+  Token.cpp
   Trace.cpp
   Visitor.cpp
   analyze/DumpDebugPass.cpp
   transform/DumpSourcePass.cpp
+  transform/SourceToAstPass.cpp
   )
 
 
@@ -87,8 +90,10 @@ ecm_generate_headers( ${PROJECT}_HEADERS_CPP
     Node
     Record
     Role
+    Specification
     TPTP
     Term
+    Token
     Trace
     Visitor
     libtptp
@@ -133,6 +138,7 @@ ecm_generate_headers( ${PROJECT}_TRANSFORM_HEADERS_CPP
     CAMELCASE
   HEADER_NAMES
     DumpSourcePass
+    SourceToAstPass
   PREFIX
     ${PROJECT}/transform
   RELATIVE
