@@ -82,11 +82,11 @@ u1 SourceToAstPass::run( libpass::PassResult& pr )
     Parser parser( /* log, */ lexer, *specification );
     // parser.set_debug_level( m_debug );
 
-    // if( ( parser.parse() != 0 ) or not specification or ( log.errors() > 0 ) )
-    // {
-    //     log.error( "could not parse `" + filePath + "´" );
-    //     return false;
-    // }
+    if( ( parser.parse() != 0 ) or not specification )  // or ( log.errors() > 0 ) )
+    {
+        // log.error( "could not parse `" + filePath + "´" );
+        return false;
+    }
 
     pr.setOutput< SourceToAstPass >( /*specification*/ );
     // TODO: FIXME: @ppaulweber: @moosbruggerj provide correct implementation to store TPTP
