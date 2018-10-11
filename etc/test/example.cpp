@@ -41,17 +41,25 @@
 
 #include <libstdhl/Test>
 
-using namespace libstdhl;
+using namespace libtptp;
 
-TEST( libstdhl_cpp_Tptp, example )
+TEST( libtptp, example )
 {
-    TPTP::Trace t;
+    DumpDebugVisitor dbg{ std::cout };
+    DumpSourceVisitor src{ std::cout };
 
-    t.add();
+    auto t = Trace();
 
-    Log::StringFormatter f;
-    Log::OutputStreamSink z( std::cerr, f );
-    t.flush( z );
+    auto x = std::make_shared< Identifier >( "X" );
+    auto v = std::make_shared< VariableTerm >( x );
+
+    auto y = std::make_shared< Identifier >( "y" );
+    auto f = std::make_shared< FirstOrderFormula >( v );
+
+    t.add< Record >( y, Role::AXIOM, f );
+
+    t.accept( dbg );
+    t.accept( src );
 }
 
 //

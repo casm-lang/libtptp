@@ -43,28 +43,11 @@
 
 TEST( libtptp, main )
 {
-    std::cout << libstdhl::REVTAG << "\n";
-}
-
-using namespace libtptp;
-
-TEST( libtptp, example )
-{
-    DumpDebugVisitor dbg{ std::cout };
-    DumpSourceVisitor src{ std::cout };
-
-    auto t = Trace();
-
-    auto x = std::make_shared< Identifier >( "X" );
-    auto v = std::make_shared< VariableTerm >( x );
-
-    auto y = std::make_shared< Identifier >( "y" );
-    auto f = std::make_shared< FirstOrderFormula >( v );
-
-    t.add< Record >( y, Role::AXIOM, f );
-
-    t.accept( dbg );
-    t.accept( src );
+    std::cout << libtptp::REVTAG << "\n";
+    std::cout << libtptp::COMMIT << "\n";
+    std::cout << libtptp::BRANCH << "\n";
+    std::cout << libtptp::LICENSE << "\n";
+    std::cout << libtptp::NOTICE << "\n";
 }
 
 //
