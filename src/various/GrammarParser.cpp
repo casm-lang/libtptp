@@ -1,4 +1,4 @@
-// A Bison parser, made by GNU Bison 3.0.5.
+// A Bison parser, made by GNU Bison 3.1.
 
 // Skeleton implementation for Bison LALR(1) parsers in C++
 
@@ -33,7 +33,7 @@
 
 // First part of user declarations.
 
-#line 37 "GrammarParser.cpp" // lalr1.cc:406
+#line 37 "GrammarParser.cpp" // lalr1.cc:407
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -47,9 +47,9 @@
 
 // User implementation prologue.
 
-#line 51 "GrammarParser.cpp" // lalr1.cc:414
+#line 51 "GrammarParser.cpp" // lalr1.cc:415
 // Unqualified %code blocks.
-#line 84 "../../obj/src/GrammarParser.yy" // lalr1.cc:415
+#line 84 "../../obj/src/GrammarParser.yy" // lalr1.cc:416
 
     // #include <libtptp/ ... >
 
@@ -64,7 +64,7 @@
 
     // static Lexer helper functions shall be located here 
 
-#line 68 "GrammarParser.cpp" // lalr1.cc:415
+#line 68 "GrammarParser.cpp" // lalr1.cc:416
 
 
 #ifndef YY_
@@ -76,6 +76,15 @@
 # endif
 # ifndef YY_
 #  define YY_(msgid) msgid
+# endif
+#endif
+
+// Whether we are compiled with exception support.
+#ifndef YY_EXCEPTIONS
+# if defined __GNUC__ && !defined __EXCEPTIONS
+#  define YY_EXCEPTIONS 0
+# else
+#  define YY_EXCEPTIONS 1
 # endif
 #endif
 
@@ -148,9 +157,9 @@
 #define YYERROR         goto yyerrorlab
 #define YYRECOVERING()  (!!yyerrstatus_)
 
-#line 47 "../../obj/src/GrammarParser.yy" // lalr1.cc:481
+#line 47 "../../obj/src/GrammarParser.yy" // lalr1.cc:491
 namespace libtptp {
-#line 154 "GrammarParser.cpp" // lalr1.cc:481
+#line 163 "GrammarParser.cpp" // lalr1.cc:491
 
   /* Return YYSTR after stripping away unnecessary quotes and
      backslashes, so that it's suitable for yyerror.  The heuristic is
@@ -254,17 +263,42 @@ namespace libtptp {
   {
     switch (that.type_get ())
     {
-      case 8: // Specification
+      case 33: // Specification
         value.copy< Specification::Ptr > (that.value);
         break;
 
       case 3: // "dummy"
+      case 4: // "tpi"
+      case 5: // "thf"
+      case 6: // "tff"
+      case 7: // "tcf"
+      case 8: // "fof"
+      case 9: // "cnf"
+      case 10: // "fot"
+      case 11: // "$"
+      case 12: // ":"
+      case 13: // ","
+      case 14: // "."
+      case 15: // "+"
+      case 16: // "-"
+      case 17: // "="
+      case 18: // "("
+      case 19: // ")"
+      case 20: // "["
+      case 21: // "]"
+      case 22: // "{"
+      case 23: // "}"
         value.copy< Token::Ptr > (that.value);
         break;
 
-      case 4: // "integer"
-      case 5: // "string"
-      case 6: // "identifier"
+      case 24: // "integer"
+      case 25: // "real"
+      case 26: // "rational"
+      case 27: // "double_quoted"
+      case 28: // "lower_word"
+      case 29: // "upper_word"
+      case 30: // "identifier"
+      case 31: // "single_quoted"
         value.copy< std::string > (that.value);
         break;
 
@@ -279,17 +313,42 @@ namespace libtptp {
   {
     switch (that.type_get ())
     {
-      case 8: // Specification
+      case 33: // Specification
         value.move< Specification::Ptr > (that.value);
         break;
 
       case 3: // "dummy"
+      case 4: // "tpi"
+      case 5: // "thf"
+      case 6: // "tff"
+      case 7: // "tcf"
+      case 8: // "fof"
+      case 9: // "cnf"
+      case 10: // "fot"
+      case 11: // "$"
+      case 12: // ":"
+      case 13: // ","
+      case 14: // "."
+      case 15: // "+"
+      case 16: // "-"
+      case 17: // "="
+      case 18: // "("
+      case 19: // ")"
+      case 20: // "["
+      case 21: // "]"
+      case 22: // "{"
+      case 23: // "}"
         value.move< Token::Ptr > (that.value);
         break;
 
-      case 4: // "integer"
-      case 5: // "string"
-      case 6: // "identifier"
+      case 24: // "integer"
+      case 25: // "real"
+      case 26: // "rational"
+      case 27: // "double_quoted"
+      case 28: // "lower_word"
+      case 29: // "upper_word"
+      case 30: // "identifier"
+      case 31: // "single_quoted"
         value.move< std::string > (that.value);
         break;
 
@@ -307,17 +366,42 @@ namespace libtptp {
     state = that.state;
     switch (that.type_get ())
     {
-      case 8: // Specification
+      case 33: // Specification
         value.copy< Specification::Ptr > (that.value);
         break;
 
       case 3: // "dummy"
+      case 4: // "tpi"
+      case 5: // "thf"
+      case 6: // "tff"
+      case 7: // "tcf"
+      case 8: // "fof"
+      case 9: // "cnf"
+      case 10: // "fot"
+      case 11: // "$"
+      case 12: // ":"
+      case 13: // ","
+      case 14: // "."
+      case 15: // "+"
+      case 16: // "-"
+      case 17: // "="
+      case 18: // "("
+      case 19: // ")"
+      case 20: // "["
+      case 21: // "]"
+      case 22: // "{"
+      case 23: // "}"
         value.copy< Token::Ptr > (that.value);
         break;
 
-      case 4: // "integer"
-      case 5: // "string"
-      case 6: // "identifier"
+      case 24: // "integer"
+      case 25: // "real"
+      case 26: // "rational"
+      case 27: // "double_quoted"
+      case 28: // "lower_word"
+      case 29: // "upper_word"
+      case 30: // "identifier"
+      case 31: // "single_quoted"
         value.copy< std::string > (that.value);
         break;
 
@@ -450,9 +534,9 @@ namespace libtptp {
     /// The return value of parse ().
     int yyresult;
 
-    // FIXME: This shoud be completely indented.  It is not yet to
-    // avoid gratuitous conflicts when merging into the master branch.
+#if YY_EXCEPTIONS
     try
+#endif // YY_EXCEPTIONS
       {
     YYCDEBUG << "Starting parse\n";
 
@@ -476,7 +560,6 @@ namespace libtptp {
 
     // Backup.
   yybackup:
-
     // Try to take a decision without lookahead.
     yyn = yypact_[yystack_[0].state];
     if (yy_pact_value_is_default_ (yyn))
@@ -486,16 +569,20 @@ namespace libtptp {
     if (yyla.empty ())
       {
         YYCDEBUG << "Reading a token: ";
+#if YY_EXCEPTIONS
         try
+#endif // YY_EXCEPTIONS
           {
             symbol_type yylookahead (yylex ());
             yyla.move (yylookahead);
           }
+#if YY_EXCEPTIONS
         catch (const syntax_error& yyexc)
           {
             error (yyexc);
             goto yyerrlab1;
           }
+#endif // YY_EXCEPTIONS
       }
     YY_SYMBOL_PRINT ("Next token is", yyla);
 
@@ -545,17 +632,42 @@ namespace libtptp {
          when using variants.  */
       switch (yyr1_[yyn])
     {
-      case 8: // Specification
+      case 33: // Specification
         yylhs.value.build< Specification::Ptr > ();
         break;
 
       case 3: // "dummy"
+      case 4: // "tpi"
+      case 5: // "thf"
+      case 6: // "tff"
+      case 7: // "tcf"
+      case 8: // "fof"
+      case 9: // "cnf"
+      case 10: // "fot"
+      case 11: // "$"
+      case 12: // ":"
+      case 13: // ","
+      case 14: // "."
+      case 15: // "+"
+      case 16: // "-"
+      case 17: // "="
+      case 18: // "("
+      case 19: // ")"
+      case 20: // "["
+      case 21: // "]"
+      case 22: // "{"
+      case 23: // "}"
         yylhs.value.build< Token::Ptr > ();
         break;
 
-      case 4: // "integer"
-      case 5: // "string"
-      case 6: // "identifier"
+      case 24: // "integer"
+      case 25: // "real"
+      case 26: // "rational"
+      case 27: // "double_quoted"
+      case 28: // "lower_word"
+      case 29: // "upper_word"
+      case 30: // "identifier"
+      case 31: // "single_quoted"
         yylhs.value.build< std::string > ();
         break;
 
@@ -573,53 +685,430 @@ namespace libtptp {
 
       // Perform the reduction.
       YY_REDUCE_PRINT (yyn);
+#if YY_EXCEPTIONS
       try
+#endif // YY_EXCEPTIONS
         {
           switch (yyn)
             {
   case 2:
-#line 126 "../../obj/src/GrammarParser.yy" // lalr1.cc:856
+#line 171 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
     {
-      // m_specification.set ... ( $1 );
+      //m_specification.setInputs( $1 );
   }
-#line 586 "GrammarParser.cpp" // lalr1.cc:856
+#line 700 "GrammarParser.cpp" // lalr1.cc:870
     break;
 
   case 3:
-#line 130 "../../obj/src/GrammarParser.yy" // lalr1.cc:856
+#line 175 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
     {
       // m_specification.set ... ( $1 );
   }
-#line 594 "GrammarParser.cpp" // lalr1.cc:856
+#line 708 "GrammarParser.cpp" // lalr1.cc:870
     break;
 
   case 4:
-#line 137 "../../obj/src/GrammarParser.yy" // lalr1.cc:856
+#line 182 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
     {
-      // $$ = libtptp::make< Identifier >( @$, $1 );
+    //auto inputs = $1;
+    //inputs->add($2);
+    //$$ = inputs;
   }
-#line 602 "GrammarParser.cpp" // lalr1.cc:856
+#line 718 "GrammarParser.cpp" // lalr1.cc:870
     break;
 
   case 5:
-#line 144 "../../obj/src/GrammarParser.yy" // lalr1.cc:856
+#line 188 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+    {
+    //auto inputs = make< Nodes >( @$ );
+    //inputs->add( $1 );
+    //$$ = inputs;
+  }
+#line 728 "GrammarParser.cpp" // lalr1.cc:870
+    break;
+
+  case 6:
+#line 205 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+    {
+      //$$ = $1;
+  }
+#line 736 "GrammarParser.cpp" // lalr1.cc:870
+    break;
+
+  case 7:
+#line 245 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+    {
+    //auto formula = $1;
+    //formula->set ...
+  }
+#line 745 "GrammarParser.cpp" // lalr1.cc:870
+    break;
+
+  case 8:
+#line 252 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+    {
+  }
+#line 752 "GrammarParser.cpp" // lalr1.cc:870
+    break;
+
+  case 9:
+#line 255 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+    {
+  }
+#line 759 "GrammarParser.cpp" // lalr1.cc:870
+    break;
+
+  case 10:
+#line 258 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+    {
+  }
+#line 766 "GrammarParser.cpp" // lalr1.cc:870
+    break;
+
+  case 11:
+#line 261 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+    {
+  }
+#line 773 "GrammarParser.cpp" // lalr1.cc:870
+    break;
+
+  case 12:
+#line 264 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+    {
+    //$$ = libtptp::make< FirstOrderFormula >( @$ );
+  }
+#line 781 "GrammarParser.cpp" // lalr1.cc:870
+    break;
+
+  case 13:
+#line 268 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+    {
+  }
+#line 788 "GrammarParser.cpp" // lalr1.cc:870
+    break;
+
+  case 14:
+#line 274 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+    {
+    //auto formula = $1;
+    //formula->setAnnotations($3);
+    //$$ = formula;
+  }
+#line 798 "GrammarParser.cpp" // lalr1.cc:870
+    break;
+
+  case 15:
+#line 280 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+    {
+    //$$ = $1;
+  }
+#line 806 "GrammarParser.cpp" // lalr1.cc:870
+    break;
+
+  case 16:
+#line 287 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+    {
+    //source
+  }
+#line 814 "GrammarParser.cpp" // lalr1.cc:870
+    break;
+
+  case 17:
+#line 291 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+    {
+    //source, optionalInfo
+  }
+#line 822 "GrammarParser.cpp" // lalr1.cc:870
+    break;
+
+  case 18:
+#line 298 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+    {
+    //TODO: wrong rule
+  }
+#line 830 "GrammarParser.cpp" // lalr1.cc:870
+    break;
+
+  case 19:
+#line 305 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+    {
+    //$$ = $1;
+  }
+#line 838 "GrammarParser.cpp" // lalr1.cc:870
+    break;
+
+  case 20:
+#line 309 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+    {
+    //$$ = $1;
+  }
+#line 846 "GrammarParser.cpp" // lalr1.cc:870
+    break;
+
+  case 21:
+#line 316 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+    {
+    // $$ = libtptp::make< FormulaRole >( @$, $1 );
+  }
+#line 854 "GrammarParser.cpp" // lalr1.cc:870
+    break;
+
+  case 22:
+#line 323 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+    {
+  }
+#line 861 "GrammarParser.cpp" // lalr1.cc:870
+    break;
+
+  case 23:
+#line 326 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+    {
+  }
+#line 868 "GrammarParser.cpp" // lalr1.cc:870
+    break;
+
+  case 24:
+#line 329 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+    {
+  }
+#line 875 "GrammarParser.cpp" // lalr1.cc:870
+    break;
+
+  case 25:
+#line 335 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+    {
+  }
+#line 882 "GrammarParser.cpp" // lalr1.cc:870
+    break;
+
+  case 26:
+#line 338 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+    {
+  }
+#line 889 "GrammarParser.cpp" // lalr1.cc:870
+    break;
+
+  case 27:
+#line 341 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+    {
+  }
+#line 896 "GrammarParser.cpp" // lalr1.cc:870
+    break;
+
+  case 28:
+#line 344 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+    {
+  }
+#line 903 "GrammarParser.cpp" // lalr1.cc:870
+    break;
+
+  case 29:
+#line 347 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+    {
+  }
+#line 910 "GrammarParser.cpp" // lalr1.cc:870
+    break;
+
+  case 30:
+#line 350 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+    {
+  }
+#line 917 "GrammarParser.cpp" // lalr1.cc:870
+    break;
+
+  case 31:
+#line 356 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+    {
+  }
+#line 924 "GrammarParser.cpp" // lalr1.cc:870
+    break;
+
+  case 32:
+#line 362 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+    {
+  }
+#line 931 "GrammarParser.cpp" // lalr1.cc:870
+    break;
+
+  case 33:
+#line 365 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+    {
+    //auto terms = $3;
+    //terms->add($1);
+    //$$ = terms;
+  }
+#line 941 "GrammarParser.cpp" // lalr1.cc:870
+    break;
+
+  case 34:
+#line 374 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+    {
+  }
+#line 948 "GrammarParser.cpp" // lalr1.cc:870
+    break;
+
+  case 35:
+#line 380 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+    {
+  }
+#line 955 "GrammarParser.cpp" // lalr1.cc:870
+    break;
+
+  case 36:
+#line 383 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+    {
+  }
+#line 962 "GrammarParser.cpp" // lalr1.cc:870
+    break;
+
+  case 37:
+#line 389 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+    {
+  }
+#line 969 "GrammarParser.cpp" // lalr1.cc:870
+    break;
+
+  case 38:
+#line 392 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+    {
+  }
+#line 976 "GrammarParser.cpp" // lalr1.cc:870
+    break;
+
+  case 39:
+#line 395 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+    {
+  }
+#line 983 "GrammarParser.cpp" // lalr1.cc:870
+    break;
+
+  case 40:
+#line 398 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+    {
+  }
+#line 990 "GrammarParser.cpp" // lalr1.cc:870
+    break;
+
+  case 41:
+#line 401 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+    {
+  }
+#line 997 "GrammarParser.cpp" // lalr1.cc:870
+    break;
+
+  case 42:
+#line 407 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+    {
+      // $$ = libtptp::make< Identifier >( @$, $1 );
+  }
+#line 1005 "GrammarParser.cpp" // lalr1.cc:870
+    break;
+
+  case 43:
+#line 414 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+    {
+  }
+#line 1012 "GrammarParser.cpp" // lalr1.cc:870
+    break;
+
+  case 44:
+#line 417 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+    {
+  }
+#line 1019 "GrammarParser.cpp" // lalr1.cc:870
+    break;
+
+  case 45:
+#line 423 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+    {
+    //$$ = $1;
+  }
+#line 1027 "GrammarParser.cpp" // lalr1.cc:870
+    break;
+
+  case 46:
+#line 427 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+    {
+    //$$ = $1;
+  }
+#line 1035 "GrammarParser.cpp" // lalr1.cc:870
+    break;
+
+  case 47:
+#line 431 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+    {
+    //$$ = $1;
+  }
+#line 1043 "GrammarParser.cpp" // lalr1.cc:870
+    break;
+
+  case 48:
+#line 438 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
     {
       // ...
   }
-#line 610 "GrammarParser.cpp" // lalr1.cc:856
+#line 1051 "GrammarParser.cpp" // lalr1.cc:870
+    break;
+
+  case 49:
+#line 445 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+    {
+      // ...
+  }
+#line 1059 "GrammarParser.cpp" // lalr1.cc:870
+    break;
+
+  case 50:
+#line 451 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+    {
+      // ...
+  }
+#line 1067 "GrammarParser.cpp" // lalr1.cc:870
+    break;
+
+  case 51:
+#line 458 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+    {
+    // ...
+  }
+#line 1075 "GrammarParser.cpp" // lalr1.cc:870
+    break;
+
+  case 52:
+#line 465 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+    {
+  }
+#line 1082 "GrammarParser.cpp" // lalr1.cc:870
+    break;
+
+  case 53:
+#line 471 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+    {
+    //
+  }
+#line 1090 "GrammarParser.cpp" // lalr1.cc:870
+    break;
+
+  case 54:
+#line 478 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+    {
+  }
+#line 1097 "GrammarParser.cpp" // lalr1.cc:870
     break;
 
 
-#line 614 "GrammarParser.cpp" // lalr1.cc:856
+#line 1101 "GrammarParser.cpp" // lalr1.cc:870
             default:
               break;
             }
         }
+#if YY_EXCEPTIONS
       catch (const syntax_error& yyexc)
         {
           error (yyexc);
           YYERROR;
         }
+#endif // YY_EXCEPTIONS
       YY_SYMBOL_PRINT ("-> $$ =", yylhs);
       yypop_ (yylen);
       yylen = 0;
@@ -743,11 +1232,12 @@ namespace libtptp {
 
     return yyresult;
   }
+#if YY_EXCEPTIONS
     catch (...)
       {
         YYCDEBUG << "Exception caught: cleaning lookahead and stack\n";
         // Do not try to display the values of the reclaimed symbols,
-        // as their printer might throw an exception.
+        // as their printers might throw an exception.
         if (!yyla.empty ())
           yy_destroy_ (YY_NULLPTR, yyla);
 
@@ -758,6 +1248,7 @@ namespace libtptp {
           }
         throw;
       }
+#endif // YY_EXCEPTIONS
   }
 
   void
@@ -864,67 +1355,113 @@ namespace libtptp {
   }
 
 
-  const signed char Parser::yypact_ninf_ = -5;
+  const signed char Parser::yypact_ninf_ = -40;
 
   const signed char Parser::yytable_ninf_ = -1;
 
   const signed char
   Parser::yypact_[] =
   {
-      -2,    -3,     2,     1,    -5,     3,    -5,    -1,    -5,    -5,
-       3,    -5
+      19,    36,   -40,   -40,   -40,   -40,   -40,   -40,    47,    37,
+     -40,   -40,    30,    46,   -40,   -40,   -19,    20,   -40,   -40,
+     -40,    38,   -40,   -40,   -40,   -40,   -40,    28,    25,   -40,
+      41,   -40,    20,    39,    42,   -40,    43,     9,   -40,    -2,
+     -10,   -40,   -40,   -40,   -40,   -40,    48,    44,   -40,   -40,
+     -40,    45,   -40,   -40,   -40,   -40,   -40,   -40,   -40,   -40,
+     -40,   -40,   -40,    49,   -40,    51,    50,    40,     9,     9,
+      20,     9,   -40,   -40,   -40,    53,    54,   -40,   -40,   -40
   };
 
   const unsigned char
   Parser::yydefact_[] =
   {
-       0,     0,     0,     0,     4,     0,     1,     0,     5,     2,
-       0,     3
+       0,     0,     8,     9,    10,    11,    12,    13,     0,     2,
+       5,     6,     0,     0,     1,     4,     0,     0,    48,    53,
+      54,     0,    19,    20,    43,    44,    42,     0,     0,     3,
+       0,    21,     0,     0,    15,    18,     0,     0,     7,     0,
+       0,    49,    50,    52,    51,    14,    16,    22,    26,    30,
+      24,    25,    28,    45,    46,    47,    27,    29,    37,    38,
+      39,    40,    41,     0,    35,    32,     0,     0,     0,     0,
+       0,     0,    36,    17,    23,     0,     0,    33,    31,    34
   };
 
   const signed char
   Parser::yypgoto_[] =
   {
-      -5,    -5,     4,    -4
+     -40,   -40,   -40,    56,   -40,   -40,   -40,   -40,   -11,   -40,
+     -40,   -37,   -40,   -40,   -39,   -40,    -5,   -40,    52,    58,
+     -40,   -14,   -40,   -40,   -40,   -40,    55,   -40
   };
 
   const signed char
   Parser::yydefgoto_[] =
   {
-      -1,     2,     5,     9
+      -1,     8,     9,    10,    11,    12,    33,    45,    34,    21,
+      30,    65,    47,    48,    66,    49,    50,    63,    35,    51,
+      52,    53,    54,    55,    56,    57,    24,    25
   };
 
   const unsigned char
   Parser::yytable_[] =
   {
-       3,     1,     6,     4,     7,     4,    11,     8,     0,     0,
-       0,    10
+      46,    39,    23,    58,    59,    18,    60,    61,    62,    19,
+      40,    64,    20,    29,    18,    41,    42,    43,    19,    44,
+      39,    20,     1,     2,     3,     4,     5,     6,     7,    40,
+      75,    74,    77,    18,    41,    42,    43,    19,    44,    13,
+      20,     2,     3,     4,     5,     6,     7,    14,    16,    17,
+      26,    28,    18,    19,    32,    37,    68,    38,    36,    76,
+      40,    67,    73,    69,    71,    15,     0,    70,     0,    27,
+       0,    72,    78,    79,    22,     0,     0,     0,     0,     0,
+       0,     0,     0,    31
   };
 
   const signed char
   Parser::yycheck_[] =
   {
-       3,     3,     0,     6,     3,     6,    10,     4,    -1,    -1,
-      -1,     7
+      37,    11,    16,     5,     6,    24,     8,     9,    10,    28,
+      20,    21,    31,    27,    24,    25,    26,    27,    28,    29,
+      11,    31,     3,     4,     5,     6,     7,     8,     9,    20,
+      69,    68,    71,    24,    25,    26,    27,    28,    29,     3,
+      31,     4,     5,     6,     7,     8,     9,     0,    18,     3,
+      30,    13,    24,    28,    13,    13,    12,    14,    19,    70,
+      20,    13,    67,    18,    13,     9,    -1,    18,    -1,    17,
+      -1,    21,    19,    19,    16,    -1,    -1,    -1,    -1,    -1,
+      -1,    -1,    -1,    28
   };
 
   const unsigned char
   Parser::yystos_[] =
   {
-       0,     3,     8,     3,     6,     9,     0,     3,     4,    10,
-       9,    10
+       0,     3,     4,     5,     6,     7,     8,     9,    33,    34,
+      35,    36,    37,     3,     0,    35,    18,     3,    24,    28,
+      31,    41,    51,    53,    58,    59,    30,    50,    13,    53,
+      42,    58,    13,    38,    40,    50,    19,    13,    14,    11,
+      20,    25,    26,    27,    29,    39,    43,    44,    45,    47,
+      48,    51,    52,    53,    54,    55,    56,    57,     5,     6,
+       8,     9,    10,    49,    21,    43,    46,    13,    12,    18,
+      18,    13,    21,    48,    43,    46,    40,    46,    19,    19
   };
 
   const unsigned char
   Parser::yyr1_[] =
   {
-       0,     7,     8,     8,     9,    10
+       0,    32,    33,    33,    34,    34,    35,    36,    37,    37,
+      37,    37,    37,    37,    38,    38,    39,    39,    40,    41,
+      41,    42,    43,    43,    43,    44,    44,    44,    44,    44,
+      44,    45,    46,    46,    47,    48,    48,    49,    49,    49,
+      49,    49,    50,    51,    51,    52,    52,    52,    53,    54,
+      55,    56,    57,    58,    59
   };
 
   const unsigned char
   Parser::yyr2_[] =
   {
-       0,     2,     3,     5,     1,     1
+       0,     2,     1,     5,     2,     1,     1,     9,     1,     1,
+       1,     1,     1,     1,     3,     1,     1,     3,     1,     1,
+       1,     1,     1,     3,     1,     1,     1,     1,     1,     1,
+       1,     4,     1,     3,     5,     2,     3,     1,     1,     1,
+       1,     1,     1,     1,     1,     1,     1,     1,     1,     1,
+       1,     1,     1,     1,     1
   };
 
 
@@ -934,16 +1471,31 @@ namespace libtptp {
   const char*
   const Parser::yytname_[] =
   {
-  "\"end of file\"", "error", "$undefined", "\"dummy\"", "\"integer\"",
-  "\"string\"", "\"identifier\"", "$accept", "Specification", "Identifier",
-  "IntegerLiteral", YY_NULLPTR
+  "\"end of file\"", "error", "$undefined", "\"dummy\"", "\"tpi\"",
+  "\"thf\"", "\"tff\"", "\"tcf\"", "\"fof\"", "\"cnf\"", "\"fot\"",
+  "\"$\"", "\":\"", "\",\"", "\".\"", "\"+\"", "\"-\"", "\"=\"", "\"(\"",
+  "\")\"", "\"[\"", "\"]\"", "\"{\"", "\"}\"", "\"integer\"", "\"real\"",
+  "\"rational\"", "\"double_quoted\"", "\"lower_word\"", "\"upper_word\"",
+  "\"identifier\"", "\"single_quoted\"", "$accept", "Specification",
+  "Inputs", "Input", "AnnotatedFormula", "FormulaKeyword",
+  "FormulaSpecification", "Annotations", "Formula", "Name", "FormulaRole",
+  "GeneralTerm", "GeneralData", "GeneralFunction", "GeneralTerms",
+  "FormulaData", "GeneralList", "FormulaDataKeyword", "Identifier",
+  "AtomicWord", "Number", "IntegerLiteral", "RealLiteral",
+  "RationalLiteral", "Variable", "DistinctObjectLiteral",
+  "LowerWordLiteral", "SingleQuotedLiteral", YY_NULLPTR
   };
 
 #if YYDEBUG
-  const unsigned char
+  const unsigned short
   Parser::yyrline_[] =
   {
-       0,   125,   125,   129,   136,   143
+       0,   170,   170,   174,   181,   187,   204,   244,   251,   254,
+     257,   260,   263,   267,   273,   279,   286,   290,   297,   304,
+     308,   315,   322,   325,   328,   334,   337,   340,   343,   346,
+     349,   355,   361,   364,   373,   379,   382,   388,   391,   394,
+     397,   400,   406,   413,   416,   422,   426,   430,   437,   444,
+     450,   457,   464,   470,   477
   };
 
   // Print the state stack on the debug stream.
@@ -976,10 +1528,10 @@ namespace libtptp {
 #endif // YYDEBUG
 
 
-#line 47 "../../obj/src/GrammarParser.yy" // lalr1.cc:1163
+#line 47 "../../obj/src/GrammarParser.yy" // lalr1.cc:1181
 } // libtptp
-#line 982 "GrammarParser.cpp" // lalr1.cc:1163
-#line 150 "../../obj/src/GrammarParser.yy" // lalr1.cc:1164
+#line 1534 "GrammarParser.cpp" // lalr1.cc:1181
+#line 482 "../../obj/src/GrammarParser.yy" // lalr1.cc:1182
 
 
 void Parser::error( const SourceLocation& location, const std::string& message )

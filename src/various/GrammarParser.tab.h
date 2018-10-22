@@ -1,4 +1,4 @@
-// A Bison parser, made by GNU Bison 3.0.5.
+// A Bison parser, made by GNU Bison 3.1.
 
 // Skeleton interface for Bison LALR(1) parsers in C++
 
@@ -40,7 +40,7 @@
 #ifndef YY_YY_GRAMMARPARSER_TAB_H_INCLUDED
 # define YY_YY_GRAMMARPARSER_TAB_H_INCLUDED
 // //                    "%code requires" blocks.
-#line 61 "../../obj/src/GrammarParser.yy" // lalr1.cc:379
+#line 61 "../../obj/src/GrammarParser.yy" // lalr1.cc:380
 
     namespace libtptp
     {
@@ -58,7 +58,7 @@
 
     #define YY_NULLPTR nullptr
 
-#line 62 "GrammarParser.tab.h" // lalr1.cc:379
+#line 62 "GrammarParser.tab.h" // lalr1.cc:380
 
 # include <cassert>
 # include <cstdlib> // std::abort
@@ -109,7 +109,7 @@
 # define YYUSE(E) /* empty */
 #endif
 
-#if defined __GNUC__ && 407 <= __GNUC__ * 100 + __GNUC_MINOR__
+#if defined __GNUC__ && ! defined __ICC && 407 <= __GNUC__ * 100 + __GNUC_MINOR__
 /* Suppress an incorrect diagnostic about yylval being uninitialized.  */
 # define YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN \
     _Pragma ("GCC diagnostic push") \
@@ -128,14 +128,21 @@
 # define YY_INITIAL_VALUE(Value) /* Nothing. */
 #endif
 
+# ifndef YY_NULLPTR
+#  if defined __cplusplus && 201103L <= __cplusplus
+#   define YY_NULLPTR nullptr
+#  else
+#   define YY_NULLPTR 0
+#  endif
+# endif
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 1
 #endif
 
-#line 47 "../../obj/src/GrammarParser.yy" // lalr1.cc:379
+#line 47 "../../obj/src/GrammarParser.yy" // lalr1.cc:380
 namespace libtptp {
-#line 139 "GrammarParser.tab.h" // lalr1.cc:379
+#line 146 "GrammarParser.tab.h" // lalr1.cc:380
 
 
 
@@ -152,7 +159,8 @@ namespace libtptp {
 
     /// Empty construction.
     variant ()
-      : yytypeid_ (YY_NULLPTR)
+      : yybuffer_ ()
+      , yytypeid_ (YY_NULLPTR)
     {}
 
     /// Construct and fill.
@@ -178,7 +186,7 @@ namespace libtptp {
       YYASSERT (!yytypeid_);
       YYASSERT (sizeof (T) <= S);
       yytypeid_ = & typeid (T);
-      return *new (yyas_<T> ()) T;
+      return *new (yyas_<T> ()) T ();
     }
 
     /// Instantiate a \a T in here from \a t.
@@ -197,6 +205,7 @@ namespace libtptp {
     T&
     as ()
     {
+      YYASSERT (yytypeid_);
       YYASSERT (*yytypeid_ == typeid (T));
       YYASSERT (sizeof (T) <= S);
       return *yyas_<T> ();
@@ -207,6 +216,7 @@ namespace libtptp {
     const T&
     as () const
     {
+      YYASSERT (yytypeid_);
       YYASSERT (*yytypeid_ == typeid (T));
       YYASSERT (sizeof (T) <= S);
       return *yyas_<T> ();
@@ -306,11 +316,36 @@ namespace libtptp {
       char dummy1[sizeof(Specification::Ptr)];
 
       // "dummy"
+      // "tpi"
+      // "thf"
+      // "tff"
+      // "tcf"
+      // "fof"
+      // "cnf"
+      // "fot"
+      // "$"
+      // ":"
+      // ","
+      // "."
+      // "+"
+      // "-"
+      // "="
+      // "("
+      // ")"
+      // "["
+      // "]"
+      // "{"
+      // "}"
       char dummy2[sizeof(Token::Ptr)];
 
       // "integer"
-      // "string"
+      // "real"
+      // "rational"
+      // "double_quoted"
+      // "lower_word"
+      // "upper_word"
       // "identifier"
+      // "single_quoted"
       char dummy3[sizeof(std::string)];
 };
 
@@ -336,9 +371,34 @@ namespace libtptp {
       {
         END = 0,
         DUMMY = 258,
-        INTEGER = 259,
-        STRING = 260,
-        IDENTIFIER = 261
+        TPI = 259,
+        THF = 260,
+        TFF = 261,
+        TCF = 262,
+        FOF = 263,
+        CNF = 264,
+        FOT = 265,
+        DOLLAR = 266,
+        COLON = 267,
+        COMMA = 268,
+        DOT = 269,
+        PLUS = 270,
+        MINUS = 271,
+        EQUAL = 272,
+        LPAREN = 273,
+        RPAREN = 274,
+        LSQPAREN = 275,
+        RSQPAREN = 276,
+        LCURPAREN = 277,
+        RCURPAREN = 278,
+        INTEGER = 279,
+        REAL = 280,
+        RATIONAL = 281,
+        DQUOTED = 282,
+        LOWER_WORD = 283,
+        UPPER_WORD = 284,
+        IDENTIFIER = 285,
+        SINGLE_QUOTED = 286
       };
     };
 
@@ -376,11 +436,11 @@ namespace libtptp {
 
   basic_symbol (typename Base::kind_type t, const location_type& l);
 
-  basic_symbol (typename Base::kind_type t, const Specification::Ptr v, const location_type& l);
+  basic_symbol (typename Base::kind_type t, const Specification::Ptr& v, const location_type& l);
 
-  basic_symbol (typename Base::kind_type t, const Token::Ptr v, const location_type& l);
+  basic_symbol (typename Base::kind_type t, const Token::Ptr& v, const location_type& l);
 
-  basic_symbol (typename Base::kind_type t, const std::string v, const location_type& l);
+  basic_symbol (typename Base::kind_type t, const std::string& v, const location_type& l);
 
 
       /// Constructor for symbols with semantic value.
@@ -459,15 +519,115 @@ namespace libtptp {
 
     static inline
     symbol_type
+    make_TPI (const Token::Ptr& v, const location_type& l);
+
+    static inline
+    symbol_type
+    make_THF (const Token::Ptr& v, const location_type& l);
+
+    static inline
+    symbol_type
+    make_TFF (const Token::Ptr& v, const location_type& l);
+
+    static inline
+    symbol_type
+    make_TCF (const Token::Ptr& v, const location_type& l);
+
+    static inline
+    symbol_type
+    make_FOF (const Token::Ptr& v, const location_type& l);
+
+    static inline
+    symbol_type
+    make_CNF (const Token::Ptr& v, const location_type& l);
+
+    static inline
+    symbol_type
+    make_FOT (const Token::Ptr& v, const location_type& l);
+
+    static inline
+    symbol_type
+    make_DOLLAR (const Token::Ptr& v, const location_type& l);
+
+    static inline
+    symbol_type
+    make_COLON (const Token::Ptr& v, const location_type& l);
+
+    static inline
+    symbol_type
+    make_COMMA (const Token::Ptr& v, const location_type& l);
+
+    static inline
+    symbol_type
+    make_DOT (const Token::Ptr& v, const location_type& l);
+
+    static inline
+    symbol_type
+    make_PLUS (const Token::Ptr& v, const location_type& l);
+
+    static inline
+    symbol_type
+    make_MINUS (const Token::Ptr& v, const location_type& l);
+
+    static inline
+    symbol_type
+    make_EQUAL (const Token::Ptr& v, const location_type& l);
+
+    static inline
+    symbol_type
+    make_LPAREN (const Token::Ptr& v, const location_type& l);
+
+    static inline
+    symbol_type
+    make_RPAREN (const Token::Ptr& v, const location_type& l);
+
+    static inline
+    symbol_type
+    make_LSQPAREN (const Token::Ptr& v, const location_type& l);
+
+    static inline
+    symbol_type
+    make_RSQPAREN (const Token::Ptr& v, const location_type& l);
+
+    static inline
+    symbol_type
+    make_LCURPAREN (const Token::Ptr& v, const location_type& l);
+
+    static inline
+    symbol_type
+    make_RCURPAREN (const Token::Ptr& v, const location_type& l);
+
+    static inline
+    symbol_type
     make_INTEGER (const std::string& v, const location_type& l);
 
     static inline
     symbol_type
-    make_STRING (const std::string& v, const location_type& l);
+    make_REAL (const std::string& v, const location_type& l);
+
+    static inline
+    symbol_type
+    make_RATIONAL (const std::string& v, const location_type& l);
+
+    static inline
+    symbol_type
+    make_DQUOTED (const std::string& v, const location_type& l);
+
+    static inline
+    symbol_type
+    make_LOWER_WORD (const std::string& v, const location_type& l);
+
+    static inline
+    symbol_type
+    make_UPPER_WORD (const std::string& v, const location_type& l);
 
     static inline
     symbol_type
     make_IDENTIFIER (const std::string& v, const location_type& l);
+
+    static inline
+    symbol_type
+    make_SINGLE_QUOTED (const std::string& v, const location_type& l);
 
 
     /// Build a parser object.
@@ -575,7 +735,7 @@ namespace libtptp {
     static const char* const yytname_[];
 #if YYDEBUG
   // YYRLINE[YYN] -- Source line where rule number YYN was defined.
-  static const unsigned char yyrline_[];
+  static const unsigned short yyrline_[];
     /// Report on the debug stream that the rule \a r is going to be reduced.
     virtual void yy_reduce_print_ (int r);
     /// Print the state stack on the debug stream.
@@ -640,7 +800,7 @@ namespace libtptp {
       typedef basic_symbol<by_state> super_type;
       /// Construct an empty symbol.
       stack_symbol_type ();
-      /// Copy construct.
+      /// Copy construct (for efficiency).
       stack_symbol_type (const stack_symbol_type& that);
       /// Steal the contents from \a sym to build this.
       stack_symbol_type (state_type s, symbol_type& sym);
@@ -676,12 +836,12 @@ namespace libtptp {
     enum
     {
       yyeof_ = 0,
-      yylast_ = 11,     ///< Last index in yytable_.
-      yynnts_ = 4,  ///< Number of nonterminal symbols.
-      yyfinal_ = 6, ///< Termination state number.
+      yylast_ = 83,     ///< Last index in yytable_.
+      yynnts_ = 28,  ///< Number of nonterminal symbols.
+      yyfinal_ = 14, ///< Termination state number.
       yyterror_ = 1,
       yyerrcode_ = 256,
-      yyntokens_ = 7  ///< Number of tokens.
+      yyntokens_ = 32  ///< Number of tokens.
     };
 
 
@@ -725,9 +885,11 @@ namespace libtptp {
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
-       5,     6
+       5,     6,     7,     8,     9,    10,    11,    12,    13,    14,
+      15,    16,    17,    18,    19,    20,    21,    22,    23,    24,
+      25,    26,    27,    28,    29,    30,    31
     };
-    const unsigned user_token_number_max_ = 261;
+    const unsigned user_token_number_max_ = 286;
     const token_number_type undef_token_ = 2;
 
     if (static_cast<int> (t) <= yyeof_)
@@ -748,6 +910,7 @@ namespace libtptp {
   template <typename Base>
   Parser::basic_symbol<Base>::basic_symbol ()
     : value ()
+    , location ()
   {}
 
   template <typename Base>
@@ -758,17 +921,42 @@ namespace libtptp {
   {
     switch (other.type_get ())
     {
-      case 8: // Specification
+      case 33: // Specification
         value.copy< Specification::Ptr > (other.value);
         break;
 
       case 3: // "dummy"
+      case 4: // "tpi"
+      case 5: // "thf"
+      case 6: // "tff"
+      case 7: // "tcf"
+      case 8: // "fof"
+      case 9: // "cnf"
+      case 10: // "fot"
+      case 11: // "$"
+      case 12: // ":"
+      case 13: // ","
+      case 14: // "."
+      case 15: // "+"
+      case 16: // "-"
+      case 17: // "="
+      case 18: // "("
+      case 19: // ")"
+      case 20: // "["
+      case 21: // "]"
+      case 22: // "{"
+      case 23: // "}"
         value.copy< Token::Ptr > (other.value);
         break;
 
-      case 4: // "integer"
-      case 5: // "string"
-      case 6: // "identifier"
+      case 24: // "integer"
+      case 25: // "real"
+      case 26: // "rational"
+      case 27: // "double_quoted"
+      case 28: // "lower_word"
+      case 29: // "upper_word"
+      case 30: // "identifier"
+      case 31: // "single_quoted"
         value.copy< std::string > (other.value);
         break;
 
@@ -787,17 +975,42 @@ namespace libtptp {
     (void) v;
     switch (this->type_get ())
     {
-      case 8: // Specification
+      case 33: // Specification
         value.copy< Specification::Ptr > (v);
         break;
 
       case 3: // "dummy"
+      case 4: // "tpi"
+      case 5: // "thf"
+      case 6: // "tff"
+      case 7: // "tcf"
+      case 8: // "fof"
+      case 9: // "cnf"
+      case 10: // "fot"
+      case 11: // "$"
+      case 12: // ":"
+      case 13: // ","
+      case 14: // "."
+      case 15: // "+"
+      case 16: // "-"
+      case 17: // "="
+      case 18: // "("
+      case 19: // ")"
+      case 20: // "["
+      case 21: // "]"
+      case 22: // "{"
+      case 23: // "}"
         value.copy< Token::Ptr > (v);
         break;
 
-      case 4: // "integer"
-      case 5: // "string"
-      case 6: // "identifier"
+      case 24: // "integer"
+      case 25: // "real"
+      case 26: // "rational"
+      case 27: // "double_quoted"
+      case 28: // "lower_word"
+      case 29: // "upper_word"
+      case 30: // "identifier"
+      case 31: // "single_quoted"
         value.copy< std::string > (v);
         break;
 
@@ -812,26 +1025,25 @@ namespace libtptp {
   template <typename Base>
   Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, const location_type& l)
     : Base (t)
-    , value ()
     , location (l)
   {}
 
   template <typename Base>
-  Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, const Specification::Ptr v, const location_type& l)
+  Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, const Specification::Ptr& v, const location_type& l)
     : Base (t)
     , value (v)
     , location (l)
   {}
 
   template <typename Base>
-  Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, const Token::Ptr v, const location_type& l)
+  Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, const Token::Ptr& v, const location_type& l)
     : Base (t)
     , value (v)
     , location (l)
   {}
 
   template <typename Base>
-  Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, const std::string v, const location_type& l)
+  Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, const std::string& v, const location_type& l)
     : Base (t)
     , value (v)
     , location (l)
@@ -861,17 +1073,42 @@ namespace libtptp {
     // Type destructor.
   switch (yytype)
     {
-      case 8: // Specification
+      case 33: // Specification
         value.template destroy< Specification::Ptr > ();
         break;
 
       case 3: // "dummy"
+      case 4: // "tpi"
+      case 5: // "thf"
+      case 6: // "tff"
+      case 7: // "tcf"
+      case 8: // "fof"
+      case 9: // "cnf"
+      case 10: // "fot"
+      case 11: // "$"
+      case 12: // ":"
+      case 13: // ","
+      case 14: // "."
+      case 15: // "+"
+      case 16: // "-"
+      case 17: // "="
+      case 18: // "("
+      case 19: // ")"
+      case 20: // "["
+      case 21: // "]"
+      case 22: // "{"
+      case 23: // "}"
         value.template destroy< Token::Ptr > ();
         break;
 
-      case 4: // "integer"
-      case 5: // "string"
-      case 6: // "identifier"
+      case 24: // "integer"
+      case 25: // "real"
+      case 26: // "rational"
+      case 27: // "double_quoted"
+      case 28: // "lower_word"
+      case 29: // "upper_word"
+      case 30: // "identifier"
+      case 31: // "single_quoted"
         value.template destroy< std::string > ();
         break;
 
@@ -896,17 +1133,42 @@ namespace libtptp {
     super_type::move (s);
     switch (this->type_get ())
     {
-      case 8: // Specification
+      case 33: // Specification
         value.move< Specification::Ptr > (s.value);
         break;
 
       case 3: // "dummy"
+      case 4: // "tpi"
+      case 5: // "thf"
+      case 6: // "tff"
+      case 7: // "tcf"
+      case 8: // "fof"
+      case 9: // "cnf"
+      case 10: // "fot"
+      case 11: // "$"
+      case 12: // ":"
+      case 13: // ","
+      case 14: // "."
+      case 15: // "+"
+      case 16: // "-"
+      case 17: // "="
+      case 18: // "("
+      case 19: // ")"
+      case 20: // "["
+      case 21: // "]"
+      case 22: // "{"
+      case 23: // "}"
         value.move< Token::Ptr > (s.value);
         break;
 
-      case 4: // "integer"
-      case 5: // "string"
-      case 6: // "identifier"
+      case 24: // "integer"
+      case 25: // "real"
+      case 26: // "rational"
+      case 27: // "double_quoted"
+      case 28: // "lower_word"
+      case 29: // "upper_word"
+      case 30: // "identifier"
+      case 31: // "single_quoted"
         value.move< std::string > (s.value);
         break;
 
@@ -962,10 +1224,13 @@ namespace libtptp {
     // YYTOKNUM[NUM] -- (External) token number corresponding to the
     // (internal) symbol number NUM (which must be that of a token).  */
     static
-    const unsigned short int
+    const unsigned short
     yytoken_number_[] =
     {
-       0,   256,   257,   258,   259,   260,   261
+       0,   256,   257,   258,   259,   260,   261,   262,   263,   264,
+     265,   266,   267,   268,   269,   270,   271,   272,   273,   274,
+     275,   276,   277,   278,   279,   280,   281,   282,   283,   284,
+     285,   286
     };
     return static_cast<token_type> (yytoken_number_[type]);
   }
@@ -983,15 +1248,159 @@ namespace libtptp {
   }
 
   Parser::symbol_type
+  Parser::make_TPI (const Token::Ptr& v, const location_type& l)
+  {
+    return symbol_type (token::TPI, v, l);
+  }
+
+  Parser::symbol_type
+  Parser::make_THF (const Token::Ptr& v, const location_type& l)
+  {
+    return symbol_type (token::THF, v, l);
+  }
+
+  Parser::symbol_type
+  Parser::make_TFF (const Token::Ptr& v, const location_type& l)
+  {
+    return symbol_type (token::TFF, v, l);
+  }
+
+  Parser::symbol_type
+  Parser::make_TCF (const Token::Ptr& v, const location_type& l)
+  {
+    return symbol_type (token::TCF, v, l);
+  }
+
+  Parser::symbol_type
+  Parser::make_FOF (const Token::Ptr& v, const location_type& l)
+  {
+    return symbol_type (token::FOF, v, l);
+  }
+
+  Parser::symbol_type
+  Parser::make_CNF (const Token::Ptr& v, const location_type& l)
+  {
+    return symbol_type (token::CNF, v, l);
+  }
+
+  Parser::symbol_type
+  Parser::make_FOT (const Token::Ptr& v, const location_type& l)
+  {
+    return symbol_type (token::FOT, v, l);
+  }
+
+  Parser::symbol_type
+  Parser::make_DOLLAR (const Token::Ptr& v, const location_type& l)
+  {
+    return symbol_type (token::DOLLAR, v, l);
+  }
+
+  Parser::symbol_type
+  Parser::make_COLON (const Token::Ptr& v, const location_type& l)
+  {
+    return symbol_type (token::COLON, v, l);
+  }
+
+  Parser::symbol_type
+  Parser::make_COMMA (const Token::Ptr& v, const location_type& l)
+  {
+    return symbol_type (token::COMMA, v, l);
+  }
+
+  Parser::symbol_type
+  Parser::make_DOT (const Token::Ptr& v, const location_type& l)
+  {
+    return symbol_type (token::DOT, v, l);
+  }
+
+  Parser::symbol_type
+  Parser::make_PLUS (const Token::Ptr& v, const location_type& l)
+  {
+    return symbol_type (token::PLUS, v, l);
+  }
+
+  Parser::symbol_type
+  Parser::make_MINUS (const Token::Ptr& v, const location_type& l)
+  {
+    return symbol_type (token::MINUS, v, l);
+  }
+
+  Parser::symbol_type
+  Parser::make_EQUAL (const Token::Ptr& v, const location_type& l)
+  {
+    return symbol_type (token::EQUAL, v, l);
+  }
+
+  Parser::symbol_type
+  Parser::make_LPAREN (const Token::Ptr& v, const location_type& l)
+  {
+    return symbol_type (token::LPAREN, v, l);
+  }
+
+  Parser::symbol_type
+  Parser::make_RPAREN (const Token::Ptr& v, const location_type& l)
+  {
+    return symbol_type (token::RPAREN, v, l);
+  }
+
+  Parser::symbol_type
+  Parser::make_LSQPAREN (const Token::Ptr& v, const location_type& l)
+  {
+    return symbol_type (token::LSQPAREN, v, l);
+  }
+
+  Parser::symbol_type
+  Parser::make_RSQPAREN (const Token::Ptr& v, const location_type& l)
+  {
+    return symbol_type (token::RSQPAREN, v, l);
+  }
+
+  Parser::symbol_type
+  Parser::make_LCURPAREN (const Token::Ptr& v, const location_type& l)
+  {
+    return symbol_type (token::LCURPAREN, v, l);
+  }
+
+  Parser::symbol_type
+  Parser::make_RCURPAREN (const Token::Ptr& v, const location_type& l)
+  {
+    return symbol_type (token::RCURPAREN, v, l);
+  }
+
+  Parser::symbol_type
   Parser::make_INTEGER (const std::string& v, const location_type& l)
   {
     return symbol_type (token::INTEGER, v, l);
   }
 
   Parser::symbol_type
-  Parser::make_STRING (const std::string& v, const location_type& l)
+  Parser::make_REAL (const std::string& v, const location_type& l)
   {
-    return symbol_type (token::STRING, v, l);
+    return symbol_type (token::REAL, v, l);
+  }
+
+  Parser::symbol_type
+  Parser::make_RATIONAL (const std::string& v, const location_type& l)
+  {
+    return symbol_type (token::RATIONAL, v, l);
+  }
+
+  Parser::symbol_type
+  Parser::make_DQUOTED (const std::string& v, const location_type& l)
+  {
+    return symbol_type (token::DQUOTED, v, l);
+  }
+
+  Parser::symbol_type
+  Parser::make_LOWER_WORD (const std::string& v, const location_type& l)
+  {
+    return symbol_type (token::LOWER_WORD, v, l);
+  }
+
+  Parser::symbol_type
+  Parser::make_UPPER_WORD (const std::string& v, const location_type& l)
+  {
+    return symbol_type (token::UPPER_WORD, v, l);
   }
 
   Parser::symbol_type
@@ -1000,10 +1409,16 @@ namespace libtptp {
     return symbol_type (token::IDENTIFIER, v, l);
   }
 
+  Parser::symbol_type
+  Parser::make_SINGLE_QUOTED (const std::string& v, const location_type& l)
+  {
+    return symbol_type (token::SINGLE_QUOTED, v, l);
+  }
 
-#line 47 "../../obj/src/GrammarParser.yy" // lalr1.cc:379
+
+#line 47 "../../obj/src/GrammarParser.yy" // lalr1.cc:380
 } // libtptp
-#line 1007 "GrammarParser.tab.h" // lalr1.cc:379
+#line 1422 "GrammarParser.tab.h" // lalr1.cc:380
 
 
 

@@ -160,6 +160,8 @@ namespace libtptp
         std::string m_name;
     };
 
+    using Nodes = NodeList< Node >;
+
     using Identifiers = NodeList< Identifier >;
 
     template < typename T, typename... Args >

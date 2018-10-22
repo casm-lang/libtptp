@@ -61,6 +61,8 @@ namespace libtptp
         using Ptr = std::shared_ptr< Specification >;
 
         Specification( void );
+
+        void setInputs( const Nodes::Ptr& formulas );
     };
 
     using Specifications = NodeList< Specification >;

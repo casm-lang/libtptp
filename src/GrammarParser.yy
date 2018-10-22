@@ -102,8 +102,13 @@ END       0 "end of file"
 {{grammartoken}}
 
 %token <std::string> INTEGER     "integer"
-%token <std::string> STRING      "string"
+%token <std::string> REAL        "real"
+%token <std::string> RATIONAL    "rational"
+%token <std::string> DQUOTED     "double_quoted"
+%token <std::string> LOWER_WORD  "lower_word"
+%token <std::string> UPPER_WORD  "upper_word"
 %token <std::string> IDENTIFIER  "identifier"
+%token <std::string> SINGLE_QUOTED "single_quoted"
 
 %type <Specification::Ptr> Specification
 
@@ -121,13 +126,238 @@ END       0 "end of file"
 
 
 Specification
-: DUMMY Identifier IntegerLiteral
+: Inputs
   {
-      // m_specification.set ... ( $1 );
+      //m_specification.setInputs( $1 );
   }
 | DUMMY DUMMY DUMMY Identifier IntegerLiteral
   {
       // m_specification.set ... ( $1 );
+  }
+;
+
+Inputs
+: Inputs Input
+  {
+    //auto inputs = $1;
+    //inputs->add($2);
+    //$$ = inputs;
+  }
+| Input
+  {
+    //auto inputs = make< Nodes >( @$ );
+    //inputs->add( $1 );
+    //$$ = inputs;
+  }
+;
+
+/*
+Input 
+: Identifier 
+  {
+  }
+;
+*/
+
+Input
+: AnnotatedFormula 
+  {
+      //$$ = $1;
+  }
+/* TODO
+| include
+  {
+      //$$ = $1;
+  }
+*/
+;
+
+AnnotatedFormula
+/*
+: ThfAnnotated
+  {
+    $$ = $1
+  }
+| TffAnnotated
+  {
+    $$ = $1
+  }
+| TcfAnnotated
+  {
+    $$ = $1
+  }
+| FofAnnotated
+  {
+    $$ = $1
+  }
+| CnfAnnotated
+  {
+    $$ = $1
+  }
+| TpiAnnotated
+  {
+    $$ = $1
+  }
+;
+*/
+: FormulaKeyword LPAREN Name COMMA FormulaRole COMMA FormulaSpecification RPAREN DOT
+  {
+    //auto formula = $1;
+    //formula->set ...
+  }
+
+FormulaKeyword
+: TPI
+  {
+  }
+| THF
+  {
+  }
+| TFF
+  {
+  }
+| TCF
+  {
+  }
+| FOF
+  {
+    //$$ = libtptp::make< FirstOrderFormula >( @$ );
+  }
+| CNF
+  {
+  }
+; 
+
+FormulaSpecification 
+: Formula COMMA Annotations
+  {
+    //auto formula = $1;
+    //formula->setAnnotations($3);
+    //$$ = formula;
+  }
+| Formula
+  {
+    //$$ = $1;
+  }
+;
+
+Annotations
+: GeneralTerm
+  {
+    //source
+  }
+| GeneralTerm COMMA GeneralList
+  {
+    //source, optionalInfo
+  }
+;
+
+Formula
+: Identifier
+  {
+    //TODO: wrong rule
+  }
+;
+
+Name
+: AtomicWord
+  {
+    //$$ = $1;
+  }
+| IntegerLiteral
+  {
+    //$$ = $1;
+  }
+;
+
+FormulaRole
+: LowerWordLiteral
+  {
+    // $$ = libtptp::make< FormulaRole >( @$, $1 );
+  }
+;
+
+GeneralTerm
+: GeneralData
+  {
+  }
+| GeneralData COLON GeneralTerm
+  {
+  }
+| GeneralList
+  {
+  }
+;
+
+GeneralData
+: AtomicWord
+  {
+  }
+| GeneralFunction
+  {
+  }
+| Variable
+  {
+  }
+| Number
+  {
+  }
+| DistinctObjectLiteral
+  {
+  }
+| FormulaData
+  {
+  }
+;
+
+GeneralFunction
+: AtomicWord LPAREN GeneralTerms RPAREN
+  {
+  }
+;
+
+GeneralTerms
+: GeneralTerm 
+  {
+  }
+| GeneralTerm COMMA GeneralTerms
+  {
+    //auto terms = $3;
+    //terms->add($1);
+    //$$ = terms;
+  }
+;
+
+FormulaData
+: DOLLAR FormulaDataKeyword LPAREN Formula RPAREN
+  {
+  }
+;
+
+GeneralList
+: LSQPAREN RSQPAREN
+  {
+  }
+| LSQPAREN GeneralTerms RSQPAREN
+  {
+  }
+;
+
+FormulaDataKeyword
+: THF
+  {
+  }
+| TFF
+  {
+  }
+| FOF
+  {
+  }
+| CNF
+  {
+  }
+| FOT
+  {
   }
 ;
 
@@ -138,6 +368,30 @@ Identifier
   }
 ;
 
+AtomicWord
+: LowerWordLiteral
+  {
+  }
+| SingleQuotedLiteral
+  {
+  }
+;
+
+Number
+: IntegerLiteral
+  {
+    //$$ = $1;
+  }
+| RealLiteral
+  {
+    //$$ = $1;
+  }
+| RationalLiteral
+  {
+    //$$ = $1;
+  }
+;
+
 IntegerLiteral
 : INTEGER
   {
@@ -145,6 +399,44 @@ IntegerLiteral
   }
 ;
 
+RealLiteral
+: REAL
+  {
+      // ...
+  }
+;
+RationalLiteral
+: RATIONAL
+  {
+      // ...
+  }
+;
+
+Variable
+: UPPER_WORD
+  {
+    // ...
+  }
+;
+
+DistinctObjectLiteral
+: DQUOTED
+  {
+  }
+;
+
+LowerWordLiteral
+: LOWER_WORD
+  {
+    //
+  }
+;
+
+SingleQuotedLiteral
+: SINGLE_QUOTED
+  {
+  }
+;
 
 %%
 

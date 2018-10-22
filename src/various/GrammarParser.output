@@ -1,40 +1,190 @@
 Terminals unused in grammar
 
-   "string"
+   "+"
+   "-"
+   "="
+   "{"
+   "}"
 
 
 Grammar
 
     0 $accept: Specification "end of file"
 
-    1 Specification: "dummy" Identifier IntegerLiteral
+    1 Specification: Inputs
     2              | "dummy" "dummy" "dummy" Identifier IntegerLiteral
 
-    3 Identifier: "identifier"
+    3 Inputs: Inputs Input
+    4       | Input
 
-    4 IntegerLiteral: "integer"
+    5 Input: AnnotatedFormula
+
+    6 AnnotatedFormula: FormulaKeyword "(" Name "," FormulaRole "," FormulaSpecification ")" "."
+
+    7 FormulaKeyword: "tpi"
+    8               | "thf"
+    9               | "tff"
+   10               | "tcf"
+   11               | "fof"
+   12               | "cnf"
+
+   13 FormulaSpecification: Formula "," Annotations
+   14                     | Formula
+
+   15 Annotations: GeneralTerm
+   16            | GeneralTerm "," GeneralList
+
+   17 Formula: Identifier
+
+   18 Name: AtomicWord
+   19     | IntegerLiteral
+
+   20 FormulaRole: LowerWordLiteral
+
+   21 GeneralTerm: GeneralData
+   22            | GeneralData ":" GeneralTerm
+   23            | GeneralList
+
+   24 GeneralData: AtomicWord
+   25            | GeneralFunction
+   26            | Variable
+   27            | Number
+   28            | DistinctObjectLiteral
+   29            | FormulaData
+
+   30 GeneralFunction: AtomicWord "(" GeneralTerms ")"
+
+   31 GeneralTerms: GeneralTerm
+   32             | GeneralTerm "," GeneralTerms
+
+   33 FormulaData: "$" FormulaDataKeyword "(" Formula ")"
+
+   34 GeneralList: "[" "]"
+   35            | "[" GeneralTerms "]"
+
+   36 FormulaDataKeyword: "thf"
+   37                   | "tff"
+   38                   | "fof"
+   39                   | "cnf"
+   40                   | "fot"
+
+   41 Identifier: "identifier"
+
+   42 AtomicWord: LowerWordLiteral
+   43           | SingleQuotedLiteral
+
+   44 Number: IntegerLiteral
+   45       | RealLiteral
+   46       | RationalLiteral
+
+   47 IntegerLiteral: "integer"
+
+   48 RealLiteral: "real"
+
+   49 RationalLiteral: "rational"
+
+   50 Variable: "upper_word"
+
+   51 DistinctObjectLiteral: "double_quoted"
+
+   52 LowerWordLiteral: "lower_word"
+
+   53 SingleQuotedLiteral: "single_quoted"
 
 
 Terminals, with rules where they appear
 
 "end of file" (0) 0
 error (256)
-"dummy" (258) 1 2
-"integer" (259) 4
-"string" (260)
-"identifier" (261) 3
+"dummy" <Token::Ptr> (258) 2
+"tpi" <Token::Ptr> (259) 7
+"thf" <Token::Ptr> (260) 8 36
+"tff" <Token::Ptr> (261) 9 37
+"tcf" <Token::Ptr> (262) 10
+"fof" <Token::Ptr> (263) 11 38
+"cnf" <Token::Ptr> (264) 12 39
+"fot" <Token::Ptr> (265) 40
+"$" <Token::Ptr> (266) 33
+":" <Token::Ptr> (267) 22
+"," <Token::Ptr> (268) 6 13 16 32
+"." <Token::Ptr> (269) 6
+"+" <Token::Ptr> (270)
+"-" <Token::Ptr> (271)
+"=" <Token::Ptr> (272)
+"(" <Token::Ptr> (273) 6 30 33
+")" <Token::Ptr> (274) 6 30 33
+"[" <Token::Ptr> (275) 34 35
+"]" <Token::Ptr> (276) 34 35
+"{" <Token::Ptr> (277)
+"}" <Token::Ptr> (278)
+"integer" <std::string> (279) 47
+"real" <std::string> (280) 48
+"rational" <std::string> (281) 49
+"double_quoted" <std::string> (282) 51
+"lower_word" <std::string> (283) 52
+"upper_word" <std::string> (284) 50
+"identifier" <std::string> (285) 41
+"single_quoted" <std::string> (286) 53
 
 
 Nonterminals, with rules where they appear
 
-$accept (7)
+$accept (32)
     on left: 0
-Specification (8)
+Specification <Specification::Ptr> (33)
     on left: 1 2, on right: 0
-Identifier (9)
-    on left: 3, on right: 1 2
-IntegerLiteral (10)
-    on left: 4, on right: 1 2
+Inputs (34)
+    on left: 3 4, on right: 1 3
+Input (35)
+    on left: 5, on right: 3 4
+AnnotatedFormula (36)
+    on left: 6, on right: 5
+FormulaKeyword (37)
+    on left: 7 8 9 10 11 12, on right: 6
+FormulaSpecification (38)
+    on left: 13 14, on right: 6
+Annotations (39)
+    on left: 15 16, on right: 13
+Formula (40)
+    on left: 17, on right: 13 14 33
+Name (41)
+    on left: 18 19, on right: 6
+FormulaRole (42)
+    on left: 20, on right: 6
+GeneralTerm (43)
+    on left: 21 22 23, on right: 15 16 22 31 32
+GeneralData (44)
+    on left: 24 25 26 27 28 29, on right: 21 22
+GeneralFunction (45)
+    on left: 30, on right: 25
+GeneralTerms (46)
+    on left: 31 32, on right: 30 32 35
+FormulaData (47)
+    on left: 33, on right: 29
+GeneralList (48)
+    on left: 34 35, on right: 16 23
+FormulaDataKeyword (49)
+    on left: 36 37 38 39 40, on right: 33
+Identifier (50)
+    on left: 41, on right: 2 17
+AtomicWord (51)
+    on left: 42 43, on right: 18 24 30
+Number (52)
+    on left: 44 45 46, on right: 27
+IntegerLiteral (53)
+    on left: 47, on right: 2 19 44
+RealLiteral (54)
+    on left: 48, on right: 45
+RationalLiteral (55)
+    on left: 49, on right: 46
+Variable (56)
+    on left: 50, on right: 26
+DistinctObjectLiteral (57)
+    on left: 51, on right: 28
+LowerWordLiteral (58)
+    on left: 52, on right: 20 42
+SingleQuotedLiteral (59)
+    on left: 53, on right: 43
 
 
 State 0
@@ -42,92 +192,746 @@ State 0
     0 $accept: . Specification "end of file"
 
     "dummy"  shift, and go to state 1
+    "tpi"    shift, and go to state 2
+    "thf"    shift, and go to state 3
+    "tff"    shift, and go to state 4
+    "tcf"    shift, and go to state 5
+    "fof"    shift, and go to state 6
+    "cnf"    shift, and go to state 7
 
-    Specification  go to state 2
+    Specification     go to state 8
+    Inputs            go to state 9
+    Input             go to state 10
+    AnnotatedFormula  go to state 11
+    FormulaKeyword    go to state 12
 
 
 State 1
 
-    1 Specification: "dummy" . Identifier IntegerLiteral
-    2              | "dummy" . "dummy" "dummy" Identifier IntegerLiteral
+    2 Specification: "dummy" . "dummy" "dummy" Identifier IntegerLiteral
 
-    "dummy"       shift, and go to state 3
-    "identifier"  shift, and go to state 4
-
-    Identifier  go to state 5
+    "dummy"  shift, and go to state 13
 
 
 State 2
 
-    0 $accept: Specification . "end of file"
+    7 FormulaKeyword: "tpi" .
 
-    "end of file"  shift, and go to state 6
+    $default  reduce using rule 7 (FormulaKeyword)
 
 
 State 3
 
-    2 Specification: "dummy" "dummy" . "dummy" Identifier IntegerLiteral
+    8 FormulaKeyword: "thf" .
 
-    "dummy"  shift, and go to state 7
+    $default  reduce using rule 8 (FormulaKeyword)
 
 
 State 4
 
-    3 Identifier: "identifier" .
+    9 FormulaKeyword: "tff" .
 
-    $default  reduce using rule 3 (Identifier)
+    $default  reduce using rule 9 (FormulaKeyword)
 
 
 State 5
 
-    1 Specification: "dummy" Identifier . IntegerLiteral
+   10 FormulaKeyword: "tcf" .
 
-    "integer"  shift, and go to state 8
-
-    IntegerLiteral  go to state 9
+    $default  reduce using rule 10 (FormulaKeyword)
 
 
 State 6
+
+   11 FormulaKeyword: "fof" .
+
+    $default  reduce using rule 11 (FormulaKeyword)
+
+
+State 7
+
+   12 FormulaKeyword: "cnf" .
+
+    $default  reduce using rule 12 (FormulaKeyword)
+
+
+State 8
+
+    0 $accept: Specification . "end of file"
+
+    "end of file"  shift, and go to state 14
+
+
+State 9
+
+    1 Specification: Inputs .
+    3 Inputs: Inputs . Input
+
+    "tpi"  shift, and go to state 2
+    "thf"  shift, and go to state 3
+    "tff"  shift, and go to state 4
+    "tcf"  shift, and go to state 5
+    "fof"  shift, and go to state 6
+    "cnf"  shift, and go to state 7
+
+    $default  reduce using rule 1 (Specification)
+
+    Input             go to state 15
+    AnnotatedFormula  go to state 11
+    FormulaKeyword    go to state 12
+
+
+State 10
+
+    4 Inputs: Input .
+
+    $default  reduce using rule 4 (Inputs)
+
+
+State 11
+
+    5 Input: AnnotatedFormula .
+
+    $default  reduce using rule 5 (Input)
+
+
+State 12
+
+    6 AnnotatedFormula: FormulaKeyword . "(" Name "," FormulaRole "," FormulaSpecification ")" "."
+
+    "("  shift, and go to state 16
+
+
+State 13
+
+    2 Specification: "dummy" "dummy" . "dummy" Identifier IntegerLiteral
+
+    "dummy"  shift, and go to state 17
+
+
+State 14
 
     0 $accept: Specification "end of file" .
 
     $default  accept
 
 
-State 7
+State 15
+
+    3 Inputs: Inputs Input .
+
+    $default  reduce using rule 3 (Inputs)
+
+
+State 16
+
+    6 AnnotatedFormula: FormulaKeyword "(" . Name "," FormulaRole "," FormulaSpecification ")" "."
+
+    "integer"        shift, and go to state 18
+    "lower_word"     shift, and go to state 19
+    "single_quoted"  shift, and go to state 20
+
+    Name                 go to state 21
+    AtomicWord           go to state 22
+    IntegerLiteral       go to state 23
+    LowerWordLiteral     go to state 24
+    SingleQuotedLiteral  go to state 25
+
+
+State 17
 
     2 Specification: "dummy" "dummy" "dummy" . Identifier IntegerLiteral
 
-    "identifier"  shift, and go to state 4
+    "identifier"  shift, and go to state 26
 
-    Identifier  go to state 10
-
-
-State 8
-
-    4 IntegerLiteral: "integer" .
-
-    $default  reduce using rule 4 (IntegerLiteral)
+    Identifier  go to state 27
 
 
-State 9
+State 18
 
-    1 Specification: "dummy" Identifier IntegerLiteral .
+   47 IntegerLiteral: "integer" .
 
-    $default  reduce using rule 1 (Specification)
+    $default  reduce using rule 47 (IntegerLiteral)
 
 
-State 10
+State 19
+
+   52 LowerWordLiteral: "lower_word" .
+
+    $default  reduce using rule 52 (LowerWordLiteral)
+
+
+State 20
+
+   53 SingleQuotedLiteral: "single_quoted" .
+
+    $default  reduce using rule 53 (SingleQuotedLiteral)
+
+
+State 21
+
+    6 AnnotatedFormula: FormulaKeyword "(" Name . "," FormulaRole "," FormulaSpecification ")" "."
+
+    ","  shift, and go to state 28
+
+
+State 22
+
+   18 Name: AtomicWord .
+
+    $default  reduce using rule 18 (Name)
+
+
+State 23
+
+   19 Name: IntegerLiteral .
+
+    $default  reduce using rule 19 (Name)
+
+
+State 24
+
+   42 AtomicWord: LowerWordLiteral .
+
+    $default  reduce using rule 42 (AtomicWord)
+
+
+State 25
+
+   43 AtomicWord: SingleQuotedLiteral .
+
+    $default  reduce using rule 43 (AtomicWord)
+
+
+State 26
+
+   41 Identifier: "identifier" .
+
+    $default  reduce using rule 41 (Identifier)
+
+
+State 27
 
     2 Specification: "dummy" "dummy" "dummy" Identifier . IntegerLiteral
 
-    "integer"  shift, and go to state 8
+    "integer"  shift, and go to state 18
 
-    IntegerLiteral  go to state 11
+    IntegerLiteral  go to state 29
 
 
-State 11
+State 28
+
+    6 AnnotatedFormula: FormulaKeyword "(" Name "," . FormulaRole "," FormulaSpecification ")" "."
+
+    "lower_word"  shift, and go to state 19
+
+    FormulaRole       go to state 30
+    LowerWordLiteral  go to state 31
+
+
+State 29
 
     2 Specification: "dummy" "dummy" "dummy" Identifier IntegerLiteral .
 
     $default  reduce using rule 2 (Specification)
+
+
+State 30
+
+    6 AnnotatedFormula: FormulaKeyword "(" Name "," FormulaRole . "," FormulaSpecification ")" "."
+
+    ","  shift, and go to state 32
+
+
+State 31
+
+   20 FormulaRole: LowerWordLiteral .
+
+    $default  reduce using rule 20 (FormulaRole)
+
+
+State 32
+
+    6 AnnotatedFormula: FormulaKeyword "(" Name "," FormulaRole "," . FormulaSpecification ")" "."
+
+    "identifier"  shift, and go to state 26
+
+    FormulaSpecification  go to state 33
+    Formula               go to state 34
+    Identifier            go to state 35
+
+
+State 33
+
+    6 AnnotatedFormula: FormulaKeyword "(" Name "," FormulaRole "," FormulaSpecification . ")" "."
+
+    ")"  shift, and go to state 36
+
+
+State 34
+
+   13 FormulaSpecification: Formula . "," Annotations
+   14                     | Formula .
+
+    ","  shift, and go to state 37
+
+    $default  reduce using rule 14 (FormulaSpecification)
+
+
+State 35
+
+   17 Formula: Identifier .
+
+    $default  reduce using rule 17 (Formula)
+
+
+State 36
+
+    6 AnnotatedFormula: FormulaKeyword "(" Name "," FormulaRole "," FormulaSpecification ")" . "."
+
+    "."  shift, and go to state 38
+
+
+State 37
+
+   13 FormulaSpecification: Formula "," . Annotations
+
+    "$"              shift, and go to state 39
+    "["              shift, and go to state 40
+    "integer"        shift, and go to state 18
+    "real"           shift, and go to state 41
+    "rational"       shift, and go to state 42
+    "double_quoted"  shift, and go to state 43
+    "lower_word"     shift, and go to state 19
+    "upper_word"     shift, and go to state 44
+    "single_quoted"  shift, and go to state 20
+
+    Annotations            go to state 45
+    GeneralTerm            go to state 46
+    GeneralData            go to state 47
+    GeneralFunction        go to state 48
+    FormulaData            go to state 49
+    GeneralList            go to state 50
+    AtomicWord             go to state 51
+    Number                 go to state 52
+    IntegerLiteral         go to state 53
+    RealLiteral            go to state 54
+    RationalLiteral        go to state 55
+    Variable               go to state 56
+    DistinctObjectLiteral  go to state 57
+    LowerWordLiteral       go to state 24
+    SingleQuotedLiteral    go to state 25
+
+
+State 38
+
+    6 AnnotatedFormula: FormulaKeyword "(" Name "," FormulaRole "," FormulaSpecification ")" "." .
+
+    $default  reduce using rule 6 (AnnotatedFormula)
+
+
+State 39
+
+   33 FormulaData: "$" . FormulaDataKeyword "(" Formula ")"
+
+    "thf"  shift, and go to state 58
+    "tff"  shift, and go to state 59
+    "fof"  shift, and go to state 60
+    "cnf"  shift, and go to state 61
+    "fot"  shift, and go to state 62
+
+    FormulaDataKeyword  go to state 63
+
+
+State 40
+
+   34 GeneralList: "[" . "]"
+   35            | "[" . GeneralTerms "]"
+
+    "$"              shift, and go to state 39
+    "["              shift, and go to state 40
+    "]"              shift, and go to state 64
+    "integer"        shift, and go to state 18
+    "real"           shift, and go to state 41
+    "rational"       shift, and go to state 42
+    "double_quoted"  shift, and go to state 43
+    "lower_word"     shift, and go to state 19
+    "upper_word"     shift, and go to state 44
+    "single_quoted"  shift, and go to state 20
+
+    GeneralTerm            go to state 65
+    GeneralData            go to state 47
+    GeneralFunction        go to state 48
+    GeneralTerms           go to state 66
+    FormulaData            go to state 49
+    GeneralList            go to state 50
+    AtomicWord             go to state 51
+    Number                 go to state 52
+    IntegerLiteral         go to state 53
+    RealLiteral            go to state 54
+    RationalLiteral        go to state 55
+    Variable               go to state 56
+    DistinctObjectLiteral  go to state 57
+    LowerWordLiteral       go to state 24
+    SingleQuotedLiteral    go to state 25
+
+
+State 41
+
+   48 RealLiteral: "real" .
+
+    $default  reduce using rule 48 (RealLiteral)
+
+
+State 42
+
+   49 RationalLiteral: "rational" .
+
+    $default  reduce using rule 49 (RationalLiteral)
+
+
+State 43
+
+   51 DistinctObjectLiteral: "double_quoted" .
+
+    $default  reduce using rule 51 (DistinctObjectLiteral)
+
+
+State 44
+
+   50 Variable: "upper_word" .
+
+    $default  reduce using rule 50 (Variable)
+
+
+State 45
+
+   13 FormulaSpecification: Formula "," Annotations .
+
+    $default  reduce using rule 13 (FormulaSpecification)
+
+
+State 46
+
+   15 Annotations: GeneralTerm .
+   16            | GeneralTerm . "," GeneralList
+
+    ","  shift, and go to state 67
+
+    $default  reduce using rule 15 (Annotations)
+
+
+State 47
+
+   21 GeneralTerm: GeneralData .
+   22            | GeneralData . ":" GeneralTerm
+
+    ":"  shift, and go to state 68
+
+    $default  reduce using rule 21 (GeneralTerm)
+
+
+State 48
+
+   25 GeneralData: GeneralFunction .
+
+    $default  reduce using rule 25 (GeneralData)
+
+
+State 49
+
+   29 GeneralData: FormulaData .
+
+    $default  reduce using rule 29 (GeneralData)
+
+
+State 50
+
+   23 GeneralTerm: GeneralList .
+
+    $default  reduce using rule 23 (GeneralTerm)
+
+
+State 51
+
+   24 GeneralData: AtomicWord .
+   30 GeneralFunction: AtomicWord . "(" GeneralTerms ")"
+
+    "("  shift, and go to state 69
+
+    $default  reduce using rule 24 (GeneralData)
+
+
+State 52
+
+   27 GeneralData: Number .
+
+    $default  reduce using rule 27 (GeneralData)
+
+
+State 53
+
+   44 Number: IntegerLiteral .
+
+    $default  reduce using rule 44 (Number)
+
+
+State 54
+
+   45 Number: RealLiteral .
+
+    $default  reduce using rule 45 (Number)
+
+
+State 55
+
+   46 Number: RationalLiteral .
+
+    $default  reduce using rule 46 (Number)
+
+
+State 56
+
+   26 GeneralData: Variable .
+
+    $default  reduce using rule 26 (GeneralData)
+
+
+State 57
+
+   28 GeneralData: DistinctObjectLiteral .
+
+    $default  reduce using rule 28 (GeneralData)
+
+
+State 58
+
+   36 FormulaDataKeyword: "thf" .
+
+    $default  reduce using rule 36 (FormulaDataKeyword)
+
+
+State 59
+
+   37 FormulaDataKeyword: "tff" .
+
+    $default  reduce using rule 37 (FormulaDataKeyword)
+
+
+State 60
+
+   38 FormulaDataKeyword: "fof" .
+
+    $default  reduce using rule 38 (FormulaDataKeyword)
+
+
+State 61
+
+   39 FormulaDataKeyword: "cnf" .
+
+    $default  reduce using rule 39 (FormulaDataKeyword)
+
+
+State 62
+
+   40 FormulaDataKeyword: "fot" .
+
+    $default  reduce using rule 40 (FormulaDataKeyword)
+
+
+State 63
+
+   33 FormulaData: "$" FormulaDataKeyword . "(" Formula ")"
+
+    "("  shift, and go to state 70
+
+
+State 64
+
+   34 GeneralList: "[" "]" .
+
+    $default  reduce using rule 34 (GeneralList)
+
+
+State 65
+
+   31 GeneralTerms: GeneralTerm .
+   32             | GeneralTerm . "," GeneralTerms
+
+    ","  shift, and go to state 71
+
+    $default  reduce using rule 31 (GeneralTerms)
+
+
+State 66
+
+   35 GeneralList: "[" GeneralTerms . "]"
+
+    "]"  shift, and go to state 72
+
+
+State 67
+
+   16 Annotations: GeneralTerm "," . GeneralList
+
+    "["  shift, and go to state 40
+
+    GeneralList  go to state 73
+
+
+State 68
+
+   22 GeneralTerm: GeneralData ":" . GeneralTerm
+
+    "$"              shift, and go to state 39
+    "["              shift, and go to state 40
+    "integer"        shift, and go to state 18
+    "real"           shift, and go to state 41
+    "rational"       shift, and go to state 42
+    "double_quoted"  shift, and go to state 43
+    "lower_word"     shift, and go to state 19
+    "upper_word"     shift, and go to state 44
+    "single_quoted"  shift, and go to state 20
+
+    GeneralTerm            go to state 74
+    GeneralData            go to state 47
+    GeneralFunction        go to state 48
+    FormulaData            go to state 49
+    GeneralList            go to state 50
+    AtomicWord             go to state 51
+    Number                 go to state 52
+    IntegerLiteral         go to state 53
+    RealLiteral            go to state 54
+    RationalLiteral        go to state 55
+    Variable               go to state 56
+    DistinctObjectLiteral  go to state 57
+    LowerWordLiteral       go to state 24
+    SingleQuotedLiteral    go to state 25
+
+
+State 69
+
+   30 GeneralFunction: AtomicWord "(" . GeneralTerms ")"
+
+    "$"              shift, and go to state 39
+    "["              shift, and go to state 40
+    "integer"        shift, and go to state 18
+    "real"           shift, and go to state 41
+    "rational"       shift, and go to state 42
+    "double_quoted"  shift, and go to state 43
+    "lower_word"     shift, and go to state 19
+    "upper_word"     shift, and go to state 44
+    "single_quoted"  shift, and go to state 20
+
+    GeneralTerm            go to state 65
+    GeneralData            go to state 47
+    GeneralFunction        go to state 48
+    GeneralTerms           go to state 75
+    FormulaData            go to state 49
+    GeneralList            go to state 50
+    AtomicWord             go to state 51
+    Number                 go to state 52
+    IntegerLiteral         go to state 53
+    RealLiteral            go to state 54
+    RationalLiteral        go to state 55
+    Variable               go to state 56
+    DistinctObjectLiteral  go to state 57
+    LowerWordLiteral       go to state 24
+    SingleQuotedLiteral    go to state 25
+
+
+State 70
+
+   33 FormulaData: "$" FormulaDataKeyword "(" . Formula ")"
+
+    "identifier"  shift, and go to state 26
+
+    Formula     go to state 76
+    Identifier  go to state 35
+
+
+State 71
+
+   32 GeneralTerms: GeneralTerm "," . GeneralTerms
+
+    "$"              shift, and go to state 39
+    "["              shift, and go to state 40
+    "integer"        shift, and go to state 18
+    "real"           shift, and go to state 41
+    "rational"       shift, and go to state 42
+    "double_quoted"  shift, and go to state 43
+    "lower_word"     shift, and go to state 19
+    "upper_word"     shift, and go to state 44
+    "single_quoted"  shift, and go to state 20
+
+    GeneralTerm            go to state 65
+    GeneralData            go to state 47
+    GeneralFunction        go to state 48
+    GeneralTerms           go to state 77
+    FormulaData            go to state 49
+    GeneralList            go to state 50
+    AtomicWord             go to state 51
+    Number                 go to state 52
+    IntegerLiteral         go to state 53
+    RealLiteral            go to state 54
+    RationalLiteral        go to state 55
+    Variable               go to state 56
+    DistinctObjectLiteral  go to state 57
+    LowerWordLiteral       go to state 24
+    SingleQuotedLiteral    go to state 25
+
+
+State 72
+
+   35 GeneralList: "[" GeneralTerms "]" .
+
+    $default  reduce using rule 35 (GeneralList)
+
+
+State 73
+
+   16 Annotations: GeneralTerm "," GeneralList .
+
+    $default  reduce using rule 16 (Annotations)
+
+
+State 74
+
+   22 GeneralTerm: GeneralData ":" GeneralTerm .
+
+    $default  reduce using rule 22 (GeneralTerm)
+
+
+State 75
+
+   30 GeneralFunction: AtomicWord "(" GeneralTerms . ")"
+
+    ")"  shift, and go to state 78
+
+
+State 76
+
+   33 FormulaData: "$" FormulaDataKeyword "(" Formula . ")"
+
+    ")"  shift, and go to state 79
+
+
+State 77
+
+   32 GeneralTerms: GeneralTerm "," GeneralTerms .
+
+    $default  reduce using rule 32 (GeneralTerms)
+
+
+State 78
+
+   30 GeneralFunction: AtomicWord "(" GeneralTerms ")" .
+
+    $default  reduce using rule 30 (GeneralFunction)
+
+
+State 79
+
+   33 FormulaData: "$" FormulaDataKeyword "(" Formula ")" .
+
+    $default  reduce using rule 33 (FormulaData)
