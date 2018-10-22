@@ -42,6 +42,27 @@
 
 DUMMY           "dummy"
 
+TPI             "tpi"
+THF             "thf"
+TFF             "tff"
+TCF             "tcf"
+FOF             "fof"
+CNF             "cnf"
+FOT             "fot"
+
+DOLLAR          "$"
+COLON           ":"
+COMMA           ","
+DOT             "."
+PLUS            "+"
+MINUS           "-"
+EQUAL           "="
+LPAREN          "("
+RPAREN          ")"
+LSQPAREN        "["
+RSQPAREN        "]"
+LCURPAREN       "{"
+RCURPAREN       "}"
 
 //  
 //  Local variables:

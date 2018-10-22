@@ -72,7 +72,8 @@ using namespace libtptp;
 
 %x LCOMMENT
 %x COMMENT
-%x STRING
+%x DQUOTED
+%x SQUOTED
 
 %%
 %{
@@ -80,11 +81,32 @@ using namespace libtptp;
     m_loc.step();
 %}
 
-[0-9][0-9\']*[0-9]* {
+[+-]?[0-9]*((\.[0-9]+([eE][-+]?[0-9]+)?)|([eE][-+]?[0-9]+)) {
+	//real: make eiter the dot or the exponent mandatory, both are possible
+	//below shortened rule, which doesn't enforce eiter a dot or exponent to be present,
+	//therefore it collides with the integer rule
+	//[+-]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?
+	return Parser::make_REAL( yytext, m_loc );
+}
+
+[+-]?[0-9]*/[1-9][0-9]* {
+	//rational
+	return Parser::make_RATIONAL( yytext, m_loc);
+}
+
+[+-]?[0-9]+ {
     return Parser::make_INTEGER( yytext, m_loc );
 }
 
 {{grammartoken}}
+
+[a-z][a-zA-Z0-9_]* {
+	return Parser::make_LOWER_WORD( yytext, m_loc );
+}
+
+[A-Z][a-zA-Z0-9_]* {
+	return Parser::make_UPPER_WORD( yytext, m_loc );
+}
 
 [a-zA-Z_][a-zA-Z0-9\_]* {
     return Parser::make_IDENTIFIER( yytext, m_loc );
@@ -107,7 +129,7 @@ using namespace libtptp;
     m_loc.step();
 }
 
-"//" { // single-line comments
+"%" { // single-line comments
     m_strbuf.clear();
     m_strbuf.append( yytext );
     BEGIN( LCOMMENT );
@@ -148,36 +170,66 @@ using namespace libtptp;
     yyterminate();
 }
 
-\" { // strings
+\' { // Single quoted strings
     m_strbuf.clear();
-    BEGIN( STRING );
+    BEGIN( SQUOTED );
 }
-<STRING>[^\\"\n]* { /* eat all tokens */
+<SQUOTED>[^\\'\n]* { /* eat all tokens */
     m_strbuf.append( yytext );
 }
-<STRING>\n {
+<SQUOTED>\n {
     m_loc.lines( 1 );
 }
-<STRING>\\n {
+<SQUOTED>\\n {
     m_strbuf.append( "\n" );
 }
-<STRING>\\t {
+<SQUOTED>\\t {
     m_strbuf.append( "\t" );
 }
-<STRING>\\["\\] {
+<SQUOTED>\\['\\] {
     m_strbuf.append( yytext + 1 );
 }
-<STRING>\\. {
+<SQUOTED>\\. {
     // m_log.error( {m_loc}, "unrecognized escape sequence", ... );
 }
-<STRING><<EOF>> {
+<SQUOTED><<EOF>> {
     // m_log.error( {m_loc}, "string not terminated", ... );
     BEGIN( INITIAL );
     yyterminate();
 }
-<STRING>\" {
+<SQUOTED>\' {
     BEGIN( INITIAL );
-    return Parser::make_STRING( m_strbuf, m_loc );
+    return Parser::make_SINGLE_QUOTED( m_strbuf, m_loc );
+}
+
+\" { // strings
+    m_strbuf.clear();
+    BEGIN( DQUOTED );
+}
+<DQUOTED>[\40-\41\43-\133\135-\176]* { /* eat all tokens from space to ~, except " and \ */
+    m_strbuf.append( yytext );
+}
+<DQUOTED>\n {
+	//double quoted string must not contain newlines
+    m_loc.lines( 1 );
+    // m_log.error( {m_loc}, "string not terminated", ... );
+    BEGIN( INITIAL );
+    yyterminate();
+}
+<DQUOTED>\\["\\] {
+    m_strbuf.append( yytext + 1 );
+}
+<DQUOTED>\\. {
+    // m_log.error( {m_loc}, "unrecognized escape sequence", ... );
+}
+<DQUOTED><<EOF>> {
+    // m_log.error( {m_loc}, "string not terminated", ... );
+    BEGIN( INITIAL );
+    yyterminate();
+}
+<DQUOTED>\" {
+    BEGIN( INITIAL );
+    return Parser::make_DQUOTED( m_strbuf, m_loc );
 }
 
 . {

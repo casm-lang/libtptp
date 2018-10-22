@@ -54,6 +54,26 @@ namespace libtptp
         {
             /*  0 */ UNRESOLVED,
             /*  1 */ DUMMY,
+            /*  2 */ TPI,
+            /*  3 */ THF,
+            /*  4 */ TFF,
+            /*  5 */ TCF,
+            /*  6 */ FOF,
+            /*  7 */ CNF,
+            /*  8 */ FOT,
+            /*  9 */ DOLLAR,
+            /* 10 */ COLON,
+            /* 11 */ COMMA,
+            /* 12 */ DOT,
+            /* 13 */ PLUS,
+            /* 14 */ MINUS,
+            /* 15 */ EQUAL,
+            /* 16 */ LPAREN,
+            /* 17 */ RPAREN,
+            /* 18 */ LSQPAREN,
+            /* 19 */ RSQPAREN,
+            /* 20 */ LCURPAREN,
+            /* 21 */ RCURPAREN,
         };
         
         static std::string tokenAsString( const Token token )
@@ -67,6 +87,86 @@ namespace libtptp
                 case /*  1 */ Token::DUMMY:
                 {
                     return "dummy";
+                }
+                case /*  2 */ Token::TPI:
+                {
+                    return "tpi";
+                }
+                case /*  3 */ Token::THF:
+                {
+                    return "thf";
+                }
+                case /*  4 */ Token::TFF:
+                {
+                    return "tff";
+                }
+                case /*  5 */ Token::TCF:
+                {
+                    return "tcf";
+                }
+                case /*  6 */ Token::FOF:
+                {
+                    return "fof";
+                }
+                case /*  7 */ Token::CNF:
+                {
+                    return "cnf";
+                }
+                case /*  8 */ Token::FOT:
+                {
+                    return "fot";
+                }
+                case /*  9 */ Token::DOLLAR:
+                {
+                    return "$";
+                }
+                case /* 10 */ Token::COLON:
+                {
+                    return ":";
+                }
+                case /* 11 */ Token::COMMA:
+                {
+                    return ",";
+                }
+                case /* 12 */ Token::DOT:
+                {
+                    return ".";
+                }
+                case /* 13 */ Token::PLUS:
+                {
+                    return "+";
+                }
+                case /* 14 */ Token::MINUS:
+                {
+                    return "-";
+                }
+                case /* 15 */ Token::EQUAL:
+                {
+                    return "=";
+                }
+                case /* 16 */ Token::LPAREN:
+                {
+                    return "(";
+                }
+                case /* 17 */ Token::RPAREN:
+                {
+                    return ")";
+                }
+                case /* 18 */ Token::LSQPAREN:
+                {
+                    return "[";
+                }
+                case /* 19 */ Token::RSQPAREN:
+                {
+                    return "]";
+                }
+                case /* 20 */ Token::LCURPAREN:
+                {
+                    return "{";
+                }
+                case /* 21 */ Token::RCURPAREN:
+                {
+                    return "}";
                 }
             }
             assert( !"internal error" );
