@@ -40,8 +40,6 @@
 //
 
 
-DUMMY           "dummy"
-
 TPI             "tpi"
 THF             "thf"
 TFF             "tff"
@@ -50,6 +48,12 @@ FOF             "fof"
 CNF             "cnf"
 FOT             "fot"
 
+//THF
+ITE             "ite"
+LET             "let"
+
+AT              "@"
+AND             "&"
 DOLLAR          "$"
 COLON           ":"
 COMMA           ","
@@ -63,6 +67,13 @@ LSQPAREN        "["
 RSQPAREN        "]"
 LCURPAREN       "{"
 RCURPAREN       "}"
+VLINE           "|"
+STAR            "*"
+GREATER         ">"
+LESS            "<"
+
+GENTZENARROW    "-->"
+SUBTYPESIGN     "<<"
 
 //  
 //  Local variables:

@@ -130,10 +130,6 @@ Specification
   {
       //m_specification.setInputs( $1 );
   }
-| DUMMY DUMMY DUMMY Identifier IntegerLiteral
-  {
-      // m_specification.set ... ( $1 );
-  }
 ;
 
 Inputs
@@ -253,9 +249,437 @@ Annotations
 ;
 
 Formula
-: Identifier
+: ThfFormula
   {
-    //TODO: wrong rule
+  }
+;
+
+ThfFormula
+: ThfLogicFormula
+  {
+  }
+| ThfAtomTyping
+  {
+  }
+| ThfSubtype
+  {
+  }
+| ThfSequent
+  {
+  }
+;
+
+ThfLogicFormula
+: ThfUnitaryFormula
+  {
+  }
+| ThfUnaryFormula
+  {
+  }
+| ThfBinaryFormula
+  {
+  }
+| ThfDefinedInfix
+  {
+  }
+;
+
+ThfBinaryFormula
+: ThfBinaryNonassoc
+  {
+  }
+| ThfBinaryAssoc
+  {
+  }
+| ThfBinaryType
+  {
+  }
+;
+
+ThfBinaryNonassoc
+: ThfUnitFormula NonassocConnective ThfUnitFormula
+  {
+  }
+;
+
+ThfBinaryAssoc
+: ThfOrFormula
+  {
+  }
+| ThfAndFormula
+  {
+  }
+| ThfApplyFormula
+  {
+  }
+;
+
+ThfOrFormula
+: ThfUnitFormula VLINE ThfUnitFormula
+  {
+  }
+| ThfOrFormula VLINE ThfUnitFormula
+  {
+  }
+;
+
+ThfAndFormula
+: ThfUnitFormula AND ThfUnitFormula
+  {
+  }
+| ThfAndFormula AND ThfUnitFormula
+  {
+  }
+;
+
+ThfApplyFormula
+: ThfUnitFormula AT ThfUnitFormula
+  {
+  }
+| ThfApplyFormula AT ThfUnitFormula
+  {
+  }
+;
+
+ThfUnitFormula
+: ThfUnitaryFormula
+  {
+  }
+| ThfUnaryFormula
+  {
+  }
+| ThfDefinedInfix
+  {
+  }
+;
+
+ThfPreunitFormula
+: ThfUnitaryFormula
+  {
+  }
+| ThfPrefixUnary
+  {
+  }
+;
+
+ThfUnitaryFormula
+: ThfQuantifiedFormula
+  {
+  }
+| ThfAtomicFormula
+  {
+  }
+| Variable
+  {
+  }
+| LPAREN ThfLogicFormula RPAREN
+  {
+  }
+;
+
+ThfQuantifiedFormula
+: ThfQuantification ThfUnitFormula
+  {
+  }
+;
+
+ThfQuantification
+: ThfQuantifier LSQPAREN ThfVariableList RSQPAREN COLON
+  {
+  }
+;
+
+ThfVariableList
+: ThfTypedVariable
+  {
+  }
+| ThfVariableList COMMA ThfTypedVariable
+  {
+  }
+;
+
+ThfTypedVariable
+: Variable COLON ThfTopLevelType
+  {
+  }
+;
+
+ThfUnaryFormula
+: ThfPrefixUnary
+  {
+  }
+| ThfInfixUnary
+  {
+  }
+;
+
+ThfPrefixUnary
+: ThfUnaryConnective ThfPreunitFormula
+  {
+  }
+;
+
+ThfInfixUnary
+: ThfUnitaryTerm InfixInequality ThfUnitaryTerm
+  {
+  }
+;
+
+ThfAtomicFormula
+: ThfPlainAtomic
+  {
+  }
+| ThfDefinedAtomic
+  {
+  }
+| ThfSystemAtomic
+  {
+  }
+| ThfFofFunction
+  {
+  }
+;
+
+ThfPlainAtomic
+: Constant
+  {
+  }
+| ThfTuple
+  {
+  }
+;
+
+ThfDefinedAtomic
+: DefinedConstant
+  {
+  }
+| ThfConditional
+  {
+  }
+| ThfLet
+  {
+  }
+| LPAREN ThfConnTerm RPAREN
+  {
+  }
+| DefinedTerm
+  {
+  }
+;
+
+ThfDefinedInfix
+: ThfUnitaryTerm DefinedInfixPred ThfUnitaryTerm
+  {
+  }
+;
+
+ThfSystemAtomic
+: SystemConstant
+  {
+  }
+;
+
+ThfFofFunction
+: Functor LPAREN ThfArguments RPAREN
+  {
+  }
+| DefinedFunctor LPAREN ThfArguments RPAREN
+  {
+  }
+| SystemFunctor LPAREN ThfArguments RPAREN
+  {
+  }
+;
+
+ThfConditional
+: DOLLAR ITE LPAREN ThfLogicFormula COMMA ThfLogicFormula COMMA ThfLogicFormula RPAREN
+  {
+  }
+;
+
+ThfLet
+: DOLLAR LET LPAREN ThfLetTypes COMMA ThfLetDefns COMMA ThfFormula RPAREN
+  {
+  }
+;
+
+ThfLetTypes
+: ThfAtomTyping
+  {
+  }
+| LSQPAREN ThfAtomTypingList RSQPAREN
+  {
+  }
+;
+
+ThfAtomTypingList
+: ThfAtomTyping
+  {
+  }
+| ThfAtomTypingList COMMA ThfAtomTyping
+  {
+  }
+;
+
+ThfLetDefns
+: ThfLetDefn
+  {
+  }
+| LSQPAREN ThfLetDefnList RSQPAREN
+  {
+  }
+;
+
+ThfLetDefn
+: ThfLogicFormula Assignment ThfLogicFormula
+  {
+  }
+;
+
+ThfLetDefnList
+: ThfLetDefn
+  {
+  }
+| ThfLetDefnList COMMA ThfLetDefn
+  {
+  }
+;
+
+ThfUnitaryTerm
+: ThfAtomicFormula
+  {
+  }
+| Variable
+  {
+  }
+| LPAREN ThfLogicFormula RPAREN
+  {
+  }
+;
+
+ThfTuple
+: LSQPAREN RSQPAREN
+  {
+  }
+| LSQPAREN ThfFormulaList RSQPAREN
+  {
+  }
+;
+
+ThfFormulaList
+: ThfLogicFormula
+  {
+  }
+| ThfFormulaList COMMA ThfLogicFormula 
+  {
+  }
+;
+
+ThfConnTerm
+: NonassocConnective
+  {
+  }
+| AssocConnective
+  {
+  }
+| InfixEquality
+  {
+  }
+| ThfUnaryConnective
+  {
+  }
+;
+
+ThfArguments
+: ThfFormulaList
+  {
+  }
+;
+
+ThfAtomTyping
+: UntypedAtom COLON ThfTopLevelType
+  {
+  }
+| LPAREN ThfAtomTyping RPAREN
+  {
+  }
+;
+
+ThfTopLevelType
+: ThfUnitaryType
+  {
+  }
+| ThfMappingType
+  {
+  }
+| ThfApplyType
+  {
+  }
+;
+
+ThfUnitaryType
+: ThfUnitaryFormula
+  {
+  }
+;
+
+ThfApplyType
+: ThfApplyFormula
+  {
+  }
+;
+
+ThfBinaryType
+: ThfMappingType
+  {
+  }
+| ThfXprodType
+  {
+  }
+| ThfUnionType
+  {
+  }
+;
+
+ThfMappingType
+: ThfUnitaryType GREATER ThfUnitaryType
+  {
+  }
+| ThfUnitaryType GREATER ThfMappingType
+  {
+  }
+;
+
+ThfXprodType
+: ThfUnitaryType STAR ThfUnitaryType
+  {
+  }
+| ThfXprodType STAR ThfUnitaryType
+  {
+  }
+;
+
+ThfUnionType
+: ThfUnitaryType PLUS ThfUnitaryType
+  {
+  }
+| ThfUnionType PLUS ThfUnitaryType
+  {
+  }
+;
+
+ThfSubtype
+: UntypedAtom SUBTYPESIGN Atom
+  {
+  }
+;
+
+ThfSequent
+: ThfTuple GENTZENARROW ThfTuple
+  {
+  }
+| LPAREN ThfSequent RPAREN
+  {
   }
 ;
 
@@ -320,10 +744,10 @@ GeneralTerms
 : GeneralTerm 
   {
   }
-| GeneralTerm COMMA GeneralTerms
+| GeneralTerms COMMA GeneralTerm
   {
-    //auto terms = $3;
-    //terms->add($1);
+    //auto terms = $1;
+    //terms->add($3);
     //$$ = terms;
   }
 ;
