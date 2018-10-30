@@ -53,27 +53,51 @@ namespace libtptp
         enum class Token : u8
         {
             /*  0 */ UNRESOLVED,
-            /*  1 */ DUMMY,
-            /*  2 */ TPI,
-            /*  3 */ THF,
-            /*  4 */ TFF,
-            /*  5 */ TCF,
-            /*  6 */ FOF,
-            /*  7 */ CNF,
-            /*  8 */ FOT,
-            /*  9 */ DOLLAR,
-            /* 10 */ COLON,
-            /* 11 */ COMMA,
-            /* 12 */ DOT,
-            /* 13 */ PLUS,
-            /* 14 */ MINUS,
-            /* 15 */ EQUAL,
-            /* 16 */ LPAREN,
-            /* 17 */ RPAREN,
-            /* 18 */ LSQPAREN,
-            /* 19 */ RSQPAREN,
-            /* 20 */ LCURPAREN,
-            /* 21 */ RCURPAREN,
+            /*  1 */ TPI,
+            /*  2 */ THF,
+            /*  3 */ TFF,
+            /*  4 */ TCF,
+            /*  5 */ FOF,
+            /*  6 */ CNF,
+            /*  7 */ FOT,
+            /*  8 */ ITE,
+            /*  9 */ LET,
+            /* 10 */ AT,
+            /* 11 */ AND,
+            /* 12 */ DOLLAR,
+            /* 13 */ COLON,
+            /* 14 */ COMMA,
+            /* 15 */ DOT,
+            /* 16 */ PLUS,
+            /* 17 */ MINUS,
+            /* 18 */ EQUAL,
+            /* 19 */ LPAREN,
+            /* 20 */ RPAREN,
+            /* 21 */ LSQPAREN,
+            /* 22 */ RSQPAREN,
+            /* 23 */ LCURPAREN,
+            /* 24 */ RCURPAREN,
+            /* 25 */ VLINE,
+            /* 26 */ STAR,
+            /* 27 */ GREATER,
+            /* 28 */ LESS,
+            /* 29 */ EXCLAMATION,
+            /* 30 */ TILDE,
+            /* 31 */ QUESTIONMARK,
+            /* 32 */ CARET,
+            /* 33 */ DOUBLEEXCLAMATION,
+            /* 34 */ DOUBLEQUESTIONMARK,
+            /* 35 */ DOUBLEAT,
+            /* 36 */ EQUALITY,
+            /* 37 */ IMPLICATION,
+            /* 38 */ RIMPLICATION,
+            /* 39 */ INEQUALITY,
+            /* 40 */ NOR,
+            /* 41 */ NAND,
+            /* 42 */ ASSIGNMENT,
+            /* 43 */ GENTZENARROW,
+            /* 44 */ SUBTYPESIGN,
+            /* 45 */ INCLUDE,
         };
         
         static std::string tokenAsString( const Token token )
@@ -84,89 +108,185 @@ namespace libtptp
                 {
                     return "$unresolved$";
                 }
-                case /*  1 */ Token::DUMMY:
-                {
-                    return "dummy";
-                }
-                case /*  2 */ Token::TPI:
+                case /*  1 */ Token::TPI:
                 {
                     return "tpi";
                 }
-                case /*  3 */ Token::THF:
+                case /*  2 */ Token::THF:
                 {
                     return "thf";
                 }
-                case /*  4 */ Token::TFF:
+                case /*  3 */ Token::TFF:
                 {
                     return "tff";
                 }
-                case /*  5 */ Token::TCF:
+                case /*  4 */ Token::TCF:
                 {
                     return "tcf";
                 }
-                case /*  6 */ Token::FOF:
+                case /*  5 */ Token::FOF:
                 {
                     return "fof";
                 }
-                case /*  7 */ Token::CNF:
+                case /*  6 */ Token::CNF:
                 {
                     return "cnf";
                 }
-                case /*  8 */ Token::FOT:
+                case /*  7 */ Token::FOT:
                 {
                     return "fot";
                 }
-                case /*  9 */ Token::DOLLAR:
+                case /*  8 */ Token::ITE:
+                {
+                    return "ite";
+                }
+                case /*  9 */ Token::LET:
+                {
+                    return "let";
+                }
+                case /* 10 */ Token::AT:
+                {
+                    return "@";
+                }
+                case /* 11 */ Token::AND:
+                {
+                    return "&";
+                }
+                case /* 12 */ Token::DOLLAR:
                 {
                     return "$";
                 }
-                case /* 10 */ Token::COLON:
+                case /* 13 */ Token::COLON:
                 {
                     return ":";
                 }
-                case /* 11 */ Token::COMMA:
+                case /* 14 */ Token::COMMA:
                 {
                     return ",";
                 }
-                case /* 12 */ Token::DOT:
+                case /* 15 */ Token::DOT:
                 {
                     return ".";
                 }
-                case /* 13 */ Token::PLUS:
+                case /* 16 */ Token::PLUS:
                 {
                     return "+";
                 }
-                case /* 14 */ Token::MINUS:
+                case /* 17 */ Token::MINUS:
                 {
                     return "-";
                 }
-                case /* 15 */ Token::EQUAL:
+                case /* 18 */ Token::EQUAL:
                 {
                     return "=";
                 }
-                case /* 16 */ Token::LPAREN:
+                case /* 19 */ Token::LPAREN:
                 {
                     return "(";
                 }
-                case /* 17 */ Token::RPAREN:
+                case /* 20 */ Token::RPAREN:
                 {
                     return ")";
                 }
-                case /* 18 */ Token::LSQPAREN:
+                case /* 21 */ Token::LSQPAREN:
                 {
                     return "[";
                 }
-                case /* 19 */ Token::RSQPAREN:
+                case /* 22 */ Token::RSQPAREN:
                 {
                     return "]";
                 }
-                case /* 20 */ Token::LCURPAREN:
+                case /* 23 */ Token::LCURPAREN:
                 {
                     return "{";
                 }
-                case /* 21 */ Token::RCURPAREN:
+                case /* 24 */ Token::RCURPAREN:
                 {
                     return "}";
+                }
+                case /* 25 */ Token::VLINE:
+                {
+                    return "|";
+                }
+                case /* 26 */ Token::STAR:
+                {
+                    return "*";
+                }
+                case /* 27 */ Token::GREATER:
+                {
+                    return ">";
+                }
+                case /* 28 */ Token::LESS:
+                {
+                    return "<";
+                }
+                case /* 29 */ Token::EXCLAMATION:
+                {
+                    return "!";
+                }
+                case /* 30 */ Token::TILDE:
+                {
+                    return "~";
+                }
+                case /* 31 */ Token::QUESTIONMARK:
+                {
+                    return "?";
+                }
+                case /* 32 */ Token::CARET:
+                {
+                    return "^";
+                }
+                case /* 33 */ Token::DOUBLEEXCLAMATION:
+                {
+                    return "!!";
+                }
+                case /* 34 */ Token::DOUBLEQUESTIONMARK:
+                {
+                    return "??";
+                }
+                case /* 35 */ Token::DOUBLEAT:
+                {
+                    return "@@";
+                }
+                case /* 36 */ Token::EQUALITY:
+                {
+                    return "<=>";
+                }
+                case /* 37 */ Token::IMPLICATION:
+                {
+                    return "=>";
+                }
+                case /* 38 */ Token::RIMPLICATION:
+                {
+                    return "<=";
+                }
+                case /* 39 */ Token::INEQUALITY:
+                {
+                    return "<~>";
+                }
+                case /* 40 */ Token::NOR:
+                {
+                    return "~|";
+                }
+                case /* 41 */ Token::NAND:
+                {
+                    return "~&";
+                }
+                case /* 42 */ Token::ASSIGNMENT:
+                {
+                    return ":=";
+                }
+                case /* 43 */ Token::GENTZENARROW:
+                {
+                    return "-->";
+                }
+                case /* 44 */ Token::SUBTYPESIGN:
+                {
+                    return "<<";
+                }
+                case /* 45 */ Token::INCLUDE:
+                {
+                    return "include";
                 }
             }
             assert( !"internal error" );

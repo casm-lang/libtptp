@@ -315,7 +315,6 @@ namespace libtptp {
       // Specification
       char dummy1[sizeof(Specification::Ptr)];
 
-      // "dummy"
       // "tpi"
       // "thf"
       // "tff"
@@ -323,6 +322,10 @@ namespace libtptp {
       // "fof"
       // "cnf"
       // "fot"
+      // "ite"
+      // "let"
+      // "@"
+      // "&"
       // "$"
       // ":"
       // ","
@@ -336,6 +339,27 @@ namespace libtptp {
       // "]"
       // "{"
       // "}"
+      // "|"
+      // "*"
+      // ">"
+      // "<"
+      // "!"
+      // "~"
+      // "?"
+      // "^"
+      // "!!"
+      // "??"
+      // "@@"
+      // "<=>"
+      // "=>"
+      // "<="
+      // "<~>"
+      // "~|"
+      // "~&"
+      // ":="
+      // "-->"
+      // "<<"
+      // "include"
       char dummy2[sizeof(Token::Ptr)];
 
       // "integer"
@@ -370,35 +394,59 @@ namespace libtptp {
       enum yytokentype
       {
         END = 0,
-        DUMMY = 258,
-        TPI = 259,
-        THF = 260,
-        TFF = 261,
-        TCF = 262,
-        FOF = 263,
-        CNF = 264,
-        FOT = 265,
-        DOLLAR = 266,
-        COLON = 267,
-        COMMA = 268,
-        DOT = 269,
-        PLUS = 270,
-        MINUS = 271,
-        EQUAL = 272,
-        LPAREN = 273,
-        RPAREN = 274,
-        LSQPAREN = 275,
-        RSQPAREN = 276,
-        LCURPAREN = 277,
-        RCURPAREN = 278,
-        INTEGER = 279,
-        REAL = 280,
-        RATIONAL = 281,
-        DQUOTED = 282,
-        LOWER_WORD = 283,
-        UPPER_WORD = 284,
-        IDENTIFIER = 285,
-        SINGLE_QUOTED = 286
+        TPI = 258,
+        THF = 259,
+        TFF = 260,
+        TCF = 261,
+        FOF = 262,
+        CNF = 263,
+        FOT = 264,
+        ITE = 265,
+        LET = 266,
+        AT = 267,
+        AND = 268,
+        DOLLAR = 269,
+        COLON = 270,
+        COMMA = 271,
+        DOT = 272,
+        PLUS = 273,
+        MINUS = 274,
+        EQUAL = 275,
+        LPAREN = 276,
+        RPAREN = 277,
+        LSQPAREN = 278,
+        RSQPAREN = 279,
+        LCURPAREN = 280,
+        RCURPAREN = 281,
+        VLINE = 282,
+        STAR = 283,
+        GREATER = 284,
+        LESS = 285,
+        EXCLAMATION = 286,
+        TILDE = 287,
+        QUESTIONMARK = 288,
+        CARET = 289,
+        DOUBLEEXCLAMATION = 290,
+        DOUBLEQUESTIONMARK = 291,
+        DOUBLEAT = 292,
+        EQUALITY = 293,
+        IMPLICATION = 294,
+        RIMPLICATION = 295,
+        INEQUALITY = 296,
+        NOR = 297,
+        NAND = 298,
+        ASSIGNMENT = 299,
+        GENTZENARROW = 300,
+        SUBTYPESIGN = 301,
+        INCLUDE = 302,
+        INTEGER = 303,
+        REAL = 304,
+        RATIONAL = 305,
+        DQUOTED = 306,
+        LOWER_WORD = 307,
+        UPPER_WORD = 308,
+        IDENTIFIER = 309,
+        SINGLE_QUOTED = 310
       };
     };
 
@@ -515,10 +563,6 @@ namespace libtptp {
 
     static inline
     symbol_type
-    make_DUMMY (const Token::Ptr& v, const location_type& l);
-
-    static inline
-    symbol_type
     make_TPI (const Token::Ptr& v, const location_type& l);
 
     static inline
@@ -544,6 +588,22 @@ namespace libtptp {
     static inline
     symbol_type
     make_FOT (const Token::Ptr& v, const location_type& l);
+
+    static inline
+    symbol_type
+    make_ITE (const Token::Ptr& v, const location_type& l);
+
+    static inline
+    symbol_type
+    make_LET (const Token::Ptr& v, const location_type& l);
+
+    static inline
+    symbol_type
+    make_AT (const Token::Ptr& v, const location_type& l);
+
+    static inline
+    symbol_type
+    make_AND (const Token::Ptr& v, const location_type& l);
 
     static inline
     symbol_type
@@ -596,6 +656,90 @@ namespace libtptp {
     static inline
     symbol_type
     make_RCURPAREN (const Token::Ptr& v, const location_type& l);
+
+    static inline
+    symbol_type
+    make_VLINE (const Token::Ptr& v, const location_type& l);
+
+    static inline
+    symbol_type
+    make_STAR (const Token::Ptr& v, const location_type& l);
+
+    static inline
+    symbol_type
+    make_GREATER (const Token::Ptr& v, const location_type& l);
+
+    static inline
+    symbol_type
+    make_LESS (const Token::Ptr& v, const location_type& l);
+
+    static inline
+    symbol_type
+    make_EXCLAMATION (const Token::Ptr& v, const location_type& l);
+
+    static inline
+    symbol_type
+    make_TILDE (const Token::Ptr& v, const location_type& l);
+
+    static inline
+    symbol_type
+    make_QUESTIONMARK (const Token::Ptr& v, const location_type& l);
+
+    static inline
+    symbol_type
+    make_CARET (const Token::Ptr& v, const location_type& l);
+
+    static inline
+    symbol_type
+    make_DOUBLEEXCLAMATION (const Token::Ptr& v, const location_type& l);
+
+    static inline
+    symbol_type
+    make_DOUBLEQUESTIONMARK (const Token::Ptr& v, const location_type& l);
+
+    static inline
+    symbol_type
+    make_DOUBLEAT (const Token::Ptr& v, const location_type& l);
+
+    static inline
+    symbol_type
+    make_EQUALITY (const Token::Ptr& v, const location_type& l);
+
+    static inline
+    symbol_type
+    make_IMPLICATION (const Token::Ptr& v, const location_type& l);
+
+    static inline
+    symbol_type
+    make_RIMPLICATION (const Token::Ptr& v, const location_type& l);
+
+    static inline
+    symbol_type
+    make_INEQUALITY (const Token::Ptr& v, const location_type& l);
+
+    static inline
+    symbol_type
+    make_NOR (const Token::Ptr& v, const location_type& l);
+
+    static inline
+    symbol_type
+    make_NAND (const Token::Ptr& v, const location_type& l);
+
+    static inline
+    symbol_type
+    make_ASSIGNMENT (const Token::Ptr& v, const location_type& l);
+
+    static inline
+    symbol_type
+    make_GENTZENARROW (const Token::Ptr& v, const location_type& l);
+
+    static inline
+    symbol_type
+    make_SUBTYPESIGN (const Token::Ptr& v, const location_type& l);
+
+    static inline
+    symbol_type
+    make_INCLUDE (const Token::Ptr& v, const location_type& l);
 
     static inline
     symbol_type
@@ -687,8 +831,8 @@ namespace libtptp {
     /// \param yyvalue   the value to check
     static bool yy_table_value_is_error_ (int yyvalue);
 
-    static const signed char yypact_ninf_;
-    static const signed char yytable_ninf_;
+    static const short yypact_ninf_;
+    static const short yytable_ninf_;
 
     /// Convert a scanner token number \a t to a symbol number.
     static token_number_type yytranslate_ (token_type t);
@@ -696,7 +840,7 @@ namespace libtptp {
     // Tables.
   // YYPACT[STATE-NUM] -- Index in YYTABLE of the portion describing
   // STATE-NUM.
-  static const signed char yypact_[];
+  static const short yypact_[];
 
   // YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
   // Performed when YYTABLE does not specify something else to do.  Zero
@@ -704,17 +848,17 @@ namespace libtptp {
   static const unsigned char yydefact_[];
 
   // YYPGOTO[NTERM-NUM].
-  static const signed char yypgoto_[];
+  static const short yypgoto_[];
 
   // YYDEFGOTO[NTERM-NUM].
-  static const signed char yydefgoto_[];
+  static const short yydefgoto_[];
 
   // YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
   // positive, shift that token.  If negative, reduce the rule whose
   // number is the opposite.  If YYTABLE_NINF, syntax error.
-  static const unsigned char yytable_[];
+  static const short yytable_[];
 
-  static const signed char yycheck_[];
+  static const short yycheck_[];
 
   // YYSTOS[STATE-NUM] -- The (internal number of the) accessing
   // symbol of state STATE-NUM.
@@ -836,12 +980,12 @@ namespace libtptp {
     enum
     {
       yyeof_ = 0,
-      yylast_ = 83,     ///< Last index in yytable_.
-      yynnts_ = 28,  ///< Number of nonterminal symbols.
-      yyfinal_ = 14, ///< Termination state number.
+      yylast_ = 601,     ///< Last index in yytable_.
+      yynnts_ = 102,  ///< Number of nonterminal symbols.
+      yyfinal_ = 15, ///< Termination state number.
       yyterror_ = 1,
       yyerrcode_ = 256,
-      yyntokens_ = 32  ///< Number of tokens.
+      yyntokens_ = 56  ///< Number of tokens.
     };
 
 
@@ -887,9 +1031,12 @@ namespace libtptp {
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
        5,     6,     7,     8,     9,    10,    11,    12,    13,    14,
       15,    16,    17,    18,    19,    20,    21,    22,    23,    24,
-      25,    26,    27,    28,    29,    30,    31
+      25,    26,    27,    28,    29,    30,    31,    32,    33,    34,
+      35,    36,    37,    38,    39,    40,    41,    42,    43,    44,
+      45,    46,    47,    48,    49,    50,    51,    52,    53,    54,
+      55
     };
-    const unsigned user_token_number_max_ = 286;
+    const unsigned user_token_number_max_ = 310;
     const token_number_type undef_token_ = 2;
 
     if (static_cast<int> (t) <= yyeof_)
@@ -921,42 +1068,66 @@ namespace libtptp {
   {
     switch (other.type_get ())
     {
-      case 33: // Specification
+      case 57: // Specification
         value.copy< Specification::Ptr > (other.value);
         break;
 
-      case 3: // "dummy"
-      case 4: // "tpi"
-      case 5: // "thf"
-      case 6: // "tff"
-      case 7: // "tcf"
-      case 8: // "fof"
-      case 9: // "cnf"
-      case 10: // "fot"
-      case 11: // "$"
-      case 12: // ":"
-      case 13: // ","
-      case 14: // "."
-      case 15: // "+"
-      case 16: // "-"
-      case 17: // "="
-      case 18: // "("
-      case 19: // ")"
-      case 20: // "["
-      case 21: // "]"
-      case 22: // "{"
-      case 23: // "}"
+      case 3: // "tpi"
+      case 4: // "thf"
+      case 5: // "tff"
+      case 6: // "tcf"
+      case 7: // "fof"
+      case 8: // "cnf"
+      case 9: // "fot"
+      case 10: // "ite"
+      case 11: // "let"
+      case 12: // "@"
+      case 13: // "&"
+      case 14: // "$"
+      case 15: // ":"
+      case 16: // ","
+      case 17: // "."
+      case 18: // "+"
+      case 19: // "-"
+      case 20: // "="
+      case 21: // "("
+      case 22: // ")"
+      case 23: // "["
+      case 24: // "]"
+      case 25: // "{"
+      case 26: // "}"
+      case 27: // "|"
+      case 28: // "*"
+      case 29: // ">"
+      case 30: // "<"
+      case 31: // "!"
+      case 32: // "~"
+      case 33: // "?"
+      case 34: // "^"
+      case 35: // "!!"
+      case 36: // "??"
+      case 37: // "@@"
+      case 38: // "<=>"
+      case 39: // "=>"
+      case 40: // "<="
+      case 41: // "<~>"
+      case 42: // "~|"
+      case 43: // "~&"
+      case 44: // ":="
+      case 45: // "-->"
+      case 46: // "<<"
+      case 47: // "include"
         value.copy< Token::Ptr > (other.value);
         break;
 
-      case 24: // "integer"
-      case 25: // "real"
-      case 26: // "rational"
-      case 27: // "double_quoted"
-      case 28: // "lower_word"
-      case 29: // "upper_word"
-      case 30: // "identifier"
-      case 31: // "single_quoted"
+      case 48: // "integer"
+      case 49: // "real"
+      case 50: // "rational"
+      case 51: // "double_quoted"
+      case 52: // "lower_word"
+      case 53: // "upper_word"
+      case 54: // "identifier"
+      case 55: // "single_quoted"
         value.copy< std::string > (other.value);
         break;
 
@@ -975,42 +1146,66 @@ namespace libtptp {
     (void) v;
     switch (this->type_get ())
     {
-      case 33: // Specification
+      case 57: // Specification
         value.copy< Specification::Ptr > (v);
         break;
 
-      case 3: // "dummy"
-      case 4: // "tpi"
-      case 5: // "thf"
-      case 6: // "tff"
-      case 7: // "tcf"
-      case 8: // "fof"
-      case 9: // "cnf"
-      case 10: // "fot"
-      case 11: // "$"
-      case 12: // ":"
-      case 13: // ","
-      case 14: // "."
-      case 15: // "+"
-      case 16: // "-"
-      case 17: // "="
-      case 18: // "("
-      case 19: // ")"
-      case 20: // "["
-      case 21: // "]"
-      case 22: // "{"
-      case 23: // "}"
+      case 3: // "tpi"
+      case 4: // "thf"
+      case 5: // "tff"
+      case 6: // "tcf"
+      case 7: // "fof"
+      case 8: // "cnf"
+      case 9: // "fot"
+      case 10: // "ite"
+      case 11: // "let"
+      case 12: // "@"
+      case 13: // "&"
+      case 14: // "$"
+      case 15: // ":"
+      case 16: // ","
+      case 17: // "."
+      case 18: // "+"
+      case 19: // "-"
+      case 20: // "="
+      case 21: // "("
+      case 22: // ")"
+      case 23: // "["
+      case 24: // "]"
+      case 25: // "{"
+      case 26: // "}"
+      case 27: // "|"
+      case 28: // "*"
+      case 29: // ">"
+      case 30: // "<"
+      case 31: // "!"
+      case 32: // "~"
+      case 33: // "?"
+      case 34: // "^"
+      case 35: // "!!"
+      case 36: // "??"
+      case 37: // "@@"
+      case 38: // "<=>"
+      case 39: // "=>"
+      case 40: // "<="
+      case 41: // "<~>"
+      case 42: // "~|"
+      case 43: // "~&"
+      case 44: // ":="
+      case 45: // "-->"
+      case 46: // "<<"
+      case 47: // "include"
         value.copy< Token::Ptr > (v);
         break;
 
-      case 24: // "integer"
-      case 25: // "real"
-      case 26: // "rational"
-      case 27: // "double_quoted"
-      case 28: // "lower_word"
-      case 29: // "upper_word"
-      case 30: // "identifier"
-      case 31: // "single_quoted"
+      case 48: // "integer"
+      case 49: // "real"
+      case 50: // "rational"
+      case 51: // "double_quoted"
+      case 52: // "lower_word"
+      case 53: // "upper_word"
+      case 54: // "identifier"
+      case 55: // "single_quoted"
         value.copy< std::string > (v);
         break;
 
@@ -1073,42 +1268,66 @@ namespace libtptp {
     // Type destructor.
   switch (yytype)
     {
-      case 33: // Specification
+      case 57: // Specification
         value.template destroy< Specification::Ptr > ();
         break;
 
-      case 3: // "dummy"
-      case 4: // "tpi"
-      case 5: // "thf"
-      case 6: // "tff"
-      case 7: // "tcf"
-      case 8: // "fof"
-      case 9: // "cnf"
-      case 10: // "fot"
-      case 11: // "$"
-      case 12: // ":"
-      case 13: // ","
-      case 14: // "."
-      case 15: // "+"
-      case 16: // "-"
-      case 17: // "="
-      case 18: // "("
-      case 19: // ")"
-      case 20: // "["
-      case 21: // "]"
-      case 22: // "{"
-      case 23: // "}"
+      case 3: // "tpi"
+      case 4: // "thf"
+      case 5: // "tff"
+      case 6: // "tcf"
+      case 7: // "fof"
+      case 8: // "cnf"
+      case 9: // "fot"
+      case 10: // "ite"
+      case 11: // "let"
+      case 12: // "@"
+      case 13: // "&"
+      case 14: // "$"
+      case 15: // ":"
+      case 16: // ","
+      case 17: // "."
+      case 18: // "+"
+      case 19: // "-"
+      case 20: // "="
+      case 21: // "("
+      case 22: // ")"
+      case 23: // "["
+      case 24: // "]"
+      case 25: // "{"
+      case 26: // "}"
+      case 27: // "|"
+      case 28: // "*"
+      case 29: // ">"
+      case 30: // "<"
+      case 31: // "!"
+      case 32: // "~"
+      case 33: // "?"
+      case 34: // "^"
+      case 35: // "!!"
+      case 36: // "??"
+      case 37: // "@@"
+      case 38: // "<=>"
+      case 39: // "=>"
+      case 40: // "<="
+      case 41: // "<~>"
+      case 42: // "~|"
+      case 43: // "~&"
+      case 44: // ":="
+      case 45: // "-->"
+      case 46: // "<<"
+      case 47: // "include"
         value.template destroy< Token::Ptr > ();
         break;
 
-      case 24: // "integer"
-      case 25: // "real"
-      case 26: // "rational"
-      case 27: // "double_quoted"
-      case 28: // "lower_word"
-      case 29: // "upper_word"
-      case 30: // "identifier"
-      case 31: // "single_quoted"
+      case 48: // "integer"
+      case 49: // "real"
+      case 50: // "rational"
+      case 51: // "double_quoted"
+      case 52: // "lower_word"
+      case 53: // "upper_word"
+      case 54: // "identifier"
+      case 55: // "single_quoted"
         value.template destroy< std::string > ();
         break;
 
@@ -1133,42 +1352,66 @@ namespace libtptp {
     super_type::move (s);
     switch (this->type_get ())
     {
-      case 33: // Specification
+      case 57: // Specification
         value.move< Specification::Ptr > (s.value);
         break;
 
-      case 3: // "dummy"
-      case 4: // "tpi"
-      case 5: // "thf"
-      case 6: // "tff"
-      case 7: // "tcf"
-      case 8: // "fof"
-      case 9: // "cnf"
-      case 10: // "fot"
-      case 11: // "$"
-      case 12: // ":"
-      case 13: // ","
-      case 14: // "."
-      case 15: // "+"
-      case 16: // "-"
-      case 17: // "="
-      case 18: // "("
-      case 19: // ")"
-      case 20: // "["
-      case 21: // "]"
-      case 22: // "{"
-      case 23: // "}"
+      case 3: // "tpi"
+      case 4: // "thf"
+      case 5: // "tff"
+      case 6: // "tcf"
+      case 7: // "fof"
+      case 8: // "cnf"
+      case 9: // "fot"
+      case 10: // "ite"
+      case 11: // "let"
+      case 12: // "@"
+      case 13: // "&"
+      case 14: // "$"
+      case 15: // ":"
+      case 16: // ","
+      case 17: // "."
+      case 18: // "+"
+      case 19: // "-"
+      case 20: // "="
+      case 21: // "("
+      case 22: // ")"
+      case 23: // "["
+      case 24: // "]"
+      case 25: // "{"
+      case 26: // "}"
+      case 27: // "|"
+      case 28: // "*"
+      case 29: // ">"
+      case 30: // "<"
+      case 31: // "!"
+      case 32: // "~"
+      case 33: // "?"
+      case 34: // "^"
+      case 35: // "!!"
+      case 36: // "??"
+      case 37: // "@@"
+      case 38: // "<=>"
+      case 39: // "=>"
+      case 40: // "<="
+      case 41: // "<~>"
+      case 42: // "~|"
+      case 43: // "~&"
+      case 44: // ":="
+      case 45: // "-->"
+      case 46: // "<<"
+      case 47: // "include"
         value.move< Token::Ptr > (s.value);
         break;
 
-      case 24: // "integer"
-      case 25: // "real"
-      case 26: // "rational"
-      case 27: // "double_quoted"
-      case 28: // "lower_word"
-      case 29: // "upper_word"
-      case 30: // "identifier"
-      case 31: // "single_quoted"
+      case 48: // "integer"
+      case 49: // "real"
+      case 50: // "rational"
+      case 51: // "double_quoted"
+      case 52: // "lower_word"
+      case 53: // "upper_word"
+      case 54: // "identifier"
+      case 55: // "single_quoted"
         value.move< std::string > (s.value);
         break;
 
@@ -1230,7 +1473,9 @@ namespace libtptp {
        0,   256,   257,   258,   259,   260,   261,   262,   263,   264,
      265,   266,   267,   268,   269,   270,   271,   272,   273,   274,
      275,   276,   277,   278,   279,   280,   281,   282,   283,   284,
-     285,   286
+     285,   286,   287,   288,   289,   290,   291,   292,   293,   294,
+     295,   296,   297,   298,   299,   300,   301,   302,   303,   304,
+     305,   306,   307,   308,   309,   310
     };
     return static_cast<token_type> (yytoken_number_[type]);
   }
@@ -1239,12 +1484,6 @@ namespace libtptp {
   Parser::make_END (const location_type& l)
   {
     return symbol_type (token::END, l);
-  }
-
-  Parser::symbol_type
-  Parser::make_DUMMY (const Token::Ptr& v, const location_type& l)
-  {
-    return symbol_type (token::DUMMY, v, l);
   }
 
   Parser::symbol_type
@@ -1287,6 +1526,30 @@ namespace libtptp {
   Parser::make_FOT (const Token::Ptr& v, const location_type& l)
   {
     return symbol_type (token::FOT, v, l);
+  }
+
+  Parser::symbol_type
+  Parser::make_ITE (const Token::Ptr& v, const location_type& l)
+  {
+    return symbol_type (token::ITE, v, l);
+  }
+
+  Parser::symbol_type
+  Parser::make_LET (const Token::Ptr& v, const location_type& l)
+  {
+    return symbol_type (token::LET, v, l);
+  }
+
+  Parser::symbol_type
+  Parser::make_AT (const Token::Ptr& v, const location_type& l)
+  {
+    return symbol_type (token::AT, v, l);
+  }
+
+  Parser::symbol_type
+  Parser::make_AND (const Token::Ptr& v, const location_type& l)
+  {
+    return symbol_type (token::AND, v, l);
   }
 
   Parser::symbol_type
@@ -1368,6 +1631,132 @@ namespace libtptp {
   }
 
   Parser::symbol_type
+  Parser::make_VLINE (const Token::Ptr& v, const location_type& l)
+  {
+    return symbol_type (token::VLINE, v, l);
+  }
+
+  Parser::symbol_type
+  Parser::make_STAR (const Token::Ptr& v, const location_type& l)
+  {
+    return symbol_type (token::STAR, v, l);
+  }
+
+  Parser::symbol_type
+  Parser::make_GREATER (const Token::Ptr& v, const location_type& l)
+  {
+    return symbol_type (token::GREATER, v, l);
+  }
+
+  Parser::symbol_type
+  Parser::make_LESS (const Token::Ptr& v, const location_type& l)
+  {
+    return symbol_type (token::LESS, v, l);
+  }
+
+  Parser::symbol_type
+  Parser::make_EXCLAMATION (const Token::Ptr& v, const location_type& l)
+  {
+    return symbol_type (token::EXCLAMATION, v, l);
+  }
+
+  Parser::symbol_type
+  Parser::make_TILDE (const Token::Ptr& v, const location_type& l)
+  {
+    return symbol_type (token::TILDE, v, l);
+  }
+
+  Parser::symbol_type
+  Parser::make_QUESTIONMARK (const Token::Ptr& v, const location_type& l)
+  {
+    return symbol_type (token::QUESTIONMARK, v, l);
+  }
+
+  Parser::symbol_type
+  Parser::make_CARET (const Token::Ptr& v, const location_type& l)
+  {
+    return symbol_type (token::CARET, v, l);
+  }
+
+  Parser::symbol_type
+  Parser::make_DOUBLEEXCLAMATION (const Token::Ptr& v, const location_type& l)
+  {
+    return symbol_type (token::DOUBLEEXCLAMATION, v, l);
+  }
+
+  Parser::symbol_type
+  Parser::make_DOUBLEQUESTIONMARK (const Token::Ptr& v, const location_type& l)
+  {
+    return symbol_type (token::DOUBLEQUESTIONMARK, v, l);
+  }
+
+  Parser::symbol_type
+  Parser::make_DOUBLEAT (const Token::Ptr& v, const location_type& l)
+  {
+    return symbol_type (token::DOUBLEAT, v, l);
+  }
+
+  Parser::symbol_type
+  Parser::make_EQUALITY (const Token::Ptr& v, const location_type& l)
+  {
+    return symbol_type (token::EQUALITY, v, l);
+  }
+
+  Parser::symbol_type
+  Parser::make_IMPLICATION (const Token::Ptr& v, const location_type& l)
+  {
+    return symbol_type (token::IMPLICATION, v, l);
+  }
+
+  Parser::symbol_type
+  Parser::make_RIMPLICATION (const Token::Ptr& v, const location_type& l)
+  {
+    return symbol_type (token::RIMPLICATION, v, l);
+  }
+
+  Parser::symbol_type
+  Parser::make_INEQUALITY (const Token::Ptr& v, const location_type& l)
+  {
+    return symbol_type (token::INEQUALITY, v, l);
+  }
+
+  Parser::symbol_type
+  Parser::make_NOR (const Token::Ptr& v, const location_type& l)
+  {
+    return symbol_type (token::NOR, v, l);
+  }
+
+  Parser::symbol_type
+  Parser::make_NAND (const Token::Ptr& v, const location_type& l)
+  {
+    return symbol_type (token::NAND, v, l);
+  }
+
+  Parser::symbol_type
+  Parser::make_ASSIGNMENT (const Token::Ptr& v, const location_type& l)
+  {
+    return symbol_type (token::ASSIGNMENT, v, l);
+  }
+
+  Parser::symbol_type
+  Parser::make_GENTZENARROW (const Token::Ptr& v, const location_type& l)
+  {
+    return symbol_type (token::GENTZENARROW, v, l);
+  }
+
+  Parser::symbol_type
+  Parser::make_SUBTYPESIGN (const Token::Ptr& v, const location_type& l)
+  {
+    return symbol_type (token::SUBTYPESIGN, v, l);
+  }
+
+  Parser::symbol_type
+  Parser::make_INCLUDE (const Token::Ptr& v, const location_type& l)
+  {
+    return symbol_type (token::INCLUDE, v, l);
+  }
+
+  Parser::symbol_type
   Parser::make_INTEGER (const std::string& v, const location_type& l)
   {
     return symbol_type (token::INTEGER, v, l);
@@ -1418,7 +1807,7 @@ namespace libtptp {
 
 #line 47 "../../obj/src/GrammarParser.yy" // lalr1.cc:380
 } // libtptp
-#line 1422 "GrammarParser.tab.h" // lalr1.cc:380
+#line 1811 "GrammarParser.tab.h" // lalr1.cc:380
 
 
 

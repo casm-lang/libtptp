@@ -160,12 +160,10 @@ Input
   {
       //$$ = $1;
   }
-/* TODO
-| include
+| Include
   {
       //$$ = $1;
   }
-*/
 ;
 
 AnnotatedFormula
@@ -531,7 +529,7 @@ ThfLetDefns
 ;
 
 ThfLetDefn
-: ThfLogicFormula Assignment ThfLogicFormula
+: ThfLogicFormula ASSIGNMENT ThfLogicFormula
   {
   }
 ;
@@ -946,7 +944,7 @@ TfxLetDefns
 ;
 
 TfxLetDefn
-: TfxLetLhs Assignment TffTerm
+: TfxLetLhs ASSIGNMENT TffTerm
   {
   }
 ;
@@ -1435,7 +1433,7 @@ Disjunction
 : Literal
   {
   }
-| Disjunction Vline Literal
+| Disjunction VLINE Literal
   {
   }
 ;
@@ -1501,7 +1499,7 @@ Th1UnaryConnective
 | DOUBLEQUESTIONMARK
   {
   }
-| DOUBLEAT PlUS
+| DOUBLEAT PLUS
   {
   }
 | DOUBLEAT MINUS
@@ -1517,6 +1515,152 @@ FofQuantifier
   {
   }
 | QUESTIONMARK
+  {
+  }
+;
+
+/* GENERAL */
+
+NonassocConnective
+: EQUALITY
+  {
+  }
+| IMPLICATION
+  {
+  }
+| RIMPLICATION
+  {
+  }
+| INEQUALITY
+  {
+  }
+| NOR
+  {
+  }
+| NAND
+  {
+  }
+;
+
+AssocConnective
+: VLINE
+  {
+  }
+| AND
+  {
+  }
+;
+
+UnaryConnective
+: TILDE
+  {
+  }
+;
+
+TypeConstant
+: TypeFunctor
+  {
+  }
+;
+
+TypeFunctor
+: AtomicWord
+  {
+  }
+;
+
+DefinedType
+: AtomicDefinedWord
+  {
+  }
+;
+
+Atom
+: UntypedAtom
+  {
+  }
+| DefinedConstant
+  {
+  }
+;
+
+UntypedAtom
+: Constant
+  {
+  }
+| SystemConstant
+  {
+  }
+;
+
+DefinedInfixPred
+: InfixEquality
+  {
+  }
+;
+
+InfixEquality
+: EQUAL
+  {
+  }
+;
+
+InfixInequality
+: EXCLAMATION EQUAL
+  {
+  }
+;
+
+Constant
+: Functor
+  {
+  }
+;
+
+Functor
+: AtomicWord
+  {
+  }
+;
+
+SystemConstant
+: SystemFunctor
+  {
+  }
+;
+
+SystemFunctor
+: AtomicSystemWord
+  {
+  }
+;
+
+DefinedConstant
+: DefinedFunctor
+  {
+  }
+;
+
+DefinedFunctor
+: AtomicDefinedWord
+  {
+  }
+;
+
+DefinedTerm
+: Number
+  {
+  }
+| DistinctObjectLiteral
+  {
+  }
+;
+
+NameList
+: Name
+  {
+  }
+| NameList COMMA Name
   {
   }
 ;
@@ -1605,6 +1749,22 @@ GeneralList
   }
 ;
 
+
+Include
+: INCLUDE LPAREN FileName RPAREN DOT
+  {
+  }
+| INCLUDE LPAREN FileName COMMA FormulaSelection RPAREN DOT
+  {
+  }
+;
+
+FormulaSelection 
+: LSQPAREN NameList RSQPAREN
+  {
+  }
+;
+
 FormulaDataKeyword
 : THF
   {
@@ -1639,6 +1799,18 @@ AtomicWord
   }
 ;
 
+AtomicDefinedWord
+: DollarWordLiteral
+  {
+  }
+;
+
+AtomicSystemWord
+: DollarDollarWordLiteral
+  {
+  }
+;
+
 Number
 : IntegerLiteral
   {
@@ -1651,6 +1823,12 @@ Number
 | RationalLiteral
   {
     //$$ = $1;
+  }
+;
+
+FileName
+: SingleQuotedLiteral
+  {
   }
 ;
 
@@ -1696,6 +1874,18 @@ LowerWordLiteral
 
 SingleQuotedLiteral
 : SINGLE_QUOTED
+  {
+  }
+;
+
+DollarWordLiteral
+: DOLLAR LowerWordLiteral
+  {
+  }
+;
+
+DollarDollarWordLiteral
+: DOLLAR DOLLAR LowerWordLiteral
   {
   }
 ;
