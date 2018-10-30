@@ -71,6 +71,7 @@ VLINE           "|"
 STAR            "*"
 GREATER         ">"
 LESS            "<"
+EXCLAMATION     "!"
 
 GENTZENARROW    "-->"
 SUBTYPESIGN     "<<"
