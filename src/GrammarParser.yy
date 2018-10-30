@@ -1137,6 +1137,390 @@ TfxSequent
   }
 ;
 
+/* TCF */
+TcfFormula
+: TcfLogicFormula
+  {
+  }
+| TffAtomTyping
+  {
+  }
+;
+
+TcfLogicFormula
+: TcfQuantifiedFormula
+  {
+  }
+| CnfFormula
+  {
+  }
+;
+
+TcfQuantifiedFormula
+: EXCLAMATION LSQPAREN TffVariableList RSQPAREN COLON CnfFormula
+  {
+  }
+;
+
+/* FoF */
+
+FofFormula
+: FofLogicFormula
+  {
+  }
+| FofSequent
+  {
+  }
+;
+
+FofLogicFormula
+: FofBinaryFormula
+  {
+  }
+| FofUnaryFormula
+  {
+  }
+| FofUnitaryFormula
+  {
+  }
+;
+
+FofBinaryFormula
+: FofBinaryNonassoc
+  {
+  }
+| FofBinaryAssoc
+  {
+  }
+;
+
+FofBinaryNonassoc
+: FofUnitFormula NonassocConnective FofUnitFormula
+  {
+  }
+;
+
+FofBinaryAssoc
+: FofOrFormula
+  {
+  }
+| FofAndFormula
+  {
+  }
+;
+
+FofOrFormula
+: FofUnitFormula VLINE FofUnitFormula
+  {
+  }
+| FofOrFormula VLINE FofUnitFormula
+  {
+  }
+;
+
+FofAndFormula
+: FofUnitFormula AND FofUnitFormula
+  {
+  }
+| FofAndFormula AND FofUnitFormula
+  {
+  }
+;
+
+FofUnaryFormula
+: UnaryConnective FofUnitFormula
+  {
+  }
+| FofInfixUnary
+  {
+  }
+;
+
+FofInfixUnary
+: FofTerm InfixInequality FofTerm
+  {
+  }
+;
+
+FofUnitFormula
+: FofUnitaryFormula
+  {
+  }
+| FofUnaryFormula
+  {
+  }
+;
+
+FofUnitaryFormula
+: FofQuantifiedFormula
+  {
+  }
+| FofAtomicFormula
+  {
+  }
+| LPAREN FofLogicFormula RPAREN
+  {
+  }
+;
+
+FofQuantifiedFormula
+: FofQuantifier LSQPAREN FofVariableList RSQPAREN COLON FofUnitFormula
+  {
+  }
+;
+
+FofVariableList
+: Variable
+  {
+  }
+| FofVariableList COMMA Variable
+  {
+  }
+;
+
+FofAtomicFormula
+: FofPlainAtomicFormula
+  {
+  }
+| FofDefinedAtomicFormula
+  {
+  }
+| FofSystemAtomicFormula
+  {
+  }
+;
+
+FofPlainAtomicFormula
+: FofPlainTerm
+  {
+  }
+;
+
+FofDefinedAtomicFormula
+: FofDefinedPlainFormula
+  {
+  }
+| FofDefinedInfixFormula
+  {
+  }
+;
+
+FofDefinedPlainFormula
+: FofDefinedPlainTerm
+  {
+  }
+;
+
+FofDefinedInfixFormula
+: FofTerm DefinedInfixPred FofTerm
+  {
+  }
+;
+
+FofSystemAtomicFormula
+: FofSystemTerm
+  {
+  }
+;
+
+FofPlainTerm
+: Constant
+  {
+  }
+| Functor LPAREN FofArguments RPAREN
+  {
+  }
+;
+
+FofDefinedTerm
+: DefinedTerm
+  {
+  }
+| FofDefinedAtomicTerm
+  {
+  }
+;
+
+FofDefinedAtomicTerm
+: FofDefinedPlainTerm
+  {
+  }
+;
+
+FofDefinedPlainTerm
+: DefinedConstant
+  {
+  }
+| DefinedFunctor LPAREN FofArguments RPAREN
+  {
+  }
+;
+
+FofSystemTerm
+: SystemConstant
+  {
+  }
+| SystemFunctor LPAREN FofArguments RPAREN
+  {
+  }
+;
+
+FofArguments
+: FofTerm
+  {
+  }
+| FofArguments COMMA FofTerm
+  {
+  }
+;
+
+FofTerm
+: FofFunctionTerm
+  {
+  }
+| Variable
+  {
+  }
+;
+
+FofFunctionTerm
+: FofPlainTerm
+  {
+  }
+| FofDefinedTerm
+  {
+  }
+| FofSystemTerm
+  {
+  }
+;
+
+FofSequent
+: FofFormulaTuple GENTZENARROW FofFormulaTuple
+  {
+  }
+| LPAREN FofSequent RPAREN
+  {
+  }
+;
+
+FofFormulaTuple
+: LCURPAREN RCURPAREN
+  {
+  }
+| LCURPAREN FofFormulaTupleList RCURPAREN
+  {
+  }
+;
+
+FofFormulaTupleList
+: FofLogicFormula
+  {
+  }
+| FofFormulaTupleList COMMA FofLogicFormula
+  {
+  }
+;
+
+CnfFormula
+: Disjunction
+  {
+  }
+| LPAREN Disjunction RPAREN
+  {
+  }
+;
+
+Disjunction
+: Literal
+  {
+  }
+| Disjunction Vline Literal
+  {
+  }
+;
+
+Literal
+: FofAtomicFormula
+  {
+  }
+| TILDE FofAtomicFormula
+  {
+  }
+| FofInfixUnary
+  {
+  }
+;
+
+ThfQuantifier
+: FofQuantifier
+  {
+  }
+| Th0Quantifier
+  {
+  }
+| Th1Quantifier
+  {
+  }
+;
+
+Th1Quantifier
+: EXCLAMATION
+  {
+  }
+| QUESTIONMARK STAR
+  {
+  }
+;
+
+Th0Quantifier
+: CARET
+  {
+  }
+| AT PLUS
+  {
+  }
+| AT MINUS
+  {
+  }
+;
+
+ThfUnaryConnective
+: UnaryConnective
+  {
+  }
+| Th1UnaryConnective
+  {
+  }
+;
+
+Th1UnaryConnective
+: DOUBLEEXCLAMATION
+  {
+  }
+| DOUBLEQUESTIONMARK
+  {
+  }
+| DOUBLEAT PlUS
+  {
+  }
+| DOUBLEAT MINUS
+  {
+  }
+| AT EQUAL
+  {
+  }
+;
+
+FofQuantifier
+: EXCLAMATION
+  {
+  }
+| QUESTIONMARK
+  {
+  }
+;
+
 Name
 : AtomicWord
   {
