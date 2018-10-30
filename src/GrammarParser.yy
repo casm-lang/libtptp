@@ -683,6 +683,460 @@ ThfSequent
   }
 ;
 
+/* TFF */
+TffFormula
+: TffLogicFormula
+  {
+  }
+| TffAtomTyping
+  {
+  }
+| TffSubtype
+  {
+  }
+| TfxSequent
+  {
+  }
+;
+
+TffLogicFormula
+: TffUnitaryFormula
+  {
+  }
+| TffUnaryFormula
+  {
+  }
+| TffBinaryFormula
+  {
+  }
+| TffDefinedInfix
+  {
+  }
+;
+
+TffBinaryFormula
+: TffBinaryNonassoc
+  {
+  }
+| TffBinaryAssoc
+  {
+  }
+;
+
+TffBinaryNonassoc
+: TffUnitFormula NonassocConnective TffUnitFormula
+  {
+  }
+;
+
+TffBinaryAssoc
+: TffOrFormula
+  {
+  }
+| TffAndFormula
+  {
+  }
+;
+
+TffOrFormula
+: TffUnitFormula VLINE TffUnitFormula
+  {
+  }
+| TffOrFormula VLINE TffUnitFormula
+  {
+  }
+;
+
+TffAndFormula
+: TffUnitFormula AND TffUnitFormula
+  {
+  }
+| TffAndFormula AND TffUnitFormula
+  {
+  }
+;
+
+TffUnitFormula
+: TffUnitaryFormula
+  {
+  }
+| TffUnaryFormula
+  {
+  }
+| TffDefinedInfix
+  {
+  }
+;
+
+TffPreunitFormula
+: TffUnitaryFormula
+  {
+  }
+| TffPrefixUnary
+  {
+  }
+;
+
+TffUnitaryFormula
+: TffQuantifiedFormula
+  {
+  }
+| TffAtomicFormula
+  {
+  }
+| TfxUnitaryFormula
+  {
+  }
+| LPAREN TffLogicFormula RPAREN
+  {
+  }
+;
+
+TfxUnitaryFormula
+: Variable
+  {
+  }
+;
+
+TffQuantifiedFormula
+: FofQuantifier LSQPAREN TffVariableList RSQPAREN COLON TffUnitFormula
+  {
+  }
+;
+
+TffVariableList
+: TffVariable
+  {
+  }
+| TffVariableList COMMA TffVariable
+  {
+  }
+;
+
+TffVariable
+: TffTypedVariable
+  {
+  }
+| Variable
+  {
+  }
+;
+
+TffTypedVariable
+: Variable COLON TffAtomicType
+  {
+  }
+;
+
+TffUnaryFormula
+: TffPrefixUnary
+  {
+  }
+| TffInfixUnary
+  {
+  }
+;
+
+TffPrefixUnary
+: UnaryConnective TffPreunitFormula
+  {
+  }
+;
+
+TffInfixUnary
+: TffUnitaryTerm InfixInequality TffUnitaryTerm
+  {
+  }
+;
+
+TffAtomicFormula
+: TffPlainAtomic
+  {
+  }
+| TffDefinedAtomic
+  {
+  }
+| TffSystemAtomic
+  {
+  }
+;
+
+TffPlainAtomic
+: Constant
+  {
+  }
+| Functor LPAREN TffArguments RPAREN
+  {
+  }
+;
+
+TffDefinedAtomic
+: TffDefinedPlain
+  {
+  }
+;
+
+TffDefinedPlain
+: DefinedConstant
+  {
+  }
+| DefinedFunctor LPAREN TffArguments RPAREN
+  {
+  }
+| TfxConditional
+  {
+  }
+| TfxLet
+  {
+  }
+;
+
+TffDefinedInfix
+: TffUnitaryTerm DefinedInfixPred TffUnitaryTerm
+  {
+  }
+;
+
+TffSystemAtomic
+: SystemConstant
+  {
+  }
+| SystemFunctor LPAREN TffArguments RPAREN
+  {
+  }
+;
+
+TfxConditional
+: DOLLAR ITE LPAREN TffLogicFormula COMMA TffTerm COMMA TffTerm RPAREN
+  {
+  }
+;
+
+TfxLet
+: DOLLAR LET LPAREN TfxLetTypes COMMA TfxLetDefns COMMA TffTerm RPAREN
+  {
+  }
+;
+
+TfxLetTypes
+: TffAtomTyping
+  {
+  }
+| LSQPAREN TffAtomTypingList RSQPAREN
+  {
+  }
+;
+
+TffAtomTypingList
+: TffAtomTyping
+  {
+  }
+| TffAtomTypingList COMMA TffAtomTyping
+  {
+  }
+;
+
+TfxLetDefns
+: TfxLetDefn
+  {
+  }
+| LSQPAREN TfxLetDefnList RSQPAREN
+  {
+  }
+;
+
+TfxLetDefn
+: TfxLetLhs Assignment TffTerm
+  {
+  }
+;
+
+TfxLetLhs
+: TffPlainAtomic
+  {
+  }
+| TfxTuple
+  {
+  }
+;
+
+TfxLetDefnList
+: TfxLetDefn
+  {
+  }
+| TfxLetDefnList COMMA TfxLetDefn
+  {
+  }
+;
+
+TffTerm
+: TffLogicFormula
+  {
+  }
+| DefinedTerm
+  {
+  }
+| TfxTuple
+  {
+  }
+;
+
+TffUnitaryTerm
+: TffAtomicFormula
+  {
+  }
+| DefinedTerm
+  {
+  }
+| TfxTuple
+  {
+  }
+| Variable
+  {
+  }
+| LPAREN TffLogicFormula RPAREN
+  {
+  }
+;
+
+TfxTuple
+: LSQPAREN RSQPAREN
+  {
+  }
+| LSQPAREN TffArguments RSQPAREN
+  {
+  }
+;
+
+TffArguments
+: TffTerm
+  {
+  }
+| TffArguments COMMA TffTerm 
+  {
+  }
+;
+
+TffAtomTyping
+: UntypedAtom COLON TffTopLevelType
+  {
+  }
+| LPAREN TffAtomTyping RPAREN
+  {
+  }
+;
+
+TffTopLevelType
+: TffAtomicType
+  {
+  }
+| TffMappingType
+  {
+  }
+| Tf1QuantifiedType
+  {
+  }
+| LPAREN TffTopLevelType RPAREN
+  {
+  }
+;
+
+Tf1QuantifiedType
+: EXCLAMATION LSQPAREN TffVariableList RSQPAREN COLON TffMonotype
+  {
+  }
+;
+
+TffMonotype
+: TffAtomicType
+  {
+  }
+| LPAREN TffMappingType RPAREN
+  {
+  }
+;
+
+TffUnitaryType
+: TffAtomicType
+  {
+  }
+| LPAREN TffXprodType RPAREN
+  {
+  }
+;
+
+TffAtomicType
+: TypeConstant
+  {
+  }
+| DefinedType
+  {
+  }
+| TypeFunctor LPAREN TffTypeArguments RPAREN
+  {
+  }
+| Variable
+  {
+  }
+| TfxTupleType
+  {
+  }
+;
+
+TffTypeArguments
+: TffAtomicType
+  {
+  }
+| TffTypeArguments COMMA TffAtomicType
+  {
+  }
+;
+
+TffMappingType
+: TffUnitaryType GREATER TffAtomicType
+  {
+  }
+;
+
+TffXprodType
+: TffUnitaryType STAR TffAtomicType
+  {
+  }
+| TffXprodType STAR TffAtomicType
+  {
+  }
+;
+
+TfxTupleType
+: LSQPAREN TffTypeList RSQPAREN
+  {
+  }
+;
+
+TffTypeList
+: TffTopLevelType
+  {
+  }
+| TffTypeList COMMA TffTopLevelType
+  {
+  }
+;
+
+TffSubtype
+: UntypedAtom SUBTYPESIGN Atom
+  {
+  }
+;
+
+TfxSequent
+: TfxTuple GENTZENARROW TfxTuple
+  {
+  }
+| LPAREN TfxSequent RPAREN
+  {
+  }
+;
+
 Name
 : AtomicWord
   {
