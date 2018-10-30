@@ -72,6 +72,14 @@ STAR            "*"
 GREATER         ">"
 LESS            "<"
 EXCLAMATION     "!"
+TILDE           "~"
+QUESTIONMARK    "?"
+CARET           "^"
+
+//DOUBLES
+DOUBLEEXCLAMATION "!!"
+DOUBLEQUESTIONMARK "??"
+DOUBLEAT "@@"
 
 GENTZENARROW    "-->"
 SUBTYPESIGN     "<<"
