@@ -81,9 +81,20 @@ DOUBLEEXCLAMATION "!!"
 DOUBLEQUESTIONMARK "??"
 DOUBLEAT "@@"
 
+//OPERATORS
+EQUALITY        "<=>"
+IMPLICATION     "=>"
+RIMPLICATION    "<="
+INEQUALITY      "<~>"
+NOR             "~|"
+NAND            "~&"
+
+ASSIGNMENT      ":="
+
 GENTZENARROW    "-->"
 SUBTYPESIGN     "<<"
 
+INCLUDE         "include"
 //  
 //  Local variables:
 //  mode: c++
