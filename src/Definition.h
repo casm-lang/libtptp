@@ -39,11 +39,11 @@
 //  statement from your version.
 //
 
-#ifndef _LIBTPTP_SPECIFICATION_H_
-#define _LIBTPTP_SPECIFICATION_H_
+#ifndef _LIBTPTP_DEFINITION_H_
+#define _LIBTPTP_DEFINITION_H_
 
-#include <libtptp/Definition>
 #include <libtptp/Node>
+#include <libtptp/Token>
 
 /**
    @brief    TODO
@@ -56,25 +56,54 @@ namespace libtptp
     /**
        @extends TPTP
     */
-    class Specification
+    class Definition : public Node
     {
       public:
-        using Ptr = std::shared_ptr< Specification >;
+        using Ptr = std::shared_ptr< Definition >;
 
-        Specification( void );
-
-        void setDefinitions( const Definitions::Ptr& defintions );
-
-        const Definitions::Ptr& definitions( void ) const;
+        Definition( const Node::ID id );
 
       private:
-        Definitions::Ptr m_definitions;
     };
 
-    using Specifications = NodeList< Specification >;
+    using Definitions = NodeList< Definition >;
+
+    class IncludeDefinition final : public Definition
+    {
+      public:
+        using Ptr = std::shared_ptr< IncludeDefinition >;
+
+        IncludeDefinition(
+            const Token::Ptr& includeToken,
+            const Token::Ptr& leftParenToken,
+            const Identifier::Ptr& filename,
+            const Token::Ptr& commaToken,
+            const Nodes::Ptr& formulaSelection,
+            const Token::Ptr& rightParenToken,
+            const Token::Ptr& dotToken );
+
+        const Token::Ptr& includeToken( void ) const;
+        const Token::Ptr& leftParenToken( void ) const;
+        const Identifier::Ptr& filename( void ) const;
+        const Token::Ptr& commaToken( void ) const;
+        const Nodes::Ptr& formulaSelection( void ) const;
+        const Token::Ptr& rightParenToken( void ) const;
+        const Token::Ptr& dotToken( void ) const;
+
+        void accept( Visitor& visitor ) override;
+
+      private:
+        const Token::Ptr m_includeToken;
+        const Token::Ptr m_leftParenToken;
+        const Identifier::Ptr m_filename;
+        const Token::Ptr m_commaToken;
+        const Nodes::Ptr m_formulaSelection;
+        const Token::Ptr m_rightParenToken;
+        const Token::Ptr m_dotToken;
+    };
 }
 
-#endif  // _LIBTPTP_SPECIFICATION_H_
+#endif  // _LIBTPTP_DEFINITION_H_
 
 //
 //  Local variables:

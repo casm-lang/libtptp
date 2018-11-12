@@ -48,7 +48,18 @@ using namespace libtptp;
 //
 
 Specification::Specification( void )
+: m_definitions()
 {
+}
+
+void Specification::setDefinitions( const Definitions::Ptr& defintions )
+{
+    m_definitions = defintions;
+}
+
+const Definitions::Ptr& Specification::definitions( void ) const
+{
+    return m_definitions;
 }
 
 //
