@@ -61,6 +61,8 @@ namespace libtptp
             IDENTIFIER,
             TRACE,
             RECORD,
+            // Definition
+            INCLUDE_DEFINITION,
 
             // formulae
             FOF_FORMULA,
@@ -161,7 +163,6 @@ namespace libtptp
     };
 
     using Nodes = NodeList< Node >;
-
     using Identifiers = NodeList< Identifier >;
 
     template < typename T, typename... Args >

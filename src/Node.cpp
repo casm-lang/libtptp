@@ -101,6 +101,11 @@ std::string Node::description( void ) const
             }
         }
 
+        // definition
+        case ID::INCLUDE_DEFINITION:
+        {
+            return "include";
+        }
         // formulae
         case ID::FOF_FORMULA:
         {

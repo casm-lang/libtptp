@@ -39,42 +39,76 @@
 //  statement from your version.
 //
 
-#ifndef _LIBTPTP_SPECIFICATION_H_
-#define _LIBTPTP_SPECIFICATION_H_
+#include "Definition.h"
 
-#include <libtptp/Definition>
-#include <libtptp/Node>
+using namespace libtptp;
 
-/**
-   @brief    TODO
+//
+//
+// Definition
+//
 
-   TODO
-*/
-
-namespace libtptp
+Definition::Definition( const ID id )
+: Node( id )
 {
-    /**
-       @extends TPTP
-    */
-    class Specification
-    {
-      public:
-        using Ptr = std::shared_ptr< Specification >;
-
-        Specification( void );
-
-        void setDefinitions( const Definitions::Ptr& defintions );
-
-        const Definitions::Ptr& definitions( void ) const;
-
-      private:
-        Definitions::Ptr m_definitions;
-    };
-
-    using Specifications = NodeList< Specification >;
 }
 
-#endif  // _LIBTPTP_SPECIFICATION_H_
+//
+//
+// Include Definition
+//
+IncludeDefinition::IncludeDefinition(
+    const Token::Ptr& includeToken,
+    const Token::Ptr& leftParenToken,
+    const Identifier::Ptr& filename,
+    const Token::Ptr& commaToken,
+    const Nodes::Ptr& formulaSelection,
+    const Token::Ptr& rightParenToken,
+    const Token::Ptr& dotToken )
+: Definition( ID::INCLUDE_DEFINITION )
+, m_includeToken( includeToken )
+, m_leftParenToken( leftParenToken )
+, m_filename( filename )
+, m_commaToken( commaToken )
+, m_formulaSelection( formulaSelection )
+, m_rightParenToken( rightParenToken )
+, m_dotToken( dotToken )
+{
+}
+
+const Token::Ptr& IncludeDefinition::includeToken( void ) const
+{
+    return m_includeToken;
+}
+const Token::Ptr& IncludeDefinition::leftParenToken( void ) const
+{
+    return m_leftParenToken;
+}
+const Identifier::Ptr& IncludeDefinition::filename( void ) const
+{
+    return m_filename;
+}
+const Token::Ptr& IncludeDefinition::commaToken( void ) const
+{
+    return m_commaToken;
+}
+const Nodes::Ptr& IncludeDefinition::formulaSelection( void ) const
+{
+    return m_formulaSelection;
+}
+const Token::Ptr& IncludeDefinition::rightParenToken( void ) const
+{
+    return m_rightParenToken;
+}
+const Token::Ptr& IncludeDefinition::dotToken( void ) const
+{
+    return m_dotToken;
+}
+
+void IncludeDefinition::accept( Visitor& visitor )
+{
+    // visitor.visit( *this ); // TODO: Fixme @moosbruggerj
+}
 
 //
 //  Local variables:

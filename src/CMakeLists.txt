@@ -48,6 +48,7 @@ include_directories(
 
 add_library( ${PROJECT}-cpp OBJECT
   Atom.cpp
+  Definition.cpp
   Formula.cpp
   Logic.cpp
   Logger.cpp
@@ -91,6 +92,7 @@ ecm_generate_headers( ${PROJECT}_HEADERS_CPP
     CAMELCASE
   HEADER_NAMES
     Atom
+    Definition
     Formula
     Logic
     Logger
