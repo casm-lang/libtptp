@@ -56,7 +56,7 @@ namespace libtptp
     class Lexer : public yyFlexLexer
     {
       public:
-        Lexer( /* Logger& log, */ std::istream& in, std::ostream& out );
+        Lexer( Logger& log, std::istream& in, std::ostream& out );
 
         void setFileName( const std::string& fileName );
 
@@ -66,7 +66,7 @@ namespace libtptp
         void LexerError( const char* msg ) override;
 
       private:
-        // Logger& m_log;
+        Logger& m_log;
         SourceLocation m_loc;
         std::string m_strbuf;
     };
