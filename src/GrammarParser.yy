@@ -69,6 +69,8 @@
     #include <libtptp/Specification>
     #include <libtptp/Token>
 
+	#include <libtptp/Logger>
+
     #include "../../src/SourceLocation.h"
 
     using namespace libtptp;
@@ -82,16 +84,18 @@
 
 %code
 {
+    // #include <libtptp/ ... >
+
+    //#include "../../src/SourceLocation.h"
     #include "../../src/Lexer.h"
     #include "../../src/various/GrammarToken.h"
-
-    #include <libtptp/Logger>
 
     #include <libstdhl/Type>
 
     #undef yylex
     #define yylex m_lexer.nextToken
 
+	static const auto uToken = std::make_shared<Token>(Grammar::Token::UNRESOLVED );
     // static Lexer helper functions shall be located here 
 }
 
@@ -114,6 +118,9 @@ END       0 "end of file"
 // %type <Identifier::Ptr> Identifier
 
 // definitions
+%type <IncludeDefinition::Ptr> IncludeDefinition
+%type <Definition::Ptr> Definition
+%type <Definitions::Ptr> Definitions
 // %type <Atom::Ptr> Atom
 
 %start Specification
@@ -125,43 +132,36 @@ END       0 "end of file"
 
 
 Specification
-: Inputs
+: Definitions
   {
-      //m_specification.setInputs( $1 );
+      m_specification.setDefinitions( $1 );
   }
 ;
 
-Inputs
-: Inputs Input
+Definitions
+: Definitions Definition
   {
-    //auto inputs = $1;
-    //inputs->add($2);
-    //$$ = inputs;
+    const auto definitions = $1;
+    definitions->add($2);
+    $$ = definitions;
   }
-| Input
+| Definition
   {
-    //auto inputs = make< Nodes >( @$ );
-    //inputs->add( $1 );
-    //$$ = inputs;
+    const auto definitions = make< Definitions >( @$ );
+    definitions->add( $1 );
+    $$ = definitions;
   }
 ;
 
-/*
-Input 
-: Identifier 
-  {
-  }
-;
-*/
 
-Input
-: AnnotatedFormula 
+Definition
+: AnnotatedFormula  /*FormulaDefinition*/
   {
       //$$ = $1;
   }
-| Include
+| IncludeDefinition
   {
-      //$$ = $1;
+      $$ = $1;
   }
 ;
 
@@ -1749,12 +1749,19 @@ GeneralList
 ;
 
 
-Include
+IncludeDefinition
 : INCLUDE LPAREN FileName RPAREN DOT
   {
+	const auto filename= libtptp::make<Identifier>(@3, "");
+	const auto formulaSelection = libtptp::make< Nodes >(@5);
+	$$ = libtptp::make< IncludeDefinition >(@$, $1, $2, filename, uToken, formulaSelection, $4, $5);
   }
 | INCLUDE LPAREN FileName COMMA FormulaSelection RPAREN DOT
   {
+	const auto filename= libtptp::make<Identifier>(@3, "");
+	const auto formulaSelection = libtptp::make< Nodes >(@5);
+	$$ = libtptp::make< IncludeDefinition >(@$, $1, $2, filename, $4, formulaSelection, $6, $7);
+	//$$ = libtptp::make< IncludeDefinition >(@$, $1, $2, $3, $4, $5, $6, $7);
   }
 ;
 
