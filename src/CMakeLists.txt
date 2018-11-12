@@ -48,8 +48,9 @@ include_directories(
 
 add_library( ${PROJECT}-cpp OBJECT
   Atom.cpp
-  Logic.cpp
   Formula.cpp
+  Logic.cpp
+  Logger.cpp
   Node.cpp
   Record.cpp
   Specification.cpp
@@ -90,8 +91,9 @@ ecm_generate_headers( ${PROJECT}_HEADERS_CPP
     CAMELCASE
   HEADER_NAMES
     Atom
-    Logic
     Formula
+    Logic
+    Logger
     Node
     Record
     Role
