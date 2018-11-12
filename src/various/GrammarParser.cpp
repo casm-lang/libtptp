@@ -1,4 +1,4 @@
-// A Bison parser, made by GNU Bison 3.1.
+// A Bison parser, made by GNU Bison 3.2.
 
 // Skeleton implementation for Bison LALR(1) parsers in C++
 
@@ -30,32 +30,23 @@
 // This special exception was added by the Free Software Foundation in
 // version 2.2 of Bison.
 
+// Undocumented macros, especially those whose name start with YY_,
+// are private implementation details.  Do not rely on them.
 
-// First part of user declarations.
 
-#line 37 "GrammarParser.cpp" // lalr1.cc:407
 
-# ifndef YY_NULLPTR
-#  if defined __cplusplus && 201103L <= __cplusplus
-#   define YY_NULLPTR nullptr
-#  else
-#   define YY_NULLPTR 0
-#  endif
-# endif
+
 
 #include "GrammarParser.tab.h"
 
-// User implementation prologue.
 
-#line 51 "GrammarParser.cpp" // lalr1.cc:415
 // Unqualified %code blocks.
-#line 84 "../../obj/src/GrammarParser.yy" // lalr1.cc:416
+#line 84 "../../obj/src/GrammarParser.yy" // lalr1.cc:437
 
-    // #include <libtptp/ ... >
-
-    //#include "../../src/SourceLocation.h"
     #include "../../src/Lexer.h"
     #include "../../src/various/GrammarToken.h"
+
+    #include <libtptp/Logger>
 
     #include <libstdhl/Type>
 
@@ -64,7 +55,7 @@
 
     // static Lexer helper functions shall be located here 
 
-#line 68 "GrammarParser.cpp" // lalr1.cc:416
+#line 59 "GrammarParser.cpp" // lalr1.cc:437
 
 
 #ifndef YY_
@@ -157,9 +148,9 @@
 #define YYERROR         goto yyerrorlab
 #define YYRECOVERING()  (!!yyerrstatus_)
 
-#line 47 "../../obj/src/GrammarParser.yy" // lalr1.cc:491
+#line 47 "../../obj/src/GrammarParser.yy" // lalr1.cc:512
 namespace libtptp {
-#line 163 "GrammarParser.cpp" // lalr1.cc:491
+#line 154 "GrammarParser.cpp" // lalr1.cc:512
 
   /* Return YYSTR after stripping away unnecessary quotes and
      backslashes, so that it's suitable for yyerror.  The heuristic is
@@ -200,12 +191,13 @@ namespace libtptp {
 
 
   /// Build a parser object.
-  Parser::Parser (Lexer& m_lexer_yyarg, Specification& m_specification_yyarg)
+  Parser::Parser (Logger& m_log_yyarg, Lexer& m_lexer_yyarg, Specification& m_specification_yyarg)
     :
 #if YYDEBUG
       yydebug_ (false),
       yycdebug_ (&std::cerr),
 #endif
+      m_log (m_log_yyarg),
       m_lexer (m_lexer_yyarg),
       m_specification (m_specification_yyarg)
   {}
@@ -258,13 +250,13 @@ namespace libtptp {
   Parser::stack_symbol_type::stack_symbol_type ()
   {}
 
-  Parser::stack_symbol_type::stack_symbol_type (const stack_symbol_type& that)
-    : super_type (that.state, that.location)
+  Parser::stack_symbol_type::stack_symbol_type (YY_RVREF (stack_symbol_type) that)
+    : super_type (YY_MOVE (that.state), YY_MOVE (that.location))
   {
     switch (that.type_get ())
     {
       case 57: // Specification
-        value.copy< Specification::Ptr > (that.value);
+        value.YY_MOVE_OR_COPY< Specification::Ptr > (YY_MOVE (that.value));
         break;
 
       case 3: // "tpi"
@@ -312,7 +304,7 @@ namespace libtptp {
       case 45: // "-->"
       case 46: // "<<"
       case 47: // "include"
-        value.copy< Token::Ptr > (that.value);
+        value.YY_MOVE_OR_COPY< Token::Ptr > (YY_MOVE (that.value));
         break;
 
       case 48: // "integer"
@@ -323,18 +315,100 @@ namespace libtptp {
       case 53: // "upper_word"
       case 54: // "identifier"
       case 55: // "single_quoted"
-        value.copy< std::string > (that.value);
+        value.YY_MOVE_OR_COPY< std::string > (YY_MOVE (that.value));
         break;
 
       default:
         break;
     }
 
+#if defined __cplusplus && 201103L <= __cplusplus
+    // that is emptied.
+    that.state = empty_state;
+#endif
   }
 
-  Parser::stack_symbol_type::stack_symbol_type (state_type s, symbol_type& that)
-    : super_type (s, that.location)
+  Parser::stack_symbol_type::stack_symbol_type (state_type s, YY_MOVE_REF (symbol_type) that)
+    : super_type (s, YY_MOVE (that.location))
   {
+    switch (that.type_get ())
+    {
+      case 57: // Specification
+        value.move< Specification::Ptr > (YY_MOVE (that.value));
+        break;
+
+      case 3: // "tpi"
+      case 4: // "thf"
+      case 5: // "tff"
+      case 6: // "tcf"
+      case 7: // "fof"
+      case 8: // "cnf"
+      case 9: // "fot"
+      case 10: // "ite"
+      case 11: // "let"
+      case 12: // "@"
+      case 13: // "&"
+      case 14: // "$"
+      case 15: // ":"
+      case 16: // ","
+      case 17: // "."
+      case 18: // "+"
+      case 19: // "-"
+      case 20: // "="
+      case 21: // "("
+      case 22: // ")"
+      case 23: // "["
+      case 24: // "]"
+      case 25: // "{"
+      case 26: // "}"
+      case 27: // "|"
+      case 28: // "*"
+      case 29: // ">"
+      case 30: // "<"
+      case 31: // "!"
+      case 32: // "~"
+      case 33: // "?"
+      case 34: // "^"
+      case 35: // "!!"
+      case 36: // "??"
+      case 37: // "@@"
+      case 38: // "<=>"
+      case 39: // "=>"
+      case 40: // "<="
+      case 41: // "<~>"
+      case 42: // "~|"
+      case 43: // "~&"
+      case 44: // ":="
+      case 45: // "-->"
+      case 46: // "<<"
+      case 47: // "include"
+        value.move< Token::Ptr > (YY_MOVE (that.value));
+        break;
+
+      case 48: // "integer"
+      case 49: // "real"
+      case 50: // "rational"
+      case 51: // "double_quoted"
+      case 52: // "lower_word"
+      case 53: // "upper_word"
+      case 54: // "identifier"
+      case 55: // "single_quoted"
+        value.move< std::string > (YY_MOVE (that.value));
+        break;
+
+      default:
+        break;
+    }
+
+    // that is emptied.
+    that.type = empty_symbol;
+  }
+
+#if defined __cplusplus && __cplusplus < 201103L
+  Parser::stack_symbol_type&
+  Parser::stack_symbol_type::operator= (stack_symbol_type& that)
+  {
+    state = that.state;
     switch (that.type_get ())
     {
       case 57: // Specification
@@ -404,87 +478,12 @@ namespace libtptp {
         break;
     }
 
-    // that is emptied.
-    that.type = empty_symbol;
-  }
-
-  Parser::stack_symbol_type&
-  Parser::stack_symbol_type::operator= (const stack_symbol_type& that)
-  {
-    state = that.state;
-    switch (that.type_get ())
-    {
-      case 57: // Specification
-        value.copy< Specification::Ptr > (that.value);
-        break;
-
-      case 3: // "tpi"
-      case 4: // "thf"
-      case 5: // "tff"
-      case 6: // "tcf"
-      case 7: // "fof"
-      case 8: // "cnf"
-      case 9: // "fot"
-      case 10: // "ite"
-      case 11: // "let"
-      case 12: // "@"
-      case 13: // "&"
-      case 14: // "$"
-      case 15: // ":"
-      case 16: // ","
-      case 17: // "."
-      case 18: // "+"
-      case 19: // "-"
-      case 20: // "="
-      case 21: // "("
-      case 22: // ")"
-      case 23: // "["
-      case 24: // "]"
-      case 25: // "{"
-      case 26: // "}"
-      case 27: // "|"
-      case 28: // "*"
-      case 29: // ">"
-      case 30: // "<"
-      case 31: // "!"
-      case 32: // "~"
-      case 33: // "?"
-      case 34: // "^"
-      case 35: // "!!"
-      case 36: // "??"
-      case 37: // "@@"
-      case 38: // "<=>"
-      case 39: // "=>"
-      case 40: // "<="
-      case 41: // "<~>"
-      case 42: // "~|"
-      case 43: // "~&"
-      case 44: // ":="
-      case 45: // "-->"
-      case 46: // "<<"
-      case 47: // "include"
-        value.copy< Token::Ptr > (that.value);
-        break;
-
-      case 48: // "integer"
-      case 49: // "real"
-      case 50: // "rational"
-      case 51: // "double_quoted"
-      case 52: // "lower_word"
-      case 53: // "upper_word"
-      case 54: // "identifier"
-      case 55: // "single_quoted"
-        value.copy< std::string > (that.value);
-        break;
-
-      default:
-        break;
-    }
-
     location = that.location;
+    // that is emptied.
+    that.state = empty_state;
     return *this;
   }
-
+#endif
 
   template <typename Base>
   void
@@ -516,22 +515,26 @@ namespace libtptp {
 #endif
 
   void
-  Parser::yypush_ (const char* m, state_type s, symbol_type& sym)
-  {
-    stack_symbol_type t (s, sym);
-    yypush_ (m, t);
-  }
-
-  void
-  Parser::yypush_ (const char* m, stack_symbol_type& s)
+  Parser::yypush_ (const char* m, YY_MOVE_REF (stack_symbol_type) sym)
   {
     if (m)
-      YY_SYMBOL_PRINT (m, s);
-    yystack_.push (s);
+      YY_SYMBOL_PRINT (m, sym);
+    yystack_.push (YY_MOVE (sym));
   }
 
   void
-  Parser::yypop_ (unsigned n)
+  Parser::yypush_ (const char* m, state_type s, YY_MOVE_REF (symbol_type) sym)
+  {
+#if defined __cplusplus && 201103L <= __cplusplus
+    yypush_ (m, stack_symbol_type (s, std::move (sym)));
+#else
+    stack_symbol_type ss (s, sym);
+    yypush_ (m, ss);
+#endif
+  }
+
+  void
+  Parser::yypop_ (int n)
   {
     yystack_.pop (n);
   }
@@ -586,6 +589,12 @@ namespace libtptp {
   }
 
   int
+  Parser::operator() ()
+  {
+    return parse ();
+  }
+
+  int
   Parser::parse ()
   {
     // State.
@@ -618,7 +627,7 @@ namespace libtptp {
        location values to have been already stored, initialize these
        stacks with a primary value.  */
     yystack_.clear ();
-    yypush_ (YY_NULLPTR, 0, yyla);
+    yypush_ (YY_NULLPTR, 0, YY_MOVE (yyla));
 
     // A new symbol was pushed on the stack.
   yynewstate:
@@ -679,7 +688,7 @@ namespace libtptp {
       --yyerrstatus_;
 
     // Shift the lookahead token.
-    yypush_ ("Shifting", yyn, yyla);
+    yypush_ ("Shifting", yyn, YY_MOVE (yyla));
     goto yynewstate;
 
   /*-----------------------------------------------------------.
@@ -705,7 +714,7 @@ namespace libtptp {
       switch (yyr1_[yyn])
     {
       case 57: // Specification
-        yylhs.value.build< Specification::Ptr > ();
+        yylhs.value.emplace< Specification::Ptr > ();
         break;
 
       case 3: // "tpi"
@@ -753,7 +762,7 @@ namespace libtptp {
       case 45: // "-->"
       case 46: // "<<"
       case 47: // "include"
-        yylhs.value.build< Token::Ptr > ();
+        yylhs.value.emplace< Token::Ptr > ();
         break;
 
       case 48: // "integer"
@@ -764,7 +773,7 @@ namespace libtptp {
       case 53: // "upper_word"
       case 54: // "identifier"
       case 55: // "single_quoted"
-        yylhs.value.build< std::string > ();
+        yylhs.value.emplace< std::string > ();
         break;
 
       default:
@@ -788,1439 +797,1439 @@ namespace libtptp {
           switch (yyn)
             {
   case 2:
-#line 219 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 218 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
       //m_specification.setInputs( $1 );
   }
-#line 796 "GrammarParser.cpp" // lalr1.cc:870
+#line 805 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 3:
-#line 226 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 225 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
     //auto inputs = $1;
     //inputs->add($2);
     //$$ = inputs;
   }
-#line 806 "GrammarParser.cpp" // lalr1.cc:870
+#line 815 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 4:
-#line 232 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 231 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
     //auto inputs = make< Nodes >( @$ );
     //inputs->add( $1 );
     //$$ = inputs;
   }
-#line 816 "GrammarParser.cpp" // lalr1.cc:870
+#line 825 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 5:
-#line 249 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 248 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
       //$$ = $1;
   }
-#line 824 "GrammarParser.cpp" // lalr1.cc:870
+#line 833 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 6:
-#line 253 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 252 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
       //$$ = $1;
   }
-#line 832 "GrammarParser.cpp" // lalr1.cc:870
+#line 841 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 7:
-#line 287 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 286 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
     //auto formula = $1;
     //formula->set ...
   }
-#line 841 "GrammarParser.cpp" // lalr1.cc:870
+#line 850 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 8:
-#line 294 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 293 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 848 "GrammarParser.cpp" // lalr1.cc:870
+#line 857 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 9:
-#line 297 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 296 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 855 "GrammarParser.cpp" // lalr1.cc:870
+#line 864 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 10:
-#line 300 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 299 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 862 "GrammarParser.cpp" // lalr1.cc:870
+#line 871 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 11:
-#line 303 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 302 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 869 "GrammarParser.cpp" // lalr1.cc:870
+#line 878 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 12:
-#line 306 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 305 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
     //$$ = libtptp::make< FirstOrderFormula >( @$ );
   }
-#line 877 "GrammarParser.cpp" // lalr1.cc:870
+#line 886 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 13:
-#line 310 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 309 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 884 "GrammarParser.cpp" // lalr1.cc:870
+#line 893 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 14:
-#line 316 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 315 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
     //auto formula = $1;
     //formula->setAnnotations($3);
     //$$ = formula;
   }
-#line 894 "GrammarParser.cpp" // lalr1.cc:870
+#line 903 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 15:
-#line 322 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 321 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
     //$$ = $1;
   }
-#line 902 "GrammarParser.cpp" // lalr1.cc:870
+#line 911 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 16:
-#line 329 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 328 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
     //source
   }
-#line 910 "GrammarParser.cpp" // lalr1.cc:870
+#line 919 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 17:
-#line 333 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 332 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
     //source, optionalInfo
   }
-#line 918 "GrammarParser.cpp" // lalr1.cc:870
+#line 927 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 18:
-#line 340 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 339 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 925 "GrammarParser.cpp" // lalr1.cc:870
+#line 934 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 19:
-#line 346 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 345 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 932 "GrammarParser.cpp" // lalr1.cc:870
+#line 941 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 20:
-#line 349 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 348 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 939 "GrammarParser.cpp" // lalr1.cc:870
+#line 948 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 21:
-#line 352 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 351 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 946 "GrammarParser.cpp" // lalr1.cc:870
+#line 955 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 22:
-#line 355 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 354 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 953 "GrammarParser.cpp" // lalr1.cc:870
+#line 962 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 23:
-#line 361 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 360 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 960 "GrammarParser.cpp" // lalr1.cc:870
+#line 969 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 24:
-#line 364 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 363 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 967 "GrammarParser.cpp" // lalr1.cc:870
+#line 976 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 25:
-#line 367 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 366 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 974 "GrammarParser.cpp" // lalr1.cc:870
+#line 983 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 26:
-#line 370 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 369 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 981 "GrammarParser.cpp" // lalr1.cc:870
+#line 990 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 27:
-#line 376 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 375 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 988 "GrammarParser.cpp" // lalr1.cc:870
+#line 997 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 28:
-#line 379 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 378 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 995 "GrammarParser.cpp" // lalr1.cc:870
+#line 1004 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 29:
-#line 382 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 381 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1002 "GrammarParser.cpp" // lalr1.cc:870
+#line 1011 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 30:
-#line 388 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 387 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1009 "GrammarParser.cpp" // lalr1.cc:870
+#line 1018 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 31:
-#line 394 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 393 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1016 "GrammarParser.cpp" // lalr1.cc:870
+#line 1025 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 32:
-#line 397 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 396 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1023 "GrammarParser.cpp" // lalr1.cc:870
+#line 1032 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 33:
-#line 400 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 399 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1030 "GrammarParser.cpp" // lalr1.cc:870
+#line 1039 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 34:
-#line 406 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 405 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1037 "GrammarParser.cpp" // lalr1.cc:870
+#line 1046 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 35:
-#line 409 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 408 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1044 "GrammarParser.cpp" // lalr1.cc:870
+#line 1053 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 36:
-#line 415 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 414 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1051 "GrammarParser.cpp" // lalr1.cc:870
+#line 1060 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 37:
-#line 418 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 417 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1058 "GrammarParser.cpp" // lalr1.cc:870
+#line 1067 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 38:
-#line 424 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 423 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1065 "GrammarParser.cpp" // lalr1.cc:870
+#line 1074 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 39:
-#line 427 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 426 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1072 "GrammarParser.cpp" // lalr1.cc:870
+#line 1081 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 40:
-#line 433 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 432 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1079 "GrammarParser.cpp" // lalr1.cc:870
+#line 1088 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 41:
-#line 436 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 435 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1086 "GrammarParser.cpp" // lalr1.cc:870
+#line 1095 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 42:
-#line 439 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 438 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1093 "GrammarParser.cpp" // lalr1.cc:870
+#line 1102 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 43:
-#line 445 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 444 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1100 "GrammarParser.cpp" // lalr1.cc:870
+#line 1109 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 44:
-#line 448 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 447 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1107 "GrammarParser.cpp" // lalr1.cc:870
+#line 1116 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 45:
-#line 454 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 453 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1114 "GrammarParser.cpp" // lalr1.cc:870
+#line 1123 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 46:
-#line 457 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 456 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1121 "GrammarParser.cpp" // lalr1.cc:870
+#line 1130 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 47:
-#line 460 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 459 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1128 "GrammarParser.cpp" // lalr1.cc:870
+#line 1137 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 48:
-#line 463 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 462 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1135 "GrammarParser.cpp" // lalr1.cc:870
+#line 1144 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 49:
-#line 469 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 468 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1142 "GrammarParser.cpp" // lalr1.cc:870
+#line 1151 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 50:
-#line 475 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 474 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1149 "GrammarParser.cpp" // lalr1.cc:870
+#line 1158 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 51:
-#line 481 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 480 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1156 "GrammarParser.cpp" // lalr1.cc:870
+#line 1165 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 52:
-#line 484 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 483 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1163 "GrammarParser.cpp" // lalr1.cc:870
+#line 1172 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 53:
-#line 490 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 489 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1170 "GrammarParser.cpp" // lalr1.cc:870
+#line 1179 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 54:
-#line 496 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 495 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1177 "GrammarParser.cpp" // lalr1.cc:870
+#line 1186 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 55:
-#line 499 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 498 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1184 "GrammarParser.cpp" // lalr1.cc:870
+#line 1193 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 56:
-#line 505 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 504 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1191 "GrammarParser.cpp" // lalr1.cc:870
+#line 1200 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 57:
-#line 511 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 510 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1198 "GrammarParser.cpp" // lalr1.cc:870
+#line 1207 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 58:
-#line 517 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 516 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1205 "GrammarParser.cpp" // lalr1.cc:870
+#line 1214 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 59:
-#line 520 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 519 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1212 "GrammarParser.cpp" // lalr1.cc:870
+#line 1221 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 60:
-#line 523 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 522 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1219 "GrammarParser.cpp" // lalr1.cc:870
+#line 1228 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 61:
-#line 526 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 525 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1226 "GrammarParser.cpp" // lalr1.cc:870
+#line 1235 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 62:
-#line 532 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 531 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1233 "GrammarParser.cpp" // lalr1.cc:870
+#line 1242 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 63:
-#line 535 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 534 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1240 "GrammarParser.cpp" // lalr1.cc:870
+#line 1249 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 64:
-#line 541 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 540 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1247 "GrammarParser.cpp" // lalr1.cc:870
+#line 1256 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 65:
-#line 544 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 543 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1254 "GrammarParser.cpp" // lalr1.cc:870
+#line 1263 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 66:
-#line 547 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 546 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1261 "GrammarParser.cpp" // lalr1.cc:870
+#line 1270 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 67:
-#line 550 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 549 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1268 "GrammarParser.cpp" // lalr1.cc:870
+#line 1277 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 68:
-#line 553 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 552 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1275 "GrammarParser.cpp" // lalr1.cc:870
+#line 1284 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 69:
-#line 559 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 558 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1282 "GrammarParser.cpp" // lalr1.cc:870
+#line 1291 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 70:
-#line 565 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 564 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1289 "GrammarParser.cpp" // lalr1.cc:870
+#line 1298 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 71:
-#line 571 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 570 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1296 "GrammarParser.cpp" // lalr1.cc:870
+#line 1305 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 72:
-#line 574 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 573 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1303 "GrammarParser.cpp" // lalr1.cc:870
+#line 1312 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 73:
-#line 577 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 576 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1310 "GrammarParser.cpp" // lalr1.cc:870
+#line 1319 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 74:
-#line 583 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 582 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1317 "GrammarParser.cpp" // lalr1.cc:870
+#line 1326 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 75:
-#line 589 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 588 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1324 "GrammarParser.cpp" // lalr1.cc:870
+#line 1333 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 76:
-#line 595 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 594 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1331 "GrammarParser.cpp" // lalr1.cc:870
+#line 1340 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 77:
-#line 598 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 597 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1338 "GrammarParser.cpp" // lalr1.cc:870
+#line 1347 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 78:
-#line 604 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 603 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1345 "GrammarParser.cpp" // lalr1.cc:870
+#line 1354 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 79:
-#line 607 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 606 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1352 "GrammarParser.cpp" // lalr1.cc:870
+#line 1361 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 80:
-#line 613 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 612 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1359 "GrammarParser.cpp" // lalr1.cc:870
+#line 1368 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 81:
-#line 616 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 615 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1366 "GrammarParser.cpp" // lalr1.cc:870
+#line 1375 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 82:
-#line 622 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 621 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1373 "GrammarParser.cpp" // lalr1.cc:870
+#line 1382 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 83:
-#line 628 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 627 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1380 "GrammarParser.cpp" // lalr1.cc:870
+#line 1389 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 84:
-#line 631 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 630 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1387 "GrammarParser.cpp" // lalr1.cc:870
+#line 1396 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 85:
-#line 637 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 636 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1394 "GrammarParser.cpp" // lalr1.cc:870
+#line 1403 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 86:
-#line 640 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 639 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1401 "GrammarParser.cpp" // lalr1.cc:870
+#line 1410 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 87:
-#line 643 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 642 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1408 "GrammarParser.cpp" // lalr1.cc:870
+#line 1417 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 88:
-#line 649 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 648 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1415 "GrammarParser.cpp" // lalr1.cc:870
+#line 1424 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 89:
-#line 652 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 651 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1422 "GrammarParser.cpp" // lalr1.cc:870
+#line 1431 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 90:
-#line 658 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 657 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1429 "GrammarParser.cpp" // lalr1.cc:870
+#line 1438 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 91:
-#line 661 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 660 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1436 "GrammarParser.cpp" // lalr1.cc:870
+#line 1445 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 92:
-#line 667 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 666 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1443 "GrammarParser.cpp" // lalr1.cc:870
+#line 1452 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 93:
-#line 670 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 669 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1450 "GrammarParser.cpp" // lalr1.cc:870
+#line 1459 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 94:
-#line 673 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 672 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1457 "GrammarParser.cpp" // lalr1.cc:870
+#line 1466 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 95:
-#line 676 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 675 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1464 "GrammarParser.cpp" // lalr1.cc:870
+#line 1473 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 96:
-#line 682 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 681 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1471 "GrammarParser.cpp" // lalr1.cc:870
+#line 1480 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 97:
-#line 688 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 687 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1478 "GrammarParser.cpp" // lalr1.cc:870
+#line 1487 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 98:
-#line 691 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 690 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1485 "GrammarParser.cpp" // lalr1.cc:870
+#line 1494 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 99:
-#line 697 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 696 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1492 "GrammarParser.cpp" // lalr1.cc:870
+#line 1501 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 100:
-#line 700 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 699 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1499 "GrammarParser.cpp" // lalr1.cc:870
+#line 1508 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 101:
-#line 703 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 702 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1506 "GrammarParser.cpp" // lalr1.cc:870
+#line 1515 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 102:
-#line 709 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 708 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1513 "GrammarParser.cpp" // lalr1.cc:870
+#line 1522 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 103:
-#line 715 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 714 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1520 "GrammarParser.cpp" // lalr1.cc:870
+#line 1529 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 104:
-#line 721 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 720 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1527 "GrammarParser.cpp" // lalr1.cc:870
+#line 1536 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 105:
-#line 724 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 723 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1534 "GrammarParser.cpp" // lalr1.cc:870
+#line 1543 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 106:
-#line 727 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 726 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1541 "GrammarParser.cpp" // lalr1.cc:870
+#line 1550 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 107:
-#line 733 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 732 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1548 "GrammarParser.cpp" // lalr1.cc:870
+#line 1557 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 108:
-#line 736 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 735 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1555 "GrammarParser.cpp" // lalr1.cc:870
+#line 1564 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 109:
-#line 742 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 741 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1562 "GrammarParser.cpp" // lalr1.cc:870
+#line 1571 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 110:
-#line 745 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 744 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1569 "GrammarParser.cpp" // lalr1.cc:870
+#line 1578 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 111:
-#line 751 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 750 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1576 "GrammarParser.cpp" // lalr1.cc:870
+#line 1585 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 112:
-#line 754 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 753 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1583 "GrammarParser.cpp" // lalr1.cc:870
+#line 1592 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 113:
-#line 760 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 759 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1590 "GrammarParser.cpp" // lalr1.cc:870
+#line 1599 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 114:
-#line 766 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 765 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1597 "GrammarParser.cpp" // lalr1.cc:870
+#line 1606 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 115:
-#line 769 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 768 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1604 "GrammarParser.cpp" // lalr1.cc:870
+#line 1613 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 116:
-#line 1544 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1543 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1611 "GrammarParser.cpp" // lalr1.cc:870
+#line 1620 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 117:
-#line 1547 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1546 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1618 "GrammarParser.cpp" // lalr1.cc:870
+#line 1627 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 118:
-#line 1550 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1549 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1625 "GrammarParser.cpp" // lalr1.cc:870
+#line 1634 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 119:
-#line 1556 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1555 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1632 "GrammarParser.cpp" // lalr1.cc:870
+#line 1641 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 120:
-#line 1559 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1558 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1639 "GrammarParser.cpp" // lalr1.cc:870
+#line 1648 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 121:
-#line 1565 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1564 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1646 "GrammarParser.cpp" // lalr1.cc:870
+#line 1655 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 122:
-#line 1568 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1567 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1653 "GrammarParser.cpp" // lalr1.cc:870
+#line 1662 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 123:
-#line 1571 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1570 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1660 "GrammarParser.cpp" // lalr1.cc:870
+#line 1669 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 124:
-#line 1577 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1576 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1667 "GrammarParser.cpp" // lalr1.cc:870
+#line 1676 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 125:
-#line 1580 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1579 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1674 "GrammarParser.cpp" // lalr1.cc:870
+#line 1683 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 126:
-#line 1586 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1585 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1681 "GrammarParser.cpp" // lalr1.cc:870
+#line 1690 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 127:
-#line 1589 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1588 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1688 "GrammarParser.cpp" // lalr1.cc:870
+#line 1697 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 128:
-#line 1592 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1591 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1695 "GrammarParser.cpp" // lalr1.cc:870
+#line 1704 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 129:
-#line 1595 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1594 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1702 "GrammarParser.cpp" // lalr1.cc:870
+#line 1711 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 130:
-#line 1598 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1597 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1709 "GrammarParser.cpp" // lalr1.cc:870
+#line 1718 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 131:
-#line 1604 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1603 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1716 "GrammarParser.cpp" // lalr1.cc:870
+#line 1725 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 132:
-#line 1607 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1606 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1723 "GrammarParser.cpp" // lalr1.cc:870
+#line 1732 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 133:
-#line 1615 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1614 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1730 "GrammarParser.cpp" // lalr1.cc:870
+#line 1739 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 134:
-#line 1618 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1617 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1737 "GrammarParser.cpp" // lalr1.cc:870
+#line 1746 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 135:
-#line 1621 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1620 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1744 "GrammarParser.cpp" // lalr1.cc:870
+#line 1753 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 136:
-#line 1624 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1623 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1751 "GrammarParser.cpp" // lalr1.cc:870
+#line 1760 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 137:
-#line 1627 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1626 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1758 "GrammarParser.cpp" // lalr1.cc:870
+#line 1767 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 138:
-#line 1630 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1629 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1765 "GrammarParser.cpp" // lalr1.cc:870
+#line 1774 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 139:
-#line 1636 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1635 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1772 "GrammarParser.cpp" // lalr1.cc:870
+#line 1781 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 140:
-#line 1639 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1638 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1779 "GrammarParser.cpp" // lalr1.cc:870
+#line 1788 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 141:
-#line 1645 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1644 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1786 "GrammarParser.cpp" // lalr1.cc:870
+#line 1795 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 142:
-#line 1669 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1668 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1793 "GrammarParser.cpp" // lalr1.cc:870
+#line 1802 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 143:
-#line 1672 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1671 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1800 "GrammarParser.cpp" // lalr1.cc:870
+#line 1809 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 144:
-#line 1678 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1677 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1807 "GrammarParser.cpp" // lalr1.cc:870
+#line 1816 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 145:
-#line 1681 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1680 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1814 "GrammarParser.cpp" // lalr1.cc:870
+#line 1823 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 146:
-#line 1687 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1686 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1821 "GrammarParser.cpp" // lalr1.cc:870
+#line 1830 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 147:
-#line 1693 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1692 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1828 "GrammarParser.cpp" // lalr1.cc:870
+#line 1837 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 148:
-#line 1699 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1698 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1835 "GrammarParser.cpp" // lalr1.cc:870
+#line 1844 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 149:
-#line 1705 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1704 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1842 "GrammarParser.cpp" // lalr1.cc:870
+#line 1851 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 150:
-#line 1711 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1710 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1849 "GrammarParser.cpp" // lalr1.cc:870
+#line 1858 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 151:
-#line 1717 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1716 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1856 "GrammarParser.cpp" // lalr1.cc:870
+#line 1865 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 152:
-#line 1723 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1722 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1863 "GrammarParser.cpp" // lalr1.cc:870
+#line 1872 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 153:
-#line 1729 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1728 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1870 "GrammarParser.cpp" // lalr1.cc:870
+#line 1879 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 154:
-#line 1735 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1734 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1877 "GrammarParser.cpp" // lalr1.cc:870
+#line 1886 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 155:
-#line 1741 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1740 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1884 "GrammarParser.cpp" // lalr1.cc:870
+#line 1893 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 156:
-#line 1744 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1743 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1891 "GrammarParser.cpp" // lalr1.cc:870
+#line 1900 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 157:
-#line 1750 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1749 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1898 "GrammarParser.cpp" // lalr1.cc:870
+#line 1907 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 158:
-#line 1753 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1752 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1905 "GrammarParser.cpp" // lalr1.cc:870
+#line 1914 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 159:
-#line 1759 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1758 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
     //$$ = $1;
   }
-#line 1913 "GrammarParser.cpp" // lalr1.cc:870
+#line 1922 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 160:
-#line 1763 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1762 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
     //$$ = $1;
   }
-#line 1921 "GrammarParser.cpp" // lalr1.cc:870
+#line 1930 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 161:
-#line 1770 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1769 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
     // $$ = libtptp::make< FormulaRole >( @$, $1 );
   }
-#line 1929 "GrammarParser.cpp" // lalr1.cc:870
+#line 1938 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 162:
-#line 1777 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1776 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1936 "GrammarParser.cpp" // lalr1.cc:870
+#line 1945 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 163:
-#line 1780 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1779 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1943 "GrammarParser.cpp" // lalr1.cc:870
+#line 1952 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 164:
-#line 1783 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1782 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1950 "GrammarParser.cpp" // lalr1.cc:870
+#line 1959 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 165:
-#line 1789 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1788 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1957 "GrammarParser.cpp" // lalr1.cc:870
+#line 1966 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 166:
-#line 1792 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1791 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1964 "GrammarParser.cpp" // lalr1.cc:870
+#line 1973 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 167:
-#line 1795 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1794 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1971 "GrammarParser.cpp" // lalr1.cc:870
+#line 1980 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 168:
-#line 1798 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1797 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1978 "GrammarParser.cpp" // lalr1.cc:870
+#line 1987 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 169:
-#line 1801 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1800 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1985 "GrammarParser.cpp" // lalr1.cc:870
+#line 1994 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 170:
-#line 1804 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1803 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1992 "GrammarParser.cpp" // lalr1.cc:870
+#line 2001 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 171:
-#line 1810 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1809 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 1999 "GrammarParser.cpp" // lalr1.cc:870
+#line 2008 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 172:
-#line 1816 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1815 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 2006 "GrammarParser.cpp" // lalr1.cc:870
+#line 2015 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 173:
-#line 1819 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1818 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
     //auto terms = $1;
     //terms->add($3);
     //$$ = terms;
   }
-#line 2016 "GrammarParser.cpp" // lalr1.cc:870
+#line 2025 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 174:
-#line 1828 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1827 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 2023 "GrammarParser.cpp" // lalr1.cc:870
+#line 2032 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 175:
-#line 1834 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1833 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 2030 "GrammarParser.cpp" // lalr1.cc:870
+#line 2039 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 176:
-#line 1837 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1836 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 2037 "GrammarParser.cpp" // lalr1.cc:870
+#line 2046 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 177:
-#line 1844 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1843 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 2044 "GrammarParser.cpp" // lalr1.cc:870
+#line 2053 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 178:
-#line 1847 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1846 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 2051 "GrammarParser.cpp" // lalr1.cc:870
+#line 2060 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 179:
-#line 1853 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1852 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 2058 "GrammarParser.cpp" // lalr1.cc:870
+#line 2067 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 180:
-#line 1859 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1858 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 2065 "GrammarParser.cpp" // lalr1.cc:870
+#line 2074 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 181:
-#line 1862 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1861 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 2072 "GrammarParser.cpp" // lalr1.cc:870
+#line 2081 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 182:
-#line 1865 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1864 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 2079 "GrammarParser.cpp" // lalr1.cc:870
+#line 2088 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 183:
-#line 1868 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1867 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 2086 "GrammarParser.cpp" // lalr1.cc:870
+#line 2095 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 184:
-#line 1871 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1870 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 2093 "GrammarParser.cpp" // lalr1.cc:870
+#line 2102 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 185:
-#line 1884 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1883 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 2100 "GrammarParser.cpp" // lalr1.cc:870
+#line 2109 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 186:
-#line 1887 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1886 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 2107 "GrammarParser.cpp" // lalr1.cc:870
+#line 2116 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 187:
-#line 1893 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1892 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 2114 "GrammarParser.cpp" // lalr1.cc:870
+#line 2123 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 188:
-#line 1899 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1898 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 2121 "GrammarParser.cpp" // lalr1.cc:870
+#line 2130 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 189:
-#line 1905 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1904 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
     //$$ = $1;
   }
-#line 2129 "GrammarParser.cpp" // lalr1.cc:870
+#line 2138 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 190:
-#line 1909 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1908 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
     //$$ = $1;
   }
-#line 2137 "GrammarParser.cpp" // lalr1.cc:870
+#line 2146 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 191:
-#line 1913 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1912 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
     //$$ = $1;
   }
-#line 2145 "GrammarParser.cpp" // lalr1.cc:870
+#line 2154 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 192:
-#line 1920 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1919 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 2152 "GrammarParser.cpp" // lalr1.cc:870
+#line 2161 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 193:
-#line 1926 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1925 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
       // ...
   }
-#line 2160 "GrammarParser.cpp" // lalr1.cc:870
+#line 2169 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 194:
-#line 1933 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1932 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
       // ...
   }
-#line 2168 "GrammarParser.cpp" // lalr1.cc:870
+#line 2177 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 195:
-#line 1939 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1938 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
       // ...
   }
-#line 2176 "GrammarParser.cpp" // lalr1.cc:870
+#line 2185 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 196:
-#line 1946 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1945 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
     // ...
   }
-#line 2184 "GrammarParser.cpp" // lalr1.cc:870
+#line 2193 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 197:
-#line 1953 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1952 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 2191 "GrammarParser.cpp" // lalr1.cc:870
+#line 2200 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 198:
-#line 1959 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1958 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
     //
   }
-#line 2199 "GrammarParser.cpp" // lalr1.cc:870
+#line 2208 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 199:
-#line 1966 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1965 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 2206 "GrammarParser.cpp" // lalr1.cc:870
+#line 2215 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 200:
-#line 1972 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1971 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 2213 "GrammarParser.cpp" // lalr1.cc:870
+#line 2222 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
   case 201:
-#line 1978 "../../obj/src/GrammarParser.yy" // lalr1.cc:870
+#line 1977 "../../obj/src/GrammarParser.yy" // lalr1.cc:906
     {
   }
-#line 2220 "GrammarParser.cpp" // lalr1.cc:870
+#line 2229 "GrammarParser.cpp" // lalr1.cc:906
     break;
 
 
-#line 2224 "GrammarParser.cpp" // lalr1.cc:870
+#line 2233 "GrammarParser.cpp" // lalr1.cc:906
             default:
               break;
             }
@@ -2238,7 +2247,7 @@ namespace libtptp {
       YY_STACK_PRINT ();
 
       // Shift the result of the reduction.
-      yypush_ (YY_NULLPTR, yylhs);
+      yypush_ (YY_NULLPTR, YY_MOVE (yylhs));
     }
     goto yynewstate;
 
@@ -2326,7 +2335,7 @@ namespace libtptp {
 
       // Shift the error token.
       error_token.state = yyn;
-      yypush_ ("Shifting", error_token);
+      yypush_ ("Shifting", YY_MOVE (error_token));
     }
     goto yynewstate;
 
@@ -2862,27 +2871,27 @@ namespace libtptp {
   const unsigned short
   Parser::yyrline_[] =
   {
-       0,   218,   218,   225,   231,   248,   252,   286,   293,   296,
-     299,   302,   305,   309,   315,   321,   328,   332,   339,   345,
-     348,   351,   354,   360,   363,   366,   369,   375,   378,   381,
-     387,   393,   396,   399,   405,   408,   414,   417,   423,   426,
-     432,   435,   438,   444,   447,   453,   456,   459,   462,   468,
-     474,   480,   483,   489,   495,   498,   504,   510,   516,   519,
-     522,   525,   531,   534,   540,   543,   546,   549,   552,   558,
-     564,   570,   573,   576,   582,   588,   594,   597,   603,   606,
-     612,   615,   621,   627,   630,   636,   639,   642,   648,   651,
-     657,   660,   666,   669,   672,   675,   681,   687,   690,   696,
-     699,   702,   708,   714,   720,   723,   726,   732,   735,   741,
-     744,   750,   753,   759,   765,   768,  1543,  1546,  1549,  1555,
-    1558,  1564,  1567,  1570,  1576,  1579,  1585,  1588,  1591,  1594,
-    1597,  1603,  1606,  1614,  1617,  1620,  1623,  1626,  1629,  1635,
-    1638,  1644,  1668,  1671,  1677,  1680,  1686,  1692,  1698,  1704,
-    1710,  1716,  1722,  1728,  1734,  1740,  1743,  1749,  1752,  1758,
-    1762,  1769,  1776,  1779,  1782,  1788,  1791,  1794,  1797,  1800,
-    1803,  1809,  1815,  1818,  1827,  1833,  1836,  1843,  1846,  1852,
-    1858,  1861,  1864,  1867,  1870,  1883,  1886,  1892,  1898,  1904,
-    1908,  1912,  1919,  1925,  1932,  1938,  1945,  1952,  1958,  1965,
-    1971,  1977
+       0,   217,   217,   224,   230,   247,   251,   285,   292,   295,
+     298,   301,   304,   308,   314,   320,   327,   331,   338,   344,
+     347,   350,   353,   359,   362,   365,   368,   374,   377,   380,
+     386,   392,   395,   398,   404,   407,   413,   416,   422,   425,
+     431,   434,   437,   443,   446,   452,   455,   458,   461,   467,
+     473,   479,   482,   488,   494,   497,   503,   509,   515,   518,
+     521,   524,   530,   533,   539,   542,   545,   548,   551,   557,
+     563,   569,   572,   575,   581,   587,   593,   596,   602,   605,
+     611,   614,   620,   626,   629,   635,   638,   641,   647,   650,
+     656,   659,   665,   668,   671,   674,   680,   686,   689,   695,
+     698,   701,   707,   713,   719,   722,   725,   731,   734,   740,
+     743,   749,   752,   758,   764,   767,  1542,  1545,  1548,  1554,
+    1557,  1563,  1566,  1569,  1575,  1578,  1584,  1587,  1590,  1593,
+    1596,  1602,  1605,  1613,  1616,  1619,  1622,  1625,  1628,  1634,
+    1637,  1643,  1667,  1670,  1676,  1679,  1685,  1691,  1697,  1703,
+    1709,  1715,  1721,  1727,  1733,  1739,  1742,  1748,  1751,  1757,
+    1761,  1768,  1775,  1778,  1781,  1787,  1790,  1793,  1796,  1799,
+    1802,  1808,  1814,  1817,  1826,  1832,  1835,  1842,  1845,  1851,
+    1857,  1860,  1863,  1866,  1869,  1882,  1885,  1891,  1897,  1903,
+    1907,  1911,  1918,  1924,  1931,  1937,  1944,  1951,  1957,  1964,
+    1970,  1976
   };
 
   // Print the state stack on the debug stream.
@@ -2915,15 +2924,15 @@ namespace libtptp {
 #endif // YYDEBUG
 
 
-#line 47 "../../obj/src/GrammarParser.yy" // lalr1.cc:1181
+#line 47 "../../obj/src/GrammarParser.yy" // lalr1.cc:1217
 } // libtptp
-#line 2921 "GrammarParser.cpp" // lalr1.cc:1181
-#line 1982 "../../obj/src/GrammarParser.yy" // lalr1.cc:1182
+#line 2930 "GrammarParser.cpp" // lalr1.cc:1217
+#line 1981 "../../obj/src/GrammarParser.yy" // lalr1.cc:1218
 
 
 void Parser::error( const SourceLocation& location, const std::string& message )
 {
-    // m_log.error( {location}, message, Code::SyntaxError );
+    m_log.error( { location }, message ); //, Code::SyntaxError );
 }
 
 //

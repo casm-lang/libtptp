@@ -1,4 +1,4 @@
-// A Bison parser, made by GNU Bison 3.1.
+// A Bison parser, made by GNU Bison 3.2.
 
 // Skeleton interface for Bison LALR(1) parsers in C++
 
@@ -30,6 +30,7 @@
 // This special exception was added by the Free Software Foundation in
 // version 2.2 of Bison.
 
+
 /**
  ** \file GrammarParser.tab.h
  ** Define the libtptp::parser class.
@@ -37,15 +38,18 @@
 
 // C++ LALR(1) parser skeleton written by Akim Demaille.
 
+// Undocumented macros, especially those whose name start with YY_,
+// are private implementation details.  Do not rely on them.
+
 #ifndef YY_YY_GRAMMARPARSER_TAB_H_INCLUDED
 # define YY_YY_GRAMMARPARSER_TAB_H_INCLUDED
 // //                    "%code requires" blocks.
-#line 61 "../../obj/src/GrammarParser.yy" // lalr1.cc:380
+#line 61 "../../obj/src/GrammarParser.yy" // lalr1.cc:403
 
     namespace libtptp
     {
         class Lexer;
-        // class Logger;
+        class Logger;
         class SourceLocation;
     }
 
@@ -58,7 +62,7 @@
 
     #define YY_NULLPTR nullptr
 
-#line 62 "GrammarParser.tab.h" // lalr1.cc:380
+#line 66 "GrammarParser.tab.h" // lalr1.cc:403
 
 # include <cassert>
 # include <cstdlib> // std::abort
@@ -66,7 +70,21 @@
 # include <stdexcept>
 # include <string>
 # include <vector>
-# include "stack.hh"
+
+// Support move semantics when possible.
+#if defined __cplusplus && 201103L <= __cplusplus
+# define YY_MOVE           std::move
+# define YY_MOVE_OR_COPY   move
+# define YY_MOVE_REF(Type) Type&&
+# define YY_RVREF(Type)    Type&&
+# define YY_COPY(Type)     Type
+#else
+# define YY_MOVE
+# define YY_MOVE_OR_COPY   copy
+# define YY_MOVE_REF(Type) Type&
+# define YY_RVREF(Type)    const Type&
+# define YY_COPY(Type)     const Type&
+#endif
 
 #include <typeinfo>
 #ifndef YYASSERT
@@ -91,15 +109,6 @@
 
 #ifndef YY_ATTRIBUTE_UNUSED
 # define YY_ATTRIBUTE_UNUSED YY_ATTRIBUTE ((__unused__))
-#endif
-
-#if !defined _Noreturn \
-     && (!defined __STDC_VERSION__ || __STDC_VERSION__ < 201112)
-# if defined _MSC_VER && 1200 <= _MSC_VER
-#  define _Noreturn __declspec (noreturn)
-# else
-#  define _Noreturn YY_ATTRIBUTE ((__noreturn__))
-# endif
 #endif
 
 /* Suppress unused-variable warnings by "using" E.  */
@@ -129,20 +138,144 @@
 #endif
 
 # ifndef YY_NULLPTR
-#  if defined __cplusplus && 201103L <= __cplusplus
-#   define YY_NULLPTR nullptr
+#  if defined __cplusplus
+#   if 201103L <= __cplusplus
+#    define YY_NULLPTR nullptr
+#   else
+#    define YY_NULLPTR 0
+#   endif
 #  else
-#   define YY_NULLPTR 0
+#   define YY_NULLPTR ((void*)0)
 #  endif
 # endif
+
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 1
 #endif
 
-#line 47 "../../obj/src/GrammarParser.yy" // lalr1.cc:380
+#line 47 "../../obj/src/GrammarParser.yy" // lalr1.cc:403
 namespace libtptp {
-#line 146 "GrammarParser.tab.h" // lalr1.cc:380
+#line 160 "GrammarParser.tab.h" // lalr1.cc:403
+
+  /// A stack with random access from its top.
+  template <typename T, typename S = std::vector<T> >
+  class stack
+  {
+  public:
+    // Hide our reversed order.
+    typedef typename S::reverse_iterator iterator;
+    typedef typename S::const_reverse_iterator const_iterator;
+    typedef typename S::size_type size_type;
+
+    stack (size_type n = 200)
+      : seq_ (n)
+    {}
+
+    /// Random access.
+    ///
+    /// Index 0 returns the topmost element.
+    T&
+    operator[] (size_type i)
+    {
+      return seq_[size () - 1 - i];
+    }
+
+    /// Random access.
+    ///
+    /// Index 0 returns the topmost element.
+    T&
+    operator[] (int i)
+    {
+      return operator[] (size_type (i));
+    }
+
+    /// Random access.
+    ///
+    /// Index 0 returns the topmost element.
+    const T&
+    operator[] (size_type i) const
+    {
+      return seq_[size () - 1 - i];
+    }
+
+    /// Random access.
+    ///
+    /// Index 0 returns the topmost element.
+    const T&
+    operator[] (int i) const
+    {
+      return operator[] (size_type (i));
+    }
+
+    /// Steal the contents of \a t.
+    ///
+    /// Close to move-semantics.
+    void
+    push (YY_MOVE_REF (T) t)
+    {
+      seq_.push_back (T ());
+      operator[](0).move (t);
+    }
+
+    void
+    pop (int n = 1)
+    {
+      for (; 0 < n; --n)
+        seq_.pop_back ();
+    }
+
+    void
+    clear ()
+    {
+      seq_.clear ();
+    }
+
+    size_type
+    size () const
+    {
+      return seq_.size ();
+    }
+
+    const_iterator
+    begin () const
+    {
+      return seq_.rbegin ();
+    }
+
+    const_iterator
+    end () const
+    {
+      return seq_.rend ();
+    }
+
+  private:
+    stack (const stack&);
+    stack& operator= (const stack&);
+    /// The wrapped container.
+    S seq_;
+  };
+
+  /// Present a slice of the top of a stack.
+  template <typename T, typename S = stack<T> >
+  class slice
+  {
+  public:
+    slice (const S& stack, int range)
+      : stack_ (stack)
+      , range_ (range)
+    {}
+
+    const T&
+    operator[] (int i) const
+    {
+      return stack_[range_ - i];
+    }
+
+  private:
+    const S& stack_;
+    int range_;
+  };
 
 
 
@@ -165,11 +298,11 @@ namespace libtptp {
 
     /// Construct and fill.
     template <typename T>
-    variant (const T& t)
+    variant (YY_RVREF (T) t)
       : yytypeid_ (&typeid (T))
     {
       YYASSERT (sizeof (T) <= S);
-      new (yyas_<T> ()) T (t);
+      new (yyas_<T> ()) T (YY_MOVE (t));
     }
 
     /// Destruction, allowed only if empty.
@@ -181,7 +314,7 @@ namespace libtptp {
     /// Instantiate an empty \a T in here.
     template <typename T>
     T&
-    build ()
+    emplace ()
     {
       YYASSERT (!yytypeid_);
       YYASSERT (sizeof (T) <= S);
@@ -189,15 +322,46 @@ namespace libtptp {
       return *new (yyas_<T> ()) T ();
     }
 
+# if defined __cplusplus && 201103L <= __cplusplus
+    /// Instantiate a \a T in here from \a t.
+    template <typename T, typename U>
+    T&
+    emplace (U&& u)
+    {
+      YYASSERT (!yytypeid_);
+      YYASSERT (sizeof (T) <= S);
+      yytypeid_ = & typeid (T);
+      return *new (yyas_<T> ()) T (std::forward <U>(u));
+    }
+# else
     /// Instantiate a \a T in here from \a t.
     template <typename T>
     T&
-    build (const T& t)
+    emplace (const T& t)
     {
       YYASSERT (!yytypeid_);
       YYASSERT (sizeof (T) <= S);
       yytypeid_ = & typeid (T);
       return *new (yyas_<T> ()) T (t);
+    }
+# endif
+
+    /// Instantiate an empty \a T in here.
+    /// Obsolete, use emplace.
+    template <typename T>
+    T&
+    build ()
+    {
+      return emplace<T> ();
+    }
+
+    /// Instantiate a \a T in here from \a t.
+    /// Obsolete, use emplace.
+    template <typename T>
+    T&
+    build (const T& t)
+    {
+      return emplace<T> (t);
     }
 
     /// Accessor to a built \a T.
@@ -227,7 +391,7 @@ namespace libtptp {
     /// Both variants must be built beforehand, because swapping the actual
     /// data requires reading it (with as()), and this is not possible on
     /// unconstructed variants: it would require some dynamic testing, which
-    /// should not be the variant's responsability.
+    /// should not be the variant's responsibility.
     /// Swapping between built and (possibly) non-built is done with
     /// variant::move ().
     template <typename T>
@@ -246,17 +410,32 @@ namespace libtptp {
     void
     move (self_type& other)
     {
-      build<T> ();
+# if defined __cplusplus && 201103L <= __cplusplus
+      emplace<T> (std::move (other.as<T> ()));
+# else
+      emplace<T> ();
       swap<T> (other);
+# endif
       other.destroy<T> ();
     }
+
+# if defined __cplusplus && 201103L <= __cplusplus
+    /// Move the content of \a other to this.
+    template <typename T>
+    void
+    move (self_type&& other)
+    {
+      emplace<T> (std::move (other.as<T> ()));
+      other.destroy<T> ();
+    }
+#endif
 
     /// Copy the content of \a other to this.
     template <typename T>
     void
     copy (const self_type& other)
     {
-      build<T> (other.as<T> ());
+      emplace<T> (other.as<T> ());
     }
 
     /// Destroy the stored \a T.
@@ -270,7 +449,7 @@ namespace libtptp {
 
   private:
     /// Prohibit blind copies.
-    self_type& operator=(const self_type&);
+    self_type& operator= (const self_type&);
     variant (const self_type&);
 
     /// Accessor to raw memory as \a T.
@@ -313,7 +492,7 @@ namespace libtptp {
     union union_type
     {
       // Specification
-      char dummy1[sizeof(Specification::Ptr)];
+      char dummy1[sizeof (Specification::Ptr)];
 
       // "tpi"
       // "thf"
@@ -360,7 +539,7 @@ namespace libtptp {
       // "-->"
       // "<<"
       // "include"
-      char dummy2[sizeof(Token::Ptr)];
+      char dummy2[sizeof (Token::Ptr)];
 
       // "integer"
       // "real"
@@ -370,11 +549,11 @@ namespace libtptp {
       // "upper_word"
       // "identifier"
       // "single_quoted"
-      char dummy3[sizeof(std::string)];
+      char dummy3[sizeof (std::string)];
 };
 
     /// Symbol semantic values.
-    typedef variant<sizeof(union_type)> semantic_type;
+    typedef variant<sizeof (union_type)> semantic_type;
 #else
     typedef YYSTYPE semantic_type;
 #endif
@@ -465,7 +644,7 @@ namespace libtptp {
     /// A complete symbol.
     ///
     /// Expects its Base type to provide access to the symbol type
-    /// via type_get().
+    /// via type_get ().
     ///
     /// Provide access to semantic value and location.
     template <typename Base>
@@ -477,24 +656,16 @@ namespace libtptp {
       /// Default constructor.
       basic_symbol ();
 
-      /// Copy constructor.
-      basic_symbol (const basic_symbol& other);
+      /// Move or copy constructor.
+      basic_symbol (YY_RVREF (basic_symbol) other);
+
 
       /// Constructor for valueless symbols, and symbols from each type.
+      basic_symbol (typename Base::kind_type t, YY_RVREF (location_type) l);
+      basic_symbol (typename Base::kind_type t, YY_RVREF (Specification::Ptr) v, YY_RVREF (location_type) l);
+      basic_symbol (typename Base::kind_type t, YY_RVREF (Token::Ptr) v, YY_RVREF (location_type) l);
+      basic_symbol (typename Base::kind_type t, YY_RVREF (std::string) v, YY_RVREF (location_type) l);
 
-  basic_symbol (typename Base::kind_type t, const location_type& l);
-
-  basic_symbol (typename Base::kind_type t, const Specification::Ptr& v, const location_type& l);
-
-  basic_symbol (typename Base::kind_type t, const Token::Ptr& v, const location_type& l);
-
-  basic_symbol (typename Base::kind_type t, const std::string& v, const location_type& l);
-
-
-      /// Constructor for symbols with semantic value.
-      basic_symbol (typename Base::kind_type t,
-                    const semantic_type& v,
-                    const location_type& l);
 
       /// Destroy the symbol.
       ~basic_symbol ();
@@ -515,8 +686,10 @@ namespace libtptp {
       location_type location;
 
     private:
+#if defined __cplusplus && __cplusplus < 201103L
       /// Assignment operator.
       basic_symbol& operator= (const basic_symbol& other);
+#endif
     };
 
     /// Type access provider for token (enum) based symbols.
@@ -556,227 +729,13 @@ namespace libtptp {
     /// "External" symbols: returned by the scanner.
     typedef basic_symbol<by_type> symbol_type;
 
-    // Symbol constructors declarations.
-    static inline
-    symbol_type
-    make_END (const location_type& l);
-
-    static inline
-    symbol_type
-    make_TPI (const Token::Ptr& v, const location_type& l);
-
-    static inline
-    symbol_type
-    make_THF (const Token::Ptr& v, const location_type& l);
-
-    static inline
-    symbol_type
-    make_TFF (const Token::Ptr& v, const location_type& l);
-
-    static inline
-    symbol_type
-    make_TCF (const Token::Ptr& v, const location_type& l);
-
-    static inline
-    symbol_type
-    make_FOF (const Token::Ptr& v, const location_type& l);
-
-    static inline
-    symbol_type
-    make_CNF (const Token::Ptr& v, const location_type& l);
-
-    static inline
-    symbol_type
-    make_FOT (const Token::Ptr& v, const location_type& l);
-
-    static inline
-    symbol_type
-    make_ITE (const Token::Ptr& v, const location_type& l);
-
-    static inline
-    symbol_type
-    make_LET (const Token::Ptr& v, const location_type& l);
-
-    static inline
-    symbol_type
-    make_AT (const Token::Ptr& v, const location_type& l);
-
-    static inline
-    symbol_type
-    make_AND (const Token::Ptr& v, const location_type& l);
-
-    static inline
-    symbol_type
-    make_DOLLAR (const Token::Ptr& v, const location_type& l);
-
-    static inline
-    symbol_type
-    make_COLON (const Token::Ptr& v, const location_type& l);
-
-    static inline
-    symbol_type
-    make_COMMA (const Token::Ptr& v, const location_type& l);
-
-    static inline
-    symbol_type
-    make_DOT (const Token::Ptr& v, const location_type& l);
-
-    static inline
-    symbol_type
-    make_PLUS (const Token::Ptr& v, const location_type& l);
-
-    static inline
-    symbol_type
-    make_MINUS (const Token::Ptr& v, const location_type& l);
-
-    static inline
-    symbol_type
-    make_EQUAL (const Token::Ptr& v, const location_type& l);
-
-    static inline
-    symbol_type
-    make_LPAREN (const Token::Ptr& v, const location_type& l);
-
-    static inline
-    symbol_type
-    make_RPAREN (const Token::Ptr& v, const location_type& l);
-
-    static inline
-    symbol_type
-    make_LSQPAREN (const Token::Ptr& v, const location_type& l);
-
-    static inline
-    symbol_type
-    make_RSQPAREN (const Token::Ptr& v, const location_type& l);
-
-    static inline
-    symbol_type
-    make_LCURPAREN (const Token::Ptr& v, const location_type& l);
-
-    static inline
-    symbol_type
-    make_RCURPAREN (const Token::Ptr& v, const location_type& l);
-
-    static inline
-    symbol_type
-    make_VLINE (const Token::Ptr& v, const location_type& l);
-
-    static inline
-    symbol_type
-    make_STAR (const Token::Ptr& v, const location_type& l);
-
-    static inline
-    symbol_type
-    make_GREATER (const Token::Ptr& v, const location_type& l);
-
-    static inline
-    symbol_type
-    make_LESS (const Token::Ptr& v, const location_type& l);
-
-    static inline
-    symbol_type
-    make_EXCLAMATION (const Token::Ptr& v, const location_type& l);
-
-    static inline
-    symbol_type
-    make_TILDE (const Token::Ptr& v, const location_type& l);
-
-    static inline
-    symbol_type
-    make_QUESTIONMARK (const Token::Ptr& v, const location_type& l);
-
-    static inline
-    symbol_type
-    make_CARET (const Token::Ptr& v, const location_type& l);
-
-    static inline
-    symbol_type
-    make_DOUBLEEXCLAMATION (const Token::Ptr& v, const location_type& l);
-
-    static inline
-    symbol_type
-    make_DOUBLEQUESTIONMARK (const Token::Ptr& v, const location_type& l);
-
-    static inline
-    symbol_type
-    make_DOUBLEAT (const Token::Ptr& v, const location_type& l);
-
-    static inline
-    symbol_type
-    make_EQUALITY (const Token::Ptr& v, const location_type& l);
-
-    static inline
-    symbol_type
-    make_IMPLICATION (const Token::Ptr& v, const location_type& l);
-
-    static inline
-    symbol_type
-    make_RIMPLICATION (const Token::Ptr& v, const location_type& l);
-
-    static inline
-    symbol_type
-    make_INEQUALITY (const Token::Ptr& v, const location_type& l);
-
-    static inline
-    symbol_type
-    make_NOR (const Token::Ptr& v, const location_type& l);
-
-    static inline
-    symbol_type
-    make_NAND (const Token::Ptr& v, const location_type& l);
-
-    static inline
-    symbol_type
-    make_ASSIGNMENT (const Token::Ptr& v, const location_type& l);
-
-    static inline
-    symbol_type
-    make_GENTZENARROW (const Token::Ptr& v, const location_type& l);
-
-    static inline
-    symbol_type
-    make_SUBTYPESIGN (const Token::Ptr& v, const location_type& l);
-
-    static inline
-    symbol_type
-    make_INCLUDE (const Token::Ptr& v, const location_type& l);
-
-    static inline
-    symbol_type
-    make_INTEGER (const std::string& v, const location_type& l);
-
-    static inline
-    symbol_type
-    make_REAL (const std::string& v, const location_type& l);
-
-    static inline
-    symbol_type
-    make_RATIONAL (const std::string& v, const location_type& l);
-
-    static inline
-    symbol_type
-    make_DQUOTED (const std::string& v, const location_type& l);
-
-    static inline
-    symbol_type
-    make_LOWER_WORD (const std::string& v, const location_type& l);
-
-    static inline
-    symbol_type
-    make_UPPER_WORD (const std::string& v, const location_type& l);
-
-    static inline
-    symbol_type
-    make_IDENTIFIER (const std::string& v, const location_type& l);
-
-    static inline
-    symbol_type
-    make_SINGLE_QUOTED (const std::string& v, const location_type& l);
-
-
     /// Build a parser object.
-    Parser (Lexer& m_lexer_yyarg, Specification& m_specification_yyarg);
+    Parser (Logger& m_log_yyarg, Lexer& m_lexer_yyarg, Specification& m_specification_yyarg);
     virtual ~Parser ();
+
+    /// Parse.  An alias for parse ().
+    /// \returns  0 iff parsing succeeded.
+    int operator() ();
 
     /// Parse.
     /// \returns  0 iff parsing succeeded.
@@ -803,6 +762,225 @@ namespace libtptp {
 
     /// Report a syntax error.
     void error (const syntax_error& err);
+
+    // Symbol constructors declarations.
+    static
+    symbol_type
+    make_END (YY_COPY (location_type) l);
+
+    static
+    symbol_type
+    make_TPI (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l);
+
+    static
+    symbol_type
+    make_THF (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l);
+
+    static
+    symbol_type
+    make_TFF (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l);
+
+    static
+    symbol_type
+    make_TCF (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l);
+
+    static
+    symbol_type
+    make_FOF (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l);
+
+    static
+    symbol_type
+    make_CNF (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l);
+
+    static
+    symbol_type
+    make_FOT (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l);
+
+    static
+    symbol_type
+    make_ITE (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l);
+
+    static
+    symbol_type
+    make_LET (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l);
+
+    static
+    symbol_type
+    make_AT (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l);
+
+    static
+    symbol_type
+    make_AND (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l);
+
+    static
+    symbol_type
+    make_DOLLAR (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l);
+
+    static
+    symbol_type
+    make_COLON (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l);
+
+    static
+    symbol_type
+    make_COMMA (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l);
+
+    static
+    symbol_type
+    make_DOT (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l);
+
+    static
+    symbol_type
+    make_PLUS (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l);
+
+    static
+    symbol_type
+    make_MINUS (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l);
+
+    static
+    symbol_type
+    make_EQUAL (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l);
+
+    static
+    symbol_type
+    make_LPAREN (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l);
+
+    static
+    symbol_type
+    make_RPAREN (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l);
+
+    static
+    symbol_type
+    make_LSQPAREN (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l);
+
+    static
+    symbol_type
+    make_RSQPAREN (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l);
+
+    static
+    symbol_type
+    make_LCURPAREN (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l);
+
+    static
+    symbol_type
+    make_RCURPAREN (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l);
+
+    static
+    symbol_type
+    make_VLINE (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l);
+
+    static
+    symbol_type
+    make_STAR (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l);
+
+    static
+    symbol_type
+    make_GREATER (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l);
+
+    static
+    symbol_type
+    make_LESS (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l);
+
+    static
+    symbol_type
+    make_EXCLAMATION (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l);
+
+    static
+    symbol_type
+    make_TILDE (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l);
+
+    static
+    symbol_type
+    make_QUESTIONMARK (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l);
+
+    static
+    symbol_type
+    make_CARET (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l);
+
+    static
+    symbol_type
+    make_DOUBLEEXCLAMATION (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l);
+
+    static
+    symbol_type
+    make_DOUBLEQUESTIONMARK (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l);
+
+    static
+    symbol_type
+    make_DOUBLEAT (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l);
+
+    static
+    symbol_type
+    make_EQUALITY (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l);
+
+    static
+    symbol_type
+    make_IMPLICATION (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l);
+
+    static
+    symbol_type
+    make_RIMPLICATION (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l);
+
+    static
+    symbol_type
+    make_INEQUALITY (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l);
+
+    static
+    symbol_type
+    make_NOR (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l);
+
+    static
+    symbol_type
+    make_NAND (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l);
+
+    static
+    symbol_type
+    make_ASSIGNMENT (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l);
+
+    static
+    symbol_type
+    make_GENTZENARROW (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l);
+
+    static
+    symbol_type
+    make_SUBTYPESIGN (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l);
+
+    static
+    symbol_type
+    make_INCLUDE (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l);
+
+    static
+    symbol_type
+    make_INTEGER (YY_COPY (std::string) v, YY_COPY (location_type) l);
+
+    static
+    symbol_type
+    make_REAL (YY_COPY (std::string) v, YY_COPY (location_type) l);
+
+    static
+    symbol_type
+    make_RATIONAL (YY_COPY (std::string) v, YY_COPY (location_type) l);
+
+    static
+    symbol_type
+    make_DQUOTED (YY_COPY (std::string) v, YY_COPY (location_type) l);
+
+    static
+    symbol_type
+    make_LOWER_WORD (YY_COPY (std::string) v, YY_COPY (location_type) l);
+
+    static
+    symbol_type
+    make_UPPER_WORD (YY_COPY (std::string) v, YY_COPY (location_type) l);
+
+    static
+    symbol_type
+    make_IDENTIFIER (YY_COPY (std::string) v, YY_COPY (location_type) l);
+
+    static
+    symbol_type
+    make_SINGLE_QUOTED (YY_COPY (std::string) v, YY_COPY (location_type) l);
+
+
 
   private:
     /// This class is not copyable.
@@ -944,12 +1122,15 @@ namespace libtptp {
       typedef basic_symbol<by_state> super_type;
       /// Construct an empty symbol.
       stack_symbol_type ();
-      /// Copy construct (for efficiency).
-      stack_symbol_type (const stack_symbol_type& that);
+      /// Move or copy construction.
+      stack_symbol_type (YY_RVREF (stack_symbol_type) that);
       /// Steal the contents from \a sym to build this.
-      stack_symbol_type (state_type s, symbol_type& sym);
-      /// Assignment, needed by push_back.
-      stack_symbol_type& operator= (const stack_symbol_type& that);
+      stack_symbol_type (state_type s, YY_MOVE_REF (symbol_type) sym);
+#if defined __cplusplus && __cplusplus < 201103L
+      /// Assignment, needed by push_back by some old implementations.
+      /// Moves the contents of that.
+      stack_symbol_type& operator= (stack_symbol_type& that);
+#endif
     };
 
     /// Stack type.
@@ -961,20 +1142,20 @@ namespace libtptp {
     /// Push a new state on the stack.
     /// \param m    a debug message to display
     ///             if null, no trace is output.
-    /// \param s    the symbol
+    /// \param sym  the symbol
     /// \warning the contents of \a s.value is stolen.
-    void yypush_ (const char* m, stack_symbol_type& s);
+    void yypush_ (const char* m, YY_MOVE_REF (stack_symbol_type) sym);
 
     /// Push a new look ahead token on the state on the stack.
     /// \param m    a debug message to display
     ///             if null, no trace is output.
     /// \param s    the state
     /// \param sym  the symbol (for its value and location).
-    /// \warning the contents of \a s.value is stolen.
-    void yypush_ (const char* m, state_type s, symbol_type& sym);
+    /// \warning the contents of \a sym.value is stolen.
+    void yypush_ (const char* m, state_type s, YY_MOVE_REF (symbol_type) sym);
 
-    /// Pop \a n symbols the three stacks.
-    void yypop_ (unsigned n = 1);
+    /// Pop \a n symbols from the stack.
+    void yypop_ (int n = 1);
 
     /// Constants.
     enum
@@ -990,6 +1171,7 @@ namespace libtptp {
 
 
     // User arguments.
+    Logger& m_log;
     Lexer& m_lexer;
     Specification& m_specification;
   };
@@ -1061,15 +1243,15 @@ namespace libtptp {
   {}
 
   template <typename Base>
-  Parser::basic_symbol<Base>::basic_symbol (const basic_symbol& other)
-    : Base (other)
+  Parser::basic_symbol<Base>::basic_symbol (YY_RVREF (basic_symbol) other)
+    : Base (YY_MOVE (other))
     , value ()
-    , location (other.location)
+    , location (YY_MOVE (other.location))
   {
     switch (other.type_get ())
     {
       case 57: // Specification
-        value.copy< Specification::Ptr > (other.value);
+        value.YY_MOVE_OR_COPY< Specification::Ptr > (YY_MOVE (other.value));
         break;
 
       case 3: // "tpi"
@@ -1117,7 +1299,7 @@ namespace libtptp {
       case 45: // "-->"
       case 46: // "<<"
       case 47: // "include"
-        value.copy< Token::Ptr > (other.value);
+        value.YY_MOVE_OR_COPY< Token::Ptr > (YY_MOVE (other.value));
         break;
 
       case 48: // "integer"
@@ -1128,7 +1310,7 @@ namespace libtptp {
       case 53: // "upper_word"
       case 54: // "identifier"
       case 55: // "single_quoted"
-        value.copy< std::string > (other.value);
+        value.YY_MOVE_OR_COPY< std::string > (YY_MOVE (other.value));
         break;
 
       default:
@@ -1137,112 +1319,35 @@ namespace libtptp {
 
   }
 
-  template <typename Base>
-  Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, const semantic_type& v, const location_type& l)
-    : Base (t)
-    , value ()
-    , location (l)
-  {
-    (void) v;
-    switch (this->type_get ())
-    {
-      case 57: // Specification
-        value.copy< Specification::Ptr > (v);
-        break;
-
-      case 3: // "tpi"
-      case 4: // "thf"
-      case 5: // "tff"
-      case 6: // "tcf"
-      case 7: // "fof"
-      case 8: // "cnf"
-      case 9: // "fot"
-      case 10: // "ite"
-      case 11: // "let"
-      case 12: // "@"
-      case 13: // "&"
-      case 14: // "$"
-      case 15: // ":"
-      case 16: // ","
-      case 17: // "."
-      case 18: // "+"
-      case 19: // "-"
-      case 20: // "="
-      case 21: // "("
-      case 22: // ")"
-      case 23: // "["
-      case 24: // "]"
-      case 25: // "{"
-      case 26: // "}"
-      case 27: // "|"
-      case 28: // "*"
-      case 29: // ">"
-      case 30: // "<"
-      case 31: // "!"
-      case 32: // "~"
-      case 33: // "?"
-      case 34: // "^"
-      case 35: // "!!"
-      case 36: // "??"
-      case 37: // "@@"
-      case 38: // "<=>"
-      case 39: // "=>"
-      case 40: // "<="
-      case 41: // "<~>"
-      case 42: // "~|"
-      case 43: // "~&"
-      case 44: // ":="
-      case 45: // "-->"
-      case 46: // "<<"
-      case 47: // "include"
-        value.copy< Token::Ptr > (v);
-        break;
-
-      case 48: // "integer"
-      case 49: // "real"
-      case 50: // "rational"
-      case 51: // "double_quoted"
-      case 52: // "lower_word"
-      case 53: // "upper_word"
-      case 54: // "identifier"
-      case 55: // "single_quoted"
-        value.copy< std::string > (v);
-        break;
-
-      default:
-        break;
-    }
-}
-
 
   // Implementation of basic_symbol constructor for each type.
-
   template <typename Base>
-  Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, const location_type& l)
+  Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, YY_RVREF (location_type) l)
     : Base (t)
-    , location (l)
+    , location (YY_MOVE (l))
   {}
 
   template <typename Base>
-  Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, const Specification::Ptr& v, const location_type& l)
+  Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, YY_RVREF (Specification::Ptr) v, YY_RVREF (location_type) l)
     : Base (t)
-    , value (v)
-    , location (l)
+    , value (YY_MOVE (v))
+    , location (YY_MOVE (l))
   {}
 
   template <typename Base>
-  Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, const Token::Ptr& v, const location_type& l)
+  Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, YY_RVREF (Token::Ptr) v, YY_RVREF (location_type) l)
     : Base (t)
-    , value (v)
-    , location (l)
+    , value (YY_MOVE (v))
+    , location (YY_MOVE (l))
   {}
 
   template <typename Base>
-  Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, const std::string& v, const location_type& l)
+  Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, YY_RVREF (std::string) v, YY_RVREF (location_type) l)
     : Base (t)
-    , value (v)
-    , location (l)
+    , value (YY_MOVE (v))
+    , location (YY_MOVE (l))
   {}
+
 
 
   template <typename Base>
@@ -1353,7 +1458,7 @@ namespace libtptp {
     switch (this->type_get ())
     {
       case 57: // Specification
-        value.move< Specification::Ptr > (s.value);
+        value.move< Specification::Ptr > (YY_MOVE (s.value));
         break;
 
       case 3: // "tpi"
@@ -1401,7 +1506,7 @@ namespace libtptp {
       case 45: // "-->"
       case 46: // "<<"
       case 47: // "include"
-        value.move< Token::Ptr > (s.value);
+        value.move< Token::Ptr > (YY_MOVE (s.value));
         break;
 
       case 48: // "integer"
@@ -1412,14 +1517,14 @@ namespace libtptp {
       case 53: // "upper_word"
       case 54: // "identifier"
       case 55: // "single_quoted"
-        value.move< std::string > (s.value);
+        value.move< std::string > (YY_MOVE (s.value));
         break;
 
       default:
         break;
     }
 
-    location = s.location;
+    location = YY_MOVE (s.location);
   }
 
   // by_type.
@@ -1479,335 +1584,390 @@ namespace libtptp {
     };
     return static_cast<token_type> (yytoken_number_[type]);
   }
+
   // Implementation of make_symbol for each symbol type.
+  inline
   Parser::symbol_type
-  Parser::make_END (const location_type& l)
+  Parser::make_END (YY_COPY (location_type) l)
   {
-    return symbol_type (token::END, l);
+    return symbol_type (token::END, YY_MOVE (l));
   }
 
+  inline
   Parser::symbol_type
-  Parser::make_TPI (const Token::Ptr& v, const location_type& l)
+  Parser::make_TPI (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l)
   {
-    return symbol_type (token::TPI, v, l);
+    return symbol_type (token::TPI, YY_MOVE (v), YY_MOVE (l));
   }
 
+  inline
   Parser::symbol_type
-  Parser::make_THF (const Token::Ptr& v, const location_type& l)
+  Parser::make_THF (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l)
   {
-    return symbol_type (token::THF, v, l);
+    return symbol_type (token::THF, YY_MOVE (v), YY_MOVE (l));
   }
 
+  inline
   Parser::symbol_type
-  Parser::make_TFF (const Token::Ptr& v, const location_type& l)
+  Parser::make_TFF (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l)
   {
-    return symbol_type (token::TFF, v, l);
+    return symbol_type (token::TFF, YY_MOVE (v), YY_MOVE (l));
   }
 
+  inline
   Parser::symbol_type
-  Parser::make_TCF (const Token::Ptr& v, const location_type& l)
+  Parser::make_TCF (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l)
   {
-    return symbol_type (token::TCF, v, l);
+    return symbol_type (token::TCF, YY_MOVE (v), YY_MOVE (l));
   }
 
+  inline
   Parser::symbol_type
-  Parser::make_FOF (const Token::Ptr& v, const location_type& l)
+  Parser::make_FOF (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l)
   {
-    return symbol_type (token::FOF, v, l);
+    return symbol_type (token::FOF, YY_MOVE (v), YY_MOVE (l));
   }
 
+  inline
   Parser::symbol_type
-  Parser::make_CNF (const Token::Ptr& v, const location_type& l)
+  Parser::make_CNF (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l)
   {
-    return symbol_type (token::CNF, v, l);
+    return symbol_type (token::CNF, YY_MOVE (v), YY_MOVE (l));
   }
 
+  inline
   Parser::symbol_type
-  Parser::make_FOT (const Token::Ptr& v, const location_type& l)
+  Parser::make_FOT (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l)
   {
-    return symbol_type (token::FOT, v, l);
+    return symbol_type (token::FOT, YY_MOVE (v), YY_MOVE (l));
   }
 
+  inline
   Parser::symbol_type
-  Parser::make_ITE (const Token::Ptr& v, const location_type& l)
+  Parser::make_ITE (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l)
   {
-    return symbol_type (token::ITE, v, l);
+    return symbol_type (token::ITE, YY_MOVE (v), YY_MOVE (l));
   }
 
+  inline
   Parser::symbol_type
-  Parser::make_LET (const Token::Ptr& v, const location_type& l)
+  Parser::make_LET (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l)
   {
-    return symbol_type (token::LET, v, l);
+    return symbol_type (token::LET, YY_MOVE (v), YY_MOVE (l));
   }
 
+  inline
   Parser::symbol_type
-  Parser::make_AT (const Token::Ptr& v, const location_type& l)
+  Parser::make_AT (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l)
   {
-    return symbol_type (token::AT, v, l);
+    return symbol_type (token::AT, YY_MOVE (v), YY_MOVE (l));
   }
 
+  inline
   Parser::symbol_type
-  Parser::make_AND (const Token::Ptr& v, const location_type& l)
+  Parser::make_AND (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l)
   {
-    return symbol_type (token::AND, v, l);
+    return symbol_type (token::AND, YY_MOVE (v), YY_MOVE (l));
   }
 
+  inline
   Parser::symbol_type
-  Parser::make_DOLLAR (const Token::Ptr& v, const location_type& l)
+  Parser::make_DOLLAR (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l)
   {
-    return symbol_type (token::DOLLAR, v, l);
+    return symbol_type (token::DOLLAR, YY_MOVE (v), YY_MOVE (l));
   }
 
+  inline
   Parser::symbol_type
-  Parser::make_COLON (const Token::Ptr& v, const location_type& l)
+  Parser::make_COLON (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l)
   {
-    return symbol_type (token::COLON, v, l);
+    return symbol_type (token::COLON, YY_MOVE (v), YY_MOVE (l));
   }
 
+  inline
   Parser::symbol_type
-  Parser::make_COMMA (const Token::Ptr& v, const location_type& l)
+  Parser::make_COMMA (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l)
   {
-    return symbol_type (token::COMMA, v, l);
+    return symbol_type (token::COMMA, YY_MOVE (v), YY_MOVE (l));
   }
 
+  inline
   Parser::symbol_type
-  Parser::make_DOT (const Token::Ptr& v, const location_type& l)
+  Parser::make_DOT (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l)
   {
-    return symbol_type (token::DOT, v, l);
+    return symbol_type (token::DOT, YY_MOVE (v), YY_MOVE (l));
   }
 
+  inline
   Parser::symbol_type
-  Parser::make_PLUS (const Token::Ptr& v, const location_type& l)
+  Parser::make_PLUS (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l)
   {
-    return symbol_type (token::PLUS, v, l);
+    return symbol_type (token::PLUS, YY_MOVE (v), YY_MOVE (l));
   }
 
+  inline
   Parser::symbol_type
-  Parser::make_MINUS (const Token::Ptr& v, const location_type& l)
+  Parser::make_MINUS (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l)
   {
-    return symbol_type (token::MINUS, v, l);
+    return symbol_type (token::MINUS, YY_MOVE (v), YY_MOVE (l));
   }
 
+  inline
   Parser::symbol_type
-  Parser::make_EQUAL (const Token::Ptr& v, const location_type& l)
+  Parser::make_EQUAL (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l)
   {
-    return symbol_type (token::EQUAL, v, l);
+    return symbol_type (token::EQUAL, YY_MOVE (v), YY_MOVE (l));
   }
 
+  inline
   Parser::symbol_type
-  Parser::make_LPAREN (const Token::Ptr& v, const location_type& l)
+  Parser::make_LPAREN (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l)
   {
-    return symbol_type (token::LPAREN, v, l);
+    return symbol_type (token::LPAREN, YY_MOVE (v), YY_MOVE (l));
   }
 
+  inline
   Parser::symbol_type
-  Parser::make_RPAREN (const Token::Ptr& v, const location_type& l)
+  Parser::make_RPAREN (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l)
   {
-    return symbol_type (token::RPAREN, v, l);
+    return symbol_type (token::RPAREN, YY_MOVE (v), YY_MOVE (l));
   }
 
+  inline
   Parser::symbol_type
-  Parser::make_LSQPAREN (const Token::Ptr& v, const location_type& l)
+  Parser::make_LSQPAREN (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l)
   {
-    return symbol_type (token::LSQPAREN, v, l);
+    return symbol_type (token::LSQPAREN, YY_MOVE (v), YY_MOVE (l));
   }
 
+  inline
   Parser::symbol_type
-  Parser::make_RSQPAREN (const Token::Ptr& v, const location_type& l)
+  Parser::make_RSQPAREN (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l)
   {
-    return symbol_type (token::RSQPAREN, v, l);
+    return symbol_type (token::RSQPAREN, YY_MOVE (v), YY_MOVE (l));
   }
 
+  inline
   Parser::symbol_type
-  Parser::make_LCURPAREN (const Token::Ptr& v, const location_type& l)
+  Parser::make_LCURPAREN (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l)
   {
-    return symbol_type (token::LCURPAREN, v, l);
+    return symbol_type (token::LCURPAREN, YY_MOVE (v), YY_MOVE (l));
   }
 
+  inline
   Parser::symbol_type
-  Parser::make_RCURPAREN (const Token::Ptr& v, const location_type& l)
+  Parser::make_RCURPAREN (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l)
   {
-    return symbol_type (token::RCURPAREN, v, l);
+    return symbol_type (token::RCURPAREN, YY_MOVE (v), YY_MOVE (l));
   }
 
+  inline
   Parser::symbol_type
-  Parser::make_VLINE (const Token::Ptr& v, const location_type& l)
+  Parser::make_VLINE (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l)
   {
-    return symbol_type (token::VLINE, v, l);
+    return symbol_type (token::VLINE, YY_MOVE (v), YY_MOVE (l));
   }
 
+  inline
   Parser::symbol_type
-  Parser::make_STAR (const Token::Ptr& v, const location_type& l)
+  Parser::make_STAR (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l)
   {
-    return symbol_type (token::STAR, v, l);
+    return symbol_type (token::STAR, YY_MOVE (v), YY_MOVE (l));
   }
 
+  inline
   Parser::symbol_type
-  Parser::make_GREATER (const Token::Ptr& v, const location_type& l)
+  Parser::make_GREATER (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l)
   {
-    return symbol_type (token::GREATER, v, l);
+    return symbol_type (token::GREATER, YY_MOVE (v), YY_MOVE (l));
   }
 
+  inline
   Parser::symbol_type
-  Parser::make_LESS (const Token::Ptr& v, const location_type& l)
+  Parser::make_LESS (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l)
   {
-    return symbol_type (token::LESS, v, l);
+    return symbol_type (token::LESS, YY_MOVE (v), YY_MOVE (l));
   }
 
+  inline
   Parser::symbol_type
-  Parser::make_EXCLAMATION (const Token::Ptr& v, const location_type& l)
+  Parser::make_EXCLAMATION (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l)
   {
-    return symbol_type (token::EXCLAMATION, v, l);
+    return symbol_type (token::EXCLAMATION, YY_MOVE (v), YY_MOVE (l));
   }
 
+  inline
   Parser::symbol_type
-  Parser::make_TILDE (const Token::Ptr& v, const location_type& l)
+  Parser::make_TILDE (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l)
   {
-    return symbol_type (token::TILDE, v, l);
+    return symbol_type (token::TILDE, YY_MOVE (v), YY_MOVE (l));
   }
 
+  inline
   Parser::symbol_type
-  Parser::make_QUESTIONMARK (const Token::Ptr& v, const location_type& l)
+  Parser::make_QUESTIONMARK (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l)
   {
-    return symbol_type (token::QUESTIONMARK, v, l);
+    return symbol_type (token::QUESTIONMARK, YY_MOVE (v), YY_MOVE (l));
   }
 
+  inline
   Parser::symbol_type
-  Parser::make_CARET (const Token::Ptr& v, const location_type& l)
+  Parser::make_CARET (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l)
   {
-    return symbol_type (token::CARET, v, l);
+    return symbol_type (token::CARET, YY_MOVE (v), YY_MOVE (l));
   }
 
+  inline
   Parser::symbol_type
-  Parser::make_DOUBLEEXCLAMATION (const Token::Ptr& v, const location_type& l)
+  Parser::make_DOUBLEEXCLAMATION (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l)
   {
-    return symbol_type (token::DOUBLEEXCLAMATION, v, l);
+    return symbol_type (token::DOUBLEEXCLAMATION, YY_MOVE (v), YY_MOVE (l));
   }
 
+  inline
   Parser::symbol_type
-  Parser::make_DOUBLEQUESTIONMARK (const Token::Ptr& v, const location_type& l)
+  Parser::make_DOUBLEQUESTIONMARK (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l)
   {
-    return symbol_type (token::DOUBLEQUESTIONMARK, v, l);
+    return symbol_type (token::DOUBLEQUESTIONMARK, YY_MOVE (v), YY_MOVE (l));
   }
 
+  inline
   Parser::symbol_type
-  Parser::make_DOUBLEAT (const Token::Ptr& v, const location_type& l)
+  Parser::make_DOUBLEAT (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l)
   {
-    return symbol_type (token::DOUBLEAT, v, l);
+    return symbol_type (token::DOUBLEAT, YY_MOVE (v), YY_MOVE (l));
   }
 
+  inline
   Parser::symbol_type
-  Parser::make_EQUALITY (const Token::Ptr& v, const location_type& l)
+  Parser::make_EQUALITY (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l)
   {
-    return symbol_type (token::EQUALITY, v, l);
+    return symbol_type (token::EQUALITY, YY_MOVE (v), YY_MOVE (l));
   }
 
+  inline
   Parser::symbol_type
-  Parser::make_IMPLICATION (const Token::Ptr& v, const location_type& l)
+  Parser::make_IMPLICATION (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l)
   {
-    return symbol_type (token::IMPLICATION, v, l);
+    return symbol_type (token::IMPLICATION, YY_MOVE (v), YY_MOVE (l));
   }
 
+  inline
   Parser::symbol_type
-  Parser::make_RIMPLICATION (const Token::Ptr& v, const location_type& l)
+  Parser::make_RIMPLICATION (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l)
   {
-    return symbol_type (token::RIMPLICATION, v, l);
+    return symbol_type (token::RIMPLICATION, YY_MOVE (v), YY_MOVE (l));
   }
 
+  inline
   Parser::symbol_type
-  Parser::make_INEQUALITY (const Token::Ptr& v, const location_type& l)
+  Parser::make_INEQUALITY (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l)
   {
-    return symbol_type (token::INEQUALITY, v, l);
+    return symbol_type (token::INEQUALITY, YY_MOVE (v), YY_MOVE (l));
   }
 
+  inline
   Parser::symbol_type
-  Parser::make_NOR (const Token::Ptr& v, const location_type& l)
+  Parser::make_NOR (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l)
   {
-    return symbol_type (token::NOR, v, l);
+    return symbol_type (token::NOR, YY_MOVE (v), YY_MOVE (l));
   }
 
+  inline
   Parser::symbol_type
-  Parser::make_NAND (const Token::Ptr& v, const location_type& l)
+  Parser::make_NAND (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l)
   {
-    return symbol_type (token::NAND, v, l);
+    return symbol_type (token::NAND, YY_MOVE (v), YY_MOVE (l));
   }
 
+  inline
   Parser::symbol_type
-  Parser::make_ASSIGNMENT (const Token::Ptr& v, const location_type& l)
+  Parser::make_ASSIGNMENT (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l)
   {
-    return symbol_type (token::ASSIGNMENT, v, l);
+    return symbol_type (token::ASSIGNMENT, YY_MOVE (v), YY_MOVE (l));
   }
 
+  inline
   Parser::symbol_type
-  Parser::make_GENTZENARROW (const Token::Ptr& v, const location_type& l)
+  Parser::make_GENTZENARROW (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l)
   {
-    return symbol_type (token::GENTZENARROW, v, l);
+    return symbol_type (token::GENTZENARROW, YY_MOVE (v), YY_MOVE (l));
   }
 
+  inline
   Parser::symbol_type
-  Parser::make_SUBTYPESIGN (const Token::Ptr& v, const location_type& l)
+  Parser::make_SUBTYPESIGN (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l)
   {
-    return symbol_type (token::SUBTYPESIGN, v, l);
+    return symbol_type (token::SUBTYPESIGN, YY_MOVE (v), YY_MOVE (l));
   }
 
+  inline
   Parser::symbol_type
-  Parser::make_INCLUDE (const Token::Ptr& v, const location_type& l)
+  Parser::make_INCLUDE (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l)
   {
-    return symbol_type (token::INCLUDE, v, l);
+    return symbol_type (token::INCLUDE, YY_MOVE (v), YY_MOVE (l));
   }
 
+  inline
   Parser::symbol_type
-  Parser::make_INTEGER (const std::string& v, const location_type& l)
+  Parser::make_INTEGER (YY_COPY (std::string) v, YY_COPY (location_type) l)
   {
-    return symbol_type (token::INTEGER, v, l);
+    return symbol_type (token::INTEGER, YY_MOVE (v), YY_MOVE (l));
   }
 
+  inline
   Parser::symbol_type
-  Parser::make_REAL (const std::string& v, const location_type& l)
+  Parser::make_REAL (YY_COPY (std::string) v, YY_COPY (location_type) l)
   {
-    return symbol_type (token::REAL, v, l);
+    return symbol_type (token::REAL, YY_MOVE (v), YY_MOVE (l));
   }
 
+  inline
   Parser::symbol_type
-  Parser::make_RATIONAL (const std::string& v, const location_type& l)
+  Parser::make_RATIONAL (YY_COPY (std::string) v, YY_COPY (location_type) l)
   {
-    return symbol_type (token::RATIONAL, v, l);
+    return symbol_type (token::RATIONAL, YY_MOVE (v), YY_MOVE (l));
   }
 
+  inline
   Parser::symbol_type
-  Parser::make_DQUOTED (const std::string& v, const location_type& l)
+  Parser::make_DQUOTED (YY_COPY (std::string) v, YY_COPY (location_type) l)
   {
-    return symbol_type (token::DQUOTED, v, l);
+    return symbol_type (token::DQUOTED, YY_MOVE (v), YY_MOVE (l));
   }
 
+  inline
   Parser::symbol_type
-  Parser::make_LOWER_WORD (const std::string& v, const location_type& l)
+  Parser::make_LOWER_WORD (YY_COPY (std::string) v, YY_COPY (location_type) l)
   {
-    return symbol_type (token::LOWER_WORD, v, l);
+    return symbol_type (token::LOWER_WORD, YY_MOVE (v), YY_MOVE (l));
   }
 
+  inline
   Parser::symbol_type
-  Parser::make_UPPER_WORD (const std::string& v, const location_type& l)
+  Parser::make_UPPER_WORD (YY_COPY (std::string) v, YY_COPY (location_type) l)
   {
-    return symbol_type (token::UPPER_WORD, v, l);
+    return symbol_type (token::UPPER_WORD, YY_MOVE (v), YY_MOVE (l));
   }
 
+  inline
   Parser::symbol_type
-  Parser::make_IDENTIFIER (const std::string& v, const location_type& l)
+  Parser::make_IDENTIFIER (YY_COPY (std::string) v, YY_COPY (location_type) l)
   {
-    return symbol_type (token::IDENTIFIER, v, l);
+    return symbol_type (token::IDENTIFIER, YY_MOVE (v), YY_MOVE (l));
   }
 
+  inline
   Parser::symbol_type
-  Parser::make_SINGLE_QUOTED (const std::string& v, const location_type& l)
+  Parser::make_SINGLE_QUOTED (YY_COPY (std::string) v, YY_COPY (location_type) l)
   {
-    return symbol_type (token::SINGLE_QUOTED, v, l);
+    return symbol_type (token::SINGLE_QUOTED, YY_MOVE (v), YY_MOVE (l));
   }
 
 
-#line 47 "../../obj/src/GrammarParser.yy" // lalr1.cc:380
+#line 47 "../../obj/src/GrammarParser.yy" // lalr1.cc:403
 } // libtptp
-#line 1811 "GrammarParser.tab.h" // lalr1.cc:380
+#line 1971 "GrammarParser.tab.h" // lalr1.cc:403
 
 
 

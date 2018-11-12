@@ -608,7 +608,7 @@ goto find_rule; \
 
 #include "../../src/Lexer.h"
 
-// #include <libtptp/Logger>
+#include <libtptp/Logger>
 #include "various/GrammarToken.h"
 #include "../../src/SourceLocation.h"
 
@@ -1232,7 +1232,7 @@ YY_RULE_SETUP
 case YY_STATE_EOF(COMMENT):
 #line 212 "obj/src/GrammarLexer.l"
 {
-    // m_log.error( {m_loc}, "multiline comment not terminated", ... );
+    m_log.error( { m_loc }, "multiline comment not terminated" );
     BEGIN( INITIAL );
     yyterminate();
 }
@@ -1285,13 +1285,13 @@ case 69:
 YY_RULE_SETUP
 #line 237 "obj/src/GrammarLexer.l"
 {
-    // m_log.error( {m_loc}, "unrecognized escape sequence", ... );
+    m_log.error( { m_loc }, "unrecognized escape sequence" );
 }
 	YY_BREAK
 case YY_STATE_EOF(SQUOTED):
 #line 240 "obj/src/GrammarLexer.l"
 {
-    // m_log.error( {m_loc}, "string not terminated", ... );
+    m_log.error( { m_loc }, "string not terminated" );
     BEGIN( INITIAL );
     yyterminate();
 }
@@ -1326,7 +1326,7 @@ YY_RULE_SETUP
 {
 	//double quoted string must not contain newlines
     m_loc.lines( 1 );
-    // m_log.error( {m_loc}, "string not terminated", ... );
+    m_log.error( { m_loc }, "string not terminated" );
     BEGIN( INITIAL );
     yyterminate();
 }
@@ -1342,13 +1342,13 @@ case 75:
 YY_RULE_SETUP
 #line 267 "obj/src/GrammarLexer.l"
 {
-    // m_log.error( {m_loc}, "unrecognized escape sequence", ... );
+    m_log.error( { m_loc }, "unrecognized escape sequence" );
 }
 	YY_BREAK
 case YY_STATE_EOF(DQUOTED):
 #line 270 "obj/src/GrammarLexer.l"
 {
-    // m_log.error( {m_loc}, "string not terminated", ... );
+    m_log.error( { m_loc }, "string not terminated" );
     BEGIN( INITIAL );
     yyterminate();
 }
@@ -1365,7 +1365,7 @@ case 77:
 YY_RULE_SETUP
 #line 280 "obj/src/GrammarLexer.l"
 {
-    // m_log.error( {m_loc}, "unrecognized character `" + std::string( yytext ) + "`", ... );
+    m_log.error( { m_loc }, "unrecognized character `" + std::string( yytext ) + "`" );
     m_loc.step();
 }
 	YY_BREAK
@@ -2305,9 +2305,9 @@ void yyfree (void * ptr )
 #line 285 "obj/src/GrammarLexer.l"
 
 
-Lexer::Lexer( /* Logger& log, */ std::istream& in, std::ostream& out )
+Lexer::Lexer( Logger& log, std::istream& in, std::ostream& out )
 : yyFlexLexer( in, out )
-// , m_log( log )
+, m_log( log )
 , m_loc()
 , m_strbuf()
 {
@@ -2320,7 +2320,7 @@ void Lexer::setFileName( const std::string& fileName )
 
 void Lexer::LexerError( const char* msg )
 {
-    // m_log.error( {m_loc}, msg, ... );
+    m_log.error( { m_loc }, msg );
 }
 
 //  
