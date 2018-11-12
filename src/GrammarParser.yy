@@ -62,7 +62,7 @@
     namespace libtptp
     {
         class Lexer;
-        // class Logger;
+        class Logger;
         class SourceLocation;
     }
 
@@ -76,17 +76,16 @@
     #define YY_NULLPTR nullptr
 }
 
-// %parse-param { Logger& m_log }
+%parse-param { Logger& m_log }
 %parse-param { Lexer& m_lexer }
 %parse-param { Specification& m_specification }
 
 %code
 {
-    // #include <libtptp/ ... >
-
-    //#include "../../src/SourceLocation.h"
     #include "../../src/Lexer.h"
     #include "../../src/various/GrammarToken.h"
+
+    #include <libtptp/Logger>
 
     #include <libstdhl/Type>
 
@@ -1894,7 +1893,7 @@ DollarDollarWordLiteral
 
 void Parser::error( const SourceLocation& location, const std::string& message )
 {
-    // m_log.error( {location}, message, Code::SyntaxError );
+    m_log.error( { location }, message ); //, Code::SyntaxError );
 }
 
 //

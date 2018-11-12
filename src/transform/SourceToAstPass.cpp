@@ -44,7 +44,7 @@
 #include "../Lexer.h"
 #include "../various/GrammarParser.tab.h"
 
-// #include <libtptp/ ... >
+#include <libtptp/Logger>
 
 #include <libpass/PassRegistry>
 #include <libpass/PassResult>
@@ -64,7 +64,7 @@ void SourceToAstPass::usage( libpass::PassUsage& pu )
 
 u1 SourceToAstPass::run( libpass::PassResult& pr )
 {
-    // libtptp::Logger log( &id, stream() );
+    libtptp::Logger log( &id, stream() );
 
     const auto data = pr.output< libpass::LoadFilePass >();
     const auto filePath = data->filename();
@@ -76,15 +76,15 @@ u1 SourceToAstPass::run( libpass::PassResult& pr )
     auto specification = std::make_shared< Specification >();
     // specification->setName( name );
 
-    Lexer lexer( /* log, */ fileStream, std::cout );
+    Lexer lexer( log, fileStream, std::cout );
     lexer.setFileName( filePath );
 
-    Parser parser( /* log, */ lexer, *specification );
+    Parser parser( log, lexer, *specification );
     // parser.set_debug_level( m_debug );
 
-    if( ( parser.parse() != 0 ) or not specification )  // or ( log.errors() > 0 ) )
+    if( ( parser.parse() != 0 ) or not specification or ( log.errors() > 0 ) )
     {
-        // log.error( "could not parse `" + filePath + "´" );
+        log.error( "could not parse `" + filePath + "´" );
         return false;
     }
 

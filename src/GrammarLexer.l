@@ -41,7 +41,7 @@
 
 #include "../../src/Lexer.h"
 
-// #include <libtptp/Logger>
+#include <libtptp/Logger>
 #include "various/GrammarToken.h"
 #include "../../src/SourceLocation.h"
 
@@ -165,7 +165,7 @@ using namespace libtptp;
     m_strbuf.append( yytext );
 }
 <COMMENT><<EOF>> {
-    // m_log.error( {m_loc}, "multiline comment not terminated", ... );
+    m_log.error( { m_loc }, "multiline comment not terminated" );
     BEGIN( INITIAL );
     yyterminate();
 }
@@ -190,10 +190,10 @@ using namespace libtptp;
     m_strbuf.append( yytext + 1 );
 }
 <SQUOTED>\\. {
-    // m_log.error( {m_loc}, "unrecognized escape sequence", ... );
+    m_log.error( { m_loc }, "unrecognized escape sequence" );
 }
 <SQUOTED><<EOF>> {
-    // m_log.error( {m_loc}, "string not terminated", ... );
+    m_log.error( { m_loc }, "string not terminated" );
     BEGIN( INITIAL );
     yyterminate();
 }
@@ -212,7 +212,7 @@ using namespace libtptp;
 <DQUOTED>\n {
 	//double quoted string must not contain newlines
     m_loc.lines( 1 );
-    // m_log.error( {m_loc}, "string not terminated", ... );
+    m_log.error( { m_loc }, "string not terminated" );
     BEGIN( INITIAL );
     yyterminate();
 }
@@ -220,10 +220,10 @@ using namespace libtptp;
     m_strbuf.append( yytext + 1 );
 }
 <DQUOTED>\\. {
-    // m_log.error( {m_loc}, "unrecognized escape sequence", ... );
+    m_log.error( { m_loc }, "unrecognized escape sequence" );
 }
 <DQUOTED><<EOF>> {
-    // m_log.error( {m_loc}, "string not terminated", ... );
+    m_log.error( { m_loc }, "string not terminated" );
     BEGIN( INITIAL );
     yyterminate();
 }
@@ -233,15 +233,15 @@ using namespace libtptp;
 }
 
 . {
-    // m_log.error( {m_loc}, "unrecognized character `" + std::string( yytext ) + "`", ... );
+    m_log.error( { m_loc }, "unrecognized character `" + std::string( yytext ) + "`" );
     m_loc.step();
 }
 
 %%
 
-Lexer::Lexer( /* Logger& log, */ std::istream& in, std::ostream& out )
+Lexer::Lexer( Logger& log, std::istream& in, std::ostream& out )
 : yyFlexLexer( in, out )
-// , m_log( log )
+, m_log( log )
 , m_loc()
 , m_strbuf()
 {
@@ -254,7 +254,7 @@ void Lexer::setFileName( const std::string& fileName )
 
 void Lexer::LexerError( const char* msg )
 {
-    // m_log.error( {m_loc}, msg, ... );
+    m_log.error( { m_loc }, msg );
 }
 
 //  
