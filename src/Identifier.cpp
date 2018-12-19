@@ -39,75 +39,24 @@
 //  statement from your version.
 //
 
-#include "Definition.h"
+#include "Identifier.h"
 
 using namespace libtptp;
 
-//
-//
-// Definition
-//
-
-Definition::Definition( const ID id )
-: Node( id )
+Identifier::Identifier( const Literal::Ptr& name )
+: Node( Node::ID::IDENTIFIER )
+, m_name( name )
 {
 }
 
-//
-//
-// Include Definition
-//
-IncludeDefinition::IncludeDefinition(
-    const Token::Ptr& includeToken,
-    const Token::Ptr& leftParenToken,
-    const Identifier::Ptr& filename,
-    const Token::Ptr& commaToken,
-    const Identifiers::Ptr& formulaSelection,
-    const Token::Ptr& rightParenToken,
-    const Token::Ptr& dotToken )
-: Definition( ID::INCLUDE_DEFINITION )
-, m_includeToken( includeToken )
-, m_leftParenToken( leftParenToken )
-, m_filename( filename )
-, m_commaToken( commaToken )
-, m_formulaSelection( formulaSelection )
-, m_rightParenToken( rightParenToken )
-, m_dotToken( dotToken )
+const Literal::Ptr& Identifier::name( void ) const
 {
+    return m_name;
 }
 
-const Token::Ptr& IncludeDefinition::includeToken( void ) const
+void Identifier::accept( Visitor& visitor )
 {
-    return m_includeToken;
-}
-const Token::Ptr& IncludeDefinition::leftParenToken( void ) const
-{
-    return m_leftParenToken;
-}
-const Identifier::Ptr& IncludeDefinition::filename( void ) const
-{
-    return m_filename;
-}
-const Token::Ptr& IncludeDefinition::commaToken( void ) const
-{
-    return m_commaToken;
-}
-const Identifiers::Ptr& IncludeDefinition::formulaSelection( void ) const
-{
-    return m_formulaSelection;
-}
-const Token::Ptr& IncludeDefinition::rightParenToken( void ) const
-{
-    return m_rightParenToken;
-}
-const Token::Ptr& IncludeDefinition::dotToken( void ) const
-{
-    return m_dotToken;
-}
-
-void IncludeDefinition::accept( Visitor& visitor )
-{
-    // visitor.visit( *this ); // TODO: Fixme @moosbruggerj
+    visitor.visit( *this );
 }
 
 //

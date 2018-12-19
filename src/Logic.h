@@ -42,6 +42,7 @@
 #ifndef _LIBTPTP_LOGIC_H_
 #define _LIBTPTP_LOGIC_H_
 
+#include <libtptp/Identifier>
 #include <libtptp/Node>
 
 /**

@@ -50,6 +50,8 @@ add_library( ${PROJECT}-cpp OBJECT
   Atom.cpp
   Definition.cpp
   Formula.cpp
+  Identifier.cpp
+  Literal.cpp
   Logic.cpp
   Logger.cpp
   Node.cpp
@@ -94,6 +96,8 @@ ecm_generate_headers( ${PROJECT}_HEADERS_CPP
     Atom
     Definition
     Formula
+    Identifier
+    Literal
     Logic
     Logger
     Node

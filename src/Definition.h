@@ -42,6 +42,7 @@
 #ifndef _LIBTPTP_DEFINITION_H_
 #define _LIBTPTP_DEFINITION_H_
 
+#include <libtptp/Identifier>
 #include <libtptp/Node>
 #include <libtptp/Token>
 
@@ -78,7 +79,7 @@ namespace libtptp
             const Token::Ptr& leftParenToken,
             const Identifier::Ptr& filename,
             const Token::Ptr& commaToken,
-            const Nodes::Ptr& formulaSelection,
+            const Identifiers::Ptr& formulaSelection,
             const Token::Ptr& rightParenToken,
             const Token::Ptr& dotToken );
 
@@ -86,7 +87,7 @@ namespace libtptp
         const Token::Ptr& leftParenToken( void ) const;
         const Identifier::Ptr& filename( void ) const;
         const Token::Ptr& commaToken( void ) const;
-        const Nodes::Ptr& formulaSelection( void ) const;
+        const Identifiers::Ptr& formulaSelection( void ) const;
         const Token::Ptr& rightParenToken( void ) const;
         const Token::Ptr& dotToken( void ) const;
 
@@ -97,7 +98,7 @@ namespace libtptp
         const Token::Ptr m_leftParenToken;
         const Identifier::Ptr m_filename;
         const Token::Ptr m_commaToken;
-        const Nodes::Ptr m_formulaSelection;
+        const Identifiers::Ptr m_formulaSelection;
         const Token::Ptr m_rightParenToken;
         const Token::Ptr m_dotToken;
     };

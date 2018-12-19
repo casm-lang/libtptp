@@ -51,6 +51,7 @@ namespace libtptp
     /**
        @extends TPTP
      */
+
     class Node : public std::enable_shared_from_this< Node >
     {
       public:
@@ -85,6 +86,10 @@ namespace libtptp
 
             // other
             TOKEN,
+
+            // literals
+            INTEGER_LITERAL,
+            STRING_LITERAL,
         };
 
       public:
@@ -107,6 +112,12 @@ namespace libtptp
         void setSourceLocation( const SourceLocation& sourceLocation );
         const SourceLocation& sourceLocation( void ) const;
 
+        void setPrefix( const libstdhl::List< Node >& prefix );
+        libstdhl::List< Node >& prefix( void );
+
+        void setSuffix( const libstdhl::List< Node >& suffix );
+        libstdhl::List< Node >& suffix( void );
+
         /**
            @return A short description about the node type.
          */
@@ -123,6 +134,8 @@ namespace libtptp
       private:
         const ID m_id;
         SourceLocation m_sourceLocation;
+        libstdhl::List< Node > m_prefix;
+        libstdhl::List< Node > m_suffix;
     };
 
     template < typename T >
@@ -147,23 +160,7 @@ namespace libtptp
         }
     };
 
-    class Identifier final : public Node
-    {
-      public:
-        using Ptr = std::shared_ptr< Identifier >;
-
-        explicit Identifier( const std::string& name );
-
-        const std::string& name( void ) const;
-
-        void accept( Visitor& visitor ) override final;
-
-      private:
-        std::string m_name;
-    };
-
     using Nodes = NodeList< Node >;
-    using Identifiers = NodeList< Identifier >;
 
     template < typename T, typename... Args >
     typename T::Ptr make( const SourceLocation& sourceLocation, Args&&... args )

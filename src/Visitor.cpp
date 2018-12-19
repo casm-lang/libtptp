@@ -116,8 +116,16 @@ void RecursiveVisitor::visit( FunctorAtom& node )
 
 void RecursiveVisitor::visit( Identifier& node )
 {
+    node.name()->accept( *this );
 }
 
+void RecursiveVisitor::visit( StringLiteral& node )
+{
+}
+
+void RecursiveVisitor::visit( IntegerLiteral& node )
+{
+}
 //
 // TraversalVisitor
 //
@@ -202,6 +210,16 @@ void TraversalVisitor::visit( FunctorAtom& node )
 }
 
 void TraversalVisitor::visit( Identifier& node )
+{
+    callback()( node );
+}
+
+void TraversalVisitor::visit( StringLiteral& node )
+{
+    callback()( node );
+}
+
+void TraversalVisitor::visit( IntegerLiteral& node )
 {
     callback()( node );
 }

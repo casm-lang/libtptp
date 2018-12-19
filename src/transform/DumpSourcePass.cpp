@@ -43,6 +43,7 @@
 
 #include <libtptp/Atom>
 #include <libtptp/Formula>
+#include <libtptp/Identifier>
 #include <libtptp/Logic>
 #include <libtptp/Node>
 #include <libtptp/Record>
@@ -189,9 +190,23 @@ void DumpSourceVisitor::visit( FunctorAtom& node )
     m_stream << " )";
 }
 
+/*
 void DumpSourceVisitor::visit( Identifier& node )
 {
-    m_stream << node.name();
+    m_stream << "Identifier( ";
+    node.name()->accept( *this );
+    m_stream << " )";
+}
+*/
+
+void DumpSourceVisitor::visit( StringLiteral& node )
+{
+    m_stream << node.value();
+}
+
+void DumpSourceVisitor::visit( IntegerLiteral& node )
+{
+    m_stream << node.value();
 }
 
 //
