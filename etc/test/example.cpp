@@ -55,6 +55,7 @@ TEST( libtptp, example )
 
     auto t = Trace();
 
+    /*
     auto x = std::make_shared< Identifier >( "X" );
     auto v = std::make_shared< VariableTerm >( x );
 
@@ -62,12 +63,13 @@ TEST( libtptp, example )
     auto f = std::make_shared< FirstOrderFormula >( v );
 
     t.add< Record >( y, Role::AXIOM, f );
+    */
 
     t.accept( dbg );
     t.accept( src );
 }
 
-TEST( libtptp, example_from_a_source_file )
+TEST( libtptp, include_file )
 {
     PassManager pm;
 
@@ -85,7 +87,8 @@ TEST( libtptp, example_from_a_source_file )
 
     const std::string filename = TEST_NAME + ".tptp";
     auto file = libstdhl::File::open( filename, std::fstream::out );
-    file << " dummy asdf 1234 ";
+    file << " include ( 'testfile' ). " << std::endl;
+    file << " include ( 'testfile2', [somemethod, 'some_method', 3] ). ";
     file.close();
 
     const auto input = libstdhl::Memory::make< LoadFilePass::Input >( filename );
