@@ -115,12 +115,16 @@ END       0 "end of file"
 
 %type <Specification::Ptr> Specification
 
-// %type <Identifier::Ptr> Identifier
+%type <Identifier::Ptr> FileName Name
+%type <Identifiers::Ptr> NameList FormulaSelection
 
 // definitions
 %type <IncludeDefinition::Ptr> IncludeDefinition
 %type <Definition::Ptr> Definition
 %type <Definitions::Ptr> Definitions
+
+%type <StringLiteral::Ptr> SingleQuotedLiteral LowerWordLiteral DistinctObjectLiteral AtomicWord
+%type <IntegerLiteral::Ptr> IntegerLiteral
 // %type <Atom::Ptr> Atom
 
 %start Specification
@@ -1658,20 +1662,28 @@ DefinedTerm
 NameList
 : Name
   {
+	const auto list = libtptp::make< Identifiers >(@$);
+	list->add($1);
+	$$ = list;
   }
 | NameList COMMA Name
   {
+	const auto list = $1;
+	const auto name = $3;
+	name->prefix().add($2);
+	list->add(name);
+	$$ = list;
   }
 ;
 
 Name
 : AtomicWord
   {
-    //$$ = $1;
+	$$ = libtptp::make< Identifier >(@$, $1);
   }
 | IntegerLiteral
   {
-    //$$ = $1;
+	$$ = libtptp::make< Identifier >(@$, $1);
   }
 ;
 
@@ -1752,22 +1764,22 @@ GeneralList
 IncludeDefinition
 : INCLUDE LPAREN FileName RPAREN DOT
   {
-	const auto filename= libtptp::make<Identifier>(@3, "");
-	const auto formulaSelection = libtptp::make< Nodes >(@5);
-	$$ = libtptp::make< IncludeDefinition >(@$, $1, $2, filename, uToken, formulaSelection, $4, $5);
+	const auto formulaSelection = libtptp::make< Identifiers >(@5);
+	$$ = libtptp::make< IncludeDefinition >(@$, $1, $2, $3, uToken, formulaSelection, $4, $5);
   }
 | INCLUDE LPAREN FileName COMMA FormulaSelection RPAREN DOT
   {
-	const auto filename= libtptp::make<Identifier>(@3, "");
-	const auto formulaSelection = libtptp::make< Nodes >(@5);
-	$$ = libtptp::make< IncludeDefinition >(@$, $1, $2, filename, $4, formulaSelection, $6, $7);
-	//$$ = libtptp::make< IncludeDefinition >(@$, $1, $2, $3, $4, $5, $6, $7);
+	$$ = libtptp::make< IncludeDefinition >(@$, $1, $2, $3, $4, $5, $6, $7);
   }
 ;
 
 FormulaSelection 
 : LSQPAREN NameList RSQPAREN
   {
+	auto nameList = $2;
+	nameList->prefix().add($1);
+	nameList->suffix().add($3);
+	$$ = nameList;
   }
 ;
 
@@ -1799,9 +1811,11 @@ Identifier
 AtomicWord
 : LowerWordLiteral
   {
+	$$ = $1;
   }
 | SingleQuotedLiteral
   {
+	$$ = $1;
   }
 ;
 
@@ -1835,13 +1849,14 @@ Number
 FileName
 : SingleQuotedLiteral
   {
+	$$ = libtptp::make<Identifier>(@$, $1);
   }
 ;
 
 IntegerLiteral
 : INTEGER
   {
-      // ...
+	$$ = libtptp::make< IntegerLiteral >(@1, $1);
   }
 ;
 
@@ -1868,19 +1883,21 @@ Variable
 DistinctObjectLiteral
 : DQUOTED
   {
+	$$ = libtptp::make< StringLiteral >(@$, $1);
   }
 ;
 
 LowerWordLiteral
 : LOWER_WORD
   {
-    //
+	$$ = libtptp::make< StringLiteral >(@$, $1);
   }
 ;
 
 SingleQuotedLiteral
 : SINGLE_QUOTED
   {
+	$$ = libtptp::make< StringLiteral >(@$, $1);
   }
 ;
 

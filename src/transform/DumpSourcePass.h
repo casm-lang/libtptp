@@ -88,7 +88,9 @@ namespace libtptp
 
         void visit( FunctorAtom& node ) override;
 
-        void visit( Identifier& node ) override;
+        // void visit( Identifier& node ) override;
+        void visit( StringLiteral& node ) override;
+        void visit( IntegerLiteral& node ) override;
 
       private:
         std::ostream& m_stream;

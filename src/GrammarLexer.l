@@ -89,7 +89,7 @@ using namespace libtptp;
 	return Parser::make_REAL( yytext, m_loc );
 }
 
-[+-]?[0-9]*/[1-9][0-9]* {
+[+-]?[0-9]*\/[1-9][0-9]* {
 	//rational
 	return Parser::make_RATIONAL( yytext, m_loc);
 }

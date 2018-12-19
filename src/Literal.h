@@ -39,76 +39,70 @@
 //  statement from your version.
 //
 
-#include "Definition.h"
+#ifndef _LIBTPTP_LITERAL_H_
+#define _LIBTPTP_LITERAL_H_
 
-using namespace libtptp;
+#include <libtptp/Node>
+#include <libtptp/Token>
 
-//
-//
-// Definition
-//
+namespace libtptp
+{
+    class Literal : public Node
+    {
+      public:
+        using Ptr = std::shared_ptr< Literal >;
 
-Definition::Definition( const ID id )
-: Node( id )
-{
-}
+        explicit Literal( const Node::ID id );
 
-//
-//
-// Include Definition
-//
-IncludeDefinition::IncludeDefinition(
-    const Token::Ptr& includeToken,
-    const Token::Ptr& leftParenToken,
-    const Identifier::Ptr& filename,
-    const Token::Ptr& commaToken,
-    const Identifiers::Ptr& formulaSelection,
-    const Token::Ptr& rightParenToken,
-    const Token::Ptr& dotToken )
-: Definition( ID::INCLUDE_DEFINITION )
-, m_includeToken( includeToken )
-, m_leftParenToken( leftParenToken )
-, m_filename( filename )
-, m_commaToken( commaToken )
-, m_formulaSelection( formulaSelection )
-, m_rightParenToken( rightParenToken )
-, m_dotToken( dotToken )
-{
-}
+      private:
+    };
 
-const Token::Ptr& IncludeDefinition::includeToken( void ) const
-{
-    return m_includeToken;
-}
-const Token::Ptr& IncludeDefinition::leftParenToken( void ) const
-{
-    return m_leftParenToken;
-}
-const Identifier::Ptr& IncludeDefinition::filename( void ) const
-{
-    return m_filename;
-}
-const Token::Ptr& IncludeDefinition::commaToken( void ) const
-{
-    return m_commaToken;
-}
-const Identifiers::Ptr& IncludeDefinition::formulaSelection( void ) const
-{
-    return m_formulaSelection;
-}
-const Token::Ptr& IncludeDefinition::rightParenToken( void ) const
-{
-    return m_rightParenToken;
-}
-const Token::Ptr& IncludeDefinition::dotToken( void ) const
-{
-    return m_dotToken;
+    using Literals = NodeList< Literal >;
+
+    class IntegerLiteral final : public Literal
+    {
+      public:
+        using Ptr = std::shared_ptr< IntegerLiteral >;
+
+        explicit IntegerLiteral( const std::string& integer );
+
+        void accept( Visitor& visitor ) override final;
+
+        const long& value( void ) const;
+
+      private:
+        long m_value;
+    };
+
+    using IntegerLiterals = NodeList< IntegerLiteral >;
+
+    class StringLiteral final : public Literal
+    {
+      public:
+        enum class StringType
+        {
+            SINGLE_QUOTED,
+            DOUBLE_QUOTED,
+            NOT_QUOTED
+        };
+        using Ptr = std::shared_ptr< StringLiteral >;
+
+        explicit StringLiteral( const std::string& string );
+
+        void accept( Visitor& visitor ) override final;
+
+        const std::string& value( void ) const;
+
+      private:
+        StringType m_type;
+        std::string m_value;
+    };
+
+    using StringLiterals = NodeList< StringLiteral >;
+
 }
 
-void IncludeDefinition::accept( Visitor& visitor )
-{
-    // visitor.visit( *this ); // TODO: Fixme @moosbruggerj
-}
+#endif  // _LIBTPTP_LITERAL_H_
 
 //
 //  Local variables:

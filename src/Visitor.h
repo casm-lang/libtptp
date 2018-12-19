@@ -68,6 +68,9 @@ namespace libtptp
 
     class Identifier;
 
+    class StringLiteral;
+    class IntegerLiteral;
+
     enum Traversal : u8
     {
         PREORDER = 0,
@@ -100,6 +103,9 @@ namespace libtptp
         virtual void visit( FunctorAtom& node ) = 0;
 
         virtual void visit( Identifier& node ) = 0;
+
+        virtual void visit( StringLiteral& node ) = 0;
+        virtual void visit( IntegerLiteral& node ) = 0;
     };
 
     class RecursiveVisitor : public Visitor
@@ -123,6 +129,9 @@ namespace libtptp
         void visit( FunctorAtom& node ) override;
 
         void visit( Identifier& node ) override;
+
+        void visit( StringLiteral& node ) override;
+        void visit( IntegerLiteral& node ) override;
     };
 
     class TraversalVisitor : public Visitor
@@ -158,6 +167,9 @@ namespace libtptp
         void visit( FunctorAtom& node ) override;
 
         void visit( Identifier& node ) override;
+
+        void visit( StringLiteral& node ) override;
+        void visit( IntegerLiteral& node ) override;
     };
 }
 

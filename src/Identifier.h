@@ -39,76 +39,37 @@
 //  statement from your version.
 //
 
-#include "Definition.h"
+#ifndef _LIBTPTP_IDENTIFIER_H_
+#define _LIBTPTP_IDENTIFIER_H_
 
-using namespace libtptp;
+#include <libtptp/Literal>
+#include <libtptp/Node>
 
-//
-//
-// Definition
-//
-
-Definition::Definition( const ID id )
-: Node( id )
+namespace libtptp
 {
-}
+    /**
+       @extends TPTP
+     */
+    class Identifier final : public Node
+    {
+      public:
+        using Ptr = std::shared_ptr< Identifier >;
 
-//
-//
-// Include Definition
-//
-IncludeDefinition::IncludeDefinition(
-    const Token::Ptr& includeToken,
-    const Token::Ptr& leftParenToken,
-    const Identifier::Ptr& filename,
-    const Token::Ptr& commaToken,
-    const Identifiers::Ptr& formulaSelection,
-    const Token::Ptr& rightParenToken,
-    const Token::Ptr& dotToken )
-: Definition( ID::INCLUDE_DEFINITION )
-, m_includeToken( includeToken )
-, m_leftParenToken( leftParenToken )
-, m_filename( filename )
-, m_commaToken( commaToken )
-, m_formulaSelection( formulaSelection )
-, m_rightParenToken( rightParenToken )
-, m_dotToken( dotToken )
-{
+        explicit Identifier( const Literal::Ptr& name );
+
+        const Literal::Ptr& name( void ) const;
+
+        void accept( Visitor& visitor ) override final;
+
+      private:
+        const Literal::Ptr m_name;
+    };
+
+    using Identifiers = NodeList< Identifier >;
+
 }
 
-const Token::Ptr& IncludeDefinition::includeToken( void ) const
-{
-    return m_includeToken;
-}
-const Token::Ptr& IncludeDefinition::leftParenToken( void ) const
-{
-    return m_leftParenToken;
-}
-const Identifier::Ptr& IncludeDefinition::filename( void ) const
-{
-    return m_filename;
-}
-const Token::Ptr& IncludeDefinition::commaToken( void ) const
-{
-    return m_commaToken;
-}
-const Identifiers::Ptr& IncludeDefinition::formulaSelection( void ) const
-{
-    return m_formulaSelection;
-}
-const Token::Ptr& IncludeDefinition::rightParenToken( void ) const
-{
-    return m_rightParenToken;
-}
-const Token::Ptr& IncludeDefinition::dotToken( void ) const
-{
-    return m_dotToken;
-}
-
-void IncludeDefinition::accept( Visitor& visitor )
-{
-    // visitor.visit( *this ); // TODO: Fixme @moosbruggerj
-}
+#endif  // _LIBTPTP_IDENTIFIER_H_
 
 //
 //  Local variables:
@@ -118,4 +79,3 @@ void IncludeDefinition::accept( Visitor& visitor )
 //  tab-width: 4
 //  End:
 //  vim:noexpandtab:sw=4:ts=4:
-//
