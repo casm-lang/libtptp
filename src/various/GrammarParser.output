@@ -377,13 +377,13 @@ Grammar
 
     0 $accept: Specification "end of file"
 
-    1 Specification: Inputs
+    1 Specification: Definitions
 
-    2 Inputs: Inputs Input
-    3       | Input
+    2 Definitions: Definitions Definition
+    3            | Definition
 
-    4 Input: AnnotatedFormula
-    5      | Include
+    4 Definition: AnnotatedFormula
+    5           | IncludeDefinition
 
     6 AnnotatedFormula: FormulaKeyword "(" Name "," FormulaRole "," FormulaSpecification ")" "."
 
@@ -636,8 +636,8 @@ Grammar
   174 GeneralList: "[" "]"
   175            | "[" GeneralTerms "]"
 
-  176 Include: "include" "(" FileName ")" "."
-  177        | "include" "(" FileName "," FormulaSelection ")" "."
+  176 IncludeDefinition: "include" "(" FileName ")" "."
+  177                  | "include" "(" FileName "," FormulaSelection ")" "."
 
   178 FormulaSelection: "[" NameList "]"
 
@@ -746,9 +746,9 @@ $accept (56)
     on left: 0
 Specification <Specification::Ptr> (57)
     on left: 1, on right: 0
-Inputs (58)
+Definitions <Definitions::Ptr> (58)
     on left: 2 3, on right: 1 2
-Input (59)
+Definition <Definition::Ptr> (59)
     on left: 4 5, on right: 2 3
 AnnotatedFormula (60)
     on left: 6, on right: 4
@@ -894,9 +894,9 @@ DefinedFunctor (130)
     on left: 153, on right: 71 152
 DefinedTerm (131)
     on left: 154 155, on right: 67
-NameList (132)
+NameList <Identifiers::Ptr> (132)
     on left: 156 157, on right: 157 178
-Name (133)
+Name <Identifier::Ptr> (133)
     on left: 158 159, on right: 6 156 157
 FormulaRole (134)
     on left: 160, on right: 6
@@ -912,13 +912,13 @@ FormulaData (139)
     on left: 173, on right: 169
 GeneralList (140)
     on left: 174 175, on right: 16 163
-Include (141)
+IncludeDefinition <IncludeDefinition::Ptr> (141)
     on left: 176 177, on right: 5
-FormulaSelection (142)
+FormulaSelection <Identifiers::Ptr> (142)
     on left: 178, on right: 177
 FormulaDataKeyword (143)
     on left: 179 180 181 182 183, on right: 173
-AtomicWord (144)
+AtomicWord <StringLiteral::Ptr> (144)
     on left: 184 185, on right: 149 158 164 170
 AtomicDefinedWord (145)
     on left: 186, on right: 153
@@ -926,9 +926,9 @@ AtomicSystemWord (146)
     on left: 187, on right: 151
 Number (147)
     on left: 188 189 190, on right: 154 167
-FileName (148)
+FileName <Identifier::Ptr> (148)
     on left: 191, on right: 176 177
-IntegerLiteral (149)
+IntegerLiteral <IntegerLiteral::Ptr> (149)
     on left: 192, on right: 159 188
 RealLiteral (150)
     on left: 193, on right: 189
@@ -936,11 +936,11 @@ RationalLiteral (151)
     on left: 194, on right: 190
 Variable (152)
     on left: 195, on right: 46 52 85 166
-DistinctObjectLiteral (153)
+DistinctObjectLiteral <StringLiteral::Ptr> (153)
     on left: 196, on right: 155 168
-LowerWordLiteral (154)
+LowerWordLiteral <StringLiteral::Ptr> (154)
     on left: 197, on right: 160 184 199 200
-SingleQuotedLiteral (155)
+SingleQuotedLiteral <StringLiteral::Ptr> (155)
     on left: 198, on right: 185 191
 DollarWordLiteral (156)
     on left: 199, on right: 186
@@ -960,12 +960,12 @@ State 0
     "cnf"      shift, and go to state 6
     "include"  shift, and go to state 7
 
-    Specification     go to state 8
-    Inputs            go to state 9
-    Input             go to state 10
-    AnnotatedFormula  go to state 11
-    FormulaKeyword    go to state 12
-    Include           go to state 13
+    Specification      go to state 8
+    Definitions        go to state 9
+    Definition         go to state 10
+    AnnotatedFormula   go to state 11
+    FormulaKeyword     go to state 12
+    IncludeDefinition  go to state 13
 
 
 State 1
@@ -1012,8 +1012,8 @@ State 6
 
 State 7
 
-  176 Include: "include" . "(" FileName ")" "."
-  177        | "include" . "(" FileName "," FormulaSelection ")" "."
+  176 IncludeDefinition: "include" . "(" FileName ")" "."
+  177                  | "include" . "(" FileName "," FormulaSelection ")" "."
 
     "("  shift, and go to state 14
 
@@ -1027,8 +1027,8 @@ State 8
 
 State 9
 
-    1 Specification: Inputs .
-    2 Inputs: Inputs . Input
+    1 Specification: Definitions .
+    2 Definitions: Definitions . Definition
 
     "tpi"      shift, and go to state 1
     "thf"      shift, and go to state 2
@@ -1040,24 +1040,24 @@ State 9
 
     $default  reduce using rule 1 (Specification)
 
-    Input             go to state 16
-    AnnotatedFormula  go to state 11
-    FormulaKeyword    go to state 12
-    Include           go to state 13
+    Definition         go to state 16
+    AnnotatedFormula   go to state 11
+    FormulaKeyword     go to state 12
+    IncludeDefinition  go to state 13
 
 
 State 10
 
-    3 Inputs: Input .
+    3 Definitions: Definition .
 
-    $default  reduce using rule 3 (Inputs)
+    $default  reduce using rule 3 (Definitions)
 
 
 State 11
 
-    4 Input: AnnotatedFormula .
+    4 Definition: AnnotatedFormula .
 
-    $default  reduce using rule 4 (Input)
+    $default  reduce using rule 4 (Definition)
 
 
 State 12
@@ -1069,15 +1069,15 @@ State 12
 
 State 13
 
-    5 Input: Include .
+    5 Definition: IncludeDefinition .
 
-    $default  reduce using rule 5 (Input)
+    $default  reduce using rule 5 (Definition)
 
 
 State 14
 
-  176 Include: "include" "(" . FileName ")" "."
-  177        | "include" "(" . FileName "," FormulaSelection ")" "."
+  176 IncludeDefinition: "include" "(" . FileName ")" "."
+  177                  | "include" "(" . FileName "," FormulaSelection ")" "."
 
     "single_quoted"  shift, and go to state 18
 
@@ -1094,9 +1094,9 @@ State 15
 
 State 16
 
-    2 Inputs: Inputs Input .
+    2 Definitions: Definitions Definition .
 
-    $default  reduce using rule 2 (Inputs)
+    $default  reduce using rule 2 (Definitions)
 
 
 State 17
@@ -1123,8 +1123,8 @@ State 18
 
 State 19
 
-  176 Include: "include" "(" FileName . ")" "."
-  177        | "include" "(" FileName . "," FormulaSelection ")" "."
+  176 IncludeDefinition: "include" "(" FileName . ")" "."
+  177                  | "include" "(" FileName . "," FormulaSelection ")" "."
 
     ","  shift, and go to state 28
     ")"  shift, and go to state 29
@@ -1188,7 +1188,7 @@ State 27
 
 State 28
 
-  177 Include: "include" "(" FileName "," . FormulaSelection ")" "."
+  177 IncludeDefinition: "include" "(" FileName "," . FormulaSelection ")" "."
 
     "["  shift, and go to state 31
 
@@ -1197,7 +1197,7 @@ State 28
 
 State 29
 
-  176 Include: "include" "(" FileName ")" . "."
+  176 IncludeDefinition: "include" "(" FileName ")" . "."
 
     "."  shift, and go to state 33
 
@@ -1230,16 +1230,16 @@ State 31
 
 State 32
 
-  177 Include: "include" "(" FileName "," FormulaSelection . ")" "."
+  177 IncludeDefinition: "include" "(" FileName "," FormulaSelection . ")" "."
 
     ")"  shift, and go to state 38
 
 
 State 33
 
-  176 Include: "include" "(" FileName ")" "." .
+  176 IncludeDefinition: "include" "(" FileName ")" "." .
 
-    $default  reduce using rule 176 (Include)
+    $default  reduce using rule 176 (IncludeDefinition)
 
 
 State 34
@@ -1274,7 +1274,7 @@ State 37
 
 State 38
 
-  177 Include: "include" "(" FileName "," FormulaSelection ")" . "."
+  177 IncludeDefinition: "include" "(" FileName "," FormulaSelection ")" . "."
 
     "."  shift, and go to state 42
 
@@ -1391,9 +1391,9 @@ State 41
 
 State 42
 
-  177 Include: "include" "(" FileName "," FormulaSelection ")" "." .
+  177 IncludeDefinition: "include" "(" FileName "," FormulaSelection ")" "." .
 
-    $default  reduce using rule 177 (Include)
+    $default  reduce using rule 177 (IncludeDefinition)
 
 
 State 43

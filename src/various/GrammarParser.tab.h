@@ -56,13 +56,15 @@
     #include <libtptp/Specification>
     #include <libtptp/Token>
 
+	#include <libtptp/Logger>
+
     #include "../../src/SourceLocation.h"
 
     using namespace libtptp;
 
     #define YY_NULLPTR nullptr
 
-#line 66 "GrammarParser.tab.h" // lalr1.cc:403
+#line 68 "GrammarParser.tab.h" // lalr1.cc:403
 
 # include <cassert>
 # include <cstdlib> // std::abort
@@ -156,7 +158,7 @@
 
 #line 47 "../../obj/src/GrammarParser.yy" // lalr1.cc:403
 namespace libtptp {
-#line 160 "GrammarParser.tab.h" // lalr1.cc:403
+#line 162 "GrammarParser.tab.h" // lalr1.cc:403
 
   /// A stack with random access from its top.
   template <typename T, typename S = std::vector<T> >
@@ -491,8 +493,34 @@ namespace libtptp {
     /// An auxiliary type to compute the largest semantic type.
     union union_type
     {
+      // Definition
+      char dummy1[sizeof (Definition::Ptr)];
+
+      // Definitions
+      char dummy2[sizeof (Definitions::Ptr)];
+
+      // Name
+      // FileName
+      char dummy3[sizeof (Identifier::Ptr)];
+
+      // NameList
+      // FormulaSelection
+      char dummy4[sizeof (Identifiers::Ptr)];
+
+      // IncludeDefinition
+      char dummy5[sizeof (IncludeDefinition::Ptr)];
+
+      // IntegerLiteral
+      char dummy6[sizeof (IntegerLiteral::Ptr)];
+
       // Specification
-      char dummy1[sizeof (Specification::Ptr)];
+      char dummy7[sizeof (Specification::Ptr)];
+
+      // AtomicWord
+      // DistinctObjectLiteral
+      // LowerWordLiteral
+      // SingleQuotedLiteral
+      char dummy8[sizeof (StringLiteral::Ptr)];
 
       // "tpi"
       // "thf"
@@ -539,7 +567,7 @@ namespace libtptp {
       // "-->"
       // "<<"
       // "include"
-      char dummy2[sizeof (Token::Ptr)];
+      char dummy9[sizeof (Token::Ptr)];
 
       // "integer"
       // "real"
@@ -549,7 +577,7 @@ namespace libtptp {
       // "upper_word"
       // "identifier"
       // "single_quoted"
-      char dummy3[sizeof (std::string)];
+      char dummy10[sizeof (std::string)];
 };
 
     /// Symbol semantic values.
@@ -662,7 +690,14 @@ namespace libtptp {
 
       /// Constructor for valueless symbols, and symbols from each type.
       basic_symbol (typename Base::kind_type t, YY_RVREF (location_type) l);
+      basic_symbol (typename Base::kind_type t, YY_RVREF (Definition::Ptr) v, YY_RVREF (location_type) l);
+      basic_symbol (typename Base::kind_type t, YY_RVREF (Definitions::Ptr) v, YY_RVREF (location_type) l);
+      basic_symbol (typename Base::kind_type t, YY_RVREF (Identifier::Ptr) v, YY_RVREF (location_type) l);
+      basic_symbol (typename Base::kind_type t, YY_RVREF (Identifiers::Ptr) v, YY_RVREF (location_type) l);
+      basic_symbol (typename Base::kind_type t, YY_RVREF (IncludeDefinition::Ptr) v, YY_RVREF (location_type) l);
+      basic_symbol (typename Base::kind_type t, YY_RVREF (IntegerLiteral::Ptr) v, YY_RVREF (location_type) l);
       basic_symbol (typename Base::kind_type t, YY_RVREF (Specification::Ptr) v, YY_RVREF (location_type) l);
+      basic_symbol (typename Base::kind_type t, YY_RVREF (StringLiteral::Ptr) v, YY_RVREF (location_type) l);
       basic_symbol (typename Base::kind_type t, YY_RVREF (Token::Ptr) v, YY_RVREF (location_type) l);
       basic_symbol (typename Base::kind_type t, YY_RVREF (std::string) v, YY_RVREF (location_type) l);
 
@@ -1250,8 +1285,41 @@ namespace libtptp {
   {
     switch (other.type_get ())
     {
+      case 59: // Definition
+        value.YY_MOVE_OR_COPY< Definition::Ptr > (YY_MOVE (other.value));
+        break;
+
+      case 58: // Definitions
+        value.YY_MOVE_OR_COPY< Definitions::Ptr > (YY_MOVE (other.value));
+        break;
+
+      case 133: // Name
+      case 148: // FileName
+        value.YY_MOVE_OR_COPY< Identifier::Ptr > (YY_MOVE (other.value));
+        break;
+
+      case 132: // NameList
+      case 142: // FormulaSelection
+        value.YY_MOVE_OR_COPY< Identifiers::Ptr > (YY_MOVE (other.value));
+        break;
+
+      case 141: // IncludeDefinition
+        value.YY_MOVE_OR_COPY< IncludeDefinition::Ptr > (YY_MOVE (other.value));
+        break;
+
+      case 149: // IntegerLiteral
+        value.YY_MOVE_OR_COPY< IntegerLiteral::Ptr > (YY_MOVE (other.value));
+        break;
+
       case 57: // Specification
         value.YY_MOVE_OR_COPY< Specification::Ptr > (YY_MOVE (other.value));
+        break;
+
+      case 144: // AtomicWord
+      case 153: // DistinctObjectLiteral
+      case 154: // LowerWordLiteral
+      case 155: // SingleQuotedLiteral
+        value.YY_MOVE_OR_COPY< StringLiteral::Ptr > (YY_MOVE (other.value));
         break;
 
       case 3: // "tpi"
@@ -1328,7 +1396,56 @@ namespace libtptp {
   {}
 
   template <typename Base>
+  Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, YY_RVREF (Definition::Ptr) v, YY_RVREF (location_type) l)
+    : Base (t)
+    , value (YY_MOVE (v))
+    , location (YY_MOVE (l))
+  {}
+
+  template <typename Base>
+  Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, YY_RVREF (Definitions::Ptr) v, YY_RVREF (location_type) l)
+    : Base (t)
+    , value (YY_MOVE (v))
+    , location (YY_MOVE (l))
+  {}
+
+  template <typename Base>
+  Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, YY_RVREF (Identifier::Ptr) v, YY_RVREF (location_type) l)
+    : Base (t)
+    , value (YY_MOVE (v))
+    , location (YY_MOVE (l))
+  {}
+
+  template <typename Base>
+  Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, YY_RVREF (Identifiers::Ptr) v, YY_RVREF (location_type) l)
+    : Base (t)
+    , value (YY_MOVE (v))
+    , location (YY_MOVE (l))
+  {}
+
+  template <typename Base>
+  Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, YY_RVREF (IncludeDefinition::Ptr) v, YY_RVREF (location_type) l)
+    : Base (t)
+    , value (YY_MOVE (v))
+    , location (YY_MOVE (l))
+  {}
+
+  template <typename Base>
+  Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, YY_RVREF (IntegerLiteral::Ptr) v, YY_RVREF (location_type) l)
+    : Base (t)
+    , value (YY_MOVE (v))
+    , location (YY_MOVE (l))
+  {}
+
+  template <typename Base>
   Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, YY_RVREF (Specification::Ptr) v, YY_RVREF (location_type) l)
+    : Base (t)
+    , value (YY_MOVE (v))
+    , location (YY_MOVE (l))
+  {}
+
+  template <typename Base>
+  Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, YY_RVREF (StringLiteral::Ptr) v, YY_RVREF (location_type) l)
     : Base (t)
     , value (YY_MOVE (v))
     , location (YY_MOVE (l))
@@ -1373,8 +1490,41 @@ namespace libtptp {
     // Type destructor.
   switch (yytype)
     {
+      case 59: // Definition
+        value.template destroy< Definition::Ptr > ();
+        break;
+
+      case 58: // Definitions
+        value.template destroy< Definitions::Ptr > ();
+        break;
+
+      case 133: // Name
+      case 148: // FileName
+        value.template destroy< Identifier::Ptr > ();
+        break;
+
+      case 132: // NameList
+      case 142: // FormulaSelection
+        value.template destroy< Identifiers::Ptr > ();
+        break;
+
+      case 141: // IncludeDefinition
+        value.template destroy< IncludeDefinition::Ptr > ();
+        break;
+
+      case 149: // IntegerLiteral
+        value.template destroy< IntegerLiteral::Ptr > ();
+        break;
+
       case 57: // Specification
         value.template destroy< Specification::Ptr > ();
+        break;
+
+      case 144: // AtomicWord
+      case 153: // DistinctObjectLiteral
+      case 154: // LowerWordLiteral
+      case 155: // SingleQuotedLiteral
+        value.template destroy< StringLiteral::Ptr > ();
         break;
 
       case 3: // "tpi"
@@ -1457,8 +1607,41 @@ namespace libtptp {
     super_type::move (s);
     switch (this->type_get ())
     {
+      case 59: // Definition
+        value.move< Definition::Ptr > (YY_MOVE (s.value));
+        break;
+
+      case 58: // Definitions
+        value.move< Definitions::Ptr > (YY_MOVE (s.value));
+        break;
+
+      case 133: // Name
+      case 148: // FileName
+        value.move< Identifier::Ptr > (YY_MOVE (s.value));
+        break;
+
+      case 132: // NameList
+      case 142: // FormulaSelection
+        value.move< Identifiers::Ptr > (YY_MOVE (s.value));
+        break;
+
+      case 141: // IncludeDefinition
+        value.move< IncludeDefinition::Ptr > (YY_MOVE (s.value));
+        break;
+
+      case 149: // IntegerLiteral
+        value.move< IntegerLiteral::Ptr > (YY_MOVE (s.value));
+        break;
+
       case 57: // Specification
         value.move< Specification::Ptr > (YY_MOVE (s.value));
+        break;
+
+      case 144: // AtomicWord
+      case 153: // DistinctObjectLiteral
+      case 154: // LowerWordLiteral
+      case 155: // SingleQuotedLiteral
+        value.move< StringLiteral::Ptr > (YY_MOVE (s.value));
         break;
 
       case 3: // "tpi"
@@ -1967,7 +2150,7 @@ namespace libtptp {
 
 #line 47 "../../obj/src/GrammarParser.yy" // lalr1.cc:403
 } // libtptp
-#line 1971 "GrammarParser.tab.h" // lalr1.cc:403
+#line 2154 "GrammarParser.tab.h" // lalr1.cc:403
 
 
 

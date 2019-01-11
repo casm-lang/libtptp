@@ -16,32 +16,32 @@
       <rule number="1" usefulness="useful">
         <lhs>Specification</lhs>
         <rhs>
-          <symbol>Inputs</symbol>
+          <symbol>Definitions</symbol>
         </rhs>
       </rule>
       <rule number="2" usefulness="useful">
-        <lhs>Inputs</lhs>
+        <lhs>Definitions</lhs>
         <rhs>
-          <symbol>Inputs</symbol>
-          <symbol>Input</symbol>
+          <symbol>Definitions</symbol>
+          <symbol>Definition</symbol>
         </rhs>
       </rule>
       <rule number="3" usefulness="useful">
-        <lhs>Inputs</lhs>
+        <lhs>Definitions</lhs>
         <rhs>
-          <symbol>Input</symbol>
+          <symbol>Definition</symbol>
         </rhs>
       </rule>
       <rule number="4" usefulness="useful">
-        <lhs>Input</lhs>
+        <lhs>Definition</lhs>
         <rhs>
           <symbol>AnnotatedFormula</symbol>
         </rhs>
       </rule>
       <rule number="5" usefulness="useful">
-        <lhs>Input</lhs>
+        <lhs>Definition</lhs>
         <rhs>
-          <symbol>Include</symbol>
+          <symbol>IncludeDefinition</symbol>
         </rhs>
       </rule>
       <rule number="6" usefulness="useful">
@@ -1196,7 +1196,7 @@
         </rhs>
       </rule>
       <rule number="176" usefulness="useful">
-        <lhs>Include</lhs>
+        <lhs>IncludeDefinition</lhs>
         <rhs>
           <symbol>&quot;include&quot;</symbol>
           <symbol>&quot;(&quot;</symbol>
@@ -1206,7 +1206,7 @@
         </rhs>
       </rule>
       <rule number="177" usefulness="useful">
-        <lhs>Include</lhs>
+        <lhs>IncludeDefinition</lhs>
         <rhs>
           <symbol>&quot;include&quot;</symbol>
           <symbol>&quot;(&quot;</symbol>
@@ -2623,8 +2623,8 @@
     <nonterminals>
       <nonterminal symbol-number="56" name="$accept" usefulness="useful"/>
       <nonterminal symbol-number="57" name="Specification" usefulness="useful"/>
-      <nonterminal symbol-number="58" name="Inputs" usefulness="useful"/>
-      <nonterminal symbol-number="59" name="Input" usefulness="useful"/>
+      <nonterminal symbol-number="58" name="Definitions" usefulness="useful"/>
+      <nonterminal symbol-number="59" name="Definition" usefulness="useful"/>
       <nonterminal symbol-number="60" name="AnnotatedFormula" usefulness="useful"/>
       <nonterminal symbol-number="61" name="FormulaKeyword" usefulness="useful"/>
       <nonterminal symbol-number="62" name="FormulaSpecification" usefulness="useful"/>
@@ -2706,7 +2706,7 @@
       <nonterminal symbol-number="138" name="GeneralTerms" usefulness="useful"/>
       <nonterminal symbol-number="139" name="FormulaData" usefulness="useful"/>
       <nonterminal symbol-number="140" name="GeneralList" usefulness="useful"/>
-      <nonterminal symbol-number="141" name="Include" usefulness="useful"/>
+      <nonterminal symbol-number="141" name="IncludeDefinition" usefulness="useful"/>
       <nonterminal symbol-number="142" name="FormulaSelection" usefulness="useful"/>
       <nonterminal symbol-number="143" name="FormulaDataKeyword" usefulness="useful"/>
       <nonterminal symbol-number="144" name="AtomicWord" usefulness="useful"/>
@@ -2845,11 +2845,11 @@
           <transition type="shift" symbol="&quot;cnf&quot;" state="6"/>
           <transition type="shift" symbol="&quot;include&quot;" state="7"/>
           <transition type="goto" symbol="Specification" state="8"/>
-          <transition type="goto" symbol="Inputs" state="9"/>
-          <transition type="goto" symbol="Input" state="10"/>
+          <transition type="goto" symbol="Definitions" state="9"/>
+          <transition type="goto" symbol="Definition" state="10"/>
           <transition type="goto" symbol="AnnotatedFormula" state="11"/>
           <transition type="goto" symbol="FormulaKeyword" state="12"/>
-          <transition type="goto" symbol="Include" state="13"/>
+          <transition type="goto" symbol="IncludeDefinition" state="13"/>
         </transitions>
         <errors/>
         <reductions/>
@@ -2999,10 +2999,10 @@
           <transition type="shift" symbol="&quot;fof&quot;" state="5"/>
           <transition type="shift" symbol="&quot;cnf&quot;" state="6"/>
           <transition type="shift" symbol="&quot;include&quot;" state="7"/>
-          <transition type="goto" symbol="Input" state="16"/>
+          <transition type="goto" symbol="Definition" state="16"/>
           <transition type="goto" symbol="AnnotatedFormula" state="11"/>
           <transition type="goto" symbol="FormulaKeyword" state="12"/>
-          <transition type="goto" symbol="Include" state="13"/>
+          <transition type="goto" symbol="IncludeDefinition" state="13"/>
         </transitions>
         <errors/>
         <reductions>

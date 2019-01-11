@@ -1670,7 +1670,7 @@ NameList
   {
 	const auto list = $1;
 	const auto name = $3;
-	name->prefix().add($2);
+	name->prefix().add($2); //setDelimiter
 	list->add(name);
 	$$ = list;
   }
