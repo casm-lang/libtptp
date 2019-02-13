@@ -43,15 +43,21 @@
 
 using namespace libtptp;
 
-Identifier::Identifier( const Literal::Ptr& name )
+Identifier::Identifier( const Literal::Ptr& name, const bool isVariable )
 : Node( Node::ID::IDENTIFIER )
 , m_name( name )
+, m_isVariable( isVariable )
 {
 }
 
 const Literal::Ptr& Identifier::name( void ) const
 {
     return m_name;
+}
+
+const bool Identifier::isVariable() const
+{
+    return m_isVariable;
 }
 
 void Identifier::accept( Visitor& visitor )

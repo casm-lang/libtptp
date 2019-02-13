@@ -126,6 +126,10 @@ std::string Node::description( void ) const
         {
             return "include";
         }
+        case ID::FORMULA_DEFINITION:
+        {
+            return "formula definition";
+        }
         // formulae
         case ID::FOF_FORMULA:
         {
@@ -189,9 +193,47 @@ std::string Node::description( void ) const
         {
             return "integer literal";
         }
+        case ID::RATIONAL_LITERAL:
+        {
+            return "rational literal";
+        }
+        case ID::REAL_LITERAL:
+        {
+            return "real literal";
+        }
         case ID::STRING_LITERAL:
         {
             return "string literal";
+        }
+        case ID::LIST_LITERAL:
+        {
+            return "list literal";
+        }
+
+        case ID::FORMULA_ROLE:
+        {
+            return "formula role";
+        }
+
+        case ID::GENERAL_DATA:
+        {
+            return "general data";
+        }
+        case ID::GENERAL_LIST:
+        {
+            return "general list";
+        }
+        case ID::GENERAL_AGGREGATOR:
+        {
+            return "general aggregator";
+        }
+        case ID::GENERAL_FUNCTION:
+        {
+            return "general function";
+        }
+        case ID::ANNOTATION:
+        {
+            return "annotation";
         }
     }
 

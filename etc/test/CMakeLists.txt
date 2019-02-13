@@ -50,4 +50,5 @@ include_directories(
 add_library( ${PROJECT}-test OBJECT
   main.cpp
   example.cpp
+  general.cpp
   )

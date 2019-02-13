@@ -42,6 +42,8 @@
 #ifndef _LIBTPTP_FORMULA_H_
 #define _LIBTPTP_FORMULA_H_
 
+#include <libstdhl/Optional>
+#include <libtptp/General>
 #include <libtptp/Logic>
 #include <libtptp/Node>
 
@@ -64,12 +66,15 @@ namespace libtptp
         Formula( const Node::ID id, const Logic::Ptr& logic );
 
         const Logic::Ptr& logic( void ) const;
+        const libstdhl::Optional< Annotation::Ptr >& annotations( void ) const;
+        void setAnnotations( Annotation::Ptr& annotations );
 
         u1 isFOF( void ) const;
         u1 isTFF( void ) const;
 
       private:
         const Logic::Ptr m_logic;
+        libstdhl::Optional< Annotation::Ptr > m_annotations;
     };
 
     using Formulas = NodeList< Formula >;
@@ -99,6 +104,24 @@ namespace libtptp
       public:
         void accept( Visitor& visitor ) override;
     };
+
+    class FormulaRole final : public Node
+    {
+      public:
+        using Ptr = std::shared_ptr< FormulaRole >;
+
+        explicit FormulaRole( const StringLiteral::Ptr& word );
+
+        void accept( Visitor& visitor ) override final;
+
+        const StringLiteral::Ptr& word( void ) const;
+
+      private:
+        const StringLiteral::Ptr m_word;
+    };
+
+    using FormulaRoles = NodeList< FormulaRole >;
+
 }
 
 #endif  // _LIBTPTP_FORMULA_H_

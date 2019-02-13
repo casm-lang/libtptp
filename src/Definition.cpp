@@ -62,7 +62,7 @@ IncludeDefinition::IncludeDefinition(
     const Token::Ptr& leftParenToken,
     const Identifier::Ptr& filename,
     const Token::Ptr& commaToken,
-    const Identifiers::Ptr& formulaSelection,
+    const ListLiteral::Ptr& formulaSelection,
     const Token::Ptr& rightParenToken,
     const Token::Ptr& dotToken )
 : Definition( ID::INCLUDE_DEFINITION )
@@ -92,7 +92,7 @@ const Token::Ptr& IncludeDefinition::commaToken( void ) const
 {
     return m_commaToken;
 }
-const Identifiers::Ptr& IncludeDefinition::formulaSelection( void ) const
+const ListLiteral::Ptr& IncludeDefinition::formulaSelection( void ) const
 {
     return m_formulaSelection;
 }
@@ -108,6 +108,71 @@ const Token::Ptr& IncludeDefinition::dotToken( void ) const
 void IncludeDefinition::accept( Visitor& visitor )
 {
     // visitor.visit( *this ); // TODO: Fixme @moosbruggerj
+}
+
+FormulaDefinition::FormulaDefinition(
+    const Token::Ptr& keyword,
+    const Token::Ptr& leftParen,
+    const Identifier::Ptr& name,
+    const Token::Ptr& comma,
+    const FormulaRole::Ptr& role,
+    const Token::Ptr& comma2,
+    const Formula::Ptr& formula,
+    const Token::Ptr& rightParen,
+    const Token::Ptr& dot )
+: Definition( Node::ID::FORMULA_DEFINITION )
+, m_keyword( keyword )
+, m_leftParen( leftParen )
+, m_name( name )
+, m_comma( comma )
+, m_role( role )
+, m_comma2( comma2 )
+, m_formula( formula )
+, m_rightParen( rightParen )
+, m_dot( dot )
+{
+}
+
+void FormulaDefinition::accept( Visitor& visitor )
+{
+    // TODO: @moosbruggerj fix me
+}
+
+const Token::Ptr& FormulaDefinition::keyword( void ) const
+{
+    return m_keyword;
+}
+const Token::Ptr& FormulaDefinition::leftParen( void ) const
+{
+    return m_leftParen;
+}
+const Identifier::Ptr& FormulaDefinition::name( void ) const
+{
+    return m_name;
+}
+const Token::Ptr& FormulaDefinition::comma( void ) const
+{
+    return m_comma;
+}
+const FormulaRole::Ptr& FormulaDefinition::role( void ) const
+{
+    return m_role;
+}
+const Token::Ptr& FormulaDefinition::comma2( void ) const
+{
+    return m_comma2;
+}
+const Formula::Ptr& FormulaDefinition::formula( void ) const
+{
+    return m_formula;
+}
+const Token::Ptr& FormulaDefinition::rightParen( void ) const
+{
+    return m_rightParen;
+}
+const Token::Ptr& FormulaDefinition::dot( void ) const
+{
+    return m_dot;
 }
 
 //

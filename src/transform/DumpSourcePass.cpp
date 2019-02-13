@@ -201,12 +201,12 @@ void DumpSourceVisitor::visit( Identifier& node )
 
 void DumpSourceVisitor::visit( StringLiteral& node )
 {
-    m_stream << node.value();
+    //   m_stream << node.value();
 }
 
 void DumpSourceVisitor::visit( IntegerLiteral& node )
 {
-    m_stream << node.value();
+    //  m_stream << node.value();
 }
 
 //

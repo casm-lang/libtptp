@@ -60,6 +60,16 @@ const Logic::Ptr& Formula::logic( void ) const
     return m_logic;
 }
 
+const libstdhl::Optional< Annotation::Ptr >& Formula::annotations( void ) const
+{
+    return m_annotations;
+}
+
+void Formula::setAnnotations( Annotation::Ptr& annotations )
+{
+    m_annotations = annotations;
+}
+
 u1 Formula::isFOF( void ) const
 {
     return id() == Node::ID::FOF_FORMULA;
@@ -98,6 +108,23 @@ void TypedFirstOrderFormula::accept( Visitor& visitor )
     visitor.visit( *this );
 }
 
+//
+// FormulaRole
+//
+
+FormulaRole::FormulaRole( const StringLiteral::Ptr& word )
+: Node( Node::ID::FORMULA_ROLE )
+{
+}
+
+void FormulaRole::accept( Visitor& visitor )
+{
+}
+
+const StringLiteral::Ptr& FormulaRole::word( void ) const
+{
+    return m_word;
+}
 //
 //  Local variables:
 //  mode: c++
