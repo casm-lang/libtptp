@@ -42,6 +42,13 @@
 #ifndef _LIBTPTP_LITERAL_H_
 #define _LIBTPTP_LITERAL_H_
 
+#include <cassert>
+#include <libstdhl/Type>
+#include <libstdhl/data/type/Data>
+#include <libstdhl/data/type/Decimal>
+#include <libstdhl/data/type/Integer>
+#include <libstdhl/data/type/Rational>
+#include <libstdhl/data/type/String>
 #include <libtptp/Node>
 #include <libtptp/Token>
 
@@ -59,7 +66,22 @@ namespace libtptp
 
     using Literals = NodeList< Literal >;
 
-    class IntegerLiteral final : public Literal
+    class ValueLiteral : public Literal
+    {
+      public:
+        using Ptr = std::shared_ptr< ValueLiteral >;
+
+        explicit ValueLiteral( const Node::ID id, libstdhl::Type::Data value );
+
+        const libstdhl::Type::Data& value( void ) const;
+
+      private:
+        libstdhl::Type::Data m_value;
+    };
+
+    using ValueLiterals = NodeList< ValueLiteral >;
+
+    class IntegerLiteral final : public ValueLiteral
     {
       public:
         using Ptr = std::shared_ptr< IntegerLiteral >;
@@ -68,18 +90,43 @@ namespace libtptp
 
         void accept( Visitor& visitor ) override final;
 
-        const long& value( void ) const;
-
       private:
-        long m_value;
     };
 
     using IntegerLiterals = NodeList< IntegerLiteral >;
 
-    class StringLiteral final : public Literal
+    class RationalLiteral final : public ValueLiteral
     {
       public:
-        enum class StringType
+        using Ptr = std::shared_ptr< RationalLiteral >;
+
+        explicit RationalLiteral( const std::string& rational );
+
+        void accept( Visitor& visitor ) override final;
+
+      private:
+    };
+
+    using RationalLiterals = NodeList< RationalLiteral >;
+
+    class RealLiteral final : public ValueLiteral
+    {
+      public:
+        using Ptr = std::shared_ptr< RealLiteral >;
+
+        explicit RealLiteral( const std::string& real );
+
+        void accept( Visitor& visitor ) override final;
+
+      private:
+    };
+
+    using RealLiterals = NodeList< RealLiteral >;
+
+    class StringLiteral final : public ValueLiteral
+    {
+      public:
+        enum class Kind
         {
             SINGLE_QUOTED,
             DOUBLE_QUOTED,
@@ -91,14 +138,39 @@ namespace libtptp
 
         void accept( Visitor& visitor ) override final;
 
-        const std::string& value( void ) const;
+        const Kind& kind( void ) const;
+
+        const std::string kindName( void ) const;
 
       private:
-        StringType m_type;
-        std::string m_value;
+        Kind m_kind;
     };
 
     using StringLiterals = NodeList< StringLiteral >;
+
+    class ListLiteral final : public Literal
+    {
+      public:
+        enum class Kind
+        {
+
+        };
+        using Ptr = std::shared_ptr< ListLiteral >;
+        explicit ListLiteral( const Token::Ptr& leftBraceToken, const Token::Ptr& rightBraceToken );
+        explicit ListLiteral(
+            const Token::Ptr& leftBraceToken,
+            const Nodes::Ptr& elements,
+            const Token::Ptr& rightBraceToken );
+
+        const Nodes::Ptr& elements( void ) const;
+
+        void accept( Visitor& visitor ) override final;
+
+      private:
+        const Token::Ptr m_leftBraceToken;
+        const Nodes::Ptr m_elements;
+        const Token::Ptr m_rightBraceToken;
+    };
 
 }
 

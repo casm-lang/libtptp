@@ -50,6 +50,7 @@ add_library( ${PROJECT}-cpp OBJECT
   Atom.cpp
   Definition.cpp
   Formula.cpp
+  General.cpp
   Identifier.cpp
   Literal.cpp
   Logic.cpp
@@ -96,6 +97,7 @@ ecm_generate_headers( ${PROJECT}_HEADERS_CPP
     Atom
     Definition
     Formula
+    General
     Identifier
     Literal
     Logic

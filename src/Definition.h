@@ -42,6 +42,8 @@
 #ifndef _LIBTPTP_DEFINITION_H_
 #define _LIBTPTP_DEFINITION_H_
 
+#include <libtptp/Formula>
+#include <libtptp/General>
 #include <libtptp/Identifier>
 #include <libtptp/Node>
 #include <libtptp/Token>
@@ -79,7 +81,7 @@ namespace libtptp
             const Token::Ptr& leftParenToken,
             const Identifier::Ptr& filename,
             const Token::Ptr& commaToken,
-            const Identifiers::Ptr& formulaSelection,
+            const ListLiteral::Ptr& formulaSelection,
             const Token::Ptr& rightParenToken,
             const Token::Ptr& dotToken );
 
@@ -87,7 +89,7 @@ namespace libtptp
         const Token::Ptr& leftParenToken( void ) const;
         const Identifier::Ptr& filename( void ) const;
         const Token::Ptr& commaToken( void ) const;
-        const Identifiers::Ptr& formulaSelection( void ) const;
+        const ListLiteral::Ptr& formulaSelection( void ) const;
         const Token::Ptr& rightParenToken( void ) const;
         const Token::Ptr& dotToken( void ) const;
 
@@ -98,10 +100,53 @@ namespace libtptp
         const Token::Ptr m_leftParenToken;
         const Identifier::Ptr m_filename;
         const Token::Ptr m_commaToken;
-        const Identifiers::Ptr m_formulaSelection;
+        const ListLiteral::Ptr m_formulaSelection;
         const Token::Ptr m_rightParenToken;
         const Token::Ptr m_dotToken;
     };
+
+    class FormulaDefinition final : public Definition
+    {
+      public:
+        using Ptr = std::shared_ptr< FormulaDefinition >;
+
+        explicit FormulaDefinition(
+            const Token::Ptr& keyword,
+            const Token::Ptr& leftParen,
+            const Identifier::Ptr& name,
+            const Token::Ptr& comma,
+            const FormulaRole::Ptr& role,
+            const Token::Ptr& comma2,
+            const Formula::Ptr& formula,
+            const Token::Ptr& rightParen,
+            const Token::Ptr& dot );
+
+        void accept( Visitor& visitor ) override final;
+
+        const Token::Ptr& keyword( void ) const;
+        const Token::Ptr& leftParen( void ) const;
+        const Identifier::Ptr& name( void ) const;
+        const Token::Ptr& comma( void ) const;
+        const FormulaRole::Ptr& role( void ) const;
+        const Token::Ptr& comma2( void ) const;
+        const Formula::Ptr& formula( void ) const;
+        const Token::Ptr& rightParen( void ) const;
+        const Token::Ptr& dot( void ) const;
+
+      private:
+        const Token::Ptr m_keyword;
+        const Token::Ptr m_leftParen;
+        const Identifier::Ptr m_name;
+        const Token::Ptr m_comma;
+        const FormulaRole::Ptr m_role;
+        const Token::Ptr m_comma2;
+        const Formula::Ptr m_formula;
+        const Token::Ptr m_rightParen;
+        const Token::Ptr m_dot;
+    };
+
+    using FormulaDefinitions = NodeList< FormulaDefinition >;
+
 }
 
 #endif  // _LIBTPTP_DEFINITION_H_

@@ -85,6 +85,8 @@
 %code
 {
     // #include <libtptp/ ... >
+	//TODO: @moosbruggerj remove temporary includes
+	#include <libtptp/General>
 
     //#include "../../src/SourceLocation.h"
     #include "../../src/Lexer.h"
@@ -115,17 +117,35 @@ END       0 "end of file"
 
 %type <Specification::Ptr> Specification
 
-%type <Identifier::Ptr> FileName Name
-%type <Identifiers::Ptr> NameList FormulaSelection
+%type <Identifier::Ptr> FileName Name Variable
+//%type <Identifiers::Ptr> FormulaSelection
+%type <Nodes::Ptr> NameList
+%type <ListLiteral::Ptr> FormulaSelection
 
 // definitions
 %type <IncludeDefinition::Ptr> IncludeDefinition
+%type <FormulaDefinition::Ptr> AnnotatedFormula FofAnnotated
 %type <Definition::Ptr> Definition
 %type <Definitions::Ptr> Definitions
 
+%type <Annotation::Ptr> Annotations
+
+%type <FormulaRole::Ptr> FormulaRole
+//%type <Token::Ptr> FormulaKeyword
+//%type <Formula::Ptr> FormulaSpecification
+
 %type <StringLiteral::Ptr> SingleQuotedLiteral LowerWordLiteral DistinctObjectLiteral AtomicWord
 %type <IntegerLiteral::Ptr> IntegerLiteral
+%type <RationalLiteral::Ptr> RationalLiteral
+%type <RealLiteral::Ptr> RealLiteral
+%type <ValueLiteral::Ptr> Number
 // %type <Atom::Ptr> Atom
+
+%type <GeneralTerm::Ptr> GeneralTerm
+%type <GeneralData::Ptr> GeneralData
+%type <GeneralList::Ptr> GeneralList
+%type <GeneralFunction::Ptr> GeneralFunction
+%type <Nodes::Ptr> GeneralTerms
 
 %start Specification
 
@@ -161,7 +181,7 @@ Definitions
 Definition
 : AnnotatedFormula  /*FormulaDefinition*/
   {
-      //$$ = $1;
+      $$ = $1;
   }
 | IncludeDefinition
   {
@@ -170,39 +190,101 @@ Definition
 ;
 
 AnnotatedFormula
-/*
 : ThfAnnotated
   {
-    $$ = $1
+    //$$ = $1
   }
 | TffAnnotated
   {
-    $$ = $1
+    //$$ = $1
   }
 | TcfAnnotated
   {
-    $$ = $1
+    //$$ = $1
   }
 | FofAnnotated
   {
-    $$ = $1
+    //$$ = $1
   }
 | CnfAnnotated
   {
-    $$ = $1
+    //$$ = $1
   }
 | TpiAnnotated
   {
-    $$ = $1
+    //$$ = $1
   }
 ;
-*/
+/*
 : FormulaKeyword LPAREN Name COMMA FormulaRole COMMA FormulaSpecification RPAREN DOT
   {
+	$$ = libtptp::make< FormulaDefinition >(@$, uToken, $2, $3, $4, $5, $6, formula, $8, $9);
+	//$$ = libtptp::make< FormulaDefinition >(@$, $1, $2, $3, $4, $5, $6, $7, $8, $9, $10);
     //auto formula = $1;
     //formula->set ...
   }
+*/
 
+ThfAnnotated
+: THF LPAREN Name COMMA FormulaRole COMMA ThfFormula RPAREN DOT
+  {
+  }
+| THF LPAREN Name COMMA FormulaRole COMMA ThfFormula COMMA Annotations RPAREN DOT
+  {
+  }
+;
+TffAnnotated
+: TFF LPAREN Name COMMA FormulaRole COMMA TffFormula RPAREN DOT
+  {
+  }
+| TFF LPAREN Name COMMA FormulaRole COMMA TffFormula COMMA Annotations RPAREN DOT
+  {
+  }
+;
+TcfAnnotated
+: TCF LPAREN Name COMMA FormulaRole COMMA TcfFormula RPAREN DOT
+  {
+  }
+| TCF LPAREN Name COMMA FormulaRole COMMA TcfFormula COMMA Annotations RPAREN DOT
+  {
+  }
+;
+FofAnnotated
+: FOF LPAREN Name COMMA FormulaRole COMMA FofFormula RPAREN DOT
+  {
+	//TODO: @moosbruggerj fix me
+	auto logic = libtptp::make< UnitaryLogic >(@$);
+	auto formula = libtptp::make< FirstOrderFormula >(@$, logic);
+	$$ = libtptp::make< FormulaDefinition >(@$, $1, $2, $3, $4, $5, $6, formula, $8, $9);
+  }
+| FOF LPAREN Name COMMA FormulaRole COMMA FofFormula COMMA Annotations RPAREN DOT
+  {
+	//TODO: @moosbruggerj fix me
+	auto logic = libtptp::make< UnitaryLogic >(@$);
+	auto formula = libtptp::make< FirstOrderFormula >(@$, logic);
+	$$ = libtptp::make< FormulaDefinition >(@$, $1, $2, $3, $4, $5, $6, formula, $10, $11);
+	auto annotation = $9;
+	annotation->setDelimiter($8);
+	formula->setAnnotations(annotation);
+  }
+;
+CnfAnnotated
+: CNF LPAREN Name COMMA FormulaRole COMMA CnfFormula RPAREN DOT
+  {
+  }
+| CNF LPAREN Name COMMA FormulaRole COMMA CnfFormula COMMA Annotations RPAREN DOT
+  {
+  }
+;
+TpiAnnotated
+:TPI LPAREN Name COMMA FormulaRole COMMA TpiFormula RPAREN DOT
+  {
+  }
+| TPI LPAREN Name COMMA FormulaRole COMMA TpiFormula COMMA Annotations RPAREN DOT
+  {
+  }
+;
+/*
 FormulaKeyword
 : TPI
   {
@@ -224,7 +306,8 @@ FormulaKeyword
   {
   }
 ; 
-
+*/
+/*
 FormulaSpecification 
 : Formula COMMA Annotations
   {
@@ -237,20 +320,45 @@ FormulaSpecification
     //$$ = $1;
   }
 ;
+*/
 
 Annotations
 : GeneralTerm
   {
+	$$ = libtptp::make< Annotation >(@$, $1);
     //source
   }
 | GeneralTerm COMMA GeneralList
   {
     //source, optionalInfo
+	$$ = libtptp::make< Annotation >(@$, $1, $2, $3);
   }
 ;
-
+/*
 Formula
-: ThfFormula
+: TpiFormula 
+  {
+  }
+| ThfFormula
+  {
+  }
+| TffFormula
+  {
+  }
+| TcfFormula
+  {
+  }
+| FofFormula
+  {
+  }
+| CnfFormula
+  {
+  }
+;
+*/
+
+TpiFormula
+: FofFormula
   {
   }
 ;
@@ -1466,7 +1574,7 @@ ThfQuantifier
 ;
 
 Th1Quantifier
-: EXCLAMATION
+: EXCLAMATION GREATER
   {
   }
 | QUESTIONMARK STAR
@@ -1662,15 +1770,18 @@ DefinedTerm
 NameList
 : Name
   {
-	const auto list = libtptp::make< Identifiers >(@$);
+	//TODO: @moosbruggerj change to identifiers list
+	//const auto list = libtptp::make< Identifiers >(@$);
+	const auto list = libtptp::make< Nodes >(@$);
 	list->add($1);
 	$$ = list;
   }
 | NameList COMMA Name
   {
+	//TODO: @moosbruggerj add delimiter
 	const auto list = $1;
 	const auto name = $3;
-	name->prefix().add($2); //setDelimiter
+	//name->prefix().add($2); //setDelimiter
 	list->add(name);
 	$$ = list;
   }
@@ -1690,63 +1801,101 @@ Name
 FormulaRole
 : LowerWordLiteral
   {
-    // $$ = libtptp::make< FormulaRole >( @$, $1 );
+    $$ = libtptp::make< FormulaRole >( @$, $1 );
   }
 ;
 
 GeneralTerm
 : GeneralData
   {
+	$$ = $1;
   }
 | GeneralData COLON GeneralTerm
   {
+	$$ = libtptp::make< GeneralAggregator >(@$, $1, $2, $3);
   }
 | GeneralList
   {
+	$$ = $1;
   }
 ;
 
 GeneralData
 : AtomicWord
   {
+	$$ = libtptp::make< GeneralData >(@$, $1);
   }
 | GeneralFunction
   {
+	$$ = libtptp::make< GeneralData >(@$, $1);
   }
 | Variable
   {
+	$$ = libtptp::make< GeneralData >(@$, $1);
   }
 | Number
   {
+	$$ = libtptp::make< GeneralData >(@$, $1);
   }
 | DistinctObjectLiteral
   {
+	$$ = libtptp::make< GeneralData >(@$, $1);
   }
 | FormulaData
   {
+	//$$ = libtptp::make< GeneralData >(@$, $1);
+	//TODO: @moosbruggerj remove wrong token
+	$$ = libtptp::make< GeneralData >(@$, uToken);
   }
 ;
 
 GeneralFunction
 : AtomicWord LPAREN GeneralTerms RPAREN
   {
+	auto name = libtptp::make< Identifier >(@1, $1);
+	$$ = libtptp::make< GeneralFunction >(@$, name, $2, $3, $4);
   }
 ;
 
 GeneralTerms
 : GeneralTerm 
   {
+	auto list = libtptp::make< Nodes >(@$);
+	list->add($1);
+	$$ = list;
   }
 | GeneralTerms COMMA GeneralTerm
   {
-    //auto terms = $1;
-    //terms->add($3);
-    //$$ = terms;
+	//TODO: @moosbruggerj use comma
+	
+    auto terms = $1;
+    terms->add($3);
+    $$ = terms;
   }
 ;
 
+/*
 FormulaData
 : DOLLAR FormulaDataKeyword LPAREN Formula RPAREN
+  {
+  }
+;
+*/
+
+FormulaData
+: DOLLAR THF LPAREN ThfFormula RPAREN
+  {
+  }
+| DOLLAR TFF LPAREN TffFormula RPAREN
+  {
+  }
+| DOLLAR FOF LPAREN FofFormula RPAREN
+  {
+  }
+| DOLLAR CNF LPAREN CnfFormula RPAREN
+  {
+  }
+| DOLLAR FOT LPAREN FofTerm RPAREN
   {
   }
 ;
@@ -1754,9 +1903,13 @@ FormulaData
 GeneralList
 : LSQPAREN RSQPAREN
   {
+	auto list = libtptp::make< ListLiteral >(@$, $1, $2);
+	$$ = libtptp::make< GeneralList >(@$, list);
   }
 | LSQPAREN GeneralTerms RSQPAREN
   {
+	auto list = libtptp::make< ListLiteral >(@$, $1, $2, $3);
+	$$ = libtptp::make< GeneralList >(@$, list);
   }
 ;
 
@@ -1764,7 +1917,7 @@ GeneralList
 IncludeDefinition
 : INCLUDE LPAREN FileName RPAREN DOT
   {
-	const auto formulaSelection = libtptp::make< Identifiers >(@5);
+	const auto formulaSelection = libtptp::make< ListLiteral >(@5, uToken, uToken);
 	$$ = libtptp::make< IncludeDefinition >(@$, $1, $2, $3, uToken, formulaSelection, $4, $5);
   }
 | INCLUDE LPAREN FileName COMMA FormulaSelection RPAREN DOT
@@ -1776,13 +1929,18 @@ IncludeDefinition
 FormulaSelection 
 : LSQPAREN NameList RSQPAREN
   {
+	auto list = libtptp::make< ListLiteral >(@$, $1, $2, $3);
+	$$ = list;
+	/*
 	auto nameList = $2;
 	nameList->prefix().add($1);
 	nameList->suffix().add($3);
 	$$ = nameList;
+	*/
   }
 ;
 
+/*
 FormulaDataKeyword
 : THF
   {
@@ -1800,13 +1958,7 @@ FormulaDataKeyword
   {
   }
 ;
-
-Identifier
-: IDENTIFIER
-  {
-      // $$ = libtptp::make< Identifier >( @$, $1 );
-  }
-;
+*/
 
 AtomicWord
 : LowerWordLiteral
@@ -1834,15 +1986,15 @@ AtomicSystemWord
 Number
 : IntegerLiteral
   {
-    //$$ = $1;
+    $$ = $1;
   }
 | RealLiteral
   {
-    //$$ = $1;
+    $$ = $1;
   }
 | RationalLiteral
   {
-    //$$ = $1;
+    $$ = $1;
   }
 ;
 
@@ -1863,20 +2015,21 @@ IntegerLiteral
 RealLiteral
 : REAL
   {
-      // ...
+	$$ = libtptp::make< RealLiteral >(@$, $1);
   }
 ;
 RationalLiteral
 : RATIONAL
   {
-      // ...
+	$$ = libtptp::make< RationalLiteral >(@$, $1);
   }
 ;
 
 Variable
 : UPPER_WORD
   {
-    // ...
+	auto literal = libtptp::make< StringLiteral >(@$, $1);
+	$$ = libtptp::make< Identifier >(@$, literal, true);
   }
 ;
 

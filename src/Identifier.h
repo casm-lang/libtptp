@@ -55,14 +55,17 @@ namespace libtptp
       public:
         using Ptr = std::shared_ptr< Identifier >;
 
-        explicit Identifier( const Literal::Ptr& name );
+        explicit Identifier( const Literal::Ptr& name, bool isVariable = false );
 
         const Literal::Ptr& name( void ) const;
 
         void accept( Visitor& visitor ) override final;
 
+        const bool isVariable() const;
+
       private:
         const Literal::Ptr m_name;
+        const bool m_isVariable;
     };
 
     using Identifiers = NodeList< Identifier >;

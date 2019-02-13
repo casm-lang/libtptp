@@ -53,6 +53,19 @@ Logic::Logic( const ID id )
 }
 
 //
+// UnitaryLogic
+//
+
+UnitaryLogic::UnitaryLogic()
+: Logic( Node::ID::UNITARY_LOGIC )
+{
+}
+
+void UnitaryLogic::accept( Visitor& visitor )
+{
+}
+
+//
 // UnaryLogic
 //
 

@@ -64,6 +64,7 @@ namespace libtptp
             RECORD,
             // Definition
             INCLUDE_DEFINITION,
+            FORMULA_DEFINITION,
 
             // formulae
             FOF_FORMULA,
@@ -89,7 +90,19 @@ namespace libtptp
 
             // literals
             INTEGER_LITERAL,
+            RATIONAL_LITERAL,
+            REAL_LITERAL,
             STRING_LITERAL,
+            LIST_LITERAL,
+
+            FORMULA_ROLE,
+
+            // general
+            GENERAL_DATA,
+            GENERAL_LIST,
+            GENERAL_AGGREGATOR,
+            GENERAL_FUNCTION,
+            ANNOTATION,
         };
 
       public:
