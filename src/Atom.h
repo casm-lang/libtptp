@@ -58,6 +58,12 @@ namespace libtptp
     class Atom : public Term
     {
       public:
+        enum class Kind
+        {
+            PLAIN,
+            DEFINED,
+            SYSTEM,
+        };
         using Ptr = std::shared_ptr< Atom >;
 
         Atom( const Node::ID id );
@@ -84,28 +90,67 @@ namespace libtptp
         // <fof_system_term>         ::= <system_constant>
         //                             | <system_functor>(<fof_arguments>)
 
-        enum class Kind
-        {
-            PLAIN,
-            DEFINED,
-            SYSTEM,
-        };
-
         using Ptr = std::shared_ptr< FunctorAtom >;
 
-        FunctorAtom( const Identifier::Ptr& name, const Terms::Ptr& arguments );
+        FunctorAtom(
+            const Identifier::Ptr& name,
+            const Token::Ptr& leftParen,
+            const Terms::Ptr& arguments,
+            const Token::Ptr& rightParen,
+            const Kind kind );
 
         const Identifier::Ptr& name( void ) const;
-
+        const Token::Ptr& leftParen( void ) const;
         const Terms::Ptr& arguments( void ) const;
+        const Token::Ptr& rightParen( void ) const;
+        const Kind kind( void ) const;
 
       private:
         const Identifier::Ptr m_name;
+        const Token::Ptr& m_leftParen;
         const Terms::Ptr m_arguments;
+        const Token::Ptr& m_rightParen;
+        const Kind m_kind;
 
       public:
         void accept( Visitor& visitor ) override;
     };
+    class ConstantAtom final : public Atom
+    {
+      public:
+        using Ptr = std::shared_ptr< ConstantAtom >;
+
+        explicit ConstantAtom( const Identifier::Ptr& constant, const Kind kind );
+
+        void accept( Visitor& visitor ) override final;
+
+        const Identifier::Ptr& constant( void ) const;
+        const Kind kind( void ) const;
+
+      private:
+        const Identifier::Ptr m_constant;
+        const Kind m_kind;
+    };
+
+    using ConstantAtoms = NodeList< ConstantAtom >;
+
+    class DefinedAtom final : public Atom
+    {
+      public:
+        using Ptr = std::shared_ptr< DefinedAtom >;
+
+        explicit DefinedAtom( const Literal::Ptr& literal );
+
+        void accept( Visitor& visitor ) override final;
+
+        const Literal::Ptr& literal( void ) const;
+
+      private:
+        const Literal::Ptr m_literal;
+    };
+
+    using DefinedAtoms = NodeList< DefinedAtom >;
+
 }
 
 #endif  // _LIBTPTP_ATOM_H_

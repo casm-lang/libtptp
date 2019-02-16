@@ -67,6 +67,8 @@ namespace libtptp
       private:
         libtptp::Grammar::Token m_token;
     };
+
+    using Tokens = NodeList< Token >;
 }
 
 #endif  // _LIBTPTP_TOKEN_H_

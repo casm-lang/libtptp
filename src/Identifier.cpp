@@ -43,21 +43,17 @@
 
 using namespace libtptp;
 
-Identifier::Identifier( const Literal::Ptr& name, const bool isVariable )
+static const auto uToken = std::make_shared< Token >( Grammar::Token::UNRESOLVED );
+
+Identifier::Identifier( const Literal::Ptr& name )
 : Node( Node::ID::IDENTIFIER )
 , m_name( name )
-, m_isVariable( isVariable )
 {
 }
 
 const Literal::Ptr& Identifier::name( void ) const
 {
     return m_name;
-}
-
-const bool Identifier::isVariable() const
-{
-    return m_isVariable;
 }
 
 void Identifier::accept( Visitor& visitor )

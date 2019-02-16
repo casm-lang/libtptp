@@ -42,6 +42,7 @@
 #ifndef _LIBTPTP_LITERAL_H_
 #define _LIBTPTP_LITERAL_H_
 
+#include <various/GrammarToken.h>
 #include <cassert>
 #include <libstdhl/Type>
 #include <libstdhl/data/type/Data>
@@ -136,6 +137,16 @@ namespace libtptp
 
         explicit StringLiteral( const std::string& string );
 
+        explicit StringLiteral( const Token::Ptr& definedModifier, const std::string& string );
+        explicit StringLiteral(
+            const Token::Ptr& systemModifier,
+            const Token::Ptr& definedModifier,
+            const std::string& string );
+
+        const Token::Ptr systemModifier( void ) const;
+
+        const Token::Ptr definedModifier( void ) const;
+
         void accept( Visitor& visitor ) override final;
 
         const Kind& kind( void ) const;
@@ -143,6 +154,8 @@ namespace libtptp
         const std::string kindName( void ) const;
 
       private:
+        const Token::Ptr m_systemModifier;
+        const Token::Ptr m_definedModifier;
         Kind m_kind;
     };
 

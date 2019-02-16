@@ -66,6 +66,12 @@
         class SourceLocation;
     }
 
+	//TODO: @moosbruggerj remove temporary includes
+	#include <libtptp/General>
+	#include <libtptp/Term>
+	#include <libtptp/Atom>
+
+
     #include <libtptp/Specification>
     #include <libtptp/Token>
 
@@ -74,6 +80,15 @@
     #include "../../src/SourceLocation.h"
 
     using namespace libtptp;
+
+	//to prevent
+	//error: too many arguments provided to function-like macro invocation
+	//because YY_RVREF macro consumes ',' in std::pair definition and interprets it as parameter separator
+	//@see: https://stackoverflow.com/a/38030161
+	using UnaryConnective_t = std::pair<Token::Ptr, UnaryLogic::Connective>;
+	using BinaryConnective_t = std::pair<Token::Ptr, BinaryLogic::Connective>;
+	using QuantifiedQuantifier_t = std::pair<Tokens::Ptr, QuantifiedLogic::Quantifier>;
+	using InfixConnective_t = std::pair<Token::Ptr, InfixLogic::Connective>;
 
     #define YY_NULLPTR nullptr
 }
@@ -85,8 +100,6 @@
 %code
 {
     // #include <libtptp/ ... >
-	//TODO: @moosbruggerj remove temporary includes
-	#include <libtptp/General>
 
     //#include "../../src/SourceLocation.h"
     #include "../../src/Lexer.h"
@@ -117,7 +130,7 @@ END       0 "end of file"
 
 %type <Specification::Ptr> Specification
 
-%type <Identifier::Ptr> FileName Name Variable
+%type <Identifier::Ptr> FileName Name Functor Constant DefinedFunctor DefinedConstant SystemFunctor SystemConstant
 //%type <Identifiers::Ptr> FormulaSelection
 %type <Nodes::Ptr> NameList
 %type <ListLiteral::Ptr> FormulaSelection
@@ -133,8 +146,27 @@ END       0 "end of file"
 %type <FormulaRole::Ptr> FormulaRole
 //%type <Token::Ptr> FormulaKeyword
 //%type <Formula::Ptr> FormulaSpecification
+%type <BinaryLogic::Ptr> FofAndFormula FofOrFormula FofBinaryAssoc FofBinaryNonassoc FofBinaryFormula
+%type <Logic::Ptr> FofUnaryFormula
+%type <QuantifiedLogic::Ptr> FofQuantifiedFormula
+%type <InfixLogic::Ptr> FofInfixUnary FofDefinedInfixFormula
+%type <SequentLogic::Ptr> FofSequent
+%type <Logic::Ptr> FofLogicFormula FofUnitFormula FofUnitaryFormula FofAtomicFormula FofDefinedAtomicFormula
+%type <Logics::Ptr> FofFormulaTupleList
+%type <LogicTuple::Ptr> FofFormulaTuple
 
-%type <StringLiteral::Ptr> SingleQuotedLiteral LowerWordLiteral DistinctObjectLiteral AtomicWord
+//TODO: @moosbruggerj maybe change signature
+%type <Term::Ptr> FofTerm FofPlainAtomicFormula FofDefinedPlainFormula FofSystemAtomicFormula
+%type <Terms::Ptr> FofArguments
+
+%type <Atom::Ptr> FofFunctionTerm FofSystemTerm FofDefinedPlainTerm FofDefinedAtomicTerm FofDefinedTerm FofPlainTerm
+%type <DefinedAtom::Ptr> DefinedTerm
+%type <VariableTerm::Ptr> Variable
+
+%type <FirstOrderFormula::Ptr> FofFormula
+
+%type <StringLiteral::Ptr> SingleQuotedLiteral LowerWordLiteral DistinctObjectLiteral AtomicWord DollarWordLiteral DollarDollarWordLiteral AtomicDefinedWord AtomicSystemWord 
+
 %type <IntegerLiteral::Ptr> IntegerLiteral
 %type <RationalLiteral::Ptr> RationalLiteral
 %type <RealLiteral::Ptr> RealLiteral
@@ -145,8 +177,12 @@ END       0 "end of file"
 %type <GeneralData::Ptr> GeneralData
 %type <GeneralList::Ptr> GeneralList
 %type <GeneralFunction::Ptr> GeneralFunction
-%type <Nodes::Ptr> GeneralTerms
+%type <Nodes::Ptr> GeneralTerms FofVariableList
 
+%type <UnaryConnective_t> UnaryConnective
+%type <BinaryConnective_t> AssocConnective NonassocConnective
+%type <QuantifiedQuantifier_t> FofQuantifier
+%type <InfixConnective_t> InfixInequality DefinedInfixPred InfixEquality
 %start Specification
 
 // precedence information shall be located here
@@ -360,6 +396,7 @@ Formula
 TpiFormula
 : FofFormula
   {
+	//$$ = $1;
   }
 ;
 
@@ -1276,258 +1313,340 @@ TcfQuantifiedFormula
 FofFormula
 : FofLogicFormula
   {
+	$$ = libtptp::make< FirstOrderFormula >(@$, $1);
   }
 | FofSequent
   {
+	$$ = libtptp::make< FirstOrderFormula >(@$, $1);
   }
 ;
 
 FofLogicFormula
 : FofBinaryFormula
   {
+	$$ = $1;
   }
 | FofUnaryFormula
   {
+	$$ = $1;
   }
 | FofUnitaryFormula
   {
+	$$ = $1;
   }
 ;
 
 FofBinaryFormula
 : FofBinaryNonassoc
   {
+	$$ = $1;
   }
 | FofBinaryAssoc
   {
+	$$ = $1;
   }
 ;
 
 FofBinaryNonassoc
 : FofUnitFormula NonassocConnective FofUnitFormula
   {
+	$$ = libtptp::make< BinaryLogic >(@$, $1, $2, $3);
   }
 ;
 
 FofBinaryAssoc
 : FofOrFormula
   {
+	$$ = $1;
   }
 | FofAndFormula
   {
+	$$ = $1;
   }
 ;
 
 FofOrFormula
 : FofUnitFormula VLINE FofUnitFormula
   {
+	auto op = std::make_pair($2, BinaryLogic::Connective::DISJUNCTION);
+	$$ = libtptp::make< BinaryLogic >(@$, $1, op, $3);
   }
 | FofOrFormula VLINE FofUnitFormula
   {
+	auto op = std::make_pair($2, BinaryLogic::Connective::DISJUNCTION);
+	$$ = libtptp::make< BinaryLogic >(@$, $1, op, $3);
   }
 ;
 
 FofAndFormula
 : FofUnitFormula AND FofUnitFormula
   {
+	auto op = std::make_pair($2, BinaryLogic::Connective::CONJUNCTION);
+	$$ = libtptp::make< BinaryLogic >(@$, $1, op, $3);
   }
 | FofAndFormula AND FofUnitFormula
   {
+	auto op = std::make_pair($2, BinaryLogic::Connective::CONJUNCTION);
+	$$ = libtptp::make< BinaryLogic >(@$, $1, op, $3);
   }
 ;
 
 FofUnaryFormula
 : UnaryConnective FofUnitFormula
   {
+	$$ = libtptp::make< UnaryLogic >(@$, $1, $2);
   }
 | FofInfixUnary
   {
+	$$ = $1;
   }
 ;
 
 FofInfixUnary
 : FofTerm InfixInequality FofTerm
   {
+	$$ = libtptp::make< InfixLogic >(@$, $1, $2, $3);
   }
 ;
 
 FofUnitFormula
 : FofUnitaryFormula
   {
+	$$ = $1;
   }
 | FofUnaryFormula
   {
+	$$ = $1;
   }
 ;
 
 FofUnitaryFormula
 : FofQuantifiedFormula
   {
+	$$ = $1;
   }
 | FofAtomicFormula
   {
+	$$ = $1;
   }
 | LPAREN FofLogicFormula RPAREN
   {
+	auto logic = $2;
+	logic->setLeftDelimiter($1);
+	logic->setRightDelimiter($3);
+	$$ = logic;
   }
 ;
 
 FofQuantifiedFormula
 : FofQuantifier LSQPAREN FofVariableList RSQPAREN COLON FofUnitFormula
   {
+	auto variables = libtptp::make< ListLiteral >(@$, $2, $3, $4);
+	$$ = libtptp::make< QuantifiedLogic >(@$, $1, variables, $5, $6);
   }
 ;
 
 FofVariableList
 : Variable
   {
+	//TODO: @moosbruggerj make variableTerms list
+	auto variables = libtptp::make< Nodes >(@$);
+	variables->add($1);
+	$$ = variables;
   }
 | FofVariableList COMMA Variable
   {
+	//TODO: @moosbruggerj use comma token
+	auto variables = $1;
+	variables->add($3);
+	$$ = variables;
   }
 ;
 
 FofAtomicFormula
 : FofPlainAtomicFormula
   {
+	$$ = $1;
   }
 | FofDefinedAtomicFormula
   {
+	$$ = $1;
   }
 | FofSystemAtomicFormula
   {
+	$$ = $1;
   }
 ;
 
 FofPlainAtomicFormula
 : FofPlainTerm
   {
+	$$ = $1;
   }
 ;
 
 FofDefinedAtomicFormula
 : FofDefinedPlainFormula
   {
+	$$ = $1;
   }
 | FofDefinedInfixFormula
   {
+	$$ = $1;
   }
 ;
 
 FofDefinedPlainFormula
 : FofDefinedPlainTerm
   {
+	$$ = $1;
   }
 ;
 
 FofDefinedInfixFormula
 : FofTerm DefinedInfixPred FofTerm
   {
+	$$ = libtptp::make< InfixLogic >(@$, $1, $2, $3);
   }
 ;
 
 FofSystemAtomicFormula
 : FofSystemTerm
   {
+	$$ = $1;
   }
 ;
 
 FofPlainTerm
 : Constant
   {
+	$$ = libtptp::make< ConstantAtom >(@$, $1, Atom::Kind::PLAIN);
   }
 | Functor LPAREN FofArguments RPAREN
   {
+	$$ = libtptp::make< FunctorAtom >(@$, $1, $2, $3, $4, Atom::Kind::PLAIN);
   }
 ;
 
 FofDefinedTerm
 : DefinedTerm
   {
+	$$ = $1;
   }
 | FofDefinedAtomicTerm
   {
+	$$ = $1;
   }
 ;
 
 FofDefinedAtomicTerm
 : FofDefinedPlainTerm
   {
+	$$ = $1;
   }
 ;
 
 FofDefinedPlainTerm
 : DefinedConstant
   {
+	$$ = libtptp::make< ConstantAtom >(@$, $1, Atom::Kind::DEFINED);
   }
 | DefinedFunctor LPAREN FofArguments RPAREN
   {
+	$$ = libtptp::make< FunctorAtom >(@$, $1, $2, $3, $4, Atom::Kind::DEFINED);
   }
 ;
 
 FofSystemTerm
 : SystemConstant
   {
+	$$ = libtptp::make< ConstantAtom >(@$, $1, Atom::Kind::SYSTEM);
   }
 | SystemFunctor LPAREN FofArguments RPAREN
   {
+	$$ = libtptp::make< FunctorAtom >(@$, $1, $2, $3, $4, Atom::Kind::SYSTEM);
   }
 ;
 
 FofArguments
 : FofTerm
   {
+	auto terms = libtptp::make< Terms >(@$);
+	terms->add($1);
+	$$ = terms;
   }
 | FofArguments COMMA FofTerm
   {
+	//TODO: @moosbruggerj use comma token
+	auto terms = $1;
+	terms->add($3);
+	$$ = terms;
   }
 ;
 
 FofTerm
 : FofFunctionTerm
   {
+	$$ = $1;
   }
 | Variable
   {
+	$$ = $1;
   }
 ;
 
 FofFunctionTerm
 : FofPlainTerm
   {
+	$$ = $1;
   }
 | FofDefinedTerm
   {
+	$$ = $1;
   }
 | FofSystemTerm
   {
+	$$ = $1;
   }
 ;
 
 FofSequent
 : FofFormulaTuple GENTZENARROW FofFormulaTuple
   {
+	$$ = libtptp::make< SequentLogic >(@$, $1, $2, $3);
   }
 | LPAREN FofSequent RPAREN
   {
+	auto sequent = $2;
+	sequent->setLeftDelimiter($1);
+	sequent->setRightDelimiter($3);
   }
 ;
 
 FofFormulaTuple
 : LCURPAREN RCURPAREN
   {
+	$$ = libtptp::make< LogicTuple >(@$, $1, $2);
   }
 | LCURPAREN FofFormulaTupleList RCURPAREN
   {
+	$$ = libtptp::make< LogicTuple >(@$, $1, $2, $3);
   }
 ;
 
 FofFormulaTupleList
 : FofLogicFormula
   {
+	auto list = libtptp::make< Logics >(@$);
+	list->add($1);
+	$$ = list;
   }
 | FofFormulaTupleList COMMA FofLogicFormula
   {
+	//TODO: @moosbruggerj use comma token
+	auto list = $1;
+	list->add($3);
+	$$ = list;
   }
 ;
 
@@ -1624,9 +1743,15 @@ Th1UnaryConnective
 FofQuantifier
 : EXCLAMATION
   {
+	auto tokens = libtptp::make< Tokens >(@$);
+	tokens->add($1);
+	$$ = std::make_pair(tokens, QuantifiedLogic::Quantifier::UNIVERSAL);
   }
 | QUESTIONMARK
   {
+	auto tokens = libtptp::make< Tokens >(@$);
+	tokens->add($1);
+	$$ = std::make_pair(tokens, QuantifiedLogic::Quantifier::UNIVERSAL);
   }
 ;
 
@@ -1635,36 +1760,45 @@ FofQuantifier
 NonassocConnective
 : EQUALITY
   {
+	$$ = std::make_pair($1, BinaryLogic::Connective::EQUIVALENCE);
   }
 | IMPLICATION
   {
+	$$ = std::make_pair($1, BinaryLogic::Connective::IMPLICATION);
   }
 | RIMPLICATION
   {
+	$$ = std::make_pair($1, BinaryLogic::Connective::REVERSE_IMPLICATION);
   }
 | INEQUALITY
   {
+	$$ = std::make_pair($1, BinaryLogic::Connective::NON_EQUIVALENCE);
   }
 | NOR
   {
+	$$ = std::make_pair($1, BinaryLogic::Connective::NEGATED_DISJUNCTION);
   }
 | NAND
   {
+	$$ = std::make_pair($1, BinaryLogic::Connective::NEGATED_CONJUNCTION);
   }
 ;
 
 AssocConnective
 : VLINE
   {
+	$$ = std::make_pair($1, BinaryLogic::Connective::DISJUNCTION);
   }
 | AND
   {
+	$$ = std::make_pair($1, BinaryLogic::Connective::CONJUNCTION);
   }
 ;
 
 UnaryConnective
 : TILDE
   {
+	$$ = std::make_pair($1, UnaryLogic::Connective::NEGATION);
   }
 ;
 
@@ -1707,63 +1841,75 @@ UntypedAtom
 DefinedInfixPred
 : InfixEquality
   {
+	$$ = $1;
   }
 ;
 
 InfixEquality
 : EQUAL
   {
+	$$ = std::make_pair($1, InfixLogic::Connective::EQUALITY);
   }
 ;
 
 InfixInequality
-: EXCLAMATION EQUAL
+: INFIXINEQUALITY
   {
+//EXCLAMATION EQUAL
+	$$ = std::make_pair($1, InfixLogic::Connective::INEQUALITY);
   }
 ;
 
 Constant
 : Functor
   {
+	$$ = $1;
   }
 ;
 
 Functor
 : AtomicWord
   {
+	$$ = libtptp::make< Identifier >(@$, $1);
   }
 ;
 
 SystemConstant
 : SystemFunctor
   {
+	$$ = $1;
   }
 ;
 
 SystemFunctor
 : AtomicSystemWord
   {
+	$$ = libtptp::make< Identifier >(@$, $1);
   }
 ;
 
 DefinedConstant
 : DefinedFunctor
   {
+	$$ = $1;
   }
 ;
 
 DefinedFunctor
 : AtomicDefinedWord
   {
+	$$ = libtptp::make< Identifier >(@$, $1);
   }
 ;
 
 DefinedTerm
 : Number
   {
+	$$ = libtptp::make< DefinedAtom >(@$, $1);
   }
 | DistinctObjectLiteral
   {
+	$$ = libtptp::make< DefinedAtom >(@$, $1);
   }
 ;
 
@@ -1931,12 +2077,6 @@ FormulaSelection
   {
 	auto list = libtptp::make< ListLiteral >(@$, $1, $2, $3);
 	$$ = list;
-	/*
-	auto nameList = $2;
-	nameList->prefix().add($1);
-	nameList->suffix().add($3);
-	$$ = nameList;
-	*/
   }
 ;
 
@@ -1974,12 +2114,14 @@ AtomicWord
 AtomicDefinedWord
 : DollarWordLiteral
   {
+	$$ = $1;
   }
 ;
 
 AtomicSystemWord
 : DollarDollarWordLiteral
   {
+	$$ = $1;
   }
 ;
 
@@ -2029,7 +2171,8 @@ Variable
 : UPPER_WORD
   {
 	auto literal = libtptp::make< StringLiteral >(@$, $1);
-	$$ = libtptp::make< Identifier >(@$, literal, true);
+	auto identifier = libtptp::make< Identifier >(@$, literal);
+	$$ = libtptp::make< VariableTerm >(@$, identifier);
   }
 ;
 
@@ -2055,14 +2198,16 @@ SingleQuotedLiteral
 ;
 
 DollarWordLiteral
-: DOLLAR LowerWordLiteral
+: DOLLAR LOWER_WORD
   {
+	$$ = libtptp::make< StringLiteral >(@$, $1, $2);
   }
 ;
 
 DollarDollarWordLiteral
-: DOLLAR DOLLAR LowerWordLiteral
+: DOLLAR DOLLAR LOWER_WORD
   {
+	$$ = libtptp::make< StringLiteral >(@$, $1, $2, $3);
   }
 ;
 

@@ -137,7 +137,7 @@ void DumpSourceVisitor::visit( BinaryLogic& node )
 }
 void DumpSourceVisitor::visit( QuantifiedLogic& node )
 {
-    m_stream << node.connectiveToken();
+    node.quantifierToken()->accept( *this );
     m_stream << " ";
     node.variables()->accept( *this );
     m_stream << " : ";

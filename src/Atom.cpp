@@ -56,10 +56,18 @@ Atom::Atom( const ID id )
 // FunctorAtom
 //
 
-FunctorAtom::FunctorAtom( const Identifier::Ptr& name, const Terms::Ptr& arguments )
+FunctorAtom::FunctorAtom(
+    const Identifier::Ptr& name,
+    const Token::Ptr& leftParen,
+    const Terms::Ptr& arguments,
+    const Token::Ptr& rightParen,
+    const Kind kind )
 : Atom( Node::ID::FUNCTOR_ATOM )
 , m_name( name )
+, m_leftParen( leftParen )
 , m_arguments( arguments )
+, m_rightParen( rightParen )
+, m_kind( kind )
 {
 }
 
@@ -68,9 +76,24 @@ const Identifier::Ptr& FunctorAtom::name( void ) const
     return m_name;
 }
 
+const Token::Ptr& FunctorAtom::leftParen( void ) const
+{
+    return m_leftParen;
+}
+
 const Terms::Ptr& FunctorAtom::arguments( void ) const
 {
     return m_arguments;
+}
+
+const Token::Ptr& FunctorAtom::rightParen( void ) const
+{
+    return m_rightParen;
+}
+
+const FunctorAtom::Kind FunctorAtom::kind( void ) const
+{
+    return m_kind;
 }
 
 void FunctorAtom::accept( Visitor& visitor )
@@ -78,6 +101,41 @@ void FunctorAtom::accept( Visitor& visitor )
     visitor.visit( *this );
 }
 
+ConstantAtom::ConstantAtom( const Identifier::Ptr& constant, const Kind kind )
+: Atom( Node::ID::CONSTANT_ATOM )
+, m_constant( constant )
+, m_kind( kind )
+{
+}
+
+void ConstantAtom::accept( Visitor& visitor )
+{
+}
+
+const Identifier::Ptr& ConstantAtom::constant( void ) const
+{
+    return m_constant;
+}
+
+const ConstantAtom::Kind ConstantAtom::kind( void ) const
+{
+    return m_kind;
+}
+
+DefinedAtom::DefinedAtom( const Literal::Ptr& literal )
+: Atom( Node::ID::DEFINED_ATOM )
+, m_literal( literal )
+{
+}
+
+void DefinedAtom::accept( Visitor& visitor )
+{
+}
+
+const Literal::Ptr& DefinedAtom::literal( void ) const
+{
+    return m_literal;
+}
 //
 //  Local variables:
 //  mode: c++

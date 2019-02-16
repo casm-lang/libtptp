@@ -40,16 +40,38 @@
 //
 
 #include "Logic.h"
+#include "Term.h"
+#include "various/GrammarToken.h"
 
 using namespace libtptp;
 
+static const auto unresolvedToken = std::make_shared< Token >( Grammar::Token::UNRESOLVED );
 //
 // Logic
 //
 
 Logic::Logic( const ID id )
 : Node( id )
+, m_leftDelimiter( unresolvedToken )
+, m_rightDelimiter( unresolvedToken )
 {
+}
+
+const Token::Ptr& Logic::leftDelimiter( void ) const
+{
+    return m_leftDelimiter;
+}
+const Token::Ptr& Logic::rightDelimiter( void ) const
+{
+    return m_rightDelimiter;
+}
+void Logic::setLeftDelimiter( const Token::Ptr& leftDelimiter )
+{
+    m_leftDelimiter = leftDelimiter;
+}
+void Logic::setRightDelimiter( const Token::Ptr& rightDelimiter )
+{
+    m_rightDelimiter = rightDelimiter;
 }
 
 //
@@ -69,10 +91,12 @@ void UnitaryLogic::accept( Visitor& visitor )
 // UnaryLogic
 //
 
-UnaryLogic::UnaryLogic( const Logic::Ptr& logic, const UnaryLogic::Connective connective )
+UnaryLogic::UnaryLogic(
+    const std::pair< const Token::Ptr&, const Connective > connective, const Logic::Ptr& logic )
 : Logic( Node::ID::UNARY_LOGIC )
+, m_connectiveToken( connective.first )
 , m_logic( logic )
-, m_connective( connective )
+, m_connective( connective.second )
 {
 }
 
@@ -86,15 +110,9 @@ const UnaryLogic::Connective UnaryLogic::connective( void ) const
     return m_connective;
 }
 
-std::string UnaryLogic::connectiveToken( void ) const
+const Token::Ptr& UnaryLogic::connectiveToken( void ) const
 {
-    switch( connective() )
-    {
-        case UnaryLogic::Connective::NEGATION:
-        {
-            return "~";
-        }
-    }
+    return m_connectiveToken;
 }
 
 std::string UnaryLogic::connectiveDescription( void ) const
@@ -118,14 +136,17 @@ void UnaryLogic::accept( Visitor& visitor )
 //
 
 BinaryLogic::BinaryLogic(
-    const Logic::Ptr& left, const Logic::Ptr& right, const BinaryLogic::Connective connective )
+    const Logic::Ptr& left,
+    const std::pair< const Token::Ptr&, Connective > connective,
+    const Logic::Ptr& right )
 : Logic( Node::ID::BINARY_LOGIC )
 , m_left( left )
 , m_right( right )
-, m_connective( connective )
+, m_connectiveToken( connective.first )
+, m_connective( connective.second )
 , m_associative(
-      connective == BinaryLogic::Connective::DISJUNCTION or
-      connective == BinaryLogic::Connective::CONJUNCTION )
+      m_connective == BinaryLogic::Connective::DISJUNCTION or
+      m_connective == BinaryLogic::Connective::CONJUNCTION )
 {
 }
 
@@ -144,43 +165,9 @@ const BinaryLogic::Connective BinaryLogic::connective( void ) const
     return m_connective;
 }
 
-std::string BinaryLogic::connectiveToken( void ) const
+const Token::Ptr& BinaryLogic::connectiveToken( void ) const
 {
-    switch( connective() )
-    {
-        case BinaryLogic::Connective::DISJUNCTION:
-        {
-            return "|";
-        }
-        case BinaryLogic::Connective::CONJUNCTION:
-        {
-            return "&";
-        }
-        case BinaryLogic::Connective::EQUIVALENCE:
-        {
-            return "<=>";
-        }
-        case BinaryLogic::Connective::NON_EQUIVALENCE:
-        {
-            return "<~>";
-        }
-        case BinaryLogic::Connective::IMPLICATION:
-        {
-            return "=>";
-        }
-        case BinaryLogic::Connective::REVERSE_IMPLICATION:
-        {
-            return "<=";
-        }
-        case BinaryLogic::Connective::NEGATED_DISJUNCTION:
-        {
-            return "~|";
-        }
-        case BinaryLogic::Connective::NEGATED_CONJUNCTION:
-        {
-            return "~&";
-        }
-    }
+    return m_connectiveToken;
 }
 
 std::string BinaryLogic::connectiveDescription( void ) const
@@ -237,14 +224,32 @@ void BinaryLogic::accept( Visitor& visitor )
 //
 
 QuantifiedLogic::QuantifiedLogic(
-    const Logic::Ptr& logic,
-    const Identifiers::Ptr& variables,
-    const QuantifiedLogic::Connective connective )
+    const std::pair< const Tokens::Ptr&, const Quantifier > quantifier,
+    const ListLiteral::Ptr& variables,
+    const Token::Ptr& colon,
+    const Logic::Ptr& logic )
 : Logic( Node::ID::QUANTIFIED_LOGIC )
-, m_logic( logic )
+, m_quantifierToken( quantifier.first )
 , m_variables( variables )
-, m_connective( connective )
+, m_colon( colon )
+, m_logic( logic )
+, m_quantifier( quantifier.second )
 {
+}
+
+const Tokens::Ptr& QuantifiedLogic::quantifierToken( void ) const
+{
+    return m_quantifierToken;
+}
+
+const ListLiteral::Ptr& QuantifiedLogic::variables( void ) const
+{
+    return m_variables;
+}
+
+const Token::Ptr& QuantifiedLogic::colon( void ) const
+{
+    return m_colon;
 }
 
 const Logic::Ptr& QuantifiedLogic::logic( void ) const
@@ -252,40 +257,20 @@ const Logic::Ptr& QuantifiedLogic::logic( void ) const
     return m_logic;
 }
 
-const Identifiers::Ptr& QuantifiedLogic::variables( void ) const
+const QuantifiedLogic::Quantifier QuantifiedLogic::quantifier( void ) const
 {
-    return m_variables;
+    return m_quantifier;
 }
 
-const QuantifiedLogic::Connective QuantifiedLogic::connective( void ) const
+std::string QuantifiedLogic::quantifierDescription( void ) const
 {
-    return m_connective;
-}
-
-std::string QuantifiedLogic::connectiveToken( void ) const
-{
-    switch( connective() )
+    switch( quantifier() )
     {
-        case QuantifiedLogic::Connective::UNIVERSAL:
-        {
-            return "!";
-        }
-        case QuantifiedLogic::Connective::EXISTENTIAL:
-        {
-            return "?";
-        }
-    }
-}
-
-std::string QuantifiedLogic::connectiveDescription( void ) const
-{
-    switch( connective() )
-    {
-        case QuantifiedLogic::Connective::UNIVERSAL:
+        case QuantifiedLogic::Quantifier::UNIVERSAL:
         {
             return "universal";
         }
-        case QuantifiedLogic::Connective::EXISTENTIAL:
+        case QuantifiedLogic::Quantifier::EXISTENTIAL:
         {
             return "existential";
         }
@@ -297,30 +282,91 @@ void QuantifiedLogic::accept( Visitor& visitor )
     visitor.visit( *this );
 }
 
+InfixLogic::InfixLogic(
+    const std::shared_ptr< Term >& lhs,
+    const std::pair< const Token::Ptr&, const Connective > connective,
+    const std::shared_ptr< Term >& rhs )
+: Logic( Node::ID::INFIX_LOGIC )
+, m_lhs( lhs )
+, m_connectiveToken( connective.first )
+, m_rhs( rhs )
+, m_connective( connective.second )
+{
+}
+
+void InfixLogic::accept( Visitor& visitor )
+{
+}
+
+const std::shared_ptr< Term >& InfixLogic::lhs( void ) const
+{
+    return m_lhs;
+}
+const Token::Ptr& InfixLogic::connectiveToken( void ) const
+{
+    return m_connectiveToken;
+}
+const std::shared_ptr< Term >& InfixLogic::rhs( void ) const
+{
+    return m_rhs;
+}
+
+LogicTuple::LogicTuple(
+    const Token::Ptr& leftBraceToken, const Logics::Ptr& tuples, const Token::Ptr& rightBraceToken )
+: Logic( Node::ID::LOGIC_TUPLE )
+, m_leftBraceToken( leftBraceToken )
+, m_tuples( tuples )
+, m_rightBraceToken( rightBraceToken )
+{
+}
+LogicTuple::LogicTuple( const Token::Ptr& leftBraceToken, const Token::Ptr& rightBraceToken )
+: LogicTuple( leftBraceToken, std::make_shared< Logics >(), rightBraceToken )
+{
+}
+
+void LogicTuple::accept( Visitor& visitor )
+{
+}
+
+const Token::Ptr& LogicTuple::leftBraceToken( void ) const
+{
+    return m_leftBraceToken;
+}
+const Logics::Ptr& LogicTuple::tuples( void ) const
+{
+    return m_tuples;
+}
+const Token::Ptr& LogicTuple::rightBraceToken( void ) const
+{
+    return m_rightBraceToken;
+}
+
 //
 // SequentLogic
 //
 
-SequentLogic::SequentLogic( const Logics::Ptr& left, const Logics::Ptr& right )
+SequentLogic::SequentLogic(
+    const LogicTuple::Ptr& left, const Token::Ptr& connectiveToken, const LogicTuple::Ptr& right )
 : Logic( Node::ID::SEQUENT_LOGIC )
 , m_left( left )
+, m_connectiveToken( connectiveToken )
 , m_right( right )
 {
 }
 
-const Logics::Ptr& SequentLogic::left( void ) const
+const LogicTuple::Ptr& SequentLogic::left( void ) const
 {
     return m_left;
 }
 
-const Logics::Ptr& SequentLogic::right( void ) const
+const LogicTuple::Ptr& SequentLogic::right( void ) const
 {
     return m_right;
 }
 
-std::string SequentLogic::connectiveToken( void ) const
+const Token::Ptr& SequentLogic::connectiveToken( void ) const
 {
-    return "-->";  // gentzen arrow
+    return m_connectiveToken;  // gentzen arrow
 }
 
 std::string SequentLogic::connectiveDescription( void ) const
