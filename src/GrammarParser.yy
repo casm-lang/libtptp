@@ -151,7 +151,7 @@ END       0 "end of file"
 %type <QuantifiedLogic::Ptr> FofQuantifiedFormula
 %type <InfixLogic::Ptr> FofInfixUnary FofDefinedInfixFormula
 %type <SequentLogic::Ptr> FofSequent
-%type <Logic::Ptr> FofLogicFormula FofUnitFormula FofUnitaryFormula FofAtomicFormula FofDefinedAtomicFormula
+%type <Logic::Ptr> FofLogicFormula FofUnitFormula FofUnitaryFormula FofAtomicFormula FofDefinedAtomicFormula CnfFormula Literal Disjunction
 %type <Logics::Ptr> FofFormulaTupleList
 %type <LogicTuple::Ptr> FofFormulaTuple
 
@@ -1653,30 +1653,42 @@ FofFormulaTupleList
 CnfFormula
 : Disjunction
   {
+	$$ = $1;
   }
 | LPAREN Disjunction RPAREN
   {
+	auto logic = $2;
+	logic->setLeftDelimiter($1);
+	logic->setRightDelimiter($3);
+	$$ = logic;
   }
 ;
 
 Disjunction
 : Literal
   {
+	$$ = $1;
   }
 | Disjunction VLINE Literal
   {
+	auto op = std::make_pair($2, BinaryLogic::Connective::DISJUNCTION);
+	$$ = libtptp::make< BinaryLogic >(@$, $1, op, $3);
   }
 ;
 
 Literal
 : FofAtomicFormula
   {
+	$$ = $1;
   }
 | TILDE FofAtomicFormula
   {
+	auto op = std::make_pair($1, UnaryLogic::Connective::NEGATION);
+	$$ = libtptp::make< UnaryLogic >(@$, op, $2);
   }
 | FofInfixUnary
   {
+	$$ = $1;
   }
 ;
 
