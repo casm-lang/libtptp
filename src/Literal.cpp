@@ -43,6 +43,8 @@
 
 using namespace libtptp;
 
+static const auto uToken = std::make_shared< Token >( Grammar::Token::UNRESOLVED );
+
 Literal::Literal( const Node::ID id )
 : Node( id )
 {
@@ -87,7 +89,19 @@ void RealLiteral::accept( Visitor& visitor )
 }
 
 StringLiteral::StringLiteral( const std::string& string )
+: StringLiteral( uToken, uToken, string )
+{
+}
+StringLiteral::StringLiteral( const Token::Ptr& definedModifier, const std::string& string )
+: StringLiteral( uToken, definedModifier, string )
+{
+}
+
+StringLiteral::StringLiteral(
+    const Token::Ptr& systemModifier, const Token::Ptr& definedModifier, const std::string& string )
 : ValueLiteral( Node::ID::STRING_LITERAL, libstdhl::Type::createString( string ) )
+, m_systemModifier( systemModifier )
+, m_definedModifier( definedModifier )
 {
     switch( string[ 0 ] )
     {
@@ -107,6 +121,16 @@ StringLiteral::StringLiteral( const std::string& string )
             break;
         }
     }
+}
+
+const Token::Ptr StringLiteral::systemModifier( void ) const
+{
+    return m_systemModifier;
+}
+
+const Token::Ptr StringLiteral::definedModifier( void ) const
+{
+    return m_definedModifier;
 }
 
 void StringLiteral::accept( Visitor& visitor )

@@ -76,6 +76,8 @@ namespace libtptp
             BINARY_LOGIC,
             QUANTIFIED_LOGIC,
             SEQUENT_LOGIC,
+            INFIX_LOGIC,
+            LOGIC_TUPLE,
 
             // terms
             FUNCTION_TERM,
@@ -84,6 +86,8 @@ namespace libtptp
 
             // atoms
             FUNCTOR_ATOM,
+            CONSTANT_ATOM,
+            DEFINED_ATOM,
 
             // other
             TOKEN,

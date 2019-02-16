@@ -161,6 +161,14 @@ std::string Node::description( void ) const
         {
             return "sequent logic";
         }
+        case ID::INFIX_LOGIC:
+        {
+            return "infix logic";
+        }
+        case ID::LOGIC_TUPLE:
+        {
+            return "logic tuple";
+        }
 
         // terms
         case ID::FUNCTION_TERM:
@@ -180,6 +188,14 @@ std::string Node::description( void ) const
         case ID::FUNCTOR_ATOM:
         {
             return "functor atom";
+        }
+        case ID::CONSTANT_ATOM:
+        {
+            return "constant atom";
+        }
+        case ID::DEFINED_ATOM:
+        {
+            return "defined atom";
         }
 
         // token
