@@ -219,6 +219,7 @@ DefinitionTerm::DefinitionTerm(
 
 void DefinitionTerm::accept( Visitor& visitor )
 {
+    visitor.visit( *this );
 }
 
 const Token::Ptr& DefinitionTerm::dollar( void ) const

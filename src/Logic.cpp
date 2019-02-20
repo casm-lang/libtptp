@@ -75,19 +75,6 @@ void Logic::setRightDelimiter( const Token::Ptr& rightDelimiter )
 }
 
 //
-// UnitaryLogic
-//
-
-UnitaryLogic::UnitaryLogic()
-: Logic( Node::ID::UNITARY_LOGIC )
-{
-}
-
-void UnitaryLogic::accept( Visitor& visitor )
-{
-}
-
-//
 // UnaryLogic
 //
 
@@ -340,6 +327,7 @@ InfixLogic::InfixLogic(
 
 void InfixLogic::accept( Visitor& visitor )
 {
+    visitor.visit( *this );
 }
 
 const Logic::Ptr& InfixLogic::lhs( void ) const
@@ -370,6 +358,7 @@ LogicTuple::LogicTuple( const Token::Ptr& leftBraceToken, const Token::Ptr& righ
 
 void LogicTuple::accept( Visitor& visitor )
 {
+    visitor.visit( *this );
 }
 
 const Token::Ptr& LogicTuple::leftBraceToken( void ) const

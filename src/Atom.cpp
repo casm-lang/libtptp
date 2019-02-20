@@ -110,6 +110,7 @@ ConstantAtom::ConstantAtom( const Identifier::Ptr& constant, const Kind kind )
 
 void ConstantAtom::accept( Visitor& visitor )
 {
+    visitor.visit( *this );
 }
 
 const Identifier::Ptr& ConstantAtom::constant( void ) const
@@ -130,6 +131,7 @@ DefinedAtom::DefinedAtom( const Literal::Ptr& literal )
 
 void DefinedAtom::accept( Visitor& visitor )
 {
+    visitor.visit( *this );
 }
 
 const Literal::Ptr& DefinedAtom::literal( void ) const
@@ -148,6 +150,7 @@ DefinitionAtom::DefinitionAtom(
 
 void DefinitionAtom::accept( Visitor& visitor )
 {
+    visitor.visit( *this );
 }
 
 const Logic::Ptr& DefinitionAtom::lhs( void ) const
@@ -173,6 +176,7 @@ ConnectiveAtom::ConnectiveAtom( Token::Ptr& connective )
 
 void ConnectiveAtom::accept( Visitor& visitor )
 {
+    visitor.visit( *this );
 }
 
 Token::Ptr& ConnectiveAtom::connective( void )

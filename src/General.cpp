@@ -57,6 +57,7 @@ GeneralData::GeneralData( const Node::Ptr& data )
 
 void GeneralData::accept( Visitor& visitor )
 {
+    visitor.visit( *this );
 }
 
 const Node::Ptr& GeneralData::data( void ) const
@@ -72,6 +73,7 @@ GeneralList::GeneralList( const ListLiteral::Ptr& list )
 
 void GeneralList::accept( Visitor& visitor )
 {
+    visitor.visit( *this );
 }
 
 const ListLiteral::Ptr& GeneralList::list( void ) const
@@ -90,6 +92,7 @@ GeneralAggregator::GeneralAggregator(
 
 void GeneralAggregator::accept( Visitor& visitor )
 {
+    visitor.visit( *this );
 }
 
 const GeneralData::Ptr& GeneralAggregator::data( void ) const
@@ -120,6 +123,7 @@ GeneralFunction::GeneralFunction(
 
 void GeneralFunction::accept( Visitor& visitor )
 {
+    visitor.visit( *this );
 }
 
 const Identifier::Ptr& GeneralFunction::name( void ) const
@@ -160,6 +164,7 @@ Annotation::Annotation( const GeneralTerm::Ptr& source )
 
 void Annotation::accept( Visitor& visitor )
 {
+    visitor.visit( *this );
 }
 
 const GeneralTerm::Ptr& Annotation::source( void ) const
@@ -170,6 +175,11 @@ const libstdhl::Optional< const GeneralList::Ptr >& Annotation::usefulInfo( void
 {
     return m_usefulInfo;
 }
+const Token::Ptr& Annotation::comma() const
+{
+    return m_comma;
+}
+
 void Annotation::setDelimiter( const Token::Ptr& delimiter )
 {
     m_delimiter = delimiter;

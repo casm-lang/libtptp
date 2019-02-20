@@ -107,7 +107,7 @@ const Token::Ptr& IncludeDefinition::dotToken( void ) const
 
 void IncludeDefinition::accept( Visitor& visitor )
 {
-    // visitor.visit( *this ); // TODO: Fixme @moosbruggerj
+    visitor.visit( *this );
 }
 
 FormulaDefinition::FormulaDefinition(
@@ -135,7 +135,7 @@ FormulaDefinition::FormulaDefinition(
 
 void FormulaDefinition::accept( Visitor& visitor )
 {
-    // TODO: @moosbruggerj fix me
+    visitor.visit( *this );
 }
 
 const Token::Ptr& FormulaDefinition::keyword( void ) const

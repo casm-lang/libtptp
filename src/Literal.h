@@ -175,7 +175,9 @@ namespace libtptp
             const Nodes::Ptr& elements,
             const Token::Ptr& rightBraceToken );
 
+        const Token::Ptr& leftBraceToken() const;
         const Nodes::Ptr& elements( void ) const;
+        const Token::Ptr& rightBraceToken() const;
 
         void accept( Visitor& visitor ) override final;
 

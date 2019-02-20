@@ -76,19 +76,6 @@ namespace libtptp
 
     using Logics = NodeList< Logic >;
 
-    class UnitaryLogic final : public Logic
-    {
-      public:
-        using Ptr = std::shared_ptr< UnitaryLogic >;
-
-        UnitaryLogic( void );
-
-        // private:
-
-      public:
-        void accept( Visitor& visitor ) override;
-    };
-
     class UnaryLogic final : public Logic
     {
       public:
