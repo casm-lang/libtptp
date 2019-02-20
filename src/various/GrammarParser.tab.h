@@ -75,7 +75,7 @@
 	//@see: https://stackoverflow.com/a/38030161
 	using UnaryConnective_t = std::pair<Token::Ptr, UnaryLogic::Connective>;
 	using BinaryConnective_t = std::pair<Token::Ptr, BinaryLogic::Connective>;
-	using QuantifiedQuantifier_t = std::pair<Tokens::Ptr, QuantifiedLogic::Quantifier>;
+	using QuantifiedQuantifier_t = std::pair<Token::Ptr, QuantifiedLogic::Quantifier>;
 	using InfixConnective_t = std::pair<Token::Ptr, InfixLogic::Connective>;
 
     #define YY_NULLPTR nullptr
@@ -522,6 +522,8 @@ namespace libtptp {
       // FofFunctionTerm
       char dummy2[sizeof (Atom::Ptr)];
 
+      // ThfUnitaryType
+      // ThfApplyType
       // TffAtomicType
       char dummy3[sizeof (AtomType::Ptr)];
 
@@ -529,6 +531,11 @@ namespace libtptp {
       // AssocConnective
       char dummy4[sizeof (BinaryConnective_t)];
 
+      // ThfBinaryNonassoc
+      // ThfBinaryAssoc
+      // ThfOrFormula
+      // ThfAndFormula
+      // ThfApplyFormula
       // TffBinaryFormula
       // TffBinaryNonassoc
       // TffBinaryAssoc
@@ -541,50 +548,66 @@ namespace libtptp {
       // FofAndFormula
       char dummy5[sizeof (BinaryLogic::Ptr)];
 
+      // ThfBinaryType
+      // ThfMappingType
+      // ThfXprodType
+      // ThfUnionType
       // TffMappingType
       // TffXprodType
       char dummy6[sizeof (BinaryType::Ptr)];
 
+      // ThfConditional
       // TfxConditional
       char dummy7[sizeof (ConditionalTerm::Ptr)];
 
+      // ThfConnTerm
+      char dummy8[sizeof (ConnectiveAtom::Ptr)];
+
+      // ThfSystemAtomic
+      char dummy9[sizeof (ConstantAtom::Ptr)];
+
       // DefinedTerm
-      char dummy8[sizeof (DefinedAtom::Ptr)];
+      char dummy10[sizeof (DefinedAtom::Ptr)];
 
       // Definition
-      char dummy9[sizeof (Definition::Ptr)];
+      char dummy11[sizeof (Definition::Ptr)];
 
+      // ThfLetDefn
       // TfxLetDefn
-      char dummy10[sizeof (DefinitionAtom::Ptr)];
+      char dummy12[sizeof (DefinitionAtom::Ptr)];
 
+      // ThfLet
       // TfxLet
-      char dummy11[sizeof (DefinitionTerm::Ptr)];
+      char dummy13[sizeof (DefinitionTerm::Ptr)];
 
       // Definitions
-      char dummy12[sizeof (Definitions::Ptr)];
+      char dummy14[sizeof (Definitions::Ptr)];
 
       // TpiFormula
       // FofFormula
-      char dummy13[sizeof (FirstOrderFormula::Ptr)];
+      char dummy15[sizeof (FirstOrderFormula::Ptr)];
 
       // AnnotatedFormula
       // FofAnnotated
-      char dummy14[sizeof (FormulaDefinition::Ptr)];
+      char dummy16[sizeof (FormulaDefinition::Ptr)];
 
       // FormulaRole
-      char dummy15[sizeof (FormulaRole::Ptr)];
+      char dummy17[sizeof (FormulaRole::Ptr)];
+
+      // ThfFofFunction
+      char dummy18[sizeof (FunctorAtom::Ptr)];
 
       // GeneralData
-      char dummy16[sizeof (GeneralData::Ptr)];
+      char dummy19[sizeof (GeneralData::Ptr)];
 
       // GeneralFunction
-      char dummy17[sizeof (GeneralFunction::Ptr)];
+      char dummy20[sizeof (GeneralFunction::Ptr)];
 
       // GeneralList
-      char dummy18[sizeof (GeneralList::Ptr)];
+      char dummy21[sizeof (GeneralList::Ptr)];
 
       // GeneralTerm
-      char dummy19[sizeof (GeneralTerm::Ptr)];
+      char dummy22[sizeof (GeneralTerm::Ptr)];
 
       // TypeConstant
       // TypeFunctor
@@ -599,28 +622,41 @@ namespace libtptp {
       // DefinedFunctor
       // Name
       // FileName
-      char dummy20[sizeof (Identifier::Ptr)];
+      char dummy23[sizeof (Identifier::Ptr)];
 
       // IncludeDefinition
-      char dummy21[sizeof (IncludeDefinition::Ptr)];
+      char dummy24[sizeof (IncludeDefinition::Ptr)];
 
       // DefinedInfixPred
       // InfixEquality
       // InfixInequality
-      char dummy22[sizeof (InfixConnective_t)];
+      char dummy25[sizeof (InfixConnective_t)];
 
+      // ThfInfixUnary
+      // ThfDefinedInfix
       // TffInfixUnary
       // TffDefinedInfix
       // FofInfixUnary
       // FofDefinedInfixFormula
-      char dummy23[sizeof (InfixLogic::Ptr)];
+      char dummy26[sizeof (InfixLogic::Ptr)];
 
       // IntegerLiteral
-      char dummy24[sizeof (IntegerLiteral::Ptr)];
+      char dummy27[sizeof (IntegerLiteral::Ptr)];
 
       // FormulaSelection
-      char dummy25[sizeof (ListLiteral::Ptr)];
+      char dummy28[sizeof (ListLiteral::Ptr)];
 
+      // ThfFormula
+      // ThfLogicFormula
+      // ThfBinaryFormula
+      // ThfUnitFormula
+      // ThfPreunitFormula
+      // ThfUnitaryFormula
+      // ThfUnaryFormula
+      // ThfAtomicFormula
+      // ThfPlainAtomic
+      // ThfLetDefns
+      // ThfUnitaryTerm
       // TffFormula
       // TffLogicFormula
       // TffUnitFormula
@@ -640,47 +676,57 @@ namespace libtptp {
       // CnfFormula
       // Disjunction
       // Literal
-      char dummy26[sizeof (Logic::Ptr)];
+      char dummy29[sizeof (Logic::Ptr)];
 
+      // ThfTuple
       // TfxTuple
       // FofFormulaTuple
-      char dummy27[sizeof (LogicTuple::Ptr)];
+      char dummy30[sizeof (LogicTuple::Ptr)];
 
+      // ThfLetDefnList
+      // ThfFormulaList
+      // ThfArguments
       // TfxLetDefnList
       // TffArguments
       // TffTypeArguments
       // FofArguments
       // FofFormulaTupleList
-      char dummy28[sizeof (Logics::Ptr)];
+      char dummy31[sizeof (Logics::Ptr)];
 
+      // ThfVariableList
       // TffVariableList
       // FofVariableList
       // NameList
       // GeneralTerms
-      char dummy29[sizeof (Nodes::Ptr)];
+      char dummy32[sizeof (Nodes::Ptr)];
 
+      // ThfQuantifiedFormula
       // TffQuantifiedFormula
       // FofQuantifiedFormula
-      char dummy30[sizeof (QuantifiedLogic::Ptr)];
+      char dummy33[sizeof (QuantifiedLogic::Ptr)];
 
+      // ThfQuantifier
+      // Th1Quantifier
+      // Th0Quantifier
       // FofQuantifier
-      char dummy31[sizeof (QuantifiedQuantifier_t)];
+      char dummy34[sizeof (QuantifiedQuantifier_t)];
 
       // Tf1QuantifiedType
-      char dummy32[sizeof (QuantifiedType::Ptr)];
+      char dummy35[sizeof (QuantifiedType::Ptr)];
 
       // RationalLiteral
-      char dummy33[sizeof (RationalLiteral::Ptr)];
+      char dummy36[sizeof (RationalLiteral::Ptr)];
 
       // RealLiteral
-      char dummy34[sizeof (RealLiteral::Ptr)];
+      char dummy37[sizeof (RealLiteral::Ptr)];
 
+      // ThfSequent
       // TfxSequent
       // FofSequent
-      char dummy35[sizeof (SequentLogic::Ptr)];
+      char dummy38[sizeof (SequentLogic::Ptr)];
 
       // Specification
-      char dummy36[sizeof (Specification::Ptr)];
+      char dummy39[sizeof (Specification::Ptr)];
 
       // AtomicWord
       // AtomicDefinedWord
@@ -690,11 +736,13 @@ namespace libtptp {
       // SingleQuotedLiteral
       // DollarWordLiteral
       // DollarDollarWordLiteral
-      char dummy37[sizeof (StringLiteral::Ptr)];
+      char dummy40[sizeof (StringLiteral::Ptr)];
 
+      // ThfSubtype
       // TffSubtype
-      char dummy38[sizeof (SubType::Ptr)];
+      char dummy41[sizeof (SubType::Ptr)];
 
+      // ThfDefinedAtomic
       // TffAtomicFormula
       // TffDefinedAtomic
       // TffDefinedPlain
@@ -702,7 +750,7 @@ namespace libtptp {
       // FofDefinedPlainFormula
       // FofSystemAtomicFormula
       // FofTerm
-      char dummy39[sizeof (Term::Ptr)];
+      char dummy42[sizeof (Term::Ptr)];
 
       // "tpi"
       // "thf"
@@ -713,7 +761,6 @@ namespace libtptp {
       // "fot"
       // "ite"
       // "let"
-      // "!>"
       // "@"
       // "&"
       // "$"
@@ -721,7 +768,6 @@ namespace libtptp {
       // ","
       // "."
       // "+"
-      // "-"
       // "="
       // "!="
       // "("
@@ -733,14 +779,19 @@ namespace libtptp {
       // "|"
       // "*"
       // ">"
-      // "<"
       // "!"
       // "~"
       // "?"
+      // "@-"
+      // "@+"
       // "^"
       // "!!"
       // "??"
-      // "@@"
+      // "@@+"
+      // "@@-"
+      // "@="
+      // "!>"
+      // "?*"
       // "<=>"
       // "=>"
       // "<="
@@ -751,38 +802,46 @@ namespace libtptp {
       // "-->"
       // "<<"
       // "include"
-      char dummy40[sizeof (Token::Ptr)];
+      char dummy43[sizeof (Token::Ptr)];
 
       // TfxTupleType
-      char dummy41[sizeof (TupleType::Ptr)];
+      char dummy44[sizeof (TupleType::Ptr)];
 
+      // ThfLetTypes
+      // ThfTopLevelType
       // TfxLetTypes
       // TffTopLevelType
       // TffMonotype
       // TffUnitaryType
-      char dummy42[sizeof (Type::Ptr)];
+      char dummy45[sizeof (Type::Ptr)];
 
+      // ThfAtomTyping
       // TffAtomTyping
-      char dummy43[sizeof (TypedAtom::Ptr)];
+      char dummy46[sizeof (TypedAtom::Ptr)];
 
+      // ThfAtomTypingList
       // TffAtomTypingList
       // TffTypeList
-      char dummy44[sizeof (Types::Ptr)];
+      char dummy47[sizeof (Types::Ptr)];
 
+      // ThfUnaryConnective
+      // Th1UnaryConnective
       // UnaryConnective
-      char dummy45[sizeof (UnaryConnective_t)];
+      char dummy48[sizeof (UnaryConnective_t)];
 
+      // ThfPrefixUnary
       // TffPrefixUnary
-      char dummy46[sizeof (UnaryLogic::Ptr)];
+      char dummy49[sizeof (UnaryLogic::Ptr)];
 
       // Number
-      char dummy47[sizeof (ValueLiteral::Ptr)];
+      char dummy50[sizeof (ValueLiteral::Ptr)];
 
+      // ThfTypedVariable
       // TfxUnitaryFormula
       // TffVariable
       // TffTypedVariable
       // Variable
-      char dummy48[sizeof (VariableTerm::Ptr)];
+      char dummy51[sizeof (VariableTerm::Ptr)];
 
       // "integer"
       // "real"
@@ -792,7 +851,7 @@ namespace libtptp {
       // "upper_word"
       // "identifier"
       // "single_quoted"
-      char dummy49[sizeof (std::string)];
+      char dummy52[sizeof (std::string)];
 };
 
     /// Symbol semantic values.
@@ -825,52 +884,55 @@ namespace libtptp {
         FOT = 264,
         ITE = 265,
         LET = 266,
-        EXCLAMATIONGREATER = 267,
-        AT = 268,
-        AND = 269,
-        DOLLAR = 270,
-        COLON = 271,
-        COMMA = 272,
-        DOT = 273,
-        PLUS = 274,
-        MINUS = 275,
-        EQUAL = 276,
-        INFIXINEQUALITY = 277,
-        LPAREN = 278,
-        RPAREN = 279,
-        LSQPAREN = 280,
-        RSQPAREN = 281,
-        LCURPAREN = 282,
-        RCURPAREN = 283,
-        VLINE = 284,
-        STAR = 285,
-        GREATER = 286,
-        LESS = 287,
-        EXCLAMATION = 288,
-        TILDE = 289,
-        QUESTIONMARK = 290,
-        CARET = 291,
-        DOUBLEEXCLAMATION = 292,
-        DOUBLEQUESTIONMARK = 293,
-        DOUBLEAT = 294,
-        EQUALITY = 295,
-        IMPLICATION = 296,
-        RIMPLICATION = 297,
-        INEQUALITY = 298,
-        NOR = 299,
-        NAND = 300,
-        ASSIGNMENT = 301,
-        GENTZENARROW = 302,
-        SUBTYPESIGN = 303,
-        INCLUDE = 304,
-        INTEGER = 305,
-        REAL = 306,
-        RATIONAL = 307,
-        DQUOTED = 308,
-        LOWER_WORD = 309,
-        UPPER_WORD = 310,
-        IDENTIFIER = 311,
-        SINGLE_QUOTED = 312
+        AT = 267,
+        AND = 268,
+        DOLLAR = 269,
+        COLON = 270,
+        COMMA = 271,
+        DOT = 272,
+        PLUS = 273,
+        EQUAL = 274,
+        INFIXINEQUALITY = 275,
+        LPAREN = 276,
+        RPAREN = 277,
+        LSQPAREN = 278,
+        RSQPAREN = 279,
+        LCURPAREN = 280,
+        RCURPAREN = 281,
+        VLINE = 282,
+        STAR = 283,
+        GREATER = 284,
+        EXCLAMATION = 285,
+        TILDE = 286,
+        QUESTIONMARK = 287,
+        ATMINUS = 288,
+        ATPLUS = 289,
+        CARET = 290,
+        DOUBLEEXCLAMATION = 291,
+        DOUBLEQUESTIONMARK = 292,
+        DOUBLEATPLUS = 293,
+        DOUBLEATMINUS = 294,
+        ATEQUAL = 295,
+        EXCLAMATIONGREATER = 296,
+        QUESTIONMARKSTAR = 297,
+        EQUALITY = 298,
+        IMPLICATION = 299,
+        RIMPLICATION = 300,
+        INEQUALITY = 301,
+        NOR = 302,
+        NAND = 303,
+        ASSIGNMENT = 304,
+        GENTZENARROW = 305,
+        SUBTYPESIGN = 306,
+        INCLUDE = 307,
+        INTEGER = 308,
+        REAL = 309,
+        RATIONAL = 310,
+        DQUOTED = 311,
+        LOWER_WORD = 312,
+        UPPER_WORD = 313,
+        IDENTIFIER = 314,
+        SINGLE_QUOTED = 315
       };
     };
 
@@ -914,6 +976,8 @@ namespace libtptp {
       basic_symbol (typename Base::kind_type t, YY_RVREF (BinaryLogic::Ptr) v, YY_RVREF (location_type) l);
       basic_symbol (typename Base::kind_type t, YY_RVREF (BinaryType::Ptr) v, YY_RVREF (location_type) l);
       basic_symbol (typename Base::kind_type t, YY_RVREF (ConditionalTerm::Ptr) v, YY_RVREF (location_type) l);
+      basic_symbol (typename Base::kind_type t, YY_RVREF (ConnectiveAtom::Ptr) v, YY_RVREF (location_type) l);
+      basic_symbol (typename Base::kind_type t, YY_RVREF (ConstantAtom::Ptr) v, YY_RVREF (location_type) l);
       basic_symbol (typename Base::kind_type t, YY_RVREF (DefinedAtom::Ptr) v, YY_RVREF (location_type) l);
       basic_symbol (typename Base::kind_type t, YY_RVREF (Definition::Ptr) v, YY_RVREF (location_type) l);
       basic_symbol (typename Base::kind_type t, YY_RVREF (DefinitionAtom::Ptr) v, YY_RVREF (location_type) l);
@@ -922,6 +986,7 @@ namespace libtptp {
       basic_symbol (typename Base::kind_type t, YY_RVREF (FirstOrderFormula::Ptr) v, YY_RVREF (location_type) l);
       basic_symbol (typename Base::kind_type t, YY_RVREF (FormulaDefinition::Ptr) v, YY_RVREF (location_type) l);
       basic_symbol (typename Base::kind_type t, YY_RVREF (FormulaRole::Ptr) v, YY_RVREF (location_type) l);
+      basic_symbol (typename Base::kind_type t, YY_RVREF (FunctorAtom::Ptr) v, YY_RVREF (location_type) l);
       basic_symbol (typename Base::kind_type t, YY_RVREF (GeneralData::Ptr) v, YY_RVREF (location_type) l);
       basic_symbol (typename Base::kind_type t, YY_RVREF (GeneralFunction::Ptr) v, YY_RVREF (location_type) l);
       basic_symbol (typename Base::kind_type t, YY_RVREF (GeneralList::Ptr) v, YY_RVREF (location_type) l);
@@ -1097,10 +1162,6 @@ namespace libtptp {
 
     static
     symbol_type
-    make_EXCLAMATIONGREATER (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l);
-
-    static
-    symbol_type
     make_AT (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l);
 
     static
@@ -1126,10 +1187,6 @@ namespace libtptp {
     static
     symbol_type
     make_PLUS (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l);
-
-    static
-    symbol_type
-    make_MINUS (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l);
 
     static
     symbol_type
@@ -1177,10 +1234,6 @@ namespace libtptp {
 
     static
     symbol_type
-    make_LESS (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l);
-
-    static
-    symbol_type
     make_EXCLAMATION (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l);
 
     static
@@ -1190,6 +1243,14 @@ namespace libtptp {
     static
     symbol_type
     make_QUESTIONMARK (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l);
+
+    static
+    symbol_type
+    make_ATMINUS (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l);
+
+    static
+    symbol_type
+    make_ATPLUS (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l);
 
     static
     symbol_type
@@ -1205,7 +1266,23 @@ namespace libtptp {
 
     static
     symbol_type
-    make_DOUBLEAT (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l);
+    make_DOUBLEATPLUS (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l);
+
+    static
+    symbol_type
+    make_DOUBLEATMINUS (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l);
+
+    static
+    symbol_type
+    make_ATEQUAL (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l);
+
+    static
+    symbol_type
+    make_EXCLAMATIONGREATER (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l);
+
+    static
+    symbol_type
+    make_QUESTIONMARKSTAR (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l);
 
     static
     symbol_type
@@ -1460,12 +1537,12 @@ namespace libtptp {
     enum
     {
       yyeof_ = 0,
-      yylast_ = 2817,     ///< Last index in yytable_.
-      yynnts_ = 193,  ///< Number of nonterminal symbols.
+      yylast_ = 2978,     ///< Last index in yytable_.
+      yynnts_ = 192,  ///< Number of nonterminal symbols.
       yyfinal_ = 26, ///< Termination state number.
       yyterror_ = 1,
       yyerrcode_ = 256,
-      yyntokens_ = 58  ///< Number of tokens.
+      yyntokens_ = 61  ///< Number of tokens.
     };
 
 
@@ -1515,9 +1592,9 @@ namespace libtptp {
       25,    26,    27,    28,    29,    30,    31,    32,    33,    34,
       35,    36,    37,    38,    39,    40,    41,    42,    43,    44,
       45,    46,    47,    48,    49,    50,    51,    52,    53,    54,
-      55,    56,    57
+      55,    56,    57,    58,    59,    60
     };
-    const unsigned user_token_number_max_ = 312;
+    const unsigned user_token_number_max_ = 315;
     const token_number_type undef_token_ = 2;
 
     if (static_cast<int> (t) <= yyeof_)
@@ -1549,237 +1626,288 @@ namespace libtptp {
   {
     switch (other.type_get ())
     {
-      case 69: // Annotations
+      case 72: // Annotations
         value.YY_MOVE_OR_COPY< Annotation::Ptr > (YY_MOVE (other.value));
         break;
 
-      case 136: // TffPlainAtomic
-      case 140: // TffSystemAtomic
-      case 188: // FofPlainTerm
-      case 189: // FofDefinedTerm
-      case 190: // FofDefinedAtomicTerm
-      case 191: // FofDefinedPlainTerm
-      case 192: // FofSystemTerm
-      case 195: // FofFunctionTerm
+      case 138: // TffPlainAtomic
+      case 142: // TffSystemAtomic
+      case 190: // FofPlainTerm
+      case 191: // FofDefinedTerm
+      case 192: // FofDefinedAtomicTerm
+      case 193: // FofDefinedPlainTerm
+      case 194: // FofSystemTerm
+      case 197: // FofFunctionTerm
         value.YY_MOVE_OR_COPY< Atom::Ptr > (YY_MOVE (other.value));
         break;
 
-      case 158: // TffAtomicType
+      case 111: // ThfUnitaryType
+      case 112: // ThfApplyType
+      case 160: // TffAtomicType
         value.YY_MOVE_OR_COPY< AtomType::Ptr > (YY_MOVE (other.value));
         break;
 
-      case 208: // NonassocConnective
-      case 209: // AssocConnective
+      case 210: // NonassocConnective
+      case 211: // AssocConnective
         value.YY_MOVE_OR_COPY< BinaryConnective_t > (YY_MOVE (other.value));
         break;
 
-      case 119: // TffBinaryFormula
-      case 120: // TffBinaryNonassoc
-      case 121: // TffBinaryAssoc
-      case 122: // TffOrFormula
-      case 123: // TffAndFormula
-      case 171: // FofBinaryFormula
-      case 172: // FofBinaryNonassoc
-      case 173: // FofBinaryAssoc
-      case 174: // FofOrFormula
-      case 175: // FofAndFormula
+      case 77: // ThfBinaryNonassoc
+      case 78: // ThfBinaryAssoc
+      case 79: // ThfOrFormula
+      case 80: // ThfAndFormula
+      case 81: // ThfApplyFormula
+      case 121: // TffBinaryFormula
+      case 122: // TffBinaryNonassoc
+      case 123: // TffBinaryAssoc
+      case 124: // TffOrFormula
+      case 125: // TffAndFormula
+      case 173: // FofBinaryFormula
+      case 174: // FofBinaryNonassoc
+      case 175: // FofBinaryAssoc
+      case 176: // FofOrFormula
+      case 177: // FofAndFormula
         value.YY_MOVE_OR_COPY< BinaryLogic::Ptr > (YY_MOVE (other.value));
         break;
 
-      case 160: // TffMappingType
-      case 161: // TffXprodType
+      case 113: // ThfBinaryType
+      case 114: // ThfMappingType
+      case 115: // ThfXprodType
+      case 116: // ThfUnionType
+      case 162: // TffMappingType
+      case 163: // TffXprodType
         value.YY_MOVE_OR_COPY< BinaryType::Ptr > (YY_MOVE (other.value));
         break;
 
-      case 141: // TfxConditional
+      case 97: // ThfConditional
+      case 143: // TfxConditional
         value.YY_MOVE_OR_COPY< ConditionalTerm::Ptr > (YY_MOVE (other.value));
         break;
 
-      case 225: // DefinedTerm
+      case 107: // ThfConnTerm
+        value.YY_MOVE_OR_COPY< ConnectiveAtom::Ptr > (YY_MOVE (other.value));
+        break;
+
+      case 95: // ThfSystemAtomic
+        value.YY_MOVE_OR_COPY< ConstantAtom::Ptr > (YY_MOVE (other.value));
+        break;
+
+      case 227: // DefinedTerm
         value.YY_MOVE_OR_COPY< DefinedAtom::Ptr > (YY_MOVE (other.value));
         break;
 
-      case 61: // Definition
+      case 64: // Definition
         value.YY_MOVE_OR_COPY< Definition::Ptr > (YY_MOVE (other.value));
         break;
 
-      case 146: // TfxLetDefn
+      case 102: // ThfLetDefn
+      case 148: // TfxLetDefn
         value.YY_MOVE_OR_COPY< DefinitionAtom::Ptr > (YY_MOVE (other.value));
         break;
 
-      case 142: // TfxLet
+      case 98: // ThfLet
+      case 144: // TfxLet
         value.YY_MOVE_OR_COPY< DefinitionTerm::Ptr > (YY_MOVE (other.value));
         break;
 
-      case 60: // Definitions
+      case 63: // Definitions
         value.YY_MOVE_OR_COPY< Definitions::Ptr > (YY_MOVE (other.value));
         break;
 
-      case 70: // TpiFormula
-      case 169: // FofFormula
+      case 73: // TpiFormula
+      case 171: // FofFormula
         value.YY_MOVE_OR_COPY< FirstOrderFormula::Ptr > (YY_MOVE (other.value));
         break;
 
-      case 62: // AnnotatedFormula
-      case 66: // FofAnnotated
+      case 65: // AnnotatedFormula
+      case 69: // FofAnnotated
         value.YY_MOVE_OR_COPY< FormulaDefinition::Ptr > (YY_MOVE (other.value));
         break;
 
-      case 228: // FormulaRole
+      case 230: // FormulaRole
         value.YY_MOVE_OR_COPY< FormulaRole::Ptr > (YY_MOVE (other.value));
         break;
 
-      case 230: // GeneralData
+      case 96: // ThfFofFunction
+        value.YY_MOVE_OR_COPY< FunctorAtom::Ptr > (YY_MOVE (other.value));
+        break;
+
+      case 232: // GeneralData
         value.YY_MOVE_OR_COPY< GeneralData::Ptr > (YY_MOVE (other.value));
         break;
 
-      case 231: // GeneralFunction
+      case 233: // GeneralFunction
         value.YY_MOVE_OR_COPY< GeneralFunction::Ptr > (YY_MOVE (other.value));
         break;
 
-      case 234: // GeneralList
+      case 236: // GeneralList
         value.YY_MOVE_OR_COPY< GeneralList::Ptr > (YY_MOVE (other.value));
         break;
 
-      case 229: // GeneralTerm
+      case 231: // GeneralTerm
         value.YY_MOVE_OR_COPY< GeneralTerm::Ptr > (YY_MOVE (other.value));
         break;
 
-      case 211: // TypeConstant
-      case 212: // TypeFunctor
-      case 213: // DefinedType
-      case 214: // Atom
-      case 215: // UntypedAtom
-      case 219: // Constant
-      case 220: // Functor
-      case 221: // SystemConstant
-      case 222: // SystemFunctor
-      case 223: // DefinedConstant
-      case 224: // DefinedFunctor
-      case 227: // Name
-      case 241: // FileName
+      case 213: // TypeConstant
+      case 214: // TypeFunctor
+      case 215: // DefinedType
+      case 216: // Atom
+      case 217: // UntypedAtom
+      case 221: // Constant
+      case 222: // Functor
+      case 223: // SystemConstant
+      case 224: // SystemFunctor
+      case 225: // DefinedConstant
+      case 226: // DefinedFunctor
+      case 229: // Name
+      case 243: // FileName
         value.YY_MOVE_OR_COPY< Identifier::Ptr > (YY_MOVE (other.value));
         break;
 
-      case 235: // IncludeDefinition
+      case 237: // IncludeDefinition
         value.YY_MOVE_OR_COPY< IncludeDefinition::Ptr > (YY_MOVE (other.value));
         break;
 
-      case 216: // DefinedInfixPred
-      case 217: // InfixEquality
-      case 218: // InfixInequality
+      case 218: // DefinedInfixPred
+      case 219: // InfixEquality
+      case 220: // InfixInequality
         value.YY_MOVE_OR_COPY< InfixConnective_t > (YY_MOVE (other.value));
         break;
 
-      case 134: // TffInfixUnary
-      case 139: // TffDefinedInfix
-      case 177: // FofInfixUnary
-      case 186: // FofDefinedInfixFormula
+      case 90: // ThfInfixUnary
+      case 94: // ThfDefinedInfix
+      case 136: // TffInfixUnary
+      case 141: // TffDefinedInfix
+      case 179: // FofInfixUnary
+      case 188: // FofDefinedInfixFormula
         value.YY_MOVE_OR_COPY< InfixLogic::Ptr > (YY_MOVE (other.value));
         break;
 
-      case 242: // IntegerLiteral
+      case 244: // IntegerLiteral
         value.YY_MOVE_OR_COPY< IntegerLiteral::Ptr > (YY_MOVE (other.value));
         break;
 
-      case 236: // FormulaSelection
+      case 238: // FormulaSelection
         value.YY_MOVE_OR_COPY< ListLiteral::Ptr > (YY_MOVE (other.value));
         break;
 
-      case 117: // TffFormula
-      case 118: // TffLogicFormula
-      case 124: // TffUnitFormula
-      case 125: // TffPreunitFormula
-      case 126: // TffUnitaryFormula
-      case 132: // TffUnaryFormula
-      case 145: // TfxLetDefns
-      case 147: // TfxLetLhs
-      case 149: // TffTerm
-      case 150: // TffUnitaryTerm
-      case 170: // FofLogicFormula
-      case 176: // FofUnaryFormula
-      case 178: // FofUnitFormula
-      case 179: // FofUnitaryFormula
-      case 182: // FofAtomicFormula
-      case 184: // FofDefinedAtomicFormula
-      case 199: // CnfFormula
-      case 200: // Disjunction
-      case 201: // Literal
+      case 74: // ThfFormula
+      case 75: // ThfLogicFormula
+      case 76: // ThfBinaryFormula
+      case 82: // ThfUnitFormula
+      case 83: // ThfPreunitFormula
+      case 84: // ThfUnitaryFormula
+      case 88: // ThfUnaryFormula
+      case 91: // ThfAtomicFormula
+      case 92: // ThfPlainAtomic
+      case 101: // ThfLetDefns
+      case 104: // ThfUnitaryTerm
+      case 119: // TffFormula
+      case 120: // TffLogicFormula
+      case 126: // TffUnitFormula
+      case 127: // TffPreunitFormula
+      case 128: // TffUnitaryFormula
+      case 134: // TffUnaryFormula
+      case 147: // TfxLetDefns
+      case 149: // TfxLetLhs
+      case 151: // TffTerm
+      case 152: // TffUnitaryTerm
+      case 172: // FofLogicFormula
+      case 178: // FofUnaryFormula
+      case 180: // FofUnitFormula
+      case 181: // FofUnitaryFormula
+      case 184: // FofAtomicFormula
+      case 186: // FofDefinedAtomicFormula
+      case 201: // CnfFormula
+      case 202: // Disjunction
+      case 203: // Literal
         value.YY_MOVE_OR_COPY< Logic::Ptr > (YY_MOVE (other.value));
         break;
 
-      case 151: // TfxTuple
-      case 197: // FofFormulaTuple
+      case 105: // ThfTuple
+      case 153: // TfxTuple
+      case 199: // FofFormulaTuple
         value.YY_MOVE_OR_COPY< LogicTuple::Ptr > (YY_MOVE (other.value));
         break;
 
-      case 148: // TfxLetDefnList
-      case 152: // TffArguments
-      case 159: // TffTypeArguments
-      case 193: // FofArguments
-      case 198: // FofFormulaTupleList
+      case 103: // ThfLetDefnList
+      case 106: // ThfFormulaList
+      case 108: // ThfArguments
+      case 150: // TfxLetDefnList
+      case 154: // TffArguments
+      case 161: // TffTypeArguments
+      case 195: // FofArguments
+      case 200: // FofFormulaTupleList
         value.YY_MOVE_OR_COPY< Logics::Ptr > (YY_MOVE (other.value));
         break;
 
-      case 129: // TffVariableList
-      case 181: // FofVariableList
-      case 226: // NameList
-      case 232: // GeneralTerms
+      case 86: // ThfVariableList
+      case 131: // TffVariableList
+      case 183: // FofVariableList
+      case 228: // NameList
+      case 234: // GeneralTerms
         value.YY_MOVE_OR_COPY< Nodes::Ptr > (YY_MOVE (other.value));
         break;
 
-      case 128: // TffQuantifiedFormula
-      case 180: // FofQuantifiedFormula
+      case 85: // ThfQuantifiedFormula
+      case 130: // TffQuantifiedFormula
+      case 182: // FofQuantifiedFormula
         value.YY_MOVE_OR_COPY< QuantifiedLogic::Ptr > (YY_MOVE (other.value));
         break;
 
-      case 207: // FofQuantifier
+      case 204: // ThfQuantifier
+      case 205: // Th1Quantifier
+      case 206: // Th0Quantifier
+      case 209: // FofQuantifier
         value.YY_MOVE_OR_COPY< QuantifiedQuantifier_t > (YY_MOVE (other.value));
         break;
 
-      case 155: // Tf1QuantifiedType
+      case 157: // Tf1QuantifiedType
         value.YY_MOVE_OR_COPY< QuantifiedType::Ptr > (YY_MOVE (other.value));
         break;
 
-      case 244: // RationalLiteral
+      case 246: // RationalLiteral
         value.YY_MOVE_OR_COPY< RationalLiteral::Ptr > (YY_MOVE (other.value));
         break;
 
-      case 243: // RealLiteral
+      case 245: // RealLiteral
         value.YY_MOVE_OR_COPY< RealLiteral::Ptr > (YY_MOVE (other.value));
         break;
 
-      case 165: // TfxSequent
-      case 196: // FofSequent
+      case 118: // ThfSequent
+      case 167: // TfxSequent
+      case 198: // FofSequent
         value.YY_MOVE_OR_COPY< SequentLogic::Ptr > (YY_MOVE (other.value));
         break;
 
-      case 59: // Specification
+      case 62: // Specification
         value.YY_MOVE_OR_COPY< Specification::Ptr > (YY_MOVE (other.value));
         break;
 
-      case 237: // AtomicWord
-      case 238: // AtomicDefinedWord
-      case 239: // AtomicSystemWord
-      case 246: // DistinctObjectLiteral
-      case 247: // LowerWordLiteral
-      case 248: // SingleQuotedLiteral
-      case 249: // DollarWordLiteral
-      case 250: // DollarDollarWordLiteral
+      case 239: // AtomicWord
+      case 240: // AtomicDefinedWord
+      case 241: // AtomicSystemWord
+      case 248: // DistinctObjectLiteral
+      case 249: // LowerWordLiteral
+      case 250: // SingleQuotedLiteral
+      case 251: // DollarWordLiteral
+      case 252: // DollarDollarWordLiteral
         value.YY_MOVE_OR_COPY< StringLiteral::Ptr > (YY_MOVE (other.value));
         break;
 
-      case 164: // TffSubtype
+      case 117: // ThfSubtype
+      case 166: // TffSubtype
         value.YY_MOVE_OR_COPY< SubType::Ptr > (YY_MOVE (other.value));
         break;
 
-      case 135: // TffAtomicFormula
-      case 137: // TffDefinedAtomic
-      case 138: // TffDefinedPlain
-      case 183: // FofPlainAtomicFormula
-      case 185: // FofDefinedPlainFormula
-      case 187: // FofSystemAtomicFormula
-      case 194: // FofTerm
+      case 93: // ThfDefinedAtomic
+      case 137: // TffAtomicFormula
+      case 139: // TffDefinedAtomic
+      case 140: // TffDefinedPlain
+      case 185: // FofPlainAtomicFormula
+      case 187: // FofDefinedPlainFormula
+      case 189: // FofSystemAtomicFormula
+      case 196: // FofTerm
         value.YY_MOVE_OR_COPY< Term::Ptr > (YY_MOVE (other.value));
         break;
 
@@ -1792,94 +1920,105 @@ namespace libtptp {
       case 9: // "fot"
       case 10: // "ite"
       case 11: // "let"
-      case 12: // "!>"
-      case 13: // "@"
-      case 14: // "&"
-      case 15: // "$"
-      case 16: // ":"
-      case 17: // ","
-      case 18: // "."
-      case 19: // "+"
-      case 20: // "-"
-      case 21: // "="
-      case 22: // "!="
-      case 23: // "("
-      case 24: // ")"
-      case 25: // "["
-      case 26: // "]"
-      case 27: // "{"
-      case 28: // "}"
-      case 29: // "|"
-      case 30: // "*"
-      case 31: // ">"
-      case 32: // "<"
-      case 33: // "!"
-      case 34: // "~"
-      case 35: // "?"
-      case 36: // "^"
-      case 37: // "!!"
-      case 38: // "??"
-      case 39: // "@@"
-      case 40: // "<=>"
-      case 41: // "=>"
-      case 42: // "<="
-      case 43: // "<~>"
-      case 44: // "~|"
-      case 45: // "~&"
-      case 46: // ":="
-      case 47: // "-->"
-      case 48: // "<<"
-      case 49: // "include"
+      case 12: // "@"
+      case 13: // "&"
+      case 14: // "$"
+      case 15: // ":"
+      case 16: // ","
+      case 17: // "."
+      case 18: // "+"
+      case 19: // "="
+      case 20: // "!="
+      case 21: // "("
+      case 22: // ")"
+      case 23: // "["
+      case 24: // "]"
+      case 25: // "{"
+      case 26: // "}"
+      case 27: // "|"
+      case 28: // "*"
+      case 29: // ">"
+      case 30: // "!"
+      case 31: // "~"
+      case 32: // "?"
+      case 33: // "@-"
+      case 34: // "@+"
+      case 35: // "^"
+      case 36: // "!!"
+      case 37: // "??"
+      case 38: // "@@+"
+      case 39: // "@@-"
+      case 40: // "@="
+      case 41: // "!>"
+      case 42: // "?*"
+      case 43: // "<=>"
+      case 44: // "=>"
+      case 45: // "<="
+      case 46: // "<~>"
+      case 47: // "~|"
+      case 48: // "~&"
+      case 49: // ":="
+      case 50: // "-->"
+      case 51: // "<<"
+      case 52: // "include"
         value.YY_MOVE_OR_COPY< Token::Ptr > (YY_MOVE (other.value));
         break;
 
-      case 162: // TfxTupleType
+      case 164: // TfxTupleType
         value.YY_MOVE_OR_COPY< TupleType::Ptr > (YY_MOVE (other.value));
         break;
 
-      case 143: // TfxLetTypes
-      case 154: // TffTopLevelType
-      case 156: // TffMonotype
-      case 157: // TffUnitaryType
+      case 99: // ThfLetTypes
+      case 110: // ThfTopLevelType
+      case 145: // TfxLetTypes
+      case 156: // TffTopLevelType
+      case 158: // TffMonotype
+      case 159: // TffUnitaryType
         value.YY_MOVE_OR_COPY< Type::Ptr > (YY_MOVE (other.value));
         break;
 
-      case 153: // TffAtomTyping
+      case 109: // ThfAtomTyping
+      case 155: // TffAtomTyping
         value.YY_MOVE_OR_COPY< TypedAtom::Ptr > (YY_MOVE (other.value));
         break;
 
-      case 144: // TffAtomTypingList
-      case 163: // TffTypeList
+      case 100: // ThfAtomTypingList
+      case 146: // TffAtomTypingList
+      case 165: // TffTypeList
         value.YY_MOVE_OR_COPY< Types::Ptr > (YY_MOVE (other.value));
         break;
 
-      case 210: // UnaryConnective
+      case 207: // ThfUnaryConnective
+      case 208: // Th1UnaryConnective
+      case 212: // UnaryConnective
         value.YY_MOVE_OR_COPY< UnaryConnective_t > (YY_MOVE (other.value));
         break;
 
-      case 133: // TffPrefixUnary
+      case 89: // ThfPrefixUnary
+      case 135: // TffPrefixUnary
         value.YY_MOVE_OR_COPY< UnaryLogic::Ptr > (YY_MOVE (other.value));
         break;
 
-      case 240: // Number
+      case 242: // Number
         value.YY_MOVE_OR_COPY< ValueLiteral::Ptr > (YY_MOVE (other.value));
         break;
 
-      case 127: // TfxUnitaryFormula
-      case 130: // TffVariable
-      case 131: // TffTypedVariable
-      case 245: // Variable
+      case 87: // ThfTypedVariable
+      case 129: // TfxUnitaryFormula
+      case 132: // TffVariable
+      case 133: // TffTypedVariable
+      case 247: // Variable
         value.YY_MOVE_OR_COPY< VariableTerm::Ptr > (YY_MOVE (other.value));
         break;
 
-      case 50: // "integer"
-      case 51: // "real"
-      case 52: // "rational"
-      case 53: // "double_quoted"
-      case 54: // "lower_word"
-      case 55: // "upper_word"
-      case 56: // "identifier"
-      case 57: // "single_quoted"
+      case 53: // "integer"
+      case 54: // "real"
+      case 55: // "rational"
+      case 56: // "double_quoted"
+      case 57: // "lower_word"
+      case 58: // "upper_word"
+      case 59: // "identifier"
+      case 60: // "single_quoted"
         value.YY_MOVE_OR_COPY< std::string > (YY_MOVE (other.value));
         break;
 
@@ -1947,6 +2086,20 @@ namespace libtptp {
   {}
 
   template <typename Base>
+  Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, YY_RVREF (ConnectiveAtom::Ptr) v, YY_RVREF (location_type) l)
+    : Base (t)
+    , value (YY_MOVE (v))
+    , location (YY_MOVE (l))
+  {}
+
+  template <typename Base>
+  Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, YY_RVREF (ConstantAtom::Ptr) v, YY_RVREF (location_type) l)
+    : Base (t)
+    , value (YY_MOVE (v))
+    , location (YY_MOVE (l))
+  {}
+
+  template <typename Base>
   Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, YY_RVREF (DefinedAtom::Ptr) v, YY_RVREF (location_type) l)
     : Base (t)
     , value (YY_MOVE (v))
@@ -1997,6 +2150,13 @@ namespace libtptp {
 
   template <typename Base>
   Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, YY_RVREF (FormulaRole::Ptr) v, YY_RVREF (location_type) l)
+    : Base (t)
+    , value (YY_MOVE (v))
+    , location (YY_MOVE (l))
+  {}
+
+  template <typename Base>
+  Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, YY_RVREF (FunctorAtom::Ptr) v, YY_RVREF (location_type) l)
     : Base (t)
     , value (YY_MOVE (v))
     , location (YY_MOVE (l))
@@ -2265,237 +2425,288 @@ namespace libtptp {
     // Type destructor.
   switch (yytype)
     {
-      case 69: // Annotations
+      case 72: // Annotations
         value.template destroy< Annotation::Ptr > ();
         break;
 
-      case 136: // TffPlainAtomic
-      case 140: // TffSystemAtomic
-      case 188: // FofPlainTerm
-      case 189: // FofDefinedTerm
-      case 190: // FofDefinedAtomicTerm
-      case 191: // FofDefinedPlainTerm
-      case 192: // FofSystemTerm
-      case 195: // FofFunctionTerm
+      case 138: // TffPlainAtomic
+      case 142: // TffSystemAtomic
+      case 190: // FofPlainTerm
+      case 191: // FofDefinedTerm
+      case 192: // FofDefinedAtomicTerm
+      case 193: // FofDefinedPlainTerm
+      case 194: // FofSystemTerm
+      case 197: // FofFunctionTerm
         value.template destroy< Atom::Ptr > ();
         break;
 
-      case 158: // TffAtomicType
+      case 111: // ThfUnitaryType
+      case 112: // ThfApplyType
+      case 160: // TffAtomicType
         value.template destroy< AtomType::Ptr > ();
         break;
 
-      case 208: // NonassocConnective
-      case 209: // AssocConnective
+      case 210: // NonassocConnective
+      case 211: // AssocConnective
         value.template destroy< BinaryConnective_t > ();
         break;
 
-      case 119: // TffBinaryFormula
-      case 120: // TffBinaryNonassoc
-      case 121: // TffBinaryAssoc
-      case 122: // TffOrFormula
-      case 123: // TffAndFormula
-      case 171: // FofBinaryFormula
-      case 172: // FofBinaryNonassoc
-      case 173: // FofBinaryAssoc
-      case 174: // FofOrFormula
-      case 175: // FofAndFormula
+      case 77: // ThfBinaryNonassoc
+      case 78: // ThfBinaryAssoc
+      case 79: // ThfOrFormula
+      case 80: // ThfAndFormula
+      case 81: // ThfApplyFormula
+      case 121: // TffBinaryFormula
+      case 122: // TffBinaryNonassoc
+      case 123: // TffBinaryAssoc
+      case 124: // TffOrFormula
+      case 125: // TffAndFormula
+      case 173: // FofBinaryFormula
+      case 174: // FofBinaryNonassoc
+      case 175: // FofBinaryAssoc
+      case 176: // FofOrFormula
+      case 177: // FofAndFormula
         value.template destroy< BinaryLogic::Ptr > ();
         break;
 
-      case 160: // TffMappingType
-      case 161: // TffXprodType
+      case 113: // ThfBinaryType
+      case 114: // ThfMappingType
+      case 115: // ThfXprodType
+      case 116: // ThfUnionType
+      case 162: // TffMappingType
+      case 163: // TffXprodType
         value.template destroy< BinaryType::Ptr > ();
         break;
 
-      case 141: // TfxConditional
+      case 97: // ThfConditional
+      case 143: // TfxConditional
         value.template destroy< ConditionalTerm::Ptr > ();
         break;
 
-      case 225: // DefinedTerm
+      case 107: // ThfConnTerm
+        value.template destroy< ConnectiveAtom::Ptr > ();
+        break;
+
+      case 95: // ThfSystemAtomic
+        value.template destroy< ConstantAtom::Ptr > ();
+        break;
+
+      case 227: // DefinedTerm
         value.template destroy< DefinedAtom::Ptr > ();
         break;
 
-      case 61: // Definition
+      case 64: // Definition
         value.template destroy< Definition::Ptr > ();
         break;
 
-      case 146: // TfxLetDefn
+      case 102: // ThfLetDefn
+      case 148: // TfxLetDefn
         value.template destroy< DefinitionAtom::Ptr > ();
         break;
 
-      case 142: // TfxLet
+      case 98: // ThfLet
+      case 144: // TfxLet
         value.template destroy< DefinitionTerm::Ptr > ();
         break;
 
-      case 60: // Definitions
+      case 63: // Definitions
         value.template destroy< Definitions::Ptr > ();
         break;
 
-      case 70: // TpiFormula
-      case 169: // FofFormula
+      case 73: // TpiFormula
+      case 171: // FofFormula
         value.template destroy< FirstOrderFormula::Ptr > ();
         break;
 
-      case 62: // AnnotatedFormula
-      case 66: // FofAnnotated
+      case 65: // AnnotatedFormula
+      case 69: // FofAnnotated
         value.template destroy< FormulaDefinition::Ptr > ();
         break;
 
-      case 228: // FormulaRole
+      case 230: // FormulaRole
         value.template destroy< FormulaRole::Ptr > ();
         break;
 
-      case 230: // GeneralData
+      case 96: // ThfFofFunction
+        value.template destroy< FunctorAtom::Ptr > ();
+        break;
+
+      case 232: // GeneralData
         value.template destroy< GeneralData::Ptr > ();
         break;
 
-      case 231: // GeneralFunction
+      case 233: // GeneralFunction
         value.template destroy< GeneralFunction::Ptr > ();
         break;
 
-      case 234: // GeneralList
+      case 236: // GeneralList
         value.template destroy< GeneralList::Ptr > ();
         break;
 
-      case 229: // GeneralTerm
+      case 231: // GeneralTerm
         value.template destroy< GeneralTerm::Ptr > ();
         break;
 
-      case 211: // TypeConstant
-      case 212: // TypeFunctor
-      case 213: // DefinedType
-      case 214: // Atom
-      case 215: // UntypedAtom
-      case 219: // Constant
-      case 220: // Functor
-      case 221: // SystemConstant
-      case 222: // SystemFunctor
-      case 223: // DefinedConstant
-      case 224: // DefinedFunctor
-      case 227: // Name
-      case 241: // FileName
+      case 213: // TypeConstant
+      case 214: // TypeFunctor
+      case 215: // DefinedType
+      case 216: // Atom
+      case 217: // UntypedAtom
+      case 221: // Constant
+      case 222: // Functor
+      case 223: // SystemConstant
+      case 224: // SystemFunctor
+      case 225: // DefinedConstant
+      case 226: // DefinedFunctor
+      case 229: // Name
+      case 243: // FileName
         value.template destroy< Identifier::Ptr > ();
         break;
 
-      case 235: // IncludeDefinition
+      case 237: // IncludeDefinition
         value.template destroy< IncludeDefinition::Ptr > ();
         break;
 
-      case 216: // DefinedInfixPred
-      case 217: // InfixEquality
-      case 218: // InfixInequality
+      case 218: // DefinedInfixPred
+      case 219: // InfixEquality
+      case 220: // InfixInequality
         value.template destroy< InfixConnective_t > ();
         break;
 
-      case 134: // TffInfixUnary
-      case 139: // TffDefinedInfix
-      case 177: // FofInfixUnary
-      case 186: // FofDefinedInfixFormula
+      case 90: // ThfInfixUnary
+      case 94: // ThfDefinedInfix
+      case 136: // TffInfixUnary
+      case 141: // TffDefinedInfix
+      case 179: // FofInfixUnary
+      case 188: // FofDefinedInfixFormula
         value.template destroy< InfixLogic::Ptr > ();
         break;
 
-      case 242: // IntegerLiteral
+      case 244: // IntegerLiteral
         value.template destroy< IntegerLiteral::Ptr > ();
         break;
 
-      case 236: // FormulaSelection
+      case 238: // FormulaSelection
         value.template destroy< ListLiteral::Ptr > ();
         break;
 
-      case 117: // TffFormula
-      case 118: // TffLogicFormula
-      case 124: // TffUnitFormula
-      case 125: // TffPreunitFormula
-      case 126: // TffUnitaryFormula
-      case 132: // TffUnaryFormula
-      case 145: // TfxLetDefns
-      case 147: // TfxLetLhs
-      case 149: // TffTerm
-      case 150: // TffUnitaryTerm
-      case 170: // FofLogicFormula
-      case 176: // FofUnaryFormula
-      case 178: // FofUnitFormula
-      case 179: // FofUnitaryFormula
-      case 182: // FofAtomicFormula
-      case 184: // FofDefinedAtomicFormula
-      case 199: // CnfFormula
-      case 200: // Disjunction
-      case 201: // Literal
+      case 74: // ThfFormula
+      case 75: // ThfLogicFormula
+      case 76: // ThfBinaryFormula
+      case 82: // ThfUnitFormula
+      case 83: // ThfPreunitFormula
+      case 84: // ThfUnitaryFormula
+      case 88: // ThfUnaryFormula
+      case 91: // ThfAtomicFormula
+      case 92: // ThfPlainAtomic
+      case 101: // ThfLetDefns
+      case 104: // ThfUnitaryTerm
+      case 119: // TffFormula
+      case 120: // TffLogicFormula
+      case 126: // TffUnitFormula
+      case 127: // TffPreunitFormula
+      case 128: // TffUnitaryFormula
+      case 134: // TffUnaryFormula
+      case 147: // TfxLetDefns
+      case 149: // TfxLetLhs
+      case 151: // TffTerm
+      case 152: // TffUnitaryTerm
+      case 172: // FofLogicFormula
+      case 178: // FofUnaryFormula
+      case 180: // FofUnitFormula
+      case 181: // FofUnitaryFormula
+      case 184: // FofAtomicFormula
+      case 186: // FofDefinedAtomicFormula
+      case 201: // CnfFormula
+      case 202: // Disjunction
+      case 203: // Literal
         value.template destroy< Logic::Ptr > ();
         break;
 
-      case 151: // TfxTuple
-      case 197: // FofFormulaTuple
+      case 105: // ThfTuple
+      case 153: // TfxTuple
+      case 199: // FofFormulaTuple
         value.template destroy< LogicTuple::Ptr > ();
         break;
 
-      case 148: // TfxLetDefnList
-      case 152: // TffArguments
-      case 159: // TffTypeArguments
-      case 193: // FofArguments
-      case 198: // FofFormulaTupleList
+      case 103: // ThfLetDefnList
+      case 106: // ThfFormulaList
+      case 108: // ThfArguments
+      case 150: // TfxLetDefnList
+      case 154: // TffArguments
+      case 161: // TffTypeArguments
+      case 195: // FofArguments
+      case 200: // FofFormulaTupleList
         value.template destroy< Logics::Ptr > ();
         break;
 
-      case 129: // TffVariableList
-      case 181: // FofVariableList
-      case 226: // NameList
-      case 232: // GeneralTerms
+      case 86: // ThfVariableList
+      case 131: // TffVariableList
+      case 183: // FofVariableList
+      case 228: // NameList
+      case 234: // GeneralTerms
         value.template destroy< Nodes::Ptr > ();
         break;
 
-      case 128: // TffQuantifiedFormula
-      case 180: // FofQuantifiedFormula
+      case 85: // ThfQuantifiedFormula
+      case 130: // TffQuantifiedFormula
+      case 182: // FofQuantifiedFormula
         value.template destroy< QuantifiedLogic::Ptr > ();
         break;
 
-      case 207: // FofQuantifier
+      case 204: // ThfQuantifier
+      case 205: // Th1Quantifier
+      case 206: // Th0Quantifier
+      case 209: // FofQuantifier
         value.template destroy< QuantifiedQuantifier_t > ();
         break;
 
-      case 155: // Tf1QuantifiedType
+      case 157: // Tf1QuantifiedType
         value.template destroy< QuantifiedType::Ptr > ();
         break;
 
-      case 244: // RationalLiteral
+      case 246: // RationalLiteral
         value.template destroy< RationalLiteral::Ptr > ();
         break;
 
-      case 243: // RealLiteral
+      case 245: // RealLiteral
         value.template destroy< RealLiteral::Ptr > ();
         break;
 
-      case 165: // TfxSequent
-      case 196: // FofSequent
+      case 118: // ThfSequent
+      case 167: // TfxSequent
+      case 198: // FofSequent
         value.template destroy< SequentLogic::Ptr > ();
         break;
 
-      case 59: // Specification
+      case 62: // Specification
         value.template destroy< Specification::Ptr > ();
         break;
 
-      case 237: // AtomicWord
-      case 238: // AtomicDefinedWord
-      case 239: // AtomicSystemWord
-      case 246: // DistinctObjectLiteral
-      case 247: // LowerWordLiteral
-      case 248: // SingleQuotedLiteral
-      case 249: // DollarWordLiteral
-      case 250: // DollarDollarWordLiteral
+      case 239: // AtomicWord
+      case 240: // AtomicDefinedWord
+      case 241: // AtomicSystemWord
+      case 248: // DistinctObjectLiteral
+      case 249: // LowerWordLiteral
+      case 250: // SingleQuotedLiteral
+      case 251: // DollarWordLiteral
+      case 252: // DollarDollarWordLiteral
         value.template destroy< StringLiteral::Ptr > ();
         break;
 
-      case 164: // TffSubtype
+      case 117: // ThfSubtype
+      case 166: // TffSubtype
         value.template destroy< SubType::Ptr > ();
         break;
 
-      case 135: // TffAtomicFormula
-      case 137: // TffDefinedAtomic
-      case 138: // TffDefinedPlain
-      case 183: // FofPlainAtomicFormula
-      case 185: // FofDefinedPlainFormula
-      case 187: // FofSystemAtomicFormula
-      case 194: // FofTerm
+      case 93: // ThfDefinedAtomic
+      case 137: // TffAtomicFormula
+      case 139: // TffDefinedAtomic
+      case 140: // TffDefinedPlain
+      case 185: // FofPlainAtomicFormula
+      case 187: // FofDefinedPlainFormula
+      case 189: // FofSystemAtomicFormula
+      case 196: // FofTerm
         value.template destroy< Term::Ptr > ();
         break;
 
@@ -2508,94 +2719,105 @@ namespace libtptp {
       case 9: // "fot"
       case 10: // "ite"
       case 11: // "let"
-      case 12: // "!>"
-      case 13: // "@"
-      case 14: // "&"
-      case 15: // "$"
-      case 16: // ":"
-      case 17: // ","
-      case 18: // "."
-      case 19: // "+"
-      case 20: // "-"
-      case 21: // "="
-      case 22: // "!="
-      case 23: // "("
-      case 24: // ")"
-      case 25: // "["
-      case 26: // "]"
-      case 27: // "{"
-      case 28: // "}"
-      case 29: // "|"
-      case 30: // "*"
-      case 31: // ">"
-      case 32: // "<"
-      case 33: // "!"
-      case 34: // "~"
-      case 35: // "?"
-      case 36: // "^"
-      case 37: // "!!"
-      case 38: // "??"
-      case 39: // "@@"
-      case 40: // "<=>"
-      case 41: // "=>"
-      case 42: // "<="
-      case 43: // "<~>"
-      case 44: // "~|"
-      case 45: // "~&"
-      case 46: // ":="
-      case 47: // "-->"
-      case 48: // "<<"
-      case 49: // "include"
+      case 12: // "@"
+      case 13: // "&"
+      case 14: // "$"
+      case 15: // ":"
+      case 16: // ","
+      case 17: // "."
+      case 18: // "+"
+      case 19: // "="
+      case 20: // "!="
+      case 21: // "("
+      case 22: // ")"
+      case 23: // "["
+      case 24: // "]"
+      case 25: // "{"
+      case 26: // "}"
+      case 27: // "|"
+      case 28: // "*"
+      case 29: // ">"
+      case 30: // "!"
+      case 31: // "~"
+      case 32: // "?"
+      case 33: // "@-"
+      case 34: // "@+"
+      case 35: // "^"
+      case 36: // "!!"
+      case 37: // "??"
+      case 38: // "@@+"
+      case 39: // "@@-"
+      case 40: // "@="
+      case 41: // "!>"
+      case 42: // "?*"
+      case 43: // "<=>"
+      case 44: // "=>"
+      case 45: // "<="
+      case 46: // "<~>"
+      case 47: // "~|"
+      case 48: // "~&"
+      case 49: // ":="
+      case 50: // "-->"
+      case 51: // "<<"
+      case 52: // "include"
         value.template destroy< Token::Ptr > ();
         break;
 
-      case 162: // TfxTupleType
+      case 164: // TfxTupleType
         value.template destroy< TupleType::Ptr > ();
         break;
 
-      case 143: // TfxLetTypes
-      case 154: // TffTopLevelType
-      case 156: // TffMonotype
-      case 157: // TffUnitaryType
+      case 99: // ThfLetTypes
+      case 110: // ThfTopLevelType
+      case 145: // TfxLetTypes
+      case 156: // TffTopLevelType
+      case 158: // TffMonotype
+      case 159: // TffUnitaryType
         value.template destroy< Type::Ptr > ();
         break;
 
-      case 153: // TffAtomTyping
+      case 109: // ThfAtomTyping
+      case 155: // TffAtomTyping
         value.template destroy< TypedAtom::Ptr > ();
         break;
 
-      case 144: // TffAtomTypingList
-      case 163: // TffTypeList
+      case 100: // ThfAtomTypingList
+      case 146: // TffAtomTypingList
+      case 165: // TffTypeList
         value.template destroy< Types::Ptr > ();
         break;
 
-      case 210: // UnaryConnective
+      case 207: // ThfUnaryConnective
+      case 208: // Th1UnaryConnective
+      case 212: // UnaryConnective
         value.template destroy< UnaryConnective_t > ();
         break;
 
-      case 133: // TffPrefixUnary
+      case 89: // ThfPrefixUnary
+      case 135: // TffPrefixUnary
         value.template destroy< UnaryLogic::Ptr > ();
         break;
 
-      case 240: // Number
+      case 242: // Number
         value.template destroy< ValueLiteral::Ptr > ();
         break;
 
-      case 127: // TfxUnitaryFormula
-      case 130: // TffVariable
-      case 131: // TffTypedVariable
-      case 245: // Variable
+      case 87: // ThfTypedVariable
+      case 129: // TfxUnitaryFormula
+      case 132: // TffVariable
+      case 133: // TffTypedVariable
+      case 247: // Variable
         value.template destroy< VariableTerm::Ptr > ();
         break;
 
-      case 50: // "integer"
-      case 51: // "real"
-      case 52: // "rational"
-      case 53: // "double_quoted"
-      case 54: // "lower_word"
-      case 55: // "upper_word"
-      case 56: // "identifier"
-      case 57: // "single_quoted"
+      case 53: // "integer"
+      case 54: // "real"
+      case 55: // "rational"
+      case 56: // "double_quoted"
+      case 57: // "lower_word"
+      case 58: // "upper_word"
+      case 59: // "identifier"
+      case 60: // "single_quoted"
         value.template destroy< std::string > ();
         break;
 
@@ -2620,237 +2842,288 @@ namespace libtptp {
     super_type::move (s);
     switch (this->type_get ())
     {
-      case 69: // Annotations
+      case 72: // Annotations
         value.move< Annotation::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 136: // TffPlainAtomic
-      case 140: // TffSystemAtomic
-      case 188: // FofPlainTerm
-      case 189: // FofDefinedTerm
-      case 190: // FofDefinedAtomicTerm
-      case 191: // FofDefinedPlainTerm
-      case 192: // FofSystemTerm
-      case 195: // FofFunctionTerm
+      case 138: // TffPlainAtomic
+      case 142: // TffSystemAtomic
+      case 190: // FofPlainTerm
+      case 191: // FofDefinedTerm
+      case 192: // FofDefinedAtomicTerm
+      case 193: // FofDefinedPlainTerm
+      case 194: // FofSystemTerm
+      case 197: // FofFunctionTerm
         value.move< Atom::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 158: // TffAtomicType
+      case 111: // ThfUnitaryType
+      case 112: // ThfApplyType
+      case 160: // TffAtomicType
         value.move< AtomType::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 208: // NonassocConnective
-      case 209: // AssocConnective
+      case 210: // NonassocConnective
+      case 211: // AssocConnective
         value.move< BinaryConnective_t > (YY_MOVE (s.value));
         break;
 
-      case 119: // TffBinaryFormula
-      case 120: // TffBinaryNonassoc
-      case 121: // TffBinaryAssoc
-      case 122: // TffOrFormula
-      case 123: // TffAndFormula
-      case 171: // FofBinaryFormula
-      case 172: // FofBinaryNonassoc
-      case 173: // FofBinaryAssoc
-      case 174: // FofOrFormula
-      case 175: // FofAndFormula
+      case 77: // ThfBinaryNonassoc
+      case 78: // ThfBinaryAssoc
+      case 79: // ThfOrFormula
+      case 80: // ThfAndFormula
+      case 81: // ThfApplyFormula
+      case 121: // TffBinaryFormula
+      case 122: // TffBinaryNonassoc
+      case 123: // TffBinaryAssoc
+      case 124: // TffOrFormula
+      case 125: // TffAndFormula
+      case 173: // FofBinaryFormula
+      case 174: // FofBinaryNonassoc
+      case 175: // FofBinaryAssoc
+      case 176: // FofOrFormula
+      case 177: // FofAndFormula
         value.move< BinaryLogic::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 160: // TffMappingType
-      case 161: // TffXprodType
+      case 113: // ThfBinaryType
+      case 114: // ThfMappingType
+      case 115: // ThfXprodType
+      case 116: // ThfUnionType
+      case 162: // TffMappingType
+      case 163: // TffXprodType
         value.move< BinaryType::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 141: // TfxConditional
+      case 97: // ThfConditional
+      case 143: // TfxConditional
         value.move< ConditionalTerm::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 225: // DefinedTerm
+      case 107: // ThfConnTerm
+        value.move< ConnectiveAtom::Ptr > (YY_MOVE (s.value));
+        break;
+
+      case 95: // ThfSystemAtomic
+        value.move< ConstantAtom::Ptr > (YY_MOVE (s.value));
+        break;
+
+      case 227: // DefinedTerm
         value.move< DefinedAtom::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 61: // Definition
+      case 64: // Definition
         value.move< Definition::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 146: // TfxLetDefn
+      case 102: // ThfLetDefn
+      case 148: // TfxLetDefn
         value.move< DefinitionAtom::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 142: // TfxLet
+      case 98: // ThfLet
+      case 144: // TfxLet
         value.move< DefinitionTerm::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 60: // Definitions
+      case 63: // Definitions
         value.move< Definitions::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 70: // TpiFormula
-      case 169: // FofFormula
+      case 73: // TpiFormula
+      case 171: // FofFormula
         value.move< FirstOrderFormula::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 62: // AnnotatedFormula
-      case 66: // FofAnnotated
+      case 65: // AnnotatedFormula
+      case 69: // FofAnnotated
         value.move< FormulaDefinition::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 228: // FormulaRole
+      case 230: // FormulaRole
         value.move< FormulaRole::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 230: // GeneralData
+      case 96: // ThfFofFunction
+        value.move< FunctorAtom::Ptr > (YY_MOVE (s.value));
+        break;
+
+      case 232: // GeneralData
         value.move< GeneralData::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 231: // GeneralFunction
+      case 233: // GeneralFunction
         value.move< GeneralFunction::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 234: // GeneralList
+      case 236: // GeneralList
         value.move< GeneralList::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 229: // GeneralTerm
+      case 231: // GeneralTerm
         value.move< GeneralTerm::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 211: // TypeConstant
-      case 212: // TypeFunctor
-      case 213: // DefinedType
-      case 214: // Atom
-      case 215: // UntypedAtom
-      case 219: // Constant
-      case 220: // Functor
-      case 221: // SystemConstant
-      case 222: // SystemFunctor
-      case 223: // DefinedConstant
-      case 224: // DefinedFunctor
-      case 227: // Name
-      case 241: // FileName
+      case 213: // TypeConstant
+      case 214: // TypeFunctor
+      case 215: // DefinedType
+      case 216: // Atom
+      case 217: // UntypedAtom
+      case 221: // Constant
+      case 222: // Functor
+      case 223: // SystemConstant
+      case 224: // SystemFunctor
+      case 225: // DefinedConstant
+      case 226: // DefinedFunctor
+      case 229: // Name
+      case 243: // FileName
         value.move< Identifier::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 235: // IncludeDefinition
+      case 237: // IncludeDefinition
         value.move< IncludeDefinition::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 216: // DefinedInfixPred
-      case 217: // InfixEquality
-      case 218: // InfixInequality
+      case 218: // DefinedInfixPred
+      case 219: // InfixEquality
+      case 220: // InfixInequality
         value.move< InfixConnective_t > (YY_MOVE (s.value));
         break;
 
-      case 134: // TffInfixUnary
-      case 139: // TffDefinedInfix
-      case 177: // FofInfixUnary
-      case 186: // FofDefinedInfixFormula
+      case 90: // ThfInfixUnary
+      case 94: // ThfDefinedInfix
+      case 136: // TffInfixUnary
+      case 141: // TffDefinedInfix
+      case 179: // FofInfixUnary
+      case 188: // FofDefinedInfixFormula
         value.move< InfixLogic::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 242: // IntegerLiteral
+      case 244: // IntegerLiteral
         value.move< IntegerLiteral::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 236: // FormulaSelection
+      case 238: // FormulaSelection
         value.move< ListLiteral::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 117: // TffFormula
-      case 118: // TffLogicFormula
-      case 124: // TffUnitFormula
-      case 125: // TffPreunitFormula
-      case 126: // TffUnitaryFormula
-      case 132: // TffUnaryFormula
-      case 145: // TfxLetDefns
-      case 147: // TfxLetLhs
-      case 149: // TffTerm
-      case 150: // TffUnitaryTerm
-      case 170: // FofLogicFormula
-      case 176: // FofUnaryFormula
-      case 178: // FofUnitFormula
-      case 179: // FofUnitaryFormula
-      case 182: // FofAtomicFormula
-      case 184: // FofDefinedAtomicFormula
-      case 199: // CnfFormula
-      case 200: // Disjunction
-      case 201: // Literal
+      case 74: // ThfFormula
+      case 75: // ThfLogicFormula
+      case 76: // ThfBinaryFormula
+      case 82: // ThfUnitFormula
+      case 83: // ThfPreunitFormula
+      case 84: // ThfUnitaryFormula
+      case 88: // ThfUnaryFormula
+      case 91: // ThfAtomicFormula
+      case 92: // ThfPlainAtomic
+      case 101: // ThfLetDefns
+      case 104: // ThfUnitaryTerm
+      case 119: // TffFormula
+      case 120: // TffLogicFormula
+      case 126: // TffUnitFormula
+      case 127: // TffPreunitFormula
+      case 128: // TffUnitaryFormula
+      case 134: // TffUnaryFormula
+      case 147: // TfxLetDefns
+      case 149: // TfxLetLhs
+      case 151: // TffTerm
+      case 152: // TffUnitaryTerm
+      case 172: // FofLogicFormula
+      case 178: // FofUnaryFormula
+      case 180: // FofUnitFormula
+      case 181: // FofUnitaryFormula
+      case 184: // FofAtomicFormula
+      case 186: // FofDefinedAtomicFormula
+      case 201: // CnfFormula
+      case 202: // Disjunction
+      case 203: // Literal
         value.move< Logic::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 151: // TfxTuple
-      case 197: // FofFormulaTuple
+      case 105: // ThfTuple
+      case 153: // TfxTuple
+      case 199: // FofFormulaTuple
         value.move< LogicTuple::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 148: // TfxLetDefnList
-      case 152: // TffArguments
-      case 159: // TffTypeArguments
-      case 193: // FofArguments
-      case 198: // FofFormulaTupleList
+      case 103: // ThfLetDefnList
+      case 106: // ThfFormulaList
+      case 108: // ThfArguments
+      case 150: // TfxLetDefnList
+      case 154: // TffArguments
+      case 161: // TffTypeArguments
+      case 195: // FofArguments
+      case 200: // FofFormulaTupleList
         value.move< Logics::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 129: // TffVariableList
-      case 181: // FofVariableList
-      case 226: // NameList
-      case 232: // GeneralTerms
+      case 86: // ThfVariableList
+      case 131: // TffVariableList
+      case 183: // FofVariableList
+      case 228: // NameList
+      case 234: // GeneralTerms
         value.move< Nodes::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 128: // TffQuantifiedFormula
-      case 180: // FofQuantifiedFormula
+      case 85: // ThfQuantifiedFormula
+      case 130: // TffQuantifiedFormula
+      case 182: // FofQuantifiedFormula
         value.move< QuantifiedLogic::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 207: // FofQuantifier
+      case 204: // ThfQuantifier
+      case 205: // Th1Quantifier
+      case 206: // Th0Quantifier
+      case 209: // FofQuantifier
         value.move< QuantifiedQuantifier_t > (YY_MOVE (s.value));
         break;
 
-      case 155: // Tf1QuantifiedType
+      case 157: // Tf1QuantifiedType
         value.move< QuantifiedType::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 244: // RationalLiteral
+      case 246: // RationalLiteral
         value.move< RationalLiteral::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 243: // RealLiteral
+      case 245: // RealLiteral
         value.move< RealLiteral::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 165: // TfxSequent
-      case 196: // FofSequent
+      case 118: // ThfSequent
+      case 167: // TfxSequent
+      case 198: // FofSequent
         value.move< SequentLogic::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 59: // Specification
+      case 62: // Specification
         value.move< Specification::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 237: // AtomicWord
-      case 238: // AtomicDefinedWord
-      case 239: // AtomicSystemWord
-      case 246: // DistinctObjectLiteral
-      case 247: // LowerWordLiteral
-      case 248: // SingleQuotedLiteral
-      case 249: // DollarWordLiteral
-      case 250: // DollarDollarWordLiteral
+      case 239: // AtomicWord
+      case 240: // AtomicDefinedWord
+      case 241: // AtomicSystemWord
+      case 248: // DistinctObjectLiteral
+      case 249: // LowerWordLiteral
+      case 250: // SingleQuotedLiteral
+      case 251: // DollarWordLiteral
+      case 252: // DollarDollarWordLiteral
         value.move< StringLiteral::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 164: // TffSubtype
+      case 117: // ThfSubtype
+      case 166: // TffSubtype
         value.move< SubType::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 135: // TffAtomicFormula
-      case 137: // TffDefinedAtomic
-      case 138: // TffDefinedPlain
-      case 183: // FofPlainAtomicFormula
-      case 185: // FofDefinedPlainFormula
-      case 187: // FofSystemAtomicFormula
-      case 194: // FofTerm
+      case 93: // ThfDefinedAtomic
+      case 137: // TffAtomicFormula
+      case 139: // TffDefinedAtomic
+      case 140: // TffDefinedPlain
+      case 185: // FofPlainAtomicFormula
+      case 187: // FofDefinedPlainFormula
+      case 189: // FofSystemAtomicFormula
+      case 196: // FofTerm
         value.move< Term::Ptr > (YY_MOVE (s.value));
         break;
 
@@ -2863,94 +3136,105 @@ namespace libtptp {
       case 9: // "fot"
       case 10: // "ite"
       case 11: // "let"
-      case 12: // "!>"
-      case 13: // "@"
-      case 14: // "&"
-      case 15: // "$"
-      case 16: // ":"
-      case 17: // ","
-      case 18: // "."
-      case 19: // "+"
-      case 20: // "-"
-      case 21: // "="
-      case 22: // "!="
-      case 23: // "("
-      case 24: // ")"
-      case 25: // "["
-      case 26: // "]"
-      case 27: // "{"
-      case 28: // "}"
-      case 29: // "|"
-      case 30: // "*"
-      case 31: // ">"
-      case 32: // "<"
-      case 33: // "!"
-      case 34: // "~"
-      case 35: // "?"
-      case 36: // "^"
-      case 37: // "!!"
-      case 38: // "??"
-      case 39: // "@@"
-      case 40: // "<=>"
-      case 41: // "=>"
-      case 42: // "<="
-      case 43: // "<~>"
-      case 44: // "~|"
-      case 45: // "~&"
-      case 46: // ":="
-      case 47: // "-->"
-      case 48: // "<<"
-      case 49: // "include"
+      case 12: // "@"
+      case 13: // "&"
+      case 14: // "$"
+      case 15: // ":"
+      case 16: // ","
+      case 17: // "."
+      case 18: // "+"
+      case 19: // "="
+      case 20: // "!="
+      case 21: // "("
+      case 22: // ")"
+      case 23: // "["
+      case 24: // "]"
+      case 25: // "{"
+      case 26: // "}"
+      case 27: // "|"
+      case 28: // "*"
+      case 29: // ">"
+      case 30: // "!"
+      case 31: // "~"
+      case 32: // "?"
+      case 33: // "@-"
+      case 34: // "@+"
+      case 35: // "^"
+      case 36: // "!!"
+      case 37: // "??"
+      case 38: // "@@+"
+      case 39: // "@@-"
+      case 40: // "@="
+      case 41: // "!>"
+      case 42: // "?*"
+      case 43: // "<=>"
+      case 44: // "=>"
+      case 45: // "<="
+      case 46: // "<~>"
+      case 47: // "~|"
+      case 48: // "~&"
+      case 49: // ":="
+      case 50: // "-->"
+      case 51: // "<<"
+      case 52: // "include"
         value.move< Token::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 162: // TfxTupleType
+      case 164: // TfxTupleType
         value.move< TupleType::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 143: // TfxLetTypes
-      case 154: // TffTopLevelType
-      case 156: // TffMonotype
-      case 157: // TffUnitaryType
+      case 99: // ThfLetTypes
+      case 110: // ThfTopLevelType
+      case 145: // TfxLetTypes
+      case 156: // TffTopLevelType
+      case 158: // TffMonotype
+      case 159: // TffUnitaryType
         value.move< Type::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 153: // TffAtomTyping
+      case 109: // ThfAtomTyping
+      case 155: // TffAtomTyping
         value.move< TypedAtom::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 144: // TffAtomTypingList
-      case 163: // TffTypeList
+      case 100: // ThfAtomTypingList
+      case 146: // TffAtomTypingList
+      case 165: // TffTypeList
         value.move< Types::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 210: // UnaryConnective
+      case 207: // ThfUnaryConnective
+      case 208: // Th1UnaryConnective
+      case 212: // UnaryConnective
         value.move< UnaryConnective_t > (YY_MOVE (s.value));
         break;
 
-      case 133: // TffPrefixUnary
+      case 89: // ThfPrefixUnary
+      case 135: // TffPrefixUnary
         value.move< UnaryLogic::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 240: // Number
+      case 242: // Number
         value.move< ValueLiteral::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 127: // TfxUnitaryFormula
-      case 130: // TffVariable
-      case 131: // TffTypedVariable
-      case 245: // Variable
+      case 87: // ThfTypedVariable
+      case 129: // TfxUnitaryFormula
+      case 132: // TffVariable
+      case 133: // TffTypedVariable
+      case 247: // Variable
         value.move< VariableTerm::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 50: // "integer"
-      case 51: // "real"
-      case 52: // "rational"
-      case 53: // "double_quoted"
-      case 54: // "lower_word"
-      case 55: // "upper_word"
-      case 56: // "identifier"
-      case 57: // "single_quoted"
+      case 53: // "integer"
+      case 54: // "real"
+      case 55: // "rational"
+      case 56: // "double_quoted"
+      case 57: // "lower_word"
+      case 58: // "upper_word"
+      case 59: // "identifier"
+      case 60: // "single_quoted"
         value.move< std::string > (YY_MOVE (s.value));
         break;
 
@@ -3014,7 +3298,8 @@ namespace libtptp {
      275,   276,   277,   278,   279,   280,   281,   282,   283,   284,
      285,   286,   287,   288,   289,   290,   291,   292,   293,   294,
      295,   296,   297,   298,   299,   300,   301,   302,   303,   304,
-     305,   306,   307,   308,   309,   310,   311,   312
+     305,   306,   307,   308,   309,   310,   311,   312,   313,   314,
+     315
     };
     return static_cast<token_type> (yytoken_number_[type]);
   }
@@ -3092,13 +3377,6 @@ namespace libtptp {
 
   inline
   Parser::symbol_type
-  Parser::make_EXCLAMATIONGREATER (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l)
-  {
-    return symbol_type (token::EXCLAMATIONGREATER, YY_MOVE (v), YY_MOVE (l));
-  }
-
-  inline
-  Parser::symbol_type
   Parser::make_AT (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l)
   {
     return symbol_type (token::AT, YY_MOVE (v), YY_MOVE (l));
@@ -3144,13 +3422,6 @@ namespace libtptp {
   Parser::make_PLUS (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l)
   {
     return symbol_type (token::PLUS, YY_MOVE (v), YY_MOVE (l));
-  }
-
-  inline
-  Parser::symbol_type
-  Parser::make_MINUS (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l)
-  {
-    return symbol_type (token::MINUS, YY_MOVE (v), YY_MOVE (l));
   }
 
   inline
@@ -3232,13 +3503,6 @@ namespace libtptp {
 
   inline
   Parser::symbol_type
-  Parser::make_LESS (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l)
-  {
-    return symbol_type (token::LESS, YY_MOVE (v), YY_MOVE (l));
-  }
-
-  inline
-  Parser::symbol_type
   Parser::make_EXCLAMATION (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l)
   {
     return symbol_type (token::EXCLAMATION, YY_MOVE (v), YY_MOVE (l));
@@ -3256,6 +3520,20 @@ namespace libtptp {
   Parser::make_QUESTIONMARK (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l)
   {
     return symbol_type (token::QUESTIONMARK, YY_MOVE (v), YY_MOVE (l));
+  }
+
+  inline
+  Parser::symbol_type
+  Parser::make_ATMINUS (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l)
+  {
+    return symbol_type (token::ATMINUS, YY_MOVE (v), YY_MOVE (l));
+  }
+
+  inline
+  Parser::symbol_type
+  Parser::make_ATPLUS (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l)
+  {
+    return symbol_type (token::ATPLUS, YY_MOVE (v), YY_MOVE (l));
   }
 
   inline
@@ -3281,9 +3559,37 @@ namespace libtptp {
 
   inline
   Parser::symbol_type
-  Parser::make_DOUBLEAT (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l)
+  Parser::make_DOUBLEATPLUS (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l)
   {
-    return symbol_type (token::DOUBLEAT, YY_MOVE (v), YY_MOVE (l));
+    return symbol_type (token::DOUBLEATPLUS, YY_MOVE (v), YY_MOVE (l));
+  }
+
+  inline
+  Parser::symbol_type
+  Parser::make_DOUBLEATMINUS (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l)
+  {
+    return symbol_type (token::DOUBLEATMINUS, YY_MOVE (v), YY_MOVE (l));
+  }
+
+  inline
+  Parser::symbol_type
+  Parser::make_ATEQUAL (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l)
+  {
+    return symbol_type (token::ATEQUAL, YY_MOVE (v), YY_MOVE (l));
+  }
+
+  inline
+  Parser::symbol_type
+  Parser::make_EXCLAMATIONGREATER (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l)
+  {
+    return symbol_type (token::EXCLAMATIONGREATER, YY_MOVE (v), YY_MOVE (l));
+  }
+
+  inline
+  Parser::symbol_type
+  Parser::make_QUESTIONMARKSTAR (YY_COPY (Token::Ptr) v, YY_COPY (location_type) l)
+  {
+    return symbol_type (token::QUESTIONMARKSTAR, YY_MOVE (v), YY_MOVE (l));
   }
 
   inline
@@ -3415,7 +3721,7 @@ namespace libtptp {
 
 #line 47 "../../obj/src/GrammarParser.yy" // lalr1.cc:403
 } // libtptp
-#line 3419 "GrammarParser.tab.h" // lalr1.cc:403
+#line 3725 "GrammarParser.tab.h" // lalr1.cc:403
 
 
 
