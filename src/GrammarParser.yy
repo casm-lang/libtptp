@@ -245,6 +245,10 @@ END       0 "end of file"
 %type <UnaryConnective_t> ThfUnaryConnective Th1UnaryConnective
 %type <QuantifiedQuantifier_t> Th0Quantifier Th1Quantifier ThfQuantifier
 
+//TCF
+%type <Logic::Ptr> TcfFormula TcfLogicFormula
+%type <QuantifiedLogic::Ptr> TcfQuantifiedFormula
+
 %start Specification
 
 // precedence information shall be located here
@@ -1655,24 +1659,31 @@ TfxSequent
 TcfFormula
 : TcfLogicFormula
   {
+	$$ = $1;
   }
 | TffAtomTyping
   {
+	$$ = $1;
   }
 ;
 
 TcfLogicFormula
 : TcfQuantifiedFormula
   {
+	$$ = $1;
   }
 | CnfFormula
   {
+	$$ = $1;
   }
 ;
 
 TcfQuantifiedFormula
 : EXCLAMATION LSQPAREN TffVariableList RSQPAREN COLON CnfFormula
   {
+	auto op = std::make_pair($1, QuantifiedLogic::Quantifier::UNIVERSAL);
+	auto list = libtptp::make< ListLiteral >(@$, $2, $3, $4);
+	$$ = libtptp::make< QuantifiedLogic >(@$, op, list, $5, $6);
   }
 ;
 
