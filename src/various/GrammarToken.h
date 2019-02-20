@@ -62,44 +62,47 @@ namespace libtptp
             /*  7 */ FOT,
             /*  8 */ ITE,
             /*  9 */ LET,
-            /* 10 */ EXCLAMATIONGREATER,
-            /* 11 */ AT,
-            /* 12 */ AND,
-            /* 13 */ DOLLAR,
-            /* 14 */ COLON,
-            /* 15 */ COMMA,
-            /* 16 */ DOT,
-            /* 17 */ PLUS,
-            /* 18 */ MINUS,
-            /* 19 */ EQUAL,
-            /* 20 */ INFIXINEQUALITY,
-            /* 21 */ LPAREN,
-            /* 22 */ RPAREN,
-            /* 23 */ LSQPAREN,
-            /* 24 */ RSQPAREN,
-            /* 25 */ LCURPAREN,
-            /* 26 */ RCURPAREN,
-            /* 27 */ VLINE,
-            /* 28 */ STAR,
-            /* 29 */ GREATER,
-            /* 30 */ LESS,
-            /* 31 */ EXCLAMATION,
-            /* 32 */ TILDE,
-            /* 33 */ QUESTIONMARK,
-            /* 34 */ CARET,
-            /* 35 */ DOUBLEEXCLAMATION,
-            /* 36 */ DOUBLEQUESTIONMARK,
-            /* 37 */ DOUBLEAT,
-            /* 38 */ EQUALITY,
-            /* 39 */ IMPLICATION,
-            /* 40 */ RIMPLICATION,
-            /* 41 */ INEQUALITY,
-            /* 42 */ NOR,
-            /* 43 */ NAND,
-            /* 44 */ ASSIGNMENT,
-            /* 45 */ GENTZENARROW,
-            /* 46 */ SUBTYPESIGN,
-            /* 47 */ INCLUDE,
+            /* 10 */ AT,
+            /* 11 */ AND,
+            /* 12 */ DOLLAR,
+            /* 13 */ COLON,
+            /* 14 */ COMMA,
+            /* 15 */ DOT,
+            /* 16 */ PLUS,
+            /* 17 */ EQUAL,
+            /* 18 */ INFIXINEQUALITY,
+            /* 19 */ LPAREN,
+            /* 20 */ RPAREN,
+            /* 21 */ LSQPAREN,
+            /* 22 */ RSQPAREN,
+            /* 23 */ LCURPAREN,
+            /* 24 */ RCURPAREN,
+            /* 25 */ VLINE,
+            /* 26 */ STAR,
+            /* 27 */ GREATER,
+            /* 28 */ EXCLAMATION,
+            /* 29 */ TILDE,
+            /* 30 */ QUESTIONMARK,
+            /* 31 */ ATMINUS,
+            /* 32 */ ATPLUS,
+            /* 33 */ CARET,
+            /* 34 */ DOUBLEEXCLAMATION,
+            /* 35 */ DOUBLEQUESTIONMARK,
+            /* 36 */ DOUBLEATPLUS,
+            /* 37 */ DOUBLEATMINUS,
+            /* 38 */ ATEQUAL,
+            /* 39 */ EXCLAMATIONGREATER,
+            /* 40 */ QUESTIONMARKSTAR,
+            /* 41 */ EQUALITY,
+            /* 42 */ IMPLICATION,
+            /* 43 */ RIMPLICATION,
+            /* 44 */ INEQUALITY,
+            /* 45 */ NOR,
+            /* 46 */ NAND,
+            /* 47 */ ASSIGNMENT,
+            /* 48 */ GENTZENARROW,
+            /* 49 */ SUBTYPESIGN,
+            /* 50 */ INCLUDE,
         };
         
         static std::string tokenAsString( const Token token )
@@ -146,155 +149,167 @@ namespace libtptp
                 {
                     return "let";
                 }
-                case /* 10 */ Token::EXCLAMATIONGREATER:
-                {
-                    return "!>";
-                }
-                case /* 11 */ Token::AT:
+                case /* 10 */ Token::AT:
                 {
                     return "@";
                 }
-                case /* 12 */ Token::AND:
+                case /* 11 */ Token::AND:
                 {
                     return "&";
                 }
-                case /* 13 */ Token::DOLLAR:
+                case /* 12 */ Token::DOLLAR:
                 {
                     return "$";
                 }
-                case /* 14 */ Token::COLON:
+                case /* 13 */ Token::COLON:
                 {
                     return ":";
                 }
-                case /* 15 */ Token::COMMA:
+                case /* 14 */ Token::COMMA:
                 {
                     return ",";
                 }
-                case /* 16 */ Token::DOT:
+                case /* 15 */ Token::DOT:
                 {
                     return ".";
                 }
-                case /* 17 */ Token::PLUS:
+                case /* 16 */ Token::PLUS:
                 {
                     return "+";
                 }
-                case /* 18 */ Token::MINUS:
-                {
-                    return "-";
-                }
-                case /* 19 */ Token::EQUAL:
+                case /* 17 */ Token::EQUAL:
                 {
                     return "=";
                 }
-                case /* 20 */ Token::INFIXINEQUALITY:
+                case /* 18 */ Token::INFIXINEQUALITY:
                 {
                     return "!=";
                 }
-                case /* 21 */ Token::LPAREN:
+                case /* 19 */ Token::LPAREN:
                 {
                     return "(";
                 }
-                case /* 22 */ Token::RPAREN:
+                case /* 20 */ Token::RPAREN:
                 {
                     return ")";
                 }
-                case /* 23 */ Token::LSQPAREN:
+                case /* 21 */ Token::LSQPAREN:
                 {
                     return "[";
                 }
-                case /* 24 */ Token::RSQPAREN:
+                case /* 22 */ Token::RSQPAREN:
                 {
                     return "]";
                 }
-                case /* 25 */ Token::LCURPAREN:
+                case /* 23 */ Token::LCURPAREN:
                 {
                     return "{";
                 }
-                case /* 26 */ Token::RCURPAREN:
+                case /* 24 */ Token::RCURPAREN:
                 {
                     return "}";
                 }
-                case /* 27 */ Token::VLINE:
+                case /* 25 */ Token::VLINE:
                 {
                     return "|";
                 }
-                case /* 28 */ Token::STAR:
+                case /* 26 */ Token::STAR:
                 {
                     return "*";
                 }
-                case /* 29 */ Token::GREATER:
+                case /* 27 */ Token::GREATER:
                 {
                     return ">";
                 }
-                case /* 30 */ Token::LESS:
-                {
-                    return "<";
-                }
-                case /* 31 */ Token::EXCLAMATION:
+                case /* 28 */ Token::EXCLAMATION:
                 {
                     return "!";
                 }
-                case /* 32 */ Token::TILDE:
+                case /* 29 */ Token::TILDE:
                 {
                     return "~";
                 }
-                case /* 33 */ Token::QUESTIONMARK:
+                case /* 30 */ Token::QUESTIONMARK:
                 {
                     return "?";
                 }
-                case /* 34 */ Token::CARET:
+                case /* 31 */ Token::ATMINUS:
+                {
+                    return "@-";
+                }
+                case /* 32 */ Token::ATPLUS:
+                {
+                    return "@+";
+                }
+                case /* 33 */ Token::CARET:
                 {
                     return "^";
                 }
-                case /* 35 */ Token::DOUBLEEXCLAMATION:
+                case /* 34 */ Token::DOUBLEEXCLAMATION:
                 {
                     return "!!";
                 }
-                case /* 36 */ Token::DOUBLEQUESTIONMARK:
+                case /* 35 */ Token::DOUBLEQUESTIONMARK:
                 {
                     return "??";
                 }
-                case /* 37 */ Token::DOUBLEAT:
+                case /* 36 */ Token::DOUBLEATPLUS:
                 {
-                    return "@@";
+                    return "@@+";
                 }
-                case /* 38 */ Token::EQUALITY:
+                case /* 37 */ Token::DOUBLEATMINUS:
+                {
+                    return "@@-";
+                }
+                case /* 38 */ Token::ATEQUAL:
+                {
+                    return "@=";
+                }
+                case /* 39 */ Token::EXCLAMATIONGREATER:
+                {
+                    return "!>";
+                }
+                case /* 40 */ Token::QUESTIONMARKSTAR:
+                {
+                    return "?*";
+                }
+                case /* 41 */ Token::EQUALITY:
                 {
                     return "<=>";
                 }
-                case /* 39 */ Token::IMPLICATION:
+                case /* 42 */ Token::IMPLICATION:
                 {
                     return "=>";
                 }
-                case /* 40 */ Token::RIMPLICATION:
+                case /* 43 */ Token::RIMPLICATION:
                 {
                     return "<=";
                 }
-                case /* 41 */ Token::INEQUALITY:
+                case /* 44 */ Token::INEQUALITY:
                 {
                     return "<~>";
                 }
-                case /* 42 */ Token::NOR:
+                case /* 45 */ Token::NOR:
                 {
                     return "~|";
                 }
-                case /* 43 */ Token::NAND:
+                case /* 46 */ Token::NAND:
                 {
                     return "~&";
                 }
-                case /* 44 */ Token::ASSIGNMENT:
+                case /* 47 */ Token::ASSIGNMENT:
                 {
                     return ":=";
                 }
-                case /* 45 */ Token::GENTZENARROW:
+                case /* 48 */ Token::GENTZENARROW:
                 {
                     return "-->";
                 }
-                case /* 46 */ Token::SUBTYPESIGN:
+                case /* 49 */ Token::SUBTYPESIGN:
                 {
                     return "<<";
                 }
-                case /* 47 */ Token::INCLUDE:
+                case /* 50 */ Token::INCLUDE:
                 {
                     return "include";
                 }
