@@ -44,6 +44,7 @@
 
 #include <libtptp/Definition>
 #include <libtptp/Node>
+#include <libtptp/Type>
 
 /**
    @brief    TODO

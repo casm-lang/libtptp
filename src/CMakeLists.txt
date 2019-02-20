@@ -60,6 +60,7 @@ add_library( ${PROJECT}-cpp OBJECT
   Specification.cpp
   Term.cpp
   Token.cpp
+  Type.cpp
   Trace.cpp
   Visitor.cpp
 
@@ -111,6 +112,7 @@ ecm_generate_headers( ${PROJECT}_HEADERS_CPP
     Term
     Token
     Trace
+    Type
     Visitor
     libtptp
   PREFIX

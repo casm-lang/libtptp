@@ -183,6 +183,10 @@ std::string Node::description( void ) const
         {
             return "conditional term";
         }
+        case ID::DEFINITION_TERM:
+        {
+            return "definition term";
+        }
 
         // atoms
         case ID::FUNCTOR_ATOM:
@@ -196,6 +200,10 @@ std::string Node::description( void ) const
         case ID::DEFINED_ATOM:
         {
             return "defined atom";
+        }
+        case ID::DEFINITION_ATOM:
+        {
+            return "definition atom";
         }
 
         // token
@@ -250,6 +258,30 @@ std::string Node::description( void ) const
         case ID::ANNOTATION:
         {
             return "annotation";
+        }
+        case ID::ATOM_TYPE:
+        {
+            return "atom type";
+        }
+        case ID::SUB_TYPE:
+        {
+            return "sub type";
+        }
+        case ID::QUANTIFIED_TYPE:
+        {
+            return "quantified type";
+        }
+        case ID::TUPLE_TYPE:
+        {
+            return "tuple type";
+        }
+        case ID::TYPED_ATOM:
+        {
+            return "typed atom";
+        }
+        case ID::BINARY_TYPE:
+        {
+            return "binary type";
         }
     }
 

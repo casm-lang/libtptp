@@ -283,9 +283,9 @@ void QuantifiedLogic::accept( Visitor& visitor )
 }
 
 InfixLogic::InfixLogic(
-    const std::shared_ptr< Term >& lhs,
+    const Logic::Ptr& lhs,
     const std::pair< const Token::Ptr&, const Connective > connective,
-    const std::shared_ptr< Term >& rhs )
+    const Logic::Ptr& rhs )
 : Logic( Node::ID::INFIX_LOGIC )
 , m_lhs( lhs )
 , m_connectiveToken( connective.first )
@@ -298,7 +298,7 @@ void InfixLogic::accept( Visitor& visitor )
 {
 }
 
-const std::shared_ptr< Term >& InfixLogic::lhs( void ) const
+const Logic::Ptr& InfixLogic::lhs( void ) const
 {
     return m_lhs;
 }
@@ -306,7 +306,7 @@ const Token::Ptr& InfixLogic::connectiveToken( void ) const
 {
     return m_connectiveToken;
 }
-const std::shared_ptr< Term >& InfixLogic::rhs( void ) const
+const Logic::Ptr& InfixLogic::rhs( void ) const
 {
     return m_rhs;
 }

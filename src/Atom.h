@@ -63,6 +63,7 @@ namespace libtptp
             PLAIN,
             DEFINED,
             SYSTEM,
+            TYPE,
         };
         using Ptr = std::shared_ptr< Atom >;
 
@@ -95,20 +96,20 @@ namespace libtptp
         FunctorAtom(
             const Identifier::Ptr& name,
             const Token::Ptr& leftParen,
-            const Terms::Ptr& arguments,
+            const Logics::Ptr& arguments,
             const Token::Ptr& rightParen,
             const Kind kind );
 
         const Identifier::Ptr& name( void ) const;
         const Token::Ptr& leftParen( void ) const;
-        const Terms::Ptr& arguments( void ) const;
+        const Logics::Ptr& arguments( void ) const;
         const Token::Ptr& rightParen( void ) const;
         const Kind kind( void ) const;
 
       private:
         const Identifier::Ptr m_name;
         const Token::Ptr& m_leftParen;
-        const Terms::Ptr m_arguments;
+        const Logics::Ptr m_arguments;
         const Token::Ptr& m_rightParen;
         const Kind m_kind;
 
@@ -150,6 +151,28 @@ namespace libtptp
     };
 
     using DefinedAtoms = NodeList< DefinedAtom >;
+
+    class DefinitionAtom final : public Atom
+    {
+      public:
+        using Ptr = std::shared_ptr< DefinitionAtom >;
+
+        explicit DefinitionAtom(
+            const Logic::Ptr& lhs, const Token::Ptr& assignment, const Logic::Ptr& rhs );
+
+        void accept( Visitor& visitor ) override final;
+
+        const Logic::Ptr& lhs( void ) const;
+        const Token::Ptr& assignment( void ) const;
+        const Logic::Ptr& rhs( void ) const;
+
+      private:
+        const Logic::Ptr m_lhs;
+        const Token::Ptr m_assignment;
+        const Logic::Ptr m_rhs;
+    };
+
+    using DefinitionAtoms = NodeList< DefinitionAtom >;
 
 }
 
