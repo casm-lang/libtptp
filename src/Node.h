@@ -83,11 +83,13 @@ namespace libtptp
             FUNCTION_TERM,
             VARIABLE_TERM,
             CONDITIONAL_TERM,
+            DEFINITION_TERM,
 
             // atoms
             FUNCTOR_ATOM,
             CONSTANT_ATOM,
             DEFINED_ATOM,
+            DEFINITION_ATOM,
 
             // other
             TOKEN,
@@ -107,6 +109,14 @@ namespace libtptp
             GENERAL_AGGREGATOR,
             GENERAL_FUNCTION,
             ANNOTATION,
+
+            // types
+            ATOM_TYPE,
+            SUB_TYPE,
+            QUANTIFIED_TYPE,
+            TUPLE_TYPE,
+            TYPED_ATOM,
+            BINARY_TYPE,
         };
 
       public:

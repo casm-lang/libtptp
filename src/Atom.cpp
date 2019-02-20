@@ -59,7 +59,7 @@ Atom::Atom( const ID id )
 FunctorAtom::FunctorAtom(
     const Identifier::Ptr& name,
     const Token::Ptr& leftParen,
-    const Terms::Ptr& arguments,
+    const Logics::Ptr& arguments,
     const Token::Ptr& rightParen,
     const Kind kind )
 : Atom( Node::ID::FUNCTOR_ATOM )
@@ -81,7 +81,7 @@ const Token::Ptr& FunctorAtom::leftParen( void ) const
     return m_leftParen;
 }
 
-const Terms::Ptr& FunctorAtom::arguments( void ) const
+const Logics::Ptr& FunctorAtom::arguments( void ) const
 {
     return m_arguments;
 }
@@ -136,6 +136,35 @@ const Literal::Ptr& DefinedAtom::literal( void ) const
 {
     return m_literal;
 }
+
+DefinitionAtom::DefinitionAtom(
+    const Logic::Ptr& lhs, const Token::Ptr& assignment, const Logic::Ptr& rhs )
+: Atom( Node::ID::DEFINITION_ATOM )
+, m_lhs( lhs )
+, m_assignment( assignment )
+, m_rhs( rhs )
+{
+}
+
+void DefinitionAtom::accept( Visitor& visitor )
+{
+}
+
+const Logic::Ptr& DefinitionAtom::lhs( void ) const
+{
+    return m_lhs;
+}
+
+const Token::Ptr& DefinitionAtom::assignment( void ) const
+{
+    return m_assignment;
+}
+
+const Logic::Ptr& DefinitionAtom::rhs( void ) const
+{
+    return m_rhs;
+}
+
 //
 //  Local variables:
 //  mode: c++

@@ -162,6 +162,7 @@ void DumpSourceVisitor::visit( VariableTerm& node )
 }
 void DumpSourceVisitor::visit( ConditionalTerm& node )
 {
+    /*
     m_stream << "$ite_t( ";
     node.condition()->accept( *this );
     m_stream << ", ";
@@ -169,6 +170,7 @@ void DumpSourceVisitor::visit( ConditionalTerm& node )
     m_stream << ", ";
     node.right()->accept( *this );
     m_stream << " )";
+    */
 }
 
 void DumpSourceVisitor::visit( FunctorAtom& node )

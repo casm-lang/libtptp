@@ -70,6 +70,7 @@
 	#include <libtptp/General>
 	#include <libtptp/Term>
 	#include <libtptp/Atom>
+	#include <libtptp/Type>
 
 
     #include <libtptp/Specification>
@@ -130,7 +131,7 @@ END       0 "end of file"
 
 %type <Specification::Ptr> Specification
 
-%type <Identifier::Ptr> FileName Name Functor Constant DefinedFunctor DefinedConstant SystemFunctor SystemConstant
+%type <Identifier::Ptr> FileName Name Functor Constant DefinedFunctor DefinedConstant SystemFunctor SystemConstant TypeConstant TypeFunctor DefinedType Atom UntypedAtom
 //%type <Identifiers::Ptr> FormulaSelection
 %type <Nodes::Ptr> NameList
 %type <ListLiteral::Ptr> FormulaSelection
@@ -152,18 +153,17 @@ END       0 "end of file"
 %type <InfixLogic::Ptr> FofInfixUnary FofDefinedInfixFormula
 %type <SequentLogic::Ptr> FofSequent
 %type <Logic::Ptr> FofLogicFormula FofUnitFormula FofUnitaryFormula FofAtomicFormula FofDefinedAtomicFormula CnfFormula Literal Disjunction
-%type <Logics::Ptr> FofFormulaTupleList
+%type <Logics::Ptr> FofFormulaTupleList FofArguments
 %type <LogicTuple::Ptr> FofFormulaTuple
 
 //TODO: @moosbruggerj maybe change signature
 %type <Term::Ptr> FofTerm FofPlainAtomicFormula FofDefinedPlainFormula FofSystemAtomicFormula
-%type <Terms::Ptr> FofArguments
 
 %type <Atom::Ptr> FofFunctionTerm FofSystemTerm FofDefinedPlainTerm FofDefinedAtomicTerm FofDefinedTerm FofPlainTerm
 %type <DefinedAtom::Ptr> DefinedTerm
 %type <VariableTerm::Ptr> Variable
 
-%type <FirstOrderFormula::Ptr> FofFormula
+%type <FirstOrderFormula::Ptr> FofFormula TpiFormula
 
 %type <StringLiteral::Ptr> SingleQuotedLiteral LowerWordLiteral DistinctObjectLiteral AtomicWord DollarWordLiteral DollarDollarWordLiteral AtomicDefinedWord AtomicSystemWord 
 
@@ -183,6 +183,38 @@ END       0 "end of file"
 %type <BinaryConnective_t> AssocConnective NonassocConnective
 %type <QuantifiedQuantifier_t> FofQuantifier
 %type <InfixConnective_t> InfixInequality DefinedInfixPred InfixEquality
+
+
+
+//Tff
+%type <Logic::Ptr> TffFormula TffLogicFormula TffUnitFormula TffPreunitFormula TffUnitaryFormula TffUnaryFormula TfxLetDefns TfxLetLhs TffTerm TffUnitaryTerm
+%type <BinaryLogic::Ptr> TffBinaryFormula TffBinaryNonassoc TffBinaryAssoc TffOrFormula TffAndFormula
+%type <VariableTerm::Ptr> TfxUnitaryFormula TffVariable TffTypedVariable
+%type <QuantifiedLogic::Ptr> TffQuantifiedFormula
+%type <UnaryLogic::Ptr> TffPrefixUnary
+%type <InfixLogic::Ptr> TffInfixUnary TffDefinedInfix
+%type <LogicTuple::Ptr> TfxTuple
+%type <SequentLogic::Ptr> TfxSequent
+%type <Logics::Ptr> TfxLetDefnList TffArguments TffTypeArguments
+
+%type <Term::Ptr> TffAtomicFormula TffDefinedAtomic TffDefinedPlain
+%type <ConditionalTerm::Ptr> TfxConditional
+%type <DefinitionTerm::Ptr> TfxLet
+
+%type <Atom::Ptr> TffPlainAtomic TffSystemAtomic
+%type <DefinitionAtom::Ptr> TfxLetDefn
+
+%type <Type::Ptr> TfxLetTypes TffTopLevelType TffMonotype TffUnitaryType
+%type <TypedAtom::Ptr> TffAtomTyping
+%type <QuantifiedType::Ptr> Tf1QuantifiedType
+%type <AtomType::Ptr> TffAtomicType
+%type <BinaryType::Ptr> TffMappingType TffXprodType
+%type <TupleType::Ptr> TfxTupleType
+%type <SubType::Ptr> TffSubtype
+%type <Types::Ptr> TffAtomTypingList TffTypeList
+
+%type <Nodes::Ptr> TffVariableList
+
 %start Specification
 
 // precedence information shall be located here
@@ -396,7 +428,7 @@ Formula
 TpiFormula
 : FofFormula
   {
-	//$$ = $1;
+	$$ = $1;
   }
 ;
 
@@ -833,453 +865,616 @@ ThfSequent
 TffFormula
 : TffLogicFormula
   {
+	$$ = $1;
   }
 | TffAtomTyping
   {
+	$$ = $1;
   }
 | TffSubtype
   {
+	$$ = $1;
   }
 | TfxSequent
   {
+	$$ = $1;
   }
 ;
 
 TffLogicFormula
 : TffUnitaryFormula
   {
+	$$ = $1;
   }
 | TffUnaryFormula
   {
+	$$ = $1;
   }
 | TffBinaryFormula
   {
+	$$ = $1;
   }
 | TffDefinedInfix
   {
+	$$ = $1;
   }
 ;
 
 TffBinaryFormula
 : TffBinaryNonassoc
   {
+	$$ = $1;
   }
 | TffBinaryAssoc
   {
+	$$ = $1;
   }
 ;
 
 TffBinaryNonassoc
 : TffUnitFormula NonassocConnective TffUnitFormula
   {
+	$$ = libtptp::make< BinaryLogic >(@$, $1, $2, $3);
   }
 ;
 
 TffBinaryAssoc
 : TffOrFormula
   {
+	$$ = $1;
   }
 | TffAndFormula
   {
+	$$ = $1;
   }
 ;
 
 TffOrFormula
 : TffUnitFormula VLINE TffUnitFormula
   {
+	auto op = std::make_pair($2, BinaryLogic::Connective::DISJUNCTION);
+	$$ = libtptp::make< BinaryLogic >(@$, $1, op, $3);
   }
 | TffOrFormula VLINE TffUnitFormula
   {
+	auto op = std::make_pair($2, BinaryLogic::Connective::DISJUNCTION);
+	$$ = libtptp::make< BinaryLogic >(@$, $1, op, $3);
   }
 ;
 
 TffAndFormula
 : TffUnitFormula AND TffUnitFormula
   {
+	auto op = std::make_pair($2, BinaryLogic::Connective::CONJUNCTION);
+	$$ = libtptp::make< BinaryLogic >(@$, $1, op, $3);
   }
 | TffAndFormula AND TffUnitFormula
   {
+	auto op = std::make_pair($2, BinaryLogic::Connective::CONJUNCTION);
+	$$ = libtptp::make< BinaryLogic >(@$, $1, op, $3);
   }
 ;
 
 TffUnitFormula
 : TffUnitaryFormula
   {
+	$$ = $1;
   }
 | TffUnaryFormula
   {
+	$$ = $1;
   }
 | TffDefinedInfix
   {
+	$$ = $1;
   }
 ;
 
 TffPreunitFormula
 : TffUnitaryFormula
   {
+	$$ = $1;
   }
 | TffPrefixUnary
   {
+	$$ = $1;
   }
 ;
 
 TffUnitaryFormula
 : TffQuantifiedFormula
   {
+	$$ = $1;
   }
 | TffAtomicFormula
   {
+	$$ = $1;
   }
 | TfxUnitaryFormula
   {
+	$$ = $1;
   }
 | LPAREN TffLogicFormula RPAREN
   {
+	auto logic = $2;
+	logic->setLeftDelimiter($1);
+	logic->setRightDelimiter($3);
+	$$ = logic;
   }
 ;
 
 TfxUnitaryFormula
 : Variable
   {
+	$$ = $1;
   }
 ;
 
 TffQuantifiedFormula
 : FofQuantifier LSQPAREN TffVariableList RSQPAREN COLON TffUnitFormula
   {
+	auto list = libtptp::make< ListLiteral >(@3, $2, $3, $4);
+	$$ = libtptp::make< QuantifiedLogic >(@$, $1, list, $5, $6);
   }
 ;
 
 TffVariableList
 : TffVariable
   {
+	//TODO: @moosbruggerj use correct type
+	auto list = libtptp::make< Nodes >(@$);
+	list->add($1);
+	$$ = list;
   }
 | TffVariableList COMMA TffVariable
   {
+	//TODO: @moosbruggerj use comma token
+	auto list = $1;
+	list->add($3);
+	$$ = list;
   }
 ;
 
 TffVariable
 : TffTypedVariable
   {
+	$$ = $1;
   }
 | Variable
   {
+	$$ = $1;
   }
 ;
 
 TffTypedVariable
 : Variable COLON TffAtomicType
   {
+	auto variable = $1;
+	variable->setColon($2);
+	Type::Ptr type = $3; //cast before set type is called, which would make a temporary Type::Ptr object, which cannot be passed to std::experimental::optional
+	variable->setType(type);
+	$$ = variable;
   }
 ;
 
 TffUnaryFormula
 : TffPrefixUnary
   {
+	$$ = $1;
   }
 | TffInfixUnary
   {
+	$$ = $1;
   }
 ;
 
 TffPrefixUnary
 : UnaryConnective TffPreunitFormula
   {
+	$$ = libtptp::make< UnaryLogic >(@$, $1, $2);
   }
 ;
 
 TffInfixUnary
 : TffUnitaryTerm InfixInequality TffUnitaryTerm
   {
+	$$ = libtptp::make< InfixLogic >(@$, $1, $2, $3);
   }
 ;
 
 TffAtomicFormula
 : TffPlainAtomic
   {
+	$$ = $1;
   }
 | TffDefinedAtomic
   {
+	$$ = $1;
   }
 | TffSystemAtomic
   {
+	$$ = $1;
   }
 ;
 
 TffPlainAtomic
 : Constant
   {
+	$$ = libtptp::make< ConstantAtom >(@$, $1, Atom::Kind::PLAIN);
   }
 | Functor LPAREN TffArguments RPAREN
   {
+	$$ = libtptp::make< FunctorAtom >(@$, $1, $2, $3, $4, Atom::Kind::PLAIN);
   }
 ;
 
 TffDefinedAtomic
 : TffDefinedPlain
   {
+	$$ = $1;
   }
 ;
 
 TffDefinedPlain
 : DefinedConstant
   {
+	$$ = libtptp::make< ConstantAtom >(@$, $1, Atom::Kind::DEFINED);
   }
 | DefinedFunctor LPAREN TffArguments RPAREN
   {
+	$$ = libtptp::make< FunctorAtom >(@$, $1, $2, $3, $4, Atom::Kind::DEFINED);
   }
 | TfxConditional
   {
+	$$ = $1;
   }
 | TfxLet
   {
+	$$ = $1;
   }
 ;
 
 TffDefinedInfix
 : TffUnitaryTerm DefinedInfixPred TffUnitaryTerm
   {
+	$$ = libtptp::make< InfixLogic >(@$, $1, $2, $3);
   }
 ;
 
 TffSystemAtomic
 : SystemConstant
   {
+	$$ = libtptp::make< ConstantAtom >(@$, $1, Atom::Kind::SYSTEM);
   }
 | SystemFunctor LPAREN TffArguments RPAREN
   {
+	$$ = libtptp::make< FunctorAtom >(@$, $1, $2, $3, $4, Atom::Kind::SYSTEM);
   }
 ;
 
 TfxConditional
 : DOLLAR ITE LPAREN TffLogicFormula COMMA TffTerm COMMA TffTerm RPAREN
   {
+	$$ = libtptp::make< ConditionalTerm >(@$, $1, $2, $3, $4, $5, $6, $7, $8, $9);
   }
 ;
 
 TfxLet
 : DOLLAR LET LPAREN TfxLetTypes COMMA TfxLetDefns COMMA TffTerm RPAREN
   {
+	$$ = libtptp::make< DefinitionTerm >(@$, $1, $2, $3, $4, $5, $6, $7, $8, $9);
   }
 ;
 
 TfxLetTypes
 : TffAtomTyping
   {
+	$$ = $1;
   }
 | LSQPAREN TffAtomTypingList RSQPAREN
   {
+	$$ = libtptp::make< TupleType >(@$, $1, $2, $3);
   }
 ;
 
 TffAtomTypingList
 : TffAtomTyping
   {
+	auto list = libtptp::make< Types >(@$);
+	list->add($1);
+	$$ = list;
   }
 | TffAtomTypingList COMMA TffAtomTyping
   {
+	//TODO: @moosbruggerj use comma token
+	auto list = $1;
+	list->add($3);
+	$$ = list;
   }
 ;
 
 TfxLetDefns
 : TfxLetDefn
   {
+	$$ = $1;
   }
 | LSQPAREN TfxLetDefnList RSQPAREN
   {
+	$$ = libtptp::make< LogicTuple >(@$, $1, $2, $3);
   }
 ;
 
 TfxLetDefn
 : TfxLetLhs ASSIGNMENT TffTerm
   {
+	$$ = libtptp::make< DefinitionAtom >(@$, $1, $2, $3);
   }
 ;
 
 TfxLetLhs
 : TffPlainAtomic
   {
+	$$ = $1;
   }
 | TfxTuple
   {
+	$$ = $1;
   }
 ;
 
 TfxLetDefnList
 : TfxLetDefn
   {
+	auto list = libtptp::make< Logics >(@$);
+	list->add($1);
+	$$ = list;
   }
 | TfxLetDefnList COMMA TfxLetDefn
   {
+	//TODO: @moosbruggerj use comma token
+	auto list = $1;
+	list->add($3);
+	$$ = list;
   }
 ;
 
 TffTerm
 : TffLogicFormula
   {
+	$$ = $1;
   }
 | DefinedTerm
   {
+	$$ = $1;
   }
 | TfxTuple
   {
+	$$ = $1;
   }
 ;
 
 TffUnitaryTerm
 : TffAtomicFormula
   {
+	$$ = $1;
   }
 | DefinedTerm
   {
+	$$ = $1;
   }
 | TfxTuple
   {
+	$$ = $1;
   }
 | Variable
   {
+	$$ = $1;
   }
 | LPAREN TffLogicFormula RPAREN
   {
+	auto logic = $2;
+	logic->setLeftDelimiter($1);
+	logic->setRightDelimiter($3);
+	$$ = logic;
   }
 ;
 
 TfxTuple
 : LSQPAREN RSQPAREN
   {
+	$$ = libtptp::make< LogicTuple >(@$, $1, $2);
   }
 | LSQPAREN TffArguments RSQPAREN
   {
+	$$ = libtptp::make< LogicTuple >(@$, $1, $2, $3);
   }
 ;
 
 TffArguments
 : TffTerm
   {
+	auto list = libtptp::make< Logics >(@$);
+	list->add($1);
+	$$ = list;
   }
 | TffArguments COMMA TffTerm 
   {
+	//TODO: @moosbruggerj use comma token
+	auto list = $1;
+	list->add($3);
+	$$ = list;
   }
 ;
 
 TffAtomTyping
 : UntypedAtom COLON TffTopLevelType
   {
+	$$ = libtptp::make< TypedAtom >(@$, $1, $2, $3);
   }
 | LPAREN TffAtomTyping RPAREN
   {
+	auto type = $2;
+	type->setLeftDelimiter($1);
+	type->setRightDelimiter($3);
+	$$ = type;
   }
 ;
 
 TffTopLevelType
 : TffAtomicType
   {
+	$$ = $1;
   }
 | TffMappingType
   {
+	$$ = $1;
   }
 | Tf1QuantifiedType
   {
+	$$ = $1;
   }
 | LPAREN TffTopLevelType RPAREN
   {
+	auto type = $2;
+	type->setLeftDelimiter($1);
+	type->setRightDelimiter($3);
+	$$ = type;
   }
 ;
 
 Tf1QuantifiedType
-: EXCLAMATION LSQPAREN TffVariableList RSQPAREN COLON TffMonotype
+: EXCLAMATIONGREATER LSQPAREN TffVariableList RSQPAREN COLON TffMonotype
   {
+	$$ = libtptp::make< QuantifiedType >(@$, $1, $2, $3, $4, $5, $6);
   }
 ;
 
 TffMonotype
 : TffAtomicType
   {
+	$$ = $1;
   }
 | LPAREN TffMappingType RPAREN
   {
+	auto type = $2;
+	type->setLeftDelimiter($1);
+	type->setRightDelimiter($3);
+	$$ = type;
   }
 ;
 
 TffUnitaryType
 : TffAtomicType
   {
+	$$ = $1;
   }
 | LPAREN TffXprodType RPAREN
   {
+	auto type = $2;
+	type->setLeftDelimiter($1);
+	type->setRightDelimiter($3);
+	$$ = type;
   }
 ;
 
 TffAtomicType
 : TypeConstant
   {
+	$$ = libtptp::make< AtomType >(@$, $1);
   }
 | DefinedType
   {
+	$$ = libtptp::make< AtomType >(@$, $1);
   }
 | TypeFunctor LPAREN TffTypeArguments RPAREN
   {
+	auto functor = libtptp::make< FunctorAtom >(@$, $1, $2, $3, $4, Atom::Kind::TYPE);
+	$$ = libtptp::make< AtomType >(@$, functor);
   }
 | Variable
   {
+	$$ = libtptp::make< AtomType >(@$, $1);
   }
 | TfxTupleType
   {
+	$$ = libtptp::make< AtomType >(@$, $1);
   }
 ;
 
 TffTypeArguments
 : TffAtomicType
   {
+	auto list = libtptp::make< Logics >(@$);
+	list->add($1);
   }
 | TffTypeArguments COMMA TffAtomicType
   {
+	//TODO: @moosbruggerj use comma token
+	auto list = $1;
+	list->add($3);
+	$$ = list;
   }
 ;
 
 TffMappingType
 : TffUnitaryType GREATER TffAtomicType
   {
+	$$ = libtptp::make< BinaryType >(@$, $1, $2, $3, BinaryType::Kind::MAPPING);
   }
 ;
 
 TffXprodType
 : TffUnitaryType STAR TffAtomicType
   {
+	$$ = libtptp::make< BinaryType >(@$, $1, $2, $3, BinaryType::Kind::XPROD);
   }
 | TffXprodType STAR TffAtomicType
   {
+	$$ = libtptp::make< BinaryType >(@$, $1, $2, $3, BinaryType::Kind::XPROD);
   }
 ;
 
 TfxTupleType
 : LSQPAREN TffTypeList RSQPAREN
   {
+	$$ = libtptp::make< TupleType >(@$, $1, $2, $3);
   }
 ;
 
 TffTypeList
 : TffTopLevelType
   {
+	auto list = libtptp::make< Types >(@$);
+	list->add($1);
+	$$ = list;
   }
 | TffTypeList COMMA TffTopLevelType
   {
+	//TODO: @moosbruggerj use comma token
+	auto list = $1;
+	list->add($3);
+	$$ = list;
   }
 ;
 
 TffSubtype
 : UntypedAtom SUBTYPESIGN Atom
   {
+	$$ = libtptp::make< SubType >(@$, $1, $2, $3);
   }
 ;
 
 TfxSequent
 : TfxTuple GENTZENARROW TfxTuple
   {
+	$$ = libtptp::make< SequentLogic >(@$, $1, $2, $3);
   }
 | LPAREN TfxSequent RPAREN
   {
+	auto sequent = $2;
+	sequent->setLeftDelimiter($1);
+	sequent->setRightDelimiter($3);
+	$$ = sequent;
   }
 ;
 
@@ -1571,7 +1766,7 @@ FofSystemTerm
 FofArguments
 : FofTerm
   {
-	auto terms = libtptp::make< Terms >(@$);
+	auto terms = libtptp::make< Logics >(@$);
 	terms->add($1);
 	$$ = terms;
   }
@@ -1705,7 +1900,7 @@ ThfQuantifier
 ;
 
 Th1Quantifier
-: EXCLAMATION GREATER
+: EXCLAMATIONGREATER
   {
   }
 | QUESTIONMARK STAR
@@ -1817,36 +2012,43 @@ UnaryConnective
 TypeConstant
 : TypeFunctor
   {
+	$$ = $1;
   }
 ;
 
 TypeFunctor
 : AtomicWord
   {
+	$$ = libtptp::make< Identifier >(@$, $1);
   }
 ;
 
 DefinedType
 : AtomicDefinedWord
   {
+	$$ = libtptp::make< Identifier >(@$, $1);
   }
 ;
 
 Atom
 : UntypedAtom
   {
+	$$ = $1;
   }
 | DefinedConstant
   {
+	$$ = $1;
   }
 ;
 
 UntypedAtom
 : Constant
   {
+	$$ = $1;
   }
 | SystemConstant
   {
+	$$ = $1;
   }
 ;
 

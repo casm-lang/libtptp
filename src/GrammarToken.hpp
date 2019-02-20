@@ -52,6 +52,7 @@ FOT             "fot"
 ITE             "ite"
 LET             "let"
 
+EXCLAMATIONGREATER "!>"
 AT              "@"
 AND             "&"
 DOLLAR          "$"

@@ -103,9 +103,9 @@ void RecursiveVisitor::visit( VariableTerm& node )
 }
 void RecursiveVisitor::visit( ConditionalTerm& node )
 {
-    node.condition()->accept( *this );
-    node.left()->accept( *this );
-    node.right()->accept( *this );
+    // node.condition()->accept( *this );
+    // node.left()->accept( *this );
+    // node.right()->accept( *this );
 }
 
 void RecursiveVisitor::visit( FunctorAtom& node )

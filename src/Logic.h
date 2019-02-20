@@ -212,20 +212,20 @@ namespace libtptp
         using Ptr = std::shared_ptr< InfixLogic >;
 
         explicit InfixLogic(
-            const std::shared_ptr< Term >& lhs,
+            const Logic::Ptr& lhs,
             const std::pair< const Token::Ptr&, const Connective > connective,
-            const std::shared_ptr< Term >& rhs );
+            const Logic::Ptr& rhs );
 
         void accept( Visitor& visitor ) override final;
 
-        const std::shared_ptr< Term >& lhs( void ) const;
+        const Logic::Ptr& lhs( void ) const;
         const Token::Ptr& connectiveToken( void ) const;
-        const std::shared_ptr< Term >& rhs( void ) const;
+        const Logic::Ptr& rhs( void ) const;
 
       private:
-        const std::shared_ptr< Term > m_lhs;
+        const Logic::Ptr m_lhs;
         const Token::Ptr m_connectiveToken;
-        const std::shared_ptr< Term > m_rhs;
+        const Logic::Ptr m_rhs;
         const Connective m_connective;
     };
 
