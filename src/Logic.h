@@ -95,6 +95,13 @@ namespace libtptp
         enum class Connective
         {
             NEGATION,  //!< ~ (not)
+
+            // TH1
+            UNIVERSAL_QUANTIFICATION,    //!!
+            EXISTENTIAL_QUANTIFICATION,  //??
+            INDEFINITE_DESCRIPTION,      //@@+
+            DEFINITE_DESCRIPTION,        //@@-
+            EQUALITY,                    //@=
         };
 
         using Ptr = std::shared_ptr< UnaryLogic >;
@@ -133,6 +140,7 @@ namespace libtptp
             REVERSE_IMPLICATION,  //!< non-associative <=
             NEGATED_DISJUNCTION,  //!< non-associative ~| (nor)
             NEGATED_CONJUNCTION,  //!< non-associative ~& (nand)
+            APPLY,                //!< associative @ (at)
         };
 
         using Ptr = std::shared_ptr< BinaryLogic >;
@@ -172,17 +180,24 @@ namespace libtptp
         {
             UNIVERSAL,    //!< !
             EXISTENTIAL,  //!< ?
+
+            // TODO: change to useful names
+            EXCLAMATIONGREATER,  // !>
+            QUESTIONMARKSTAR,    // ?*
+            CARET,               // ^
+            ATPLUS,              // @+
+            ATMINUS,             // @-
         };
 
         using Ptr = std::shared_ptr< QuantifiedLogic >;
 
         QuantifiedLogic(
-            const std::pair< const Tokens::Ptr&, const Quantifier > quantifier,
+            const std::pair< const Token::Ptr&, const Quantifier > quantifier,
             const ListLiteral::Ptr& variables,
             const Token::Ptr& colon,
             const Logic::Ptr& logic );
 
-        const Tokens::Ptr& quantifierToken( void ) const;
+        const Token::Ptr& quantifierToken( void ) const;
         const ListLiteral::Ptr& variables( void ) const;
         const Token::Ptr& colon( void ) const;
         const Logic::Ptr& logic( void ) const;
@@ -191,7 +206,7 @@ namespace libtptp
         std::string quantifierDescription( void ) const;
 
       private:
-        const Tokens::Ptr m_quantifierToken;
+        const Token::Ptr m_quantifierToken;
         const ListLiteral::Ptr m_variables;
         const Token::Ptr m_colon;
         const Logic::Ptr m_logic;

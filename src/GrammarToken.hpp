@@ -52,7 +52,6 @@ FOT             "fot"
 ITE             "ite"
 LET             "let"
 
-EXCLAMATIONGREATER "!>"
 AT              "@"
 AND             "&"
 DOLLAR          "$"
@@ -60,7 +59,6 @@ COLON           ":"
 COMMA           ","
 DOT             "."
 PLUS            "+"
-MINUS           "-"
 EQUAL           "="
 INFIXINEQUALITY "!="
 LPAREN          "("
@@ -72,16 +70,24 @@ RCURPAREN       "}"
 VLINE           "|"
 STAR            "*"
 GREATER         ">"
-LESS            "<"
 EXCLAMATION     "!"
 TILDE           "~"
 QUESTIONMARK    "?"
+
+//TH0
+ATMINUS         "@-"
+ATPLUS          "@+"
 CARET           "^"
 
-//DOUBLES
+//TH1
 DOUBLEEXCLAMATION "!!"
 DOUBLEQUESTIONMARK "??"
-DOUBLEAT "@@"
+DOUBLEATPLUS    "@@+"
+DOUBLEATMINUS   "@@-"
+ATEQUAL         "@="
+
+EXCLAMATIONGREATER "!>"
+QUESTIONMARKSTAR "?*"
 
 //OPERATORS
 EQUALITY        "<=>"

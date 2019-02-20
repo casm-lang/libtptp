@@ -174,6 +174,23 @@ namespace libtptp
 
     using DefinitionAtoms = NodeList< DefinitionAtom >;
 
+    class ConnectiveAtom final : public Atom
+    {
+      public:
+        using Ptr = std::shared_ptr< ConnectiveAtom >;
+
+        explicit ConnectiveAtom( Token::Ptr& connective );
+
+        void accept( Visitor& visitor ) override final;
+
+        Token::Ptr& connective( void );
+
+      private:
+        Token::Ptr m_connective;
+    };
+
+    using ConnectiveAtoms = NodeList< ConnectiveAtom >;
+
 }
 
 #endif  // _LIBTPTP_ATOM_H_

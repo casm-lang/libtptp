@@ -88,7 +88,7 @@
 	//@see: https://stackoverflow.com/a/38030161
 	using UnaryConnective_t = std::pair<Token::Ptr, UnaryLogic::Connective>;
 	using BinaryConnective_t = std::pair<Token::Ptr, BinaryLogic::Connective>;
-	using QuantifiedQuantifier_t = std::pair<Tokens::Ptr, QuantifiedLogic::Quantifier>;
+	using QuantifiedQuantifier_t = std::pair<Token::Ptr, QuantifiedLogic::Quantifier>;
 	using InfixConnective_t = std::pair<Token::Ptr, InfixLogic::Connective>;
 
     #define YY_NULLPTR nullptr
@@ -184,8 +184,6 @@ END       0 "end of file"
 %type <QuantifiedQuantifier_t> FofQuantifier
 %type <InfixConnective_t> InfixInequality DefinedInfixPred InfixEquality
 
-
-
 //Tff
 %type <Logic::Ptr> TffFormula TffLogicFormula TffUnitFormula TffPreunitFormula TffUnitaryFormula TffUnaryFormula TfxLetDefns TfxLetLhs TffTerm TffUnitaryTerm
 %type <BinaryLogic::Ptr> TffBinaryFormula TffBinaryNonassoc TffBinaryAssoc TffOrFormula TffAndFormula
@@ -214,6 +212,38 @@ END       0 "end of file"
 %type <Types::Ptr> TffAtomTypingList TffTypeList
 
 %type <Nodes::Ptr> TffVariableList
+
+//THF
+%type <Logic::Ptr> ThfFormula ThfLogicFormula  ThfBinaryFormula ThfUnitFormula ThfPreunitFormula ThfUnitaryFormula ThfUnaryFormula ThfAtomicFormula ThfPlainAtomic ThfLetDefns ThfUnitaryTerm
+%type <BinaryLogic::Ptr> ThfBinaryNonassoc ThfBinaryAssoc ThfOrFormula ThfAndFormula ThfApplyFormula
+%type <QuantifiedLogic::Ptr> ThfQuantifiedFormula
+%type <UnaryLogic::Ptr> ThfPrefixUnary
+%type <InfixLogic::Ptr> ThfInfixUnary ThfDefinedInfix
+%type <LogicTuple::Ptr> ThfTuple
+%type <SequentLogic::Ptr> ThfSequent
+%type <Logics::Ptr> ThfLetDefnList ThfFormulaList ThfArguments
+
+%type <Term::Ptr> ThfDefinedAtomic
+%type <VariableTerm::Ptr> ThfTypedVariable
+%type <ConditionalTerm::Ptr> ThfConditional
+%type <DefinitionTerm::Ptr> ThfLet
+
+%type <ConstantAtom::Ptr> ThfSystemAtomic
+%type <FunctorAtom::Ptr> ThfFofFunction
+%type <DefinitionAtom::Ptr> ThfLetDefn
+%type <ConnectiveAtom::Ptr> ThfConnTerm
+%type <TypedAtom::Ptr> ThfAtomTyping
+
+%type <Type::Ptr> ThfLetTypes ThfTopLevelType
+%type <AtomType::Ptr> ThfUnitaryType ThfApplyType
+%type <BinaryType::Ptr> ThfBinaryType ThfMappingType ThfXprodType ThfUnionType
+%type <SubType::Ptr> ThfSubtype
+%type <Types::Ptr> ThfAtomTypingList
+
+%type <Nodes::Ptr> ThfVariableList
+
+%type <UnaryConnective_t> ThfUnaryConnective Th1UnaryConnective
+%type <QuantifiedQuantifier_t> Th0Quantifier Th1Quantifier ThfQuantifier
 
 %start Specification
 
@@ -435,429 +465,572 @@ TpiFormula
 ThfFormula
 : ThfLogicFormula
   {
+	$$ = $1;
   }
 | ThfAtomTyping
   {
+	$$ = $1;
   }
 | ThfSubtype
   {
+	$$ = $1;
   }
 | ThfSequent
   {
+	$$ = $1;
   }
 ;
 
 ThfLogicFormula
 : ThfUnitaryFormula
   {
+	$$ = $1;
   }
 | ThfUnaryFormula
   {
+	$$ = $1;
   }
 | ThfBinaryFormula
   {
+	$$ = $1;
   }
 | ThfDefinedInfix
   {
+	$$ = $1;
   }
 ;
 
 ThfBinaryFormula
 : ThfBinaryNonassoc
   {
+	$$ = $1;
   }
 | ThfBinaryAssoc
   {
+	$$ = $1;
   }
 | ThfBinaryType
   {
+	$$ = $1;
   }
 ;
 
 ThfBinaryNonassoc
 : ThfUnitFormula NonassocConnective ThfUnitFormula
   {
+	$$ = libtptp::make< BinaryLogic >(@$, $1, $2, $3);
   }
 ;
 
 ThfBinaryAssoc
 : ThfOrFormula
   {
+	$$ = $1;
   }
 | ThfAndFormula
   {
+	$$ = $1;
   }
 | ThfApplyFormula
   {
+	$$ = $1;
   }
 ;
 
 ThfOrFormula
 : ThfUnitFormula VLINE ThfUnitFormula
   {
+	auto op = std::make_pair($2, BinaryLogic::Connective::DISJUNCTION);
+	$$ = libtptp::make< BinaryLogic >(@$, $1, op, $3);
   }
 | ThfOrFormula VLINE ThfUnitFormula
   {
+	auto op = std::make_pair($2, BinaryLogic::Connective::DISJUNCTION);
+	$$ = libtptp::make< BinaryLogic >(@$, $1, op, $3);
   }
 ;
 
 ThfAndFormula
 : ThfUnitFormula AND ThfUnitFormula
   {
+	auto op = std::make_pair($2, BinaryLogic::Connective::CONJUNCTION);
+	$$ = libtptp::make< BinaryLogic >(@$, $1, op, $3);
   }
 | ThfAndFormula AND ThfUnitFormula
   {
+	auto op = std::make_pair($2, BinaryLogic::Connective::CONJUNCTION);
+	$$ = libtptp::make< BinaryLogic >(@$, $1, op, $3);
   }
 ;
 
 ThfApplyFormula
 : ThfUnitFormula AT ThfUnitFormula
   {
+	auto op = std::make_pair($2, BinaryLogic::Connective::APPLY);
+	$$ = libtptp::make< BinaryLogic >(@$, $1, op, $3);
   }
 | ThfApplyFormula AT ThfUnitFormula
   {
+	auto op = std::make_pair($2, BinaryLogic::Connective::APPLY);
+	$$ = libtptp::make< BinaryLogic >(@$, $1, op, $3);
   }
 ;
 
 ThfUnitFormula
 : ThfUnitaryFormula
   {
+	$$ = $1;
   }
 | ThfUnaryFormula
   {
+	$$ = $1;
   }
 | ThfDefinedInfix
   {
+	$$ = $1;
   }
 ;
 
 ThfPreunitFormula
 : ThfUnitaryFormula
   {
+	$$ = $1;
   }
 | ThfPrefixUnary
   {
+	$$ = $1;
   }
 ;
 
 ThfUnitaryFormula
 : ThfQuantifiedFormula
   {
+	$$ = $1;
   }
 | ThfAtomicFormula
   {
+	$$ = $1;
   }
 | Variable
   {
+	$$ = $1;
   }
 | LPAREN ThfLogicFormula RPAREN
   {
+	auto logic = $2;
+	logic->setLeftDelimiter($1);
+	logic->setRightDelimiter($3);
+	$$ = logic;
   }
 ;
 
 ThfQuantifiedFormula
-: ThfQuantification ThfUnitFormula
+: ThfQuantifier LSQPAREN ThfVariableList RSQPAREN COLON ThfUnitFormula
   {
-  }
-;
-
-ThfQuantification
-: ThfQuantifier LSQPAREN ThfVariableList RSQPAREN COLON
-  {
+	auto variables = libtptp::make< ListLiteral >(@$, $2, $3, $4);
+	$$ = libtptp::make< QuantifiedLogic >(@$, $1, variables, $5, $6);
   }
 ;
 
 ThfVariableList
 : ThfTypedVariable
   {
+	auto list = libtptp::make< Nodes >(@$);
+	list->add($1);
+	$$ = list;
   }
 | ThfVariableList COMMA ThfTypedVariable
   {
+	//TODO: @moosbruggerj use comma token
+	auto list = $1;
+	list->add($3);
+	$$ = list;
   }
 ;
 
 ThfTypedVariable
 : Variable COLON ThfTopLevelType
   {
+	auto var = $1;
+	var->setColon($2);
+	Type::Ptr type = $3;
+	var->setType(type);
   }
 ;
 
 ThfUnaryFormula
 : ThfPrefixUnary
   {
+	$$ = $1;
   }
 | ThfInfixUnary
   {
+	$$ = $1;
   }
 ;
 
 ThfPrefixUnary
 : ThfUnaryConnective ThfPreunitFormula
   {
+	$$ = libtptp::make< UnaryLogic >(@$, $1, $2);
   }
 ;
 
 ThfInfixUnary
 : ThfUnitaryTerm InfixInequality ThfUnitaryTerm
   {
+	$$ = libtptp::make< InfixLogic >(@$, $1, $2, $3);
   }
 ;
 
 ThfAtomicFormula
 : ThfPlainAtomic
   {
+	$$ = $1;
   }
 | ThfDefinedAtomic
   {
+	$$ = $1;
   }
 | ThfSystemAtomic
   {
+	$$ = $1;
   }
 | ThfFofFunction
   {
+	$$ = $1;
   }
 ;
 
 ThfPlainAtomic
 : Constant
   {
+	$$ = libtptp::make< ConstantAtom >(@$, $1, Atom::Kind::PLAIN);
   }
 | ThfTuple
   {
+	$$ = $1;
   }
 ;
 
 ThfDefinedAtomic
 : DefinedConstant
   {
+	$$ = libtptp::make< ConstantAtom >(@$, $1, Atom::Kind::DEFINED);
   }
 | ThfConditional
   {
+	$$ = $1;
   }
 | ThfLet
   {
+	$$ = $1;
   }
 | LPAREN ThfConnTerm RPAREN
   {
+	auto logic = $2;
+	logic->setLeftDelimiter($1);
+	logic->setRightDelimiter($3);
+	$$ = logic;
   }
 | DefinedTerm
   {
+	$$ = $1;
   }
 ;
 
 ThfDefinedInfix
 : ThfUnitaryTerm DefinedInfixPred ThfUnitaryTerm
   {
+	$$ = libtptp::make< InfixLogic >(@$, $1, $2, $3);
   }
 ;
 
 ThfSystemAtomic
 : SystemConstant
   {
+	$$ = libtptp::make< ConstantAtom >(@$, $1, Atom::Kind::SYSTEM);
   }
 ;
 
 ThfFofFunction
 : Functor LPAREN ThfArguments RPAREN
   {
+	$$ = libtptp::make< FunctorAtom >(@$, $1, $2, $3, $4, Atom::Kind::PLAIN);
   }
 | DefinedFunctor LPAREN ThfArguments RPAREN
   {
+	$$ = libtptp::make< FunctorAtom >(@$, $1, $2, $3, $4, Atom::Kind::DEFINED);
   }
 | SystemFunctor LPAREN ThfArguments RPAREN
   {
+	$$ = libtptp::make< FunctorAtom >(@$, $1, $2, $3, $4, Atom::Kind::SYSTEM);
   }
 ;
 
 ThfConditional
 : DOLLAR ITE LPAREN ThfLogicFormula COMMA ThfLogicFormula COMMA ThfLogicFormula RPAREN
   {
+	$$ = libtptp::make< ConditionalTerm >(@$, $1, $2, $3, $4, $5, $6, $7, $8, $9);
   }
 ;
 
 ThfLet
 : DOLLAR LET LPAREN ThfLetTypes COMMA ThfLetDefns COMMA ThfFormula RPAREN
   {
+	$$ = libtptp::make< DefinitionTerm >(@$, $1, $2, $3, $4, $5, $6, $7, $8, $9);
   }
 ;
 
 ThfLetTypes
 : ThfAtomTyping
   {
+	$$ = $1;
   }
 | LSQPAREN ThfAtomTypingList RSQPAREN
   {
+	$$ = libtptp::make< TupleType >(@$, $1, $2, $3);
   }
 ;
 
 ThfAtomTypingList
 : ThfAtomTyping
   {
+	auto list = libtptp::make< Types >(@$);
+	list->add($1);
+	$$ = list;
   }
 | ThfAtomTypingList COMMA ThfAtomTyping
   {
+	//TODO: @moosbruggerj use comma token
+	auto list = $1;
+	list->add($3);
+	$$ = list;
   }
 ;
 
 ThfLetDefns
 : ThfLetDefn
   {
+	$$ = $1;
   }
 | LSQPAREN ThfLetDefnList RSQPAREN
   {
+	$$ = libtptp::make< LogicTuple >(@$, $1, $2, $3);
   }
 ;
 
 ThfLetDefn
 : ThfLogicFormula ASSIGNMENT ThfLogicFormula
   {
+	$$ = libtptp::make< DefinitionAtom >(@$, $1, $2, $3);
   }
 ;
 
 ThfLetDefnList
 : ThfLetDefn
   {
+	//could be of type DefinitionAtoms, but Logics is expected
+	auto list = libtptp::make< Logics >(@$);
+	list->add($1);
+	$$ = list;
   }
 | ThfLetDefnList COMMA ThfLetDefn
   {
+	//TODO: @moosbruggerj use comma token
+	auto list = $1;
+	list->add($3);
+	$$ = list;
   }
 ;
 
 ThfUnitaryTerm
 : ThfAtomicFormula
   {
+	$$ = $1;
   }
 | Variable
   {
+	$$ = $1;
   }
 | LPAREN ThfLogicFormula RPAREN
   {
+	auto logic = $2;
+	logic->setLeftDelimiter($1);
+	logic->setRightDelimiter($3);
+	$$ = logic;
   }
 ;
 
 ThfTuple
 : LSQPAREN RSQPAREN
   {
+	$$ = libtptp::make< LogicTuple >(@$, $1, $2);
   }
 | LSQPAREN ThfFormulaList RSQPAREN
   {
+	$$ = libtptp::make< LogicTuple >(@$, $1, $2, $3);
   }
 ;
 
 ThfFormulaList
 : ThfLogicFormula
   {
+	auto list = libtptp::make< Logics >(@$);
+	list->add($1);
+	$$ = list;
   }
 | ThfFormulaList COMMA ThfLogicFormula 
   {
+	//TODO: @moosbruggerj use comma token
+	auto list = $1;
+	list->add($3);
+	$$ = list;
   }
 ;
 
 ThfConnTerm
 : NonassocConnective
   {
+	auto pair = $1;
+	$$ = libtptp::make< ConnectiveAtom >(@$, pair.first);
   }
 | AssocConnective
   {
+	auto pair = $1;
+	$$ = libtptp::make< ConnectiveAtom >(@$, pair.first);
   }
 | InfixEquality
   {
+	auto pair = $1;
+	$$ = libtptp::make< ConnectiveAtom >(@$, pair.first);
   }
 | ThfUnaryConnective
   {
+	auto pair = $1;
+	$$ = libtptp::make< ConnectiveAtom >(@$, pair.first);
   }
 ;
 
 ThfArguments
 : ThfFormulaList
   {
+	$$ = $1;
   }
 ;
 
 ThfAtomTyping
 : UntypedAtom COLON ThfTopLevelType
   {
+	$$ = libtptp::make< TypedAtom >(@$, $1, $2, $3);
   }
 | LPAREN ThfAtomTyping RPAREN
   {
+	auto type = $2;
+	type->setLeftDelimiter($1);
+	type->setRightDelimiter($3);
+	$$ = type;
   }
 ;
 
 ThfTopLevelType
 : ThfUnitaryType
   {
+	$$ = $1;
   }
 | ThfMappingType
   {
+	$$ = $1;
   }
 | ThfApplyType
   {
+	$$ = $1;
   }
 ;
 
 ThfUnitaryType
 : ThfUnitaryFormula
   {
+	$$ = libtptp::make< AtomType >(@$, $1);
   }
 ;
 
 ThfApplyType
 : ThfApplyFormula
   {
+	$$ = libtptp::make< AtomType >(@$, $1);
   }
 ;
 
 ThfBinaryType
 : ThfMappingType
   {
+	$$ = $1;
   }
 | ThfXprodType
   {
+	$$ = $1;
   }
 | ThfUnionType
   {
+	$$ = $1;
   }
 ;
 
+//right associative
 ThfMappingType
 : ThfUnitaryType GREATER ThfUnitaryType
   {
+	$$ = libtptp::make< BinaryType >(@$, $1, $2, $3, BinaryType::Kind::MAPPING);
   }
 | ThfUnitaryType GREATER ThfMappingType
   {
+	$$ = libtptp::make< BinaryType >(@$, $1, $2, $3, BinaryType::Kind::MAPPING);
   }
 ;
 
+//left associative
 ThfXprodType
 : ThfUnitaryType STAR ThfUnitaryType
   {
+	$$ = libtptp::make< BinaryType >(@$, $1, $2, $3, BinaryType::Kind::XPROD);
   }
 | ThfXprodType STAR ThfUnitaryType
   {
+	$$ = libtptp::make< BinaryType >(@$, $1, $2, $3, BinaryType::Kind::XPROD);
   }
 ;
 
+//left associative
 ThfUnionType
 : ThfUnitaryType PLUS ThfUnitaryType
   {
+	$$ = libtptp::make< BinaryType >(@$, $1, $2, $3, BinaryType::Kind::UNION);
   }
 | ThfUnionType PLUS ThfUnitaryType
   {
+	$$ = libtptp::make< BinaryType >(@$, $1, $2, $3, BinaryType::Kind::UNION);
   }
 ;
 
 ThfSubtype
 : UntypedAtom SUBTYPESIGN Atom
   {
+	$$ = libtptp::make< SubType >(@$, $1, $2, $3);
   }
 ;
 
 ThfSequent
 : ThfTuple GENTZENARROW ThfTuple
   {
+	$$ = libtptp::make< SequentLogic >(@$, $1, $2, $3);
   }
 | LPAREN ThfSequent RPAREN
   {
+	auto logic = $2;
+	logic->setLeftDelimiter($1);
+	logic->setRightDelimiter($3);
+	$$ = logic;
   }
 ;
 
@@ -1890,75 +2063,86 @@ Literal
 ThfQuantifier
 : FofQuantifier
   {
+	$$ = $1;
   }
 | Th0Quantifier
   {
+	$$ = $1;
   }
 | Th1Quantifier
   {
+	$$ = $1;
   }
 ;
 
 Th1Quantifier
 : EXCLAMATIONGREATER
   {
+	$$ = std::make_pair($1, QuantifiedLogic::Quantifier::EXCLAMATIONGREATER);
   }
-| QUESTIONMARK STAR
+| QUESTIONMARKSTAR
   {
+	$$ = std::make_pair($1, QuantifiedLogic::Quantifier::QUESTIONMARKSTAR);
   }
 ;
 
 Th0Quantifier
 : CARET
   {
+	$$ = std::make_pair($1, QuantifiedLogic::Quantifier::CARET);
   }
-| AT PLUS
+| ATPLUS
   {
+	$$ = std::make_pair($1, QuantifiedLogic::Quantifier::ATPLUS);
   }
-| AT MINUS
+| ATMINUS
   {
+	$$ = std::make_pair($1, QuantifiedLogic::Quantifier::ATMINUS);
   }
 ;
 
 ThfUnaryConnective
 : UnaryConnective
   {
+	$$ = $1;
   }
 | Th1UnaryConnective
   {
+	$$ = $1;
   }
 ;
 
 Th1UnaryConnective
 : DOUBLEEXCLAMATION
   {
+	$$ = std::make_pair($1, UnaryLogic::Connective::UNIVERSAL_QUANTIFICATION);
   }
 | DOUBLEQUESTIONMARK
   {
+	$$ = std::make_pair($1, UnaryLogic::Connective::EXISTENTIAL_QUANTIFICATION);
   }
-| DOUBLEAT PLUS
+| DOUBLEATPLUS
   {
+	$$ = std::make_pair($1, UnaryLogic::Connective::INDEFINITE_DESCRIPTION);
   }
-| DOUBLEAT MINUS
+| DOUBLEATMINUS
   {
+	$$ = std::make_pair($1, UnaryLogic::Connective::DEFINITE_DESCRIPTION);
   }
-| AT EQUAL
+| ATEQUAL
   {
+	$$ = std::make_pair($1, UnaryLogic::Connective::EQUALITY);
   }
 ;
 
 FofQuantifier
 : EXCLAMATION
   {
-	auto tokens = libtptp::make< Tokens >(@$);
-	tokens->add($1);
-	$$ = std::make_pair(tokens, QuantifiedLogic::Quantifier::UNIVERSAL);
+	$$ = std::make_pair($1, QuantifiedLogic::Quantifier::UNIVERSAL);
   }
 | QUESTIONMARK
   {
-	auto tokens = libtptp::make< Tokens >(@$);
-	tokens->add($1);
-	$$ = std::make_pair(tokens, QuantifiedLogic::Quantifier::UNIVERSAL);
+	$$ = std::make_pair($1, QuantifiedLogic::Quantifier::UNIVERSAL);
   }
 ;
 

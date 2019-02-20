@@ -81,6 +81,7 @@ namespace libtptp
         {
             MAPPING,
             XPROD,
+            UNION,
         };
         using Ptr = std::shared_ptr< BinaryType >;
 
