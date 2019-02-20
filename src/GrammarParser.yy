@@ -66,12 +66,6 @@
         class SourceLocation;
     }
 
-	//TODO: @moosbruggerj remove temporary includes
-	#include <libtptp/General>
-	#include <libtptp/Term>
-	#include <libtptp/Atom>
-	#include <libtptp/Type>
-
 
     #include <libtptp/Specification>
     #include <libtptp/Token>
@@ -131,22 +125,21 @@ END       0 "end of file"
 
 %type <Specification::Ptr> Specification
 
+%type <FormulaDefinition::Ptr> AnnotatedFormula ThfAnnotated TffAnnotated TcfAnnotated FofAnnotated CnfAnnotated TpiAnnotated
+
 %type <Identifier::Ptr> FileName Name Functor Constant DefinedFunctor DefinedConstant SystemFunctor SystemConstant TypeConstant TypeFunctor DefinedType Atom UntypedAtom
-//%type <Identifiers::Ptr> FormulaSelection
 %type <Nodes::Ptr> NameList
 %type <ListLiteral::Ptr> FormulaSelection
 
 // definitions
 %type <IncludeDefinition::Ptr> IncludeDefinition
-%type <FormulaDefinition::Ptr> AnnotatedFormula FofAnnotated
 %type <Definition::Ptr> Definition
 %type <Definitions::Ptr> Definitions
 
 %type <Annotation::Ptr> Annotations
 
 %type <FormulaRole::Ptr> FormulaRole
-//%type <Token::Ptr> FormulaKeyword
-//%type <Formula::Ptr> FormulaSpecification
+%type <FormulaData::Ptr> FormulaData
 %type <BinaryLogic::Ptr> FofAndFormula FofOrFormula FofBinaryAssoc FofBinaryNonassoc FofBinaryFormula
 %type <Logic::Ptr> FofUnaryFormula
 %type <QuantifiedLogic::Ptr> FofQuantifiedFormula
@@ -156,14 +149,13 @@ END       0 "end of file"
 %type <Logics::Ptr> FofFormulaTupleList FofArguments
 %type <LogicTuple::Ptr> FofFormulaTuple
 
-//TODO: @moosbruggerj maybe change signature
 %type <Term::Ptr> FofTerm FofPlainAtomicFormula FofDefinedPlainFormula FofSystemAtomicFormula
 
 %type <Atom::Ptr> FofFunctionTerm FofSystemTerm FofDefinedPlainTerm FofDefinedAtomicTerm FofDefinedTerm FofPlainTerm
 %type <DefinedAtom::Ptr> DefinedTerm
 %type <VariableTerm::Ptr> Variable
 
-%type <FirstOrderFormula::Ptr> FofFormula TpiFormula
+%type <Logic::Ptr> FofFormula TpiFormula
 
 %type <StringLiteral::Ptr> SingleQuotedLiteral LowerWordLiteral DistinctObjectLiteral AtomicWord DollarWordLiteral DollarDollarWordLiteral AtomicDefinedWord AtomicSystemWord 
 
@@ -294,135 +286,125 @@ Definition
 AnnotatedFormula
 : ThfAnnotated
   {
-    //$$ = $1
+    $$ = $1;
   }
 | TffAnnotated
   {
-    //$$ = $1
+    $$ = $1;
   }
 | TcfAnnotated
   {
-    //$$ = $1
+    $$ = $1;
   }
 | FofAnnotated
   {
-    //$$ = $1
+    $$ = $1;
   }
 | CnfAnnotated
   {
-    //$$ = $1
+    $$ = $1;
   }
 | TpiAnnotated
   {
-    //$$ = $1
+    $$ = $1;
   }
 ;
-/*
-: FormulaKeyword LPAREN Name COMMA FormulaRole COMMA FormulaSpecification RPAREN DOT
-  {
-	$$ = libtptp::make< FormulaDefinition >(@$, uToken, $2, $3, $4, $5, $6, formula, $8, $9);
-	//$$ = libtptp::make< FormulaDefinition >(@$, $1, $2, $3, $4, $5, $6, $7, $8, $9, $10);
-    //auto formula = $1;
-    //formula->set ...
-  }
-*/
 
 ThfAnnotated
 : THF LPAREN Name COMMA FormulaRole COMMA ThfFormula RPAREN DOT
   {
+	auto formula = libtptp::make< TypedHigherOrderFormula >(@7, $7);
+	$$ = libtptp::make< FormulaDefinition >(@$, $1, $2, $3, $4, $5, $6, formula, $8, $9);
   }
 | THF LPAREN Name COMMA FormulaRole COMMA ThfFormula COMMA Annotations RPAREN DOT
   {
+	auto formula = libtptp::make< TypedHigherOrderFormula >(@7, $7);
+	auto annotation = $9;
+	annotation->setDelimiter($8);
+	formula->setAnnotations(annotation);
+	$$ = libtptp::make< FormulaDefinition >(@$, $1, $2, $3, $4, $5, $6, formula, $10, $11);
   }
 ;
+
 TffAnnotated
 : TFF LPAREN Name COMMA FormulaRole COMMA TffFormula RPAREN DOT
   {
+	auto formula = libtptp::make< TypedFirstOrderFormula >(@7, $7);
+	$$ = libtptp::make< FormulaDefinition >(@$, $1, $2, $3, $4, $5, $6, formula, $8, $9);
   }
 | TFF LPAREN Name COMMA FormulaRole COMMA TffFormula COMMA Annotations RPAREN DOT
   {
+	auto formula = libtptp::make< TypedFirstOrderFormula >(@7, $7);
+	auto annotation = $9;
+	annotation->setDelimiter($8);
+	formula->setAnnotations(annotation);
+	$$ = libtptp::make< FormulaDefinition >(@$, $1, $2, $3, $4, $5, $6, formula, $10, $11);
   }
 ;
+
 TcfAnnotated
 : TCF LPAREN Name COMMA FormulaRole COMMA TcfFormula RPAREN DOT
   {
+	auto formula = libtptp::make< TheoryComputableFunctionalsFormula >(@7, $7);
+	$$ = libtptp::make< FormulaDefinition >(@$, $1, $2, $3, $4, $5, $6, formula, $8, $9);
   }
 | TCF LPAREN Name COMMA FormulaRole COMMA TcfFormula COMMA Annotations RPAREN DOT
   {
+	auto formula = libtptp::make< TheoryComputableFunctionalsFormula >(@7, $7);
+	auto annotation = $9;
+	annotation->setDelimiter($8);
+	formula->setAnnotations(annotation);
+	$$ = libtptp::make< FormulaDefinition >(@$, $1, $2, $3, $4, $5, $6, formula, $10, $11);
   }
 ;
+
 FofAnnotated
 : FOF LPAREN Name COMMA FormulaRole COMMA FofFormula RPAREN DOT
   {
-	//TODO: @moosbruggerj fix me
-	auto logic = libtptp::make< UnitaryLogic >(@$);
-	auto formula = libtptp::make< FirstOrderFormula >(@$, logic);
+	auto formula = libtptp::make< FirstOrderFormula >(@7, $7);
 	$$ = libtptp::make< FormulaDefinition >(@$, $1, $2, $3, $4, $5, $6, formula, $8, $9);
   }
 | FOF LPAREN Name COMMA FormulaRole COMMA FofFormula COMMA Annotations RPAREN DOT
   {
-	//TODO: @moosbruggerj fix me
-	auto logic = libtptp::make< UnitaryLogic >(@$);
-	auto formula = libtptp::make< FirstOrderFormula >(@$, logic);
-	$$ = libtptp::make< FormulaDefinition >(@$, $1, $2, $3, $4, $5, $6, formula, $10, $11);
+	auto formula = libtptp::make< FirstOrderFormula >(@7, $7);
 	auto annotation = $9;
 	annotation->setDelimiter($8);
 	formula->setAnnotations(annotation);
+	$$ = libtptp::make< FormulaDefinition >(@$, $1, $2, $3, $4, $5, $6, formula, $10, $11);
   }
 ;
+
 CnfAnnotated
 : CNF LPAREN Name COMMA FormulaRole COMMA CnfFormula RPAREN DOT
   {
+	auto formula = libtptp::make< ClauseNormalFormFormula >(@7, $7);
+	$$ = libtptp::make< FormulaDefinition >(@$, $1, $2, $3, $4, $5, $6, formula, $8, $9);
   }
 | CNF LPAREN Name COMMA FormulaRole COMMA CnfFormula COMMA Annotations RPAREN DOT
   {
+	auto formula = libtptp::make< ClauseNormalFormFormula >(@7, $7);
+	auto annotation = $9;
+	annotation->setDelimiter($8);
+	formula->setAnnotations(annotation);
+	$$ = libtptp::make< FormulaDefinition >(@$, $1, $2, $3, $4, $5, $6, formula, $10, $11);
   }
 ;
+
 TpiAnnotated
 :TPI LPAREN Name COMMA FormulaRole COMMA TpiFormula RPAREN DOT
   {
+	auto formula = libtptp::make< TPTPProcessInstructionFormula >(@7, $7);
+	$$ = libtptp::make< FormulaDefinition >(@$, $1, $2, $3, $4, $5, $6, formula, $8, $9);
   }
 | TPI LPAREN Name COMMA FormulaRole COMMA TpiFormula COMMA Annotations RPAREN DOT
   {
+	auto formula = libtptp::make< TPTPProcessInstructionFormula >(@7, $7);
+	auto annotation = $9;
+	annotation->setDelimiter($8);
+	formula->setAnnotations(annotation);
+	$$ = libtptp::make< FormulaDefinition >(@$, $1, $2, $3, $4, $5, $6, formula, $10, $11);
   }
 ;
-/*
-FormulaKeyword
-: TPI
-  {
-  }
-| THF
-  {
-  }
-| TFF
-  {
-  }
-| TCF
-  {
-  }
-| FOF
-  {
-    //$$ = libtptp::make< FirstOrderFormula >( @$ );
-  }
-| CNF
-  {
-  }
-; 
-*/
-/*
-FormulaSpecification 
-: Formula COMMA Annotations
-  {
-    //auto formula = $1;
-    //formula->setAnnotations($3);
-    //$$ = formula;
-  }
-| Formula
-  {
-    //$$ = $1;
-  }
-;
-*/
 
 Annotations
 : GeneralTerm
@@ -436,28 +418,6 @@ Annotations
 	$$ = libtptp::make< Annotation >(@$, $1, $2, $3);
   }
 ;
-/*
-Formula
-: TpiFormula 
-  {
-  }
-| ThfFormula
-  {
-  }
-| TffFormula
-  {
-  }
-| TcfFormula
-  {
-  }
-| FofFormula
-  {
-  }
-| CnfFormula
-  {
-  }
-;
-*/
 
 TpiFormula
 : FofFormula
@@ -1692,11 +1652,11 @@ TcfQuantifiedFormula
 FofFormula
 : FofLogicFormula
   {
-	$$ = libtptp::make< FirstOrderFormula >(@$, $1);
+	$$ = $1;
   }
 | FofSequent
   {
-	$$ = libtptp::make< FirstOrderFormula >(@$, $1);
+	$$ = $1;
   }
 ;
 
@@ -2264,7 +2224,6 @@ InfixEquality
 InfixInequality
 : INFIXINEQUALITY
   {
-//EXCLAMATION EQUAL
 	$$ = std::make_pair($1, InfixLogic::Connective::INEQUALITY);
   }
 ;
@@ -2333,11 +2292,9 @@ NameList
   }
 | NameList COMMA Name
   {
-	//TODO: @moosbruggerj add delimiter
+	//TODO: @moosbruggerj use comma token
 	const auto list = $1;
-	const auto name = $3;
-	//name->prefix().add($2); //setDelimiter
-	list->add(name);
+	list->add($3);
 	$$ = list;
   }
 ;
@@ -2398,9 +2355,7 @@ GeneralData
   }
 | FormulaData
   {
-	//$$ = libtptp::make< GeneralData >(@$, $1);
-	//TODO: @moosbruggerj remove wrong token
-	$$ = libtptp::make< GeneralData >(@$, uToken);
+	$$ = libtptp::make< GeneralData >(@$, $1);
   }
 ;
 
@@ -2421,7 +2376,7 @@ GeneralTerms
   }
 | GeneralTerms COMMA GeneralTerm
   {
-	//TODO: @moosbruggerj use comma
+	//TODO: @moosbruggerj use comma token
 	
     auto terms = $1;
     terms->add($3);
@@ -2429,29 +2384,26 @@ GeneralTerms
   }
 ;
 
-/*
-FormulaData
-: DOLLAR FormulaDataKeyword LPAREN Formula RPAREN
-  {
-  }
-;
-*/
-
 FormulaData
 : DOLLAR THF LPAREN ThfFormula RPAREN
   {
+	$$ = libtptp::make< FormulaData >(@$, $1, $2, $3, $4, $5);
   }
 | DOLLAR TFF LPAREN TffFormula RPAREN
   {
+	$$ = libtptp::make< FormulaData >(@$, $1, $2, $3, $4, $5);
   }
 | DOLLAR FOF LPAREN FofFormula RPAREN
   {
+	$$ = libtptp::make< FormulaData >(@$, $1, $2, $3, $4, $5);
   }
 | DOLLAR CNF LPAREN CnfFormula RPAREN
   {
+	$$ = libtptp::make< FormulaData >(@$, $1, $2, $3, $4, $5);
   }
 | DOLLAR FOT LPAREN FofTerm RPAREN
   {
+	$$ = libtptp::make< FormulaData >(@$, $1, $2, $3, $4, $5);
   }
 ;
 
@@ -2488,26 +2440,6 @@ FormulaSelection
 	$$ = list;
   }
 ;
-
-/*
-FormulaDataKeyword
-: THF
-  {
-  }
-| TFF
-  {
-  }
-| FOF
-  {
-  }
-| CNF
-  {
-  }
-| FOT
-  {
-  }
-;
-*/
 
 AtomicWord
 : LowerWordLiteral

@@ -69,6 +69,10 @@ namespace libtptp
             // formulae
             FOF_FORMULA,
             TFF_FORMULA,
+            THF_FORMULA,
+            TPI_FORMULA,
+            CNF_FORMULA,
+            TCF_FORMULA,
 
             // logics
             UNITARY_LOGIC,
@@ -103,6 +107,7 @@ namespace libtptp
             LIST_LITERAL,
 
             FORMULA_ROLE,
+            FORMULA_DATA,
 
             // general
             GENERAL_DATA,
