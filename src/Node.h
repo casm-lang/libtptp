@@ -84,6 +84,7 @@ namespace libtptp
             VARIABLE_TERM,
             CONDITIONAL_TERM,
             DEFINITION_TERM,
+            CONNECTIVE_ATOM,
 
             // atoms
             FUNCTOR_ATOM,

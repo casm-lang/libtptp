@@ -123,6 +123,26 @@ std::string UnaryLogic::connectiveDescription( void ) const
         {
             return "negation";
         }
+        case UnaryLogic::Connective::UNIVERSAL_QUANTIFICATION:
+        {
+            return "universal quantification";
+        }
+        case UnaryLogic::Connective::EXISTENTIAL_QUANTIFICATION:
+        {
+            return "existential quantification";
+        }
+        case UnaryLogic::Connective::INDEFINITE_DESCRIPTION:
+        {
+            return "indefinite description";
+        }
+        case UnaryLogic::Connective::DEFINITE_DESCRIPTION:
+        {
+            return "definite description";
+        }
+        case UnaryLogic::Connective::EQUALITY:
+        {
+            return "equality";
+        }
     }
 }
 
@@ -206,6 +226,10 @@ std::string BinaryLogic::connectiveDescription( void ) const
         {
             return "negated conjunction";
         }
+        case BinaryLogic::Connective::APPLY:
+        {
+            return "apply";
+        }
     }
 }
 
@@ -224,7 +248,7 @@ void BinaryLogic::accept( Visitor& visitor )
 //
 
 QuantifiedLogic::QuantifiedLogic(
-    const std::pair< const Tokens::Ptr&, const Quantifier > quantifier,
+    const std::pair< const Token::Ptr&, const Quantifier > quantifier,
     const ListLiteral::Ptr& variables,
     const Token::Ptr& colon,
     const Logic::Ptr& logic )
@@ -237,7 +261,7 @@ QuantifiedLogic::QuantifiedLogic(
 {
 }
 
-const Tokens::Ptr& QuantifiedLogic::quantifierToken( void ) const
+const Token::Ptr& QuantifiedLogic::quantifierToken( void ) const
 {
     return m_quantifierToken;
 }
@@ -273,6 +297,26 @@ std::string QuantifiedLogic::quantifierDescription( void ) const
         case QuantifiedLogic::Quantifier::EXISTENTIAL:
         {
             return "existential";
+        }
+        case QuantifiedLogic::Quantifier::EXCLAMATIONGREATER:
+        {
+            return "exclamation greater";
+        }
+        case QuantifiedLogic::Quantifier::QUESTIONMARKSTAR:
+        {
+            return "questionmark star";
+        }
+        case QuantifiedLogic::Quantifier::CARET:
+        {
+            return "caret";
+        }
+        case QuantifiedLogic::Quantifier::ATPLUS:
+        {
+            return "at plus";
+        }
+        case QuantifiedLogic::Quantifier::ATMINUS:
+        {
+            return "at minus";
         }
     }
 }

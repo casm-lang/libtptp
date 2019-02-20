@@ -187,6 +187,10 @@ std::string Node::description( void ) const
         {
             return "definition term";
         }
+        case ID::CONNECTIVE_ATOM:
+        {
+            return "connective atom";
+        }
 
         // atoms
         case ID::FUNCTOR_ATOM:

@@ -165,6 +165,21 @@ const Logic::Ptr& DefinitionAtom::rhs( void ) const
     return m_rhs;
 }
 
+ConnectiveAtom::ConnectiveAtom( Token::Ptr& connective )
+: Atom( Node::ID::CONNECTIVE_ATOM )
+, m_connective( connective )
+{
+}
+
+void ConnectiveAtom::accept( Visitor& visitor )
+{
+}
+
+Token::Ptr& ConnectiveAtom::connective( void )
+{
+    return m_connective;
+}
+
 //
 //  Local variables:
 //  mode: c++
