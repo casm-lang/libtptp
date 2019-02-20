@@ -53,12 +53,6 @@
         class SourceLocation;
     }
 
-	//TODO: @moosbruggerj remove temporary includes
-	#include <libtptp/General>
-	#include <libtptp/Term>
-	#include <libtptp/Atom>
-	#include <libtptp/Type>
-
 
     #include <libtptp/Specification>
     #include <libtptp/Token>
@@ -80,7 +74,7 @@
 
     #define YY_NULLPTR nullptr
 
-#line 84 "GrammarParser.tab.h" // lalr1.cc:403
+#line 78 "GrammarParser.tab.h" // lalr1.cc:403
 
 # include <cassert>
 # include <cstdlib> // std::abort
@@ -174,7 +168,7 @@
 
 #line 47 "../../obj/src/GrammarParser.yy" // lalr1.cc:403
 namespace libtptp {
-#line 178 "GrammarParser.tab.h" // lalr1.cc:403
+#line 172 "GrammarParser.tab.h" // lalr1.cc:403
 
   /// A stack with random access from its top.
   template <typename T, typename S = std::vector<T> >
@@ -583,12 +577,16 @@ namespace libtptp {
       // Definitions
       char dummy14[sizeof (Definitions::Ptr)];
 
-      // TpiFormula
-      // FofFormula
-      char dummy15[sizeof (FirstOrderFormula::Ptr)];
+      // FormulaData
+      char dummy15[sizeof (FormulaData::Ptr)];
 
       // AnnotatedFormula
+      // ThfAnnotated
+      // TffAnnotated
+      // TcfAnnotated
       // FofAnnotated
+      // CnfAnnotated
+      // TpiAnnotated
       char dummy16[sizeof (FormulaDefinition::Ptr)];
 
       // FormulaRole
@@ -646,6 +644,7 @@ namespace libtptp {
       // FormulaSelection
       char dummy28[sizeof (ListLiteral::Ptr)];
 
+      // TpiFormula
       // ThfFormula
       // ThfLogicFormula
       // ThfBinaryFormula
@@ -667,6 +666,9 @@ namespace libtptp {
       // TfxLetLhs
       // TffTerm
       // TffUnitaryTerm
+      // TcfFormula
+      // TcfLogicFormula
+      // FofFormula
       // FofLogicFormula
       // FofUnaryFormula
       // FofUnitFormula
@@ -702,6 +704,7 @@ namespace libtptp {
 
       // ThfQuantifiedFormula
       // TffQuantifiedFormula
+      // TcfQuantifiedFormula
       // FofQuantifiedFormula
       char dummy33[sizeof (QuantifiedLogic::Ptr)];
 
@@ -983,7 +986,7 @@ namespace libtptp {
       basic_symbol (typename Base::kind_type t, YY_RVREF (DefinitionAtom::Ptr) v, YY_RVREF (location_type) l);
       basic_symbol (typename Base::kind_type t, YY_RVREF (DefinitionTerm::Ptr) v, YY_RVREF (location_type) l);
       basic_symbol (typename Base::kind_type t, YY_RVREF (Definitions::Ptr) v, YY_RVREF (location_type) l);
-      basic_symbol (typename Base::kind_type t, YY_RVREF (FirstOrderFormula::Ptr) v, YY_RVREF (location_type) l);
+      basic_symbol (typename Base::kind_type t, YY_RVREF (FormulaData::Ptr) v, YY_RVREF (location_type) l);
       basic_symbol (typename Base::kind_type t, YY_RVREF (FormulaDefinition::Ptr) v, YY_RVREF (location_type) l);
       basic_symbol (typename Base::kind_type t, YY_RVREF (FormulaRole::Ptr) v, YY_RVREF (location_type) l);
       basic_symbol (typename Base::kind_type t, YY_RVREF (FunctorAtom::Ptr) v, YY_RVREF (location_type) l);
@@ -1714,13 +1717,17 @@ namespace libtptp {
         value.YY_MOVE_OR_COPY< Definitions::Ptr > (YY_MOVE (other.value));
         break;
 
-      case 73: // TpiFormula
-      case 171: // FofFormula
-        value.YY_MOVE_OR_COPY< FirstOrderFormula::Ptr > (YY_MOVE (other.value));
+      case 235: // FormulaData
+        value.YY_MOVE_OR_COPY< FormulaData::Ptr > (YY_MOVE (other.value));
         break;
 
       case 65: // AnnotatedFormula
+      case 66: // ThfAnnotated
+      case 67: // TffAnnotated
+      case 68: // TcfAnnotated
       case 69: // FofAnnotated
+      case 70: // CnfAnnotated
+      case 71: // TpiAnnotated
         value.YY_MOVE_OR_COPY< FormulaDefinition::Ptr > (YY_MOVE (other.value));
         break;
 
@@ -1791,6 +1798,7 @@ namespace libtptp {
         value.YY_MOVE_OR_COPY< ListLiteral::Ptr > (YY_MOVE (other.value));
         break;
 
+      case 73: // TpiFormula
       case 74: // ThfFormula
       case 75: // ThfLogicFormula
       case 76: // ThfBinaryFormula
@@ -1812,6 +1820,9 @@ namespace libtptp {
       case 149: // TfxLetLhs
       case 151: // TffTerm
       case 152: // TffUnitaryTerm
+      case 168: // TcfFormula
+      case 169: // TcfLogicFormula
+      case 171: // FofFormula
       case 172: // FofLogicFormula
       case 178: // FofUnaryFormula
       case 180: // FofUnitFormula
@@ -1851,6 +1862,7 @@ namespace libtptp {
 
       case 85: // ThfQuantifiedFormula
       case 130: // TffQuantifiedFormula
+      case 170: // TcfQuantifiedFormula
       case 182: // FofQuantifiedFormula
         value.YY_MOVE_OR_COPY< QuantifiedLogic::Ptr > (YY_MOVE (other.value));
         break;
@@ -2135,7 +2147,7 @@ namespace libtptp {
   {}
 
   template <typename Base>
-  Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, YY_RVREF (FirstOrderFormula::Ptr) v, YY_RVREF (location_type) l)
+  Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, YY_RVREF (FormulaData::Ptr) v, YY_RVREF (location_type) l)
     : Base (t)
     , value (YY_MOVE (v))
     , location (YY_MOVE (l))
@@ -2513,13 +2525,17 @@ namespace libtptp {
         value.template destroy< Definitions::Ptr > ();
         break;
 
-      case 73: // TpiFormula
-      case 171: // FofFormula
-        value.template destroy< FirstOrderFormula::Ptr > ();
+      case 235: // FormulaData
+        value.template destroy< FormulaData::Ptr > ();
         break;
 
       case 65: // AnnotatedFormula
+      case 66: // ThfAnnotated
+      case 67: // TffAnnotated
+      case 68: // TcfAnnotated
       case 69: // FofAnnotated
+      case 70: // CnfAnnotated
+      case 71: // TpiAnnotated
         value.template destroy< FormulaDefinition::Ptr > ();
         break;
 
@@ -2590,6 +2606,7 @@ namespace libtptp {
         value.template destroy< ListLiteral::Ptr > ();
         break;
 
+      case 73: // TpiFormula
       case 74: // ThfFormula
       case 75: // ThfLogicFormula
       case 76: // ThfBinaryFormula
@@ -2611,6 +2628,9 @@ namespace libtptp {
       case 149: // TfxLetLhs
       case 151: // TffTerm
       case 152: // TffUnitaryTerm
+      case 168: // TcfFormula
+      case 169: // TcfLogicFormula
+      case 171: // FofFormula
       case 172: // FofLogicFormula
       case 178: // FofUnaryFormula
       case 180: // FofUnitFormula
@@ -2650,6 +2670,7 @@ namespace libtptp {
 
       case 85: // ThfQuantifiedFormula
       case 130: // TffQuantifiedFormula
+      case 170: // TcfQuantifiedFormula
       case 182: // FofQuantifiedFormula
         value.template destroy< QuantifiedLogic::Ptr > ();
         break;
@@ -2930,13 +2951,17 @@ namespace libtptp {
         value.move< Definitions::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 73: // TpiFormula
-      case 171: // FofFormula
-        value.move< FirstOrderFormula::Ptr > (YY_MOVE (s.value));
+      case 235: // FormulaData
+        value.move< FormulaData::Ptr > (YY_MOVE (s.value));
         break;
 
       case 65: // AnnotatedFormula
+      case 66: // ThfAnnotated
+      case 67: // TffAnnotated
+      case 68: // TcfAnnotated
       case 69: // FofAnnotated
+      case 70: // CnfAnnotated
+      case 71: // TpiAnnotated
         value.move< FormulaDefinition::Ptr > (YY_MOVE (s.value));
         break;
 
@@ -3007,6 +3032,7 @@ namespace libtptp {
         value.move< ListLiteral::Ptr > (YY_MOVE (s.value));
         break;
 
+      case 73: // TpiFormula
       case 74: // ThfFormula
       case 75: // ThfLogicFormula
       case 76: // ThfBinaryFormula
@@ -3028,6 +3054,9 @@ namespace libtptp {
       case 149: // TfxLetLhs
       case 151: // TffTerm
       case 152: // TffUnitaryTerm
+      case 168: // TcfFormula
+      case 169: // TcfLogicFormula
+      case 171: // FofFormula
       case 172: // FofLogicFormula
       case 178: // FofUnaryFormula
       case 180: // FofUnitFormula
@@ -3067,6 +3096,7 @@ namespace libtptp {
 
       case 85: // ThfQuantifiedFormula
       case 130: // TffQuantifiedFormula
+      case 170: // TcfQuantifiedFormula
       case 182: // FofQuantifiedFormula
         value.move< QuantifiedLogic::Ptr > (YY_MOVE (s.value));
         break;
@@ -3721,7 +3751,7 @@ namespace libtptp {
 
 #line 47 "../../obj/src/GrammarParser.yy" // lalr1.cc:403
 } // libtptp
-#line 3725 "GrammarParser.tab.h" // lalr1.cc:403
+#line 3755 "GrammarParser.tab.h" // lalr1.cc:403
 
 
 
