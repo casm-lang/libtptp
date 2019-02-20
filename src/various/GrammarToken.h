@@ -62,42 +62,44 @@ namespace libtptp
             /*  7 */ FOT,
             /*  8 */ ITE,
             /*  9 */ LET,
-            /* 10 */ AT,
-            /* 11 */ AND,
-            /* 12 */ DOLLAR,
-            /* 13 */ COLON,
-            /* 14 */ COMMA,
-            /* 15 */ DOT,
-            /* 16 */ PLUS,
-            /* 17 */ MINUS,
-            /* 18 */ EQUAL,
-            /* 19 */ LPAREN,
-            /* 20 */ RPAREN,
-            /* 21 */ LSQPAREN,
-            /* 22 */ RSQPAREN,
-            /* 23 */ LCURPAREN,
-            /* 24 */ RCURPAREN,
-            /* 25 */ VLINE,
-            /* 26 */ STAR,
-            /* 27 */ GREATER,
-            /* 28 */ LESS,
-            /* 29 */ EXCLAMATION,
-            /* 30 */ TILDE,
-            /* 31 */ QUESTIONMARK,
-            /* 32 */ CARET,
-            /* 33 */ DOUBLEEXCLAMATION,
-            /* 34 */ DOUBLEQUESTIONMARK,
-            /* 35 */ DOUBLEAT,
-            /* 36 */ EQUALITY,
-            /* 37 */ IMPLICATION,
-            /* 38 */ RIMPLICATION,
-            /* 39 */ INEQUALITY,
-            /* 40 */ NOR,
-            /* 41 */ NAND,
-            /* 42 */ ASSIGNMENT,
-            /* 43 */ GENTZENARROW,
-            /* 44 */ SUBTYPESIGN,
-            /* 45 */ INCLUDE,
+            /* 10 */ EXCLAMATIONGREATER,
+            /* 11 */ AT,
+            /* 12 */ AND,
+            /* 13 */ DOLLAR,
+            /* 14 */ COLON,
+            /* 15 */ COMMA,
+            /* 16 */ DOT,
+            /* 17 */ PLUS,
+            /* 18 */ MINUS,
+            /* 19 */ EQUAL,
+            /* 20 */ INFIXINEQUALITY,
+            /* 21 */ LPAREN,
+            /* 22 */ RPAREN,
+            /* 23 */ LSQPAREN,
+            /* 24 */ RSQPAREN,
+            /* 25 */ LCURPAREN,
+            /* 26 */ RCURPAREN,
+            /* 27 */ VLINE,
+            /* 28 */ STAR,
+            /* 29 */ GREATER,
+            /* 30 */ LESS,
+            /* 31 */ EXCLAMATION,
+            /* 32 */ TILDE,
+            /* 33 */ QUESTIONMARK,
+            /* 34 */ CARET,
+            /* 35 */ DOUBLEEXCLAMATION,
+            /* 36 */ DOUBLEQUESTIONMARK,
+            /* 37 */ DOUBLEAT,
+            /* 38 */ EQUALITY,
+            /* 39 */ IMPLICATION,
+            /* 40 */ RIMPLICATION,
+            /* 41 */ INEQUALITY,
+            /* 42 */ NOR,
+            /* 43 */ NAND,
+            /* 44 */ ASSIGNMENT,
+            /* 45 */ GENTZENARROW,
+            /* 46 */ SUBTYPESIGN,
+            /* 47 */ INCLUDE,
         };
         
         static std::string tokenAsString( const Token token )
@@ -144,147 +146,155 @@ namespace libtptp
                 {
                     return "let";
                 }
-                case /* 10 */ Token::AT:
+                case /* 10 */ Token::EXCLAMATIONGREATER:
+                {
+                    return "!>";
+                }
+                case /* 11 */ Token::AT:
                 {
                     return "@";
                 }
-                case /* 11 */ Token::AND:
+                case /* 12 */ Token::AND:
                 {
                     return "&";
                 }
-                case /* 12 */ Token::DOLLAR:
+                case /* 13 */ Token::DOLLAR:
                 {
                     return "$";
                 }
-                case /* 13 */ Token::COLON:
+                case /* 14 */ Token::COLON:
                 {
                     return ":";
                 }
-                case /* 14 */ Token::COMMA:
+                case /* 15 */ Token::COMMA:
                 {
                     return ",";
                 }
-                case /* 15 */ Token::DOT:
+                case /* 16 */ Token::DOT:
                 {
                     return ".";
                 }
-                case /* 16 */ Token::PLUS:
+                case /* 17 */ Token::PLUS:
                 {
                     return "+";
                 }
-                case /* 17 */ Token::MINUS:
+                case /* 18 */ Token::MINUS:
                 {
                     return "-";
                 }
-                case /* 18 */ Token::EQUAL:
+                case /* 19 */ Token::EQUAL:
                 {
                     return "=";
                 }
-                case /* 19 */ Token::LPAREN:
+                case /* 20 */ Token::INFIXINEQUALITY:
+                {
+                    return "!=";
+                }
+                case /* 21 */ Token::LPAREN:
                 {
                     return "(";
                 }
-                case /* 20 */ Token::RPAREN:
+                case /* 22 */ Token::RPAREN:
                 {
                     return ")";
                 }
-                case /* 21 */ Token::LSQPAREN:
+                case /* 23 */ Token::LSQPAREN:
                 {
                     return "[";
                 }
-                case /* 22 */ Token::RSQPAREN:
+                case /* 24 */ Token::RSQPAREN:
                 {
                     return "]";
                 }
-                case /* 23 */ Token::LCURPAREN:
+                case /* 25 */ Token::LCURPAREN:
                 {
                     return "{";
                 }
-                case /* 24 */ Token::RCURPAREN:
+                case /* 26 */ Token::RCURPAREN:
                 {
                     return "}";
                 }
-                case /* 25 */ Token::VLINE:
+                case /* 27 */ Token::VLINE:
                 {
                     return "|";
                 }
-                case /* 26 */ Token::STAR:
+                case /* 28 */ Token::STAR:
                 {
                     return "*";
                 }
-                case /* 27 */ Token::GREATER:
+                case /* 29 */ Token::GREATER:
                 {
                     return ">";
                 }
-                case /* 28 */ Token::LESS:
+                case /* 30 */ Token::LESS:
                 {
                     return "<";
                 }
-                case /* 29 */ Token::EXCLAMATION:
+                case /* 31 */ Token::EXCLAMATION:
                 {
                     return "!";
                 }
-                case /* 30 */ Token::TILDE:
+                case /* 32 */ Token::TILDE:
                 {
                     return "~";
                 }
-                case /* 31 */ Token::QUESTIONMARK:
+                case /* 33 */ Token::QUESTIONMARK:
                 {
                     return "?";
                 }
-                case /* 32 */ Token::CARET:
+                case /* 34 */ Token::CARET:
                 {
                     return "^";
                 }
-                case /* 33 */ Token::DOUBLEEXCLAMATION:
+                case /* 35 */ Token::DOUBLEEXCLAMATION:
                 {
                     return "!!";
                 }
-                case /* 34 */ Token::DOUBLEQUESTIONMARK:
+                case /* 36 */ Token::DOUBLEQUESTIONMARK:
                 {
                     return "??";
                 }
-                case /* 35 */ Token::DOUBLEAT:
+                case /* 37 */ Token::DOUBLEAT:
                 {
                     return "@@";
                 }
-                case /* 36 */ Token::EQUALITY:
+                case /* 38 */ Token::EQUALITY:
                 {
                     return "<=>";
                 }
-                case /* 37 */ Token::IMPLICATION:
+                case /* 39 */ Token::IMPLICATION:
                 {
                     return "=>";
                 }
-                case /* 38 */ Token::RIMPLICATION:
+                case /* 40 */ Token::RIMPLICATION:
                 {
                     return "<=";
                 }
-                case /* 39 */ Token::INEQUALITY:
+                case /* 41 */ Token::INEQUALITY:
                 {
                     return "<~>";
                 }
-                case /* 40 */ Token::NOR:
+                case /* 42 */ Token::NOR:
                 {
                     return "~|";
                 }
-                case /* 41 */ Token::NAND:
+                case /* 43 */ Token::NAND:
                 {
                     return "~&";
                 }
-                case /* 42 */ Token::ASSIGNMENT:
+                case /* 44 */ Token::ASSIGNMENT:
                 {
                     return ":=";
                 }
-                case /* 43 */ Token::GENTZENARROW:
+                case /* 45 */ Token::GENTZENARROW:
                 {
                     return "-->";
                 }
-                case /* 44 */ Token::SUBTYPESIGN:
+                case /* 46 */ Token::SUBTYPESIGN:
                 {
                     return "<<";
                 }
-                case /* 45 */ Token::INCLUDE:
+                case /* 47 */ Token::INCLUDE:
                 {
                     return "include";
                 }
