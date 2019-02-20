@@ -665,21 +665,21 @@ Definition <Definition::Ptr> (64)
     on left: 4 5, on right: 2 3
 AnnotatedFormula <FormulaDefinition::Ptr> (65)
     on left: 6 7 8 9 10 11, on right: 4
-ThfAnnotated (66)
+ThfAnnotated <FormulaDefinition::Ptr> (66)
     on left: 12 13, on right: 6
-TffAnnotated (67)
+TffAnnotated <FormulaDefinition::Ptr> (67)
     on left: 14 15, on right: 7
-TcfAnnotated (68)
+TcfAnnotated <FormulaDefinition::Ptr> (68)
     on left: 16 17, on right: 8
 FofAnnotated <FormulaDefinition::Ptr> (69)
     on left: 18 19, on right: 9
-CnfAnnotated (70)
+CnfAnnotated <FormulaDefinition::Ptr> (70)
     on left: 20 21, on right: 10
-TpiAnnotated (71)
+TpiAnnotated <FormulaDefinition::Ptr> (71)
     on left: 22 23, on right: 11
 Annotations <Annotation::Ptr> (72)
     on left: 24 25, on right: 13 15 17 19 21 23
-TpiFormula <FirstOrderFormula::Ptr> (73)
+TpiFormula <Logic::Ptr> (73)
     on left: 26, on right: 22 23
 ThfFormula <Logic::Ptr> (74)
     on left: 27 28 29 30, on right: 12 13 82 354
@@ -870,13 +870,13 @@ TffSubtype <SubType::Ptr> (166)
     on left: 222, on right: 125
 TfxSequent <SequentLogic::Ptr> (167)
     on left: 223 224, on right: 126 224
-TcfFormula (168)
+TcfFormula <Logic::Ptr> (168)
     on left: 225 226, on right: 16 17
-TcfLogicFormula (169)
+TcfLogicFormula <Logic::Ptr> (169)
     on left: 227 228, on right: 225
-TcfQuantifiedFormula (170)
+TcfQuantifiedFormula <QuantifiedLogic::Ptr> (170)
     on left: 229, on right: 227
-FofFormula <FirstOrderFormula::Ptr> (171)
+FofFormula <Logic::Ptr> (171)
     on left: 230 231, on right: 18 19 26 356
 FofLogicFormula <Logic::Ptr> (172)
     on left: 232 233 234, on right: 230 251 284 285
@@ -1005,7 +1005,7 @@ GeneralFunction <GeneralFunction::Ptr> (233)
     on left: 351, on right: 346
 GeneralTerms <Nodes::Ptr> (234)
     on left: 352 353, on right: 351 353 360
-FormulaData (235)
+FormulaData <FormulaData::Ptr> (235)
     on left: 354 355 356 357 358, on right: 350
 GeneralList <GeneralList::Ptr> (236)
     on left: 359 360, on right: 25 344
