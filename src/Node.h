@@ -145,12 +145,6 @@ namespace libtptp
         void setSourceLocation( const SourceLocation& sourceLocation );
         const SourceLocation& sourceLocation( void ) const;
 
-        void setPrefix( const libstdhl::List< Node >& prefix );
-        libstdhl::List< Node >& prefix( void );
-
-        void setSuffix( const libstdhl::List< Node >& suffix );
-        libstdhl::List< Node >& suffix( void );
-
         /**
            @return A short description about the node type.
          */
@@ -167,8 +161,6 @@ namespace libtptp
       private:
         const ID m_id;
         SourceLocation m_sourceLocation;
-        libstdhl::List< Node > m_prefix;
-        libstdhl::List< Node > m_suffix;
     };
 
     template < typename T >

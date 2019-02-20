@@ -158,6 +158,7 @@ namespace libtptp
 
         const GeneralTerm::Ptr& source( void ) const;
         const libstdhl::Optional< const GeneralList::Ptr >& usefulInfo( void ) const;
+        const Token::Ptr& comma() const;
         void setDelimiter( const Token::Ptr& delimiter );
 
       private:

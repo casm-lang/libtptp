@@ -56,6 +56,11 @@ ValueLiteral::ValueLiteral( const Node::ID id, libstdhl::Type::Data value )
 {
 }
 
+const libstdhl::Type::Data& ValueLiteral::value( void ) const
+{
+    return m_value;
+}
+
 IntegerLiteral::IntegerLiteral( const std::string& integer )
 : ValueLiteral( Node::ID::INTEGER_LITERAL, libstdhl::Type::createInteger( integer ) )
 {
@@ -73,8 +78,7 @@ RationalLiteral::RationalLiteral( const std::string& rational )
 
 void RationalLiteral::accept( Visitor& visitor )
 {
-    // visitor.visit( *this );
-    // TODO: @moosbruggerj implement visitor
+    visitor.visit( *this );
 }
 
 RealLiteral::RealLiteral( const std::string& real )
@@ -84,8 +88,7 @@ RealLiteral::RealLiteral( const std::string& real )
 
 void RealLiteral::accept( Visitor& visitor )
 {
-    // visitor.visit( *this );
-    // TODO: @moosbruggerj implement visitor
+    visitor.visit( *this );
 }
 
 StringLiteral::StringLiteral( const std::string& string )
@@ -174,13 +177,24 @@ ListLiteral::ListLiteral(
 {
 }
 
+const Token::Ptr& ListLiteral::leftBraceToken() const
+{
+    return m_leftBraceToken;
+}
+
 const Nodes::Ptr& ListLiteral::elements( void ) const
 {
     return m_elements;
 }
 
+const Token::Ptr& ListLiteral::rightBraceToken() const
+{
+    return m_rightBraceToken;
+}
+
 void ListLiteral::accept( Visitor& visitor )
 {
+    visitor.visit( *this );
 }
 
 //

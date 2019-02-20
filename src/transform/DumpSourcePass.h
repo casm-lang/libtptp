@@ -74,23 +74,12 @@ namespace libtptp
         void visit( Trace& node ) override;
         void visit( Record& node ) override;
 
-        void visit( FirstOrderFormula& node ) override;
-        void visit( TypedFirstOrderFormula& node ) override;
-
-        void visit( UnaryLogic& node ) override;
-        void visit( BinaryLogic& node ) override;
-        void visit( QuantifiedLogic& node ) override;
-        void visit( SequentLogic& node ) override;
-
-        void visit( FunctionTerm& node ) override;
-        void visit( VariableTerm& node ) override;
-        void visit( ConditionalTerm& node ) override;
-
-        void visit( FunctorAtom& node ) override;
-
-        // void visit( Identifier& node ) override;
-        void visit( StringLiteral& node ) override;
         void visit( IntegerLiteral& node ) override;
+        void visit( RationalLiteral& node ) override;
+        void visit( RealLiteral& node ) override;
+        void visit( StringLiteral& node ) override;
+
+        void visit( Token& node ) override;
 
       private:
         std::ostream& m_stream;

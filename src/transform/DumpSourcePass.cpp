@@ -44,6 +44,7 @@
 #include <libtptp/Atom>
 #include <libtptp/Formula>
 #include <libtptp/Identifier>
+#include <libtptp/Literal>
 #include <libtptp/Logic>
 #include <libtptp/Node>
 #include <libtptp/Record>
@@ -113,104 +114,34 @@ void DumpSourceVisitor::visit( Record& node )
     m_stream << "\n";
 }
 
-void DumpSourceVisitor::visit( FirstOrderFormula& node )
+void DumpSourceVisitor::visit( IntegerLiteral& node )
+{
+    RecursiveVisitor::visit( node );
+    m_stream << node.value().to_string();
+}
+
+void DumpSourceVisitor::visit( RationalLiteral& node )
 {
     RecursiveVisitor::visit( node );
 }
-void DumpSourceVisitor::visit( TypedFirstOrderFormula& node )
+
+void DumpSourceVisitor::visit( RealLiteral& node )
 {
     RecursiveVisitor::visit( node );
+    m_stream << node.value().to_string();
 }
-
-void DumpSourceVisitor::visit( UnaryLogic& node )
-{
-    m_stream << node.connectiveToken();
-    node.logic()->accept( *this );
-}
-void DumpSourceVisitor::visit( BinaryLogic& node )
-{
-    node.left()->accept( *this );
-    m_stream << " ";
-    m_stream << node.connectiveToken();
-    m_stream << " ";
-    node.right()->accept( *this );
-}
-void DumpSourceVisitor::visit( QuantifiedLogic& node )
-{
-    node.quantifierToken()->accept( *this );
-    m_stream << " ";
-    node.variables()->accept( *this );
-    m_stream << " : ";
-    node.logic()->accept( *this );
-}
-void DumpSourceVisitor::visit( SequentLogic& node )
-{
-    node.left()->accept( *this );
-    m_stream << " ";
-    m_stream << node.connectiveToken();
-    m_stream << " ";
-    node.right()->accept( *this );
-}
-
-void DumpSourceVisitor::visit( FunctionTerm& node )
-{
-    RecursiveVisitor::visit( node );
-}
-void DumpSourceVisitor::visit( VariableTerm& node )
-{
-    RecursiveVisitor::visit( node );
-}
-void DumpSourceVisitor::visit( ConditionalTerm& node )
-{
-    /*
-    m_stream << "$ite_t( ";
-    node.condition()->accept( *this );
-    m_stream << ", ";
-    node.left()->accept( *this );
-    m_stream << ", ";
-    node.right()->accept( *this );
-    m_stream << " )";
-    */
-}
-
-void DumpSourceVisitor::visit( FunctorAtom& node )
-{
-    node.name()->accept( *this );
-
-    m_stream << "( ";
-
-    u1 first = true;
-    assert( node.arguments() );
-    for( auto& argument : *node.arguments() )
-    {
-        m_stream << ( first ? "" : ", " );
-        first = false;
-
-        argument->accept( *this );
-    }
-
-    m_stream << " )";
-}
-
-/*
-void DumpSourceVisitor::visit( Identifier& node )
-{
-    m_stream << "Identifier( ";
-    node.name()->accept( *this );
-    m_stream << " )";
-}
-*/
 
 void DumpSourceVisitor::visit( StringLiteral& node )
 {
-    //   m_stream << node.value();
+    RecursiveVisitor::visit( node );
+    m_stream << node.value().to_string();
 }
 
-void DumpSourceVisitor::visit( IntegerLiteral& node )
+void DumpSourceVisitor::visit( Token& node )
 {
-    //  m_stream << node.value();
+    RecursiveVisitor::visit( node );
+    m_stream << node.tokenString();
 }
-
 //
 //  Local variables:
 //  mode: c++

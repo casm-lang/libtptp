@@ -115,6 +115,7 @@ TypedHigherOrderFormula::TypedHigherOrderFormula( const Logic::Ptr& logic )
 
 void TypedHigherOrderFormula::accept( Visitor& visitor )
 {
+    visitor.visit( *this );
 }
 
 TPTPProcessInstructionFormula::TPTPProcessInstructionFormula( const Logic::Ptr& logic )
@@ -124,6 +125,7 @@ TPTPProcessInstructionFormula::TPTPProcessInstructionFormula( const Logic::Ptr& 
 
 void TPTPProcessInstructionFormula::accept( Visitor& visitor )
 {
+    visitor.visit( *this );
 }
 
 ClauseNormalFormFormula::ClauseNormalFormFormula( const Logic::Ptr& logic )
@@ -133,6 +135,7 @@ ClauseNormalFormFormula::ClauseNormalFormFormula( const Logic::Ptr& logic )
 
 void ClauseNormalFormFormula::accept( Visitor& visitor )
 {
+    visitor.visit( *this );
 }
 
 TheoryComputableFunctionalsFormula::TheoryComputableFunctionalsFormula( const Logic::Ptr& logic )
@@ -142,6 +145,7 @@ TheoryComputableFunctionalsFormula::TheoryComputableFunctionalsFormula( const Lo
 
 void TheoryComputableFunctionalsFormula::accept( Visitor& visitor )
 {
+    visitor.visit( *this );
 }
 
 FormulaData::FormulaData(
@@ -160,6 +164,7 @@ FormulaData::FormulaData(
 
 void FormulaData::accept( Visitor& visitor )
 {
+    visitor.visit( *this );
 }
 
 const Token::Ptr& FormulaData::dollar( void ) const
@@ -193,6 +198,7 @@ FormulaRole::FormulaRole( const StringLiteral::Ptr& word )
 
 void FormulaRole::accept( Visitor& visitor )
 {
+    visitor.visit( *this );
 }
 
 const StringLiteral::Ptr& FormulaRole::word( void ) const

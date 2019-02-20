@@ -67,26 +67,6 @@ const SourceLocation& Node::sourceLocation( void ) const
     return m_sourceLocation;
 }
 
-void Node::setPrefix( const libstdhl::List< Node >& prefix )
-{
-    m_prefix = prefix;
-}
-
-libstdhl::List< Node >& Node::prefix( void )
-{
-    return m_prefix;
-}
-
-void Node::setSuffix( const libstdhl::List< Node >& suffix )
-{
-    m_suffix = suffix;
-}
-
-libstdhl::List< Node >& Node::suffix( void )
-{
-    return m_suffix;
-}
-
 std::string Node::description( void ) const
 {
     switch( m_id )
@@ -312,23 +292,6 @@ std::string Node::description( void ) const
     assert( !" internal error! " );
     return std::string();
 }
-/*
-Identifier::Identifier( const StringLiteral& name )
-: Node( Node::ID::IDENTIFIER )
-, m_name( name )
-{
-}
-
-const StringLiteral& Identifier::name( void ) const
-{
-    return m_name;
-}
-
-void Identifier::accept( Visitor& visitor )
-{
-    visitor.visit( *this );
-}
-*/
 
 //
 //  Local variables:

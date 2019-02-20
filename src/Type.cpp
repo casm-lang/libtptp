@@ -55,6 +55,7 @@ AtomType::AtomType( const Node::Ptr& atom )
 
 void AtomType::accept( Visitor& visitor )
 {
+    visitor.visit( *this );
 }
 
 const Node::Ptr& AtomType::atom( void ) const
@@ -81,6 +82,7 @@ BinaryType::BinaryType(
 
 void BinaryType::accept( Visitor& visitor )
 {
+    visitor.visit( *this );
 }
 
 const Type::Ptr& BinaryType::left( void ) const
@@ -117,6 +119,7 @@ TypedAtom::TypedAtom( const Identifier::Ptr& atom, const Token::Ptr& colon, cons
 
 void TypedAtom::accept( Visitor& visitor )
 {
+    visitor.visit( *this );
 }
 
 const Type::Ptr& TypedAtom::type( void ) const
@@ -149,6 +152,7 @@ TupleType::TupleType(
 
 void TupleType::accept( Visitor& visitor )
 {
+    visitor.visit( *this );
 }
 
 const Token::Ptr& TupleType::leftBraceToken( void ) const
@@ -189,6 +193,7 @@ QuantifiedType::QuantifiedType(
 
 void QuantifiedType::accept( Visitor& visitor )
 {
+    visitor.visit( *this );
 }
 
 const Token::Ptr& QuantifiedType::quantifierToken( void ) const
@@ -236,6 +241,7 @@ SubType::SubType(
 
 void SubType::accept( Visitor& visitor )
 {
+    visitor.visit( *this );
 }
 
 const Identifier::Ptr& SubType::lhs( void ) const
