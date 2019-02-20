@@ -105,6 +105,81 @@ namespace libtptp
         void accept( Visitor& visitor ) override;
     };
 
+    class TypedHigherOrderFormula final : public Formula
+    {
+      public:
+        using Ptr = std::shared_ptr< TypedHigherOrderFormula >;
+
+        explicit TypedHigherOrderFormula( const Logic::Ptr& logic );
+
+        void accept( Visitor& visitor ) override final;
+
+      private:
+    };
+    class TPTPProcessInstructionFormula final : public Formula
+    {
+      public:
+        using Ptr = std::shared_ptr< TPTPProcessInstructionFormula >;
+
+        explicit TPTPProcessInstructionFormula( const Logic::Ptr& logic );
+
+        void accept( Visitor& visitor ) override final;
+
+      private:
+    };
+
+    class ClauseNormalFormFormula final : public Formula
+    {
+      public:
+        using Ptr = std::shared_ptr< ClauseNormalFormFormula >;
+
+        explicit ClauseNormalFormFormula( const Logic::Ptr& logic );
+
+        void accept( Visitor& visitor ) override final;
+
+      private:
+    };
+
+    class TheoryComputableFunctionalsFormula final : public Formula
+    {
+      public:
+        using Ptr = std::shared_ptr< TheoryComputableFunctionalsFormula >;
+
+        explicit TheoryComputableFunctionalsFormula( const Logic::Ptr& logic );
+
+        void accept( Visitor& visitor ) override final;
+
+      private:
+    };
+
+    class FormulaData final : public Formula
+    {
+      public:
+        using Ptr = std::shared_ptr< FormulaData >;
+
+        explicit FormulaData(
+            const Token::Ptr& dollar,
+            const Token::Ptr& formulaType,
+            const Token::Ptr& leftParen,
+            const Logic::Ptr& formula,
+            const Token::Ptr& rightParen );
+
+        void accept( Visitor& visitor ) override final;
+
+        const Token::Ptr& dollar( void ) const;
+        const Token::Ptr& formulaType( void ) const;
+        const Token::Ptr& leftParen( void ) const;
+        const Token::Ptr& rightParen( void ) const;
+
+      private:
+        const Token::Ptr m_dollar;
+        const Token::Ptr m_formulaType;
+        const Token::Ptr m_leftParen;
+        const Token::Ptr m_rightParen;
+    };
+
+    using FormulaDatas = NodeList< FormulaData >;
+
     class FormulaRole final : public Node
     {
       public:

@@ -133,11 +133,27 @@ std::string Node::description( void ) const
         // formulae
         case ID::FOF_FORMULA:
         {
-            return "fof_formula";
+            return "fof formula";
         }
         case ID::TFF_FORMULA:
         {
-            return "tff_formula";
+            return "tff formula";
+        }
+        case ID::THF_FORMULA:
+        {
+            return "thf formula";
+        }
+        case ID::TPI_FORMULA:
+        {
+            return "tpi formula";
+        }
+        case ID::CNF_FORMULA:
+        {
+            return "cnf formula";
+        }
+        case ID::TCF_FORMULA:
+        {
+            return "rcf formula";
         }
 
         // logics
@@ -241,6 +257,10 @@ std::string Node::description( void ) const
         case ID::FORMULA_ROLE:
         {
             return "formula role";
+        }
+        case ID::FORMULA_DATA:
+        {
+            return "formula data";
         }
 
         case ID::GENERAL_DATA:

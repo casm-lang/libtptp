@@ -108,6 +108,80 @@ void TypedFirstOrderFormula::accept( Visitor& visitor )
     visitor.visit( *this );
 }
 
+TypedHigherOrderFormula::TypedHigherOrderFormula( const Logic::Ptr& logic )
+: Formula( Node::ID::THF_FORMULA, logic )
+{
+}
+
+void TypedHigherOrderFormula::accept( Visitor& visitor )
+{
+}
+
+TPTPProcessInstructionFormula::TPTPProcessInstructionFormula( const Logic::Ptr& logic )
+: Formula( Node::ID::TPI_FORMULA, logic )
+{
+}
+
+void TPTPProcessInstructionFormula::accept( Visitor& visitor )
+{
+}
+
+ClauseNormalFormFormula::ClauseNormalFormFormula( const Logic::Ptr& logic )
+: Formula( Node::ID::CNF_FORMULA, logic )
+{
+}
+
+void ClauseNormalFormFormula::accept( Visitor& visitor )
+{
+}
+
+TheoryComputableFunctionalsFormula::TheoryComputableFunctionalsFormula( const Logic::Ptr& logic )
+: Formula( Node::ID::TCF_FORMULA, logic )
+{
+}
+
+void TheoryComputableFunctionalsFormula::accept( Visitor& visitor )
+{
+}
+
+FormulaData::FormulaData(
+    const Token::Ptr& dollar,
+    const Token::Ptr& formulaType,
+    const Token::Ptr& leftParen,
+    const Logic::Ptr& formula,
+    const Token::Ptr& rightParen )
+: Formula( Node::ID::FORMULA_DATA, formula )
+, m_dollar( dollar )
+, m_formulaType( formulaType )
+, m_leftParen( leftParen )
+, m_rightParen( rightParen )
+{
+}
+
+void FormulaData::accept( Visitor& visitor )
+{
+}
+
+const Token::Ptr& FormulaData::dollar( void ) const
+{
+    return m_dollar;
+}
+
+const Token::Ptr& FormulaData::formulaType( void ) const
+{
+    return m_formulaType;
+}
+
+const Token::Ptr& FormulaData::leftParen( void ) const
+{
+    return m_leftParen;
+}
+
+const Token::Ptr& FormulaData::rightParen( void ) const
+{
+    return m_rightParen;
+}
+
 //
 // FormulaRole
 //
