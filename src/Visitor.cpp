@@ -449,82 +449,245 @@ std::function< void( Node& ) > TraversalVisitor::callback( void ) const
     return m_callback;
 }
 
-void TraversalVisitor::visit( Trace& node )
+template < class T >
+void TraversalVisitor::handle( T& node )
 {
     if( order() == PREORDER )
     {
         callback()( node );
     }
 
-    node.records()->accept( *this );
+    RecursiveVisitor::visit( node );
 
     if( order() == POSTORDER )
     {
         callback()( node );
     }
 }
+
+void TraversalVisitor::visit( Trace& node )
+{
+    handle( node );
+}
+
 void TraversalVisitor::visit( Record& node )
 {
-    callback()( node );
+    handle( node );
 }
 
 void TraversalVisitor::visit( FirstOrderFormula& node )
 {
-    callback()( node );
+    handle( node );
 }
+
 void TraversalVisitor::visit( TypedFirstOrderFormula& node )
 {
-    callback()( node );
+    handle( node );
+}
+
+void TraversalVisitor::visit( TypedHigherOrderFormula& node )
+{
+    handle( node );
+}
+
+void TraversalVisitor::visit( TPTPProcessInstructionFormula& node )
+{
+    handle( node );
+}
+
+void TraversalVisitor::visit( ClauseNormalFormFormula& node )
+{
+    handle( node );
+}
+
+void TraversalVisitor::visit( TheoryComputableFunctionalsFormula& node )
+{
+    handle( node );
+}
+
+void TraversalVisitor::visit( FormulaData& node )
+{
+    handle( node );
+}
+
+void TraversalVisitor::visit( FormulaRole& node )
+{
+    handle( node );
 }
 
 void TraversalVisitor::visit( UnaryLogic& node )
 {
-    callback()( node );
+    handle( node );
 }
+
 void TraversalVisitor::visit( BinaryLogic& node )
 {
-    callback()( node );
+    handle( node );
 }
+
 void TraversalVisitor::visit( QuantifiedLogic& node )
 {
-    callback()( node );
+    handle( node );
 }
+
+void TraversalVisitor::visit( InfixLogic& node )
+{
+    handle( node );
+}
+
+void TraversalVisitor::visit( LogicTuple& node )
+{
+    handle( node );
+}
+
 void TraversalVisitor::visit( SequentLogic& node )
 {
-    callback()( node );
+    handle( node );
 }
 
 void TraversalVisitor::visit( FunctionTerm& node )
 {
-    callback()( node );
+    handle( node );
 }
+
 void TraversalVisitor::visit( VariableTerm& node )
 {
-    callback()( node );
+    handle( node );
 }
+
 void TraversalVisitor::visit( ConditionalTerm& node )
 {
-    callback()( node );
+    handle( node );
+}
+
+void TraversalVisitor::visit( DefinitionTerm& node )
+{
+    handle( node );
 }
 
 void TraversalVisitor::visit( FunctorAtom& node )
 {
-    callback()( node );
+    handle( node );
+}
+
+void TraversalVisitor::visit( ConstantAtom& node )
+{
+    handle( node );
+}
+
+void TraversalVisitor::visit( DefinedAtom& node )
+{
+    handle( node );
+}
+
+void TraversalVisitor::visit( DefinitionAtom& node )
+{
+    handle( node );
+}
+
+void TraversalVisitor::visit( ConnectiveAtom& node )
+{
+    handle( node );
+}
+
+void TraversalVisitor::visit( AtomType& node )
+{
+    handle( node );
+}
+
+void TraversalVisitor::visit( BinaryType& node )
+{
+    handle( node );
+}
+
+void TraversalVisitor::visit( TypedAtom& node )
+{
+    handle( node );
+}
+
+void TraversalVisitor::visit( TupleType& node )
+{
+    handle( node );
+}
+
+void TraversalVisitor::visit( QuantifiedType& node )
+{
+    handle( node );
+}
+
+void TraversalVisitor::visit( SubType& node )
+{
+    handle( node );
 }
 
 void TraversalVisitor::visit( Identifier& node )
 {
-    callback()( node );
-}
-
-void TraversalVisitor::visit( StringLiteral& node )
-{
-    callback()( node );
+    handle( node );
 }
 
 void TraversalVisitor::visit( IntegerLiteral& node )
 {
-    callback()( node );
+    handle( node );
+}
+
+void TraversalVisitor::visit( RationalLiteral& node )
+{
+    handle( node );
+}
+
+void TraversalVisitor::visit( RealLiteral& node )
+{
+    handle( node );
+}
+
+void TraversalVisitor::visit( StringLiteral& node )
+{
+    handle( node );
+}
+
+void TraversalVisitor::visit( ListLiteral& node )
+{
+    handle( node );
+}
+
+void TraversalVisitor::visit( Token& node )
+{
+    handle( node );
+}
+
+void TraversalVisitor::visit( IncludeDefinition& node )
+{
+    handle( node );
+}
+
+void TraversalVisitor::visit( FormulaDefinition& node )
+{
+    handle( node );
+}
+
+void TraversalVisitor::visit( GeneralData& node )
+{
+    handle( node );
+}
+
+void TraversalVisitor::visit( GeneralList& node )
+{
+    handle( node );
+}
+
+void TraversalVisitor::visit( GeneralAggregator& node )
+{
+    handle( node );
+}
+
+void TraversalVisitor::visit( GeneralFunction& node )
+{
+    handle( node );
+}
+
+void TraversalVisitor::visit( Annotation& node )
+{
+    handle( node );
 }
 
 //
