@@ -1543,6 +1543,7 @@ TffTypeArguments
   {
 	auto list = libtptp::make< Logics >(@$);
 	list->add($1);
+	$$ = list;
   }
 | TffTypeArguments COMMA TffAtomicType
   {
