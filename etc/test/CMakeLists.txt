@@ -49,6 +49,12 @@ include_directories(
 
 add_library( ${PROJECT}-test OBJECT
   main.cpp
+  cnf.cpp
   example.cpp
+  fof.cpp
   general.cpp
+  tff.cpp
+  thf.cpp
+  tpi.cpp
+
   )
