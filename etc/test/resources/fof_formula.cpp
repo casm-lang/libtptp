@@ -39,8 +39,9 @@
 //  statement from your version.
 //
 
-//http://www.tptp.org/cgi-bin/SeeTPTP?Category=Problems&Domain=ALG&File=ALG181+1.p
-static const std::string fof_test_depth = R"***(%--------------------------------------------------------------------------
+// http://www.tptp.org/cgi-bin/SeeTPTP?Category=Problems&Domain=ALG&File=ALG181+1.p
+static const std::string fof_test_depth =
+    R"***(%--------------------------------------------------------------------------
 % File     : ALG181+1 : TPTP v7.2.0. Released v2.7.0.
 % Domain   : General Algebra
 % Problem  : Quasigroups 5 QG4: REPRESENTATIVES-PAIRWISE-NOT-ISO-PROBLEM-2
@@ -288,8 +289,9 @@ fof(co1,conjecture,
 %--------------------------------------------------------------------------
 )***";
 
-//http://www.tptp.org/cgi-bin/SeeTPTP?Category=Axioms&File=AGT001+0.ax
-static const std::string fof_test_variables = R"***(%------------------------------------------------------------------------------
+// http://www.tptp.org/cgi-bin/SeeTPTP?Category=Axioms&File=AGT001+0.ax
+static const std::string fof_test_variables =
+    R"***(%------------------------------------------------------------------------------
 % File     : AGT001+0 : TPTP v7.2.0. Released v2.7.0.
 % Domain   : Agents
 % Axioms   : CPlanT system
@@ -476,8 +478,9 @@ fof(a2_13,axiom,
 %------------------------------------------------------------------------------
 )***";
 
-//http://www.tptp.org/cgi-bin/SeeTPTP?Category=Problems&Domain=SYN&File=SYN054+1.p
-static const std::string fof_test_existential = R"***(%--------------------------------------------------------------------------
+// http://www.tptp.org/cgi-bin/SeeTPTP?Category=Problems&Domain=SYN&File=SYN054+1.p
+static const std::string fof_test_existential =
+    R"***(%--------------------------------------------------------------------------
 % File     : SYN054+1 : TPTP v7.2.0. Released v2.0.0.
 % Domain   : Syntactic
 % Problem  : Pelletier Problem 24
@@ -534,12 +537,12 @@ fof(pel24,conjecture,
 
 %--------------------------------------------------------------------------
 )***";
-// 
-//  Local variables: 
-//  mode: c++ 
-//  indent-tabs-mode: nil 
-//  c-basic-offset: 4 
-//  tab-width: 4 
-//  End: 
-//  vim:noexpandtab:sw=4:ts=4: 
-// 
+//
+//  Local variables:
+//  mode: c++
+//  indent-tabs-mode: nil
+//  c-basic-offset: 4
+//  tab-width: 4
+//  End:
+//  vim:noexpandtab:sw=4:ts=4:
+//

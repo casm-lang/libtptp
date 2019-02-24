@@ -39,8 +39,9 @@
 //  statement from your version.
 //
 
-//http://www.tptp.org/cgi-bin/SeeTPTP?Category=Problems&Domain=AGT&File=AGT027^2.p
-static const std::string thf_test_basics = R"***(%------------------------------------------------------------------------------
+// http://www.tptp.org/cgi-bin/SeeTPTP?Category=Problems&Domain=AGT&File=AGT027^2.p
+static const std::string thf_test_basics =
+    R"***(%------------------------------------------------------------------------------
 % File     : AGT027^2 : TPTP v7.2.0. Released v5.2.0.
 % Domain   : Agents
 % Problem  : Two different degrees of belief
@@ -156,8 +157,9 @@ thf(conj,conjecture,
 %------------------------------------------------------------------------------
 )***";
 
-//http://www.tptp.org/cgi-bin/SeeTPTP?Category=Problems&Domain=GRA&File=GRA045^2.p
-static const std::string thf_test_depth = R"***(%------------------------------------------------------------------------------
+// http://www.tptp.org/cgi-bin/SeeTPTP?Category=Problems&Domain=GRA&File=GRA045^2.p
+static const std::string thf_test_depth =
+    R"***(%------------------------------------------------------------------------------
 % File     : GRA045^2 : TPTP v7.2.0. Released v3.6.0.
 % Domain   : Graph Theory
 % Problem  : R(5,9) <= 256
@@ -345,8 +347,9 @@ thf(ramsey_u_5_9_256a,conjecture,(
 %------------------------------------------------------------------------------
 )***";
 
-//http://www.tptp.org/cgi-bin/SeeTPTP?Category=Problems&Domain=ANA&File=ANA070^1.p
-static const std::string thf_test_th1 = R"***(%------------------------------------------------------------------------------
+// http://www.tptp.org/cgi-bin/SeeTPTP?Category=Problems&Domain=ANA&File=ANA070^1.p
+static const std::string thf_test_th1 =
+    R"***(%------------------------------------------------------------------------------
 % File     : ANA070^1 : TPTP v7.2.0. Released v7.0.0.
 % Domain   : Analysis
 % Problem  : REAL_SUP_LE_FINITE
@@ -427,12 +430,12 @@ thf('thm/sets/REAL_SUP_LE_FINITE_',conjecture,(
 
 %------------------------------------------------------------------------------
 )***";
-// 
-//  Local variables: 
-//  mode: c++ 
-//  indent-tabs-mode: nil 
-//  c-basic-offset: 4 
-//  tab-width: 4 
-//  End: 
-//  vim:noexpandtab:sw=4:ts=4: 
-// 
+//
+//  Local variables:
+//  mode: c++
+//  indent-tabs-mode: nil
+//  c-basic-offset: 4
+//  tab-width: 4
+//  End:
+//  vim:noexpandtab:sw=4:ts=4:
+//
