@@ -37,6 +37,7 @@
 //  may extend this exception to your version of the library, but you are
 //  not obliged to do so. If you do not wish to do so, delete this exception
 //  statement from your version.
+//
 
 #include "General.h"
 #include "various/GrammarToken.h"
