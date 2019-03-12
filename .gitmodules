@@ -63,4 +63,3 @@
 [submodule "lib/z3"] # external
 	path = lib/z3
 	url = https://github.com/casm-lang/libz3
-	branch = master
