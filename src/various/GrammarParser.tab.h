@@ -577,8 +577,11 @@ namespace libtptp {
       // Definitions
       char dummy14[sizeof (Definitions::Ptr)];
 
+      // DistinctObjectLiteral
+      char dummy15[sizeof (DistinctObjectLiteral::Ptr)];
+
       // FormulaData
-      char dummy15[sizeof (FormulaData::Ptr)];
+      char dummy16[sizeof (FormulaData::Ptr)];
 
       // AnnotatedFormula
       // ThfAnnotated
@@ -587,10 +590,7 @@ namespace libtptp {
       // FofAnnotated
       // CnfAnnotated
       // TpiAnnotated
-      char dummy16[sizeof (FormulaDefinition::Ptr)];
-
-      // FormulaRole
-      char dummy17[sizeof (FormulaRole::Ptr)];
+      char dummy17[sizeof (FormulaDefinition::Ptr)];
 
       // ThfFofFunction
       char dummy18[sizeof (FunctorAtom::Ptr)];
@@ -619,7 +619,14 @@ namespace libtptp {
       // DefinedConstant
       // DefinedFunctor
       // Name
+      // AtomicWord
+      // AtomicDefinedWord
+      // AtomicSystemWord
       // FileName
+      // LowerWordLiteral
+      // SingleQuotedLiteral
+      // DollarWordLiteral
+      // DollarDollarWordLiteral
       char dummy23[sizeof (Identifier::Ptr)];
 
       // IncludeDefinition
@@ -723,23 +730,16 @@ namespace libtptp {
       // RealLiteral
       char dummy37[sizeof (RealLiteral::Ptr)];
 
+      // FormulaRole
+      char dummy38[sizeof (Role::Ptr)];
+
       // ThfSequent
       // TfxSequent
       // FofSequent
-      char dummy38[sizeof (SequentLogic::Ptr)];
+      char dummy39[sizeof (SequentLogic::Ptr)];
 
       // Specification
-      char dummy39[sizeof (Specification::Ptr)];
-
-      // AtomicWord
-      // AtomicDefinedWord
-      // AtomicSystemWord
-      // DistinctObjectLiteral
-      // LowerWordLiteral
-      // SingleQuotedLiteral
-      // DollarWordLiteral
-      // DollarDollarWordLiteral
-      char dummy40[sizeof (StringLiteral::Ptr)];
+      char dummy40[sizeof (Specification::Ptr)];
 
       // ThfSubtype
       // TffSubtype
@@ -986,9 +986,9 @@ namespace libtptp {
       basic_symbol (typename Base::kind_type t, YY_RVREF (DefinitionAtom::Ptr) v, YY_RVREF (location_type) l);
       basic_symbol (typename Base::kind_type t, YY_RVREF (DefinitionTerm::Ptr) v, YY_RVREF (location_type) l);
       basic_symbol (typename Base::kind_type t, YY_RVREF (Definitions::Ptr) v, YY_RVREF (location_type) l);
+      basic_symbol (typename Base::kind_type t, YY_RVREF (DistinctObjectLiteral::Ptr) v, YY_RVREF (location_type) l);
       basic_symbol (typename Base::kind_type t, YY_RVREF (FormulaData::Ptr) v, YY_RVREF (location_type) l);
       basic_symbol (typename Base::kind_type t, YY_RVREF (FormulaDefinition::Ptr) v, YY_RVREF (location_type) l);
-      basic_symbol (typename Base::kind_type t, YY_RVREF (FormulaRole::Ptr) v, YY_RVREF (location_type) l);
       basic_symbol (typename Base::kind_type t, YY_RVREF (FunctorAtom::Ptr) v, YY_RVREF (location_type) l);
       basic_symbol (typename Base::kind_type t, YY_RVREF (GeneralData::Ptr) v, YY_RVREF (location_type) l);
       basic_symbol (typename Base::kind_type t, YY_RVREF (GeneralFunction::Ptr) v, YY_RVREF (location_type) l);
@@ -1009,9 +1009,9 @@ namespace libtptp {
       basic_symbol (typename Base::kind_type t, YY_RVREF (QuantifiedType::Ptr) v, YY_RVREF (location_type) l);
       basic_symbol (typename Base::kind_type t, YY_RVREF (RationalLiteral::Ptr) v, YY_RVREF (location_type) l);
       basic_symbol (typename Base::kind_type t, YY_RVREF (RealLiteral::Ptr) v, YY_RVREF (location_type) l);
+      basic_symbol (typename Base::kind_type t, YY_RVREF (Role::Ptr) v, YY_RVREF (location_type) l);
       basic_symbol (typename Base::kind_type t, YY_RVREF (SequentLogic::Ptr) v, YY_RVREF (location_type) l);
       basic_symbol (typename Base::kind_type t, YY_RVREF (Specification::Ptr) v, YY_RVREF (location_type) l);
-      basic_symbol (typename Base::kind_type t, YY_RVREF (StringLiteral::Ptr) v, YY_RVREF (location_type) l);
       basic_symbol (typename Base::kind_type t, YY_RVREF (SubType::Ptr) v, YY_RVREF (location_type) l);
       basic_symbol (typename Base::kind_type t, YY_RVREF (Term::Ptr) v, YY_RVREF (location_type) l);
       basic_symbol (typename Base::kind_type t, YY_RVREF (Token::Ptr) v, YY_RVREF (location_type) l);
@@ -1540,7 +1540,7 @@ namespace libtptp {
     enum
     {
       yyeof_ = 0,
-      yylast_ = 2978,     ///< Last index in yytable_.
+      yylast_ = 2814,     ///< Last index in yytable_.
       yynnts_ = 192,  ///< Number of nonterminal symbols.
       yyfinal_ = 26, ///< Termination state number.
       yyterror_ = 1,
@@ -1717,6 +1717,10 @@ namespace libtptp {
         value.YY_MOVE_OR_COPY< Definitions::Ptr > (YY_MOVE (other.value));
         break;
 
+      case 248: // DistinctObjectLiteral
+        value.YY_MOVE_OR_COPY< DistinctObjectLiteral::Ptr > (YY_MOVE (other.value));
+        break;
+
       case 235: // FormulaData
         value.YY_MOVE_OR_COPY< FormulaData::Ptr > (YY_MOVE (other.value));
         break;
@@ -1729,10 +1733,6 @@ namespace libtptp {
       case 70: // CnfAnnotated
       case 71: // TpiAnnotated
         value.YY_MOVE_OR_COPY< FormulaDefinition::Ptr > (YY_MOVE (other.value));
-        break;
-
-      case 230: // FormulaRole
-        value.YY_MOVE_OR_COPY< FormulaRole::Ptr > (YY_MOVE (other.value));
         break;
 
       case 96: // ThfFofFunction
@@ -1767,7 +1767,14 @@ namespace libtptp {
       case 225: // DefinedConstant
       case 226: // DefinedFunctor
       case 229: // Name
+      case 239: // AtomicWord
+      case 240: // AtomicDefinedWord
+      case 241: // AtomicSystemWord
       case 243: // FileName
+      case 249: // LowerWordLiteral
+      case 250: // SingleQuotedLiteral
+      case 251: // DollarWordLiteral
+      case 252: // DollarDollarWordLiteral
         value.YY_MOVE_OR_COPY< Identifier::Ptr > (YY_MOVE (other.value));
         break;
 
@@ -1886,6 +1893,10 @@ namespace libtptp {
         value.YY_MOVE_OR_COPY< RealLiteral::Ptr > (YY_MOVE (other.value));
         break;
 
+      case 230: // FormulaRole
+        value.YY_MOVE_OR_COPY< Role::Ptr > (YY_MOVE (other.value));
+        break;
+
       case 118: // ThfSequent
       case 167: // TfxSequent
       case 198: // FofSequent
@@ -1894,17 +1905,6 @@ namespace libtptp {
 
       case 62: // Specification
         value.YY_MOVE_OR_COPY< Specification::Ptr > (YY_MOVE (other.value));
-        break;
-
-      case 239: // AtomicWord
-      case 240: // AtomicDefinedWord
-      case 241: // AtomicSystemWord
-      case 248: // DistinctObjectLiteral
-      case 249: // LowerWordLiteral
-      case 250: // SingleQuotedLiteral
-      case 251: // DollarWordLiteral
-      case 252: // DollarDollarWordLiteral
-        value.YY_MOVE_OR_COPY< StringLiteral::Ptr > (YY_MOVE (other.value));
         break;
 
       case 117: // ThfSubtype
@@ -2147,6 +2147,13 @@ namespace libtptp {
   {}
 
   template <typename Base>
+  Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, YY_RVREF (DistinctObjectLiteral::Ptr) v, YY_RVREF (location_type) l)
+    : Base (t)
+    , value (YY_MOVE (v))
+    , location (YY_MOVE (l))
+  {}
+
+  template <typename Base>
   Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, YY_RVREF (FormulaData::Ptr) v, YY_RVREF (location_type) l)
     : Base (t)
     , value (YY_MOVE (v))
@@ -2155,13 +2162,6 @@ namespace libtptp {
 
   template <typename Base>
   Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, YY_RVREF (FormulaDefinition::Ptr) v, YY_RVREF (location_type) l)
-    : Base (t)
-    , value (YY_MOVE (v))
-    , location (YY_MOVE (l))
-  {}
-
-  template <typename Base>
-  Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, YY_RVREF (FormulaRole::Ptr) v, YY_RVREF (location_type) l)
     : Base (t)
     , value (YY_MOVE (v))
     , location (YY_MOVE (l))
@@ -2308,6 +2308,13 @@ namespace libtptp {
   {}
 
   template <typename Base>
+  Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, YY_RVREF (Role::Ptr) v, YY_RVREF (location_type) l)
+    : Base (t)
+    , value (YY_MOVE (v))
+    , location (YY_MOVE (l))
+  {}
+
+  template <typename Base>
   Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, YY_RVREF (SequentLogic::Ptr) v, YY_RVREF (location_type) l)
     : Base (t)
     , value (YY_MOVE (v))
@@ -2316,13 +2323,6 @@ namespace libtptp {
 
   template <typename Base>
   Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, YY_RVREF (Specification::Ptr) v, YY_RVREF (location_type) l)
-    : Base (t)
-    , value (YY_MOVE (v))
-    , location (YY_MOVE (l))
-  {}
-
-  template <typename Base>
-  Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, YY_RVREF (StringLiteral::Ptr) v, YY_RVREF (location_type) l)
     : Base (t)
     , value (YY_MOVE (v))
     , location (YY_MOVE (l))
@@ -2525,6 +2525,10 @@ namespace libtptp {
         value.template destroy< Definitions::Ptr > ();
         break;
 
+      case 248: // DistinctObjectLiteral
+        value.template destroy< DistinctObjectLiteral::Ptr > ();
+        break;
+
       case 235: // FormulaData
         value.template destroy< FormulaData::Ptr > ();
         break;
@@ -2537,10 +2541,6 @@ namespace libtptp {
       case 70: // CnfAnnotated
       case 71: // TpiAnnotated
         value.template destroy< FormulaDefinition::Ptr > ();
-        break;
-
-      case 230: // FormulaRole
-        value.template destroy< FormulaRole::Ptr > ();
         break;
 
       case 96: // ThfFofFunction
@@ -2575,7 +2575,14 @@ namespace libtptp {
       case 225: // DefinedConstant
       case 226: // DefinedFunctor
       case 229: // Name
+      case 239: // AtomicWord
+      case 240: // AtomicDefinedWord
+      case 241: // AtomicSystemWord
       case 243: // FileName
+      case 249: // LowerWordLiteral
+      case 250: // SingleQuotedLiteral
+      case 251: // DollarWordLiteral
+      case 252: // DollarDollarWordLiteral
         value.template destroy< Identifier::Ptr > ();
         break;
 
@@ -2694,6 +2701,10 @@ namespace libtptp {
         value.template destroy< RealLiteral::Ptr > ();
         break;
 
+      case 230: // FormulaRole
+        value.template destroy< Role::Ptr > ();
+        break;
+
       case 118: // ThfSequent
       case 167: // TfxSequent
       case 198: // FofSequent
@@ -2702,17 +2713,6 @@ namespace libtptp {
 
       case 62: // Specification
         value.template destroy< Specification::Ptr > ();
-        break;
-
-      case 239: // AtomicWord
-      case 240: // AtomicDefinedWord
-      case 241: // AtomicSystemWord
-      case 248: // DistinctObjectLiteral
-      case 249: // LowerWordLiteral
-      case 250: // SingleQuotedLiteral
-      case 251: // DollarWordLiteral
-      case 252: // DollarDollarWordLiteral
-        value.template destroy< StringLiteral::Ptr > ();
         break;
 
       case 117: // ThfSubtype
@@ -2951,6 +2951,10 @@ namespace libtptp {
         value.move< Definitions::Ptr > (YY_MOVE (s.value));
         break;
 
+      case 248: // DistinctObjectLiteral
+        value.move< DistinctObjectLiteral::Ptr > (YY_MOVE (s.value));
+        break;
+
       case 235: // FormulaData
         value.move< FormulaData::Ptr > (YY_MOVE (s.value));
         break;
@@ -2963,10 +2967,6 @@ namespace libtptp {
       case 70: // CnfAnnotated
       case 71: // TpiAnnotated
         value.move< FormulaDefinition::Ptr > (YY_MOVE (s.value));
-        break;
-
-      case 230: // FormulaRole
-        value.move< FormulaRole::Ptr > (YY_MOVE (s.value));
         break;
 
       case 96: // ThfFofFunction
@@ -3001,7 +3001,14 @@ namespace libtptp {
       case 225: // DefinedConstant
       case 226: // DefinedFunctor
       case 229: // Name
+      case 239: // AtomicWord
+      case 240: // AtomicDefinedWord
+      case 241: // AtomicSystemWord
       case 243: // FileName
+      case 249: // LowerWordLiteral
+      case 250: // SingleQuotedLiteral
+      case 251: // DollarWordLiteral
+      case 252: // DollarDollarWordLiteral
         value.move< Identifier::Ptr > (YY_MOVE (s.value));
         break;
 
@@ -3120,6 +3127,10 @@ namespace libtptp {
         value.move< RealLiteral::Ptr > (YY_MOVE (s.value));
         break;
 
+      case 230: // FormulaRole
+        value.move< Role::Ptr > (YY_MOVE (s.value));
+        break;
+
       case 118: // ThfSequent
       case 167: // TfxSequent
       case 198: // FofSequent
@@ -3128,17 +3139,6 @@ namespace libtptp {
 
       case 62: // Specification
         value.move< Specification::Ptr > (YY_MOVE (s.value));
-        break;
-
-      case 239: // AtomicWord
-      case 240: // AtomicDefinedWord
-      case 241: // AtomicSystemWord
-      case 248: // DistinctObjectLiteral
-      case 249: // LowerWordLiteral
-      case 250: // SingleQuotedLiteral
-      case 251: // DollarWordLiteral
-      case 252: // DollarDollarWordLiteral
-        value.move< StringLiteral::Ptr > (YY_MOVE (s.value));
         break;
 
       case 117: // ThfSubtype
