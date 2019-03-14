@@ -38,6 +38,7 @@
 //  not obliged to do so. If you do not wish to do so, delete this exception
 //  statement from your version.
 //
+
 #include <libstdhl/Test>
 
 #include <libpass/libpass>
@@ -76,7 +77,7 @@ TEST( libtptp, annotation_source_general_term )
     file << "fof(distinct_object_annotation, axiom, functor, \"distinct object\").\n";
     file << "fof(recursive_aggregate_annotation, axiom, functor, 4/2:3:2:\"distinct\").\n";
     file << "fof(list_annotation, axiom, functor, [5, 3, 3.4]).\n";
-    // TODO: @moosbruggerj formula data test
+    file << "fof(formula_annotation, axiom, functor, $fot(Variable)).\n";
 
     file.close();
 
@@ -130,6 +131,7 @@ TEST( libtptp, annotation_useful_info_general_list )
     libstdhl::File::remove( filename );
     EXPECT_EQ( libstdhl::File::exists( filename ), false );
 }
+
 //
 //  Local variables:
 //  mode: c++

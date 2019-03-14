@@ -91,74 +91,14 @@ void RealLiteral::accept( Visitor& visitor )
     visitor.visit( *this );
 }
 
-StringLiteral::StringLiteral( const std::string& string )
-: StringLiteral( uToken, uToken, string )
-{
-}
-StringLiteral::StringLiteral( const Token::Ptr& definedModifier, const std::string& string )
-: StringLiteral( uToken, definedModifier, string )
+DistinctObjectLiteral::DistinctObjectLiteral( const std::string& string )
+: ValueLiteral( Node::ID::DISTINCT_OBJECT_LITERAL, libstdhl::Type::createString( string ) )
 {
 }
 
-StringLiteral::StringLiteral(
-    const Token::Ptr& systemModifier, const Token::Ptr& definedModifier, const std::string& string )
-: ValueLiteral( Node::ID::STRING_LITERAL, libstdhl::Type::createString( string ) )
-, m_systemModifier( systemModifier )
-, m_definedModifier( definedModifier )
-{
-    switch( string[ 0 ] )
-    {
-        case '"':
-        {
-            m_kind = Kind::DOUBLE_QUOTED;
-            break;
-        }
-        case '\'':
-        {
-            m_kind = Kind::SINGLE_QUOTED;
-            break;
-        }
-        default:
-        {
-            m_kind = Kind::NOT_QUOTED;
-            break;
-        }
-    }
-}
-
-const Token::Ptr StringLiteral::systemModifier( void ) const
-{
-    return m_systemModifier;
-}
-
-const Token::Ptr StringLiteral::definedModifier( void ) const
-{
-    return m_definedModifier;
-}
-
-void StringLiteral::accept( Visitor& visitor )
+void DistinctObjectLiteral::accept( Visitor& visitor )
 {
     visitor.visit( *this );
-}
-
-const StringLiteral::Kind& StringLiteral::kind( void ) const
-{
-    return m_kind;
-}
-
-const std::string StringLiteral::kindName( void ) const
-{
-    switch( m_kind )
-    {
-        case StringLiteral::Kind::NOT_QUOTED:
-            return "not quoted";
-        case StringLiteral::Kind::DOUBLE_QUOTED:
-            return "double qouted";
-        case StringLiteral::Kind::SINGLE_QUOTED:
-            return "single quoted";
-    };
-    assert( !"impossible StringLiteral Kind" );
-    return std::string();
 }
 
 ListLiteral::ListLiteral( const Token::Ptr& leftBraceToken, const Token::Ptr& rightBraceToken )

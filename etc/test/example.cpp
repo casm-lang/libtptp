@@ -48,22 +48,23 @@
 using namespace libtptp;
 using namespace libpass;
 
+static const auto uToken = std::make_shared< Token >( Grammar::Token::UNRESOLVED );
+
 TEST( libtptp, example )
 {
     DumpDebugVisitor dbg{ std::cout };
     DumpSourceVisitor src{ std::cout };
 
-    auto t = Trace();
+    auto t = Specification();
 
-    /*
-    auto x = std::make_shared< Identifier >( "X" );
-    auto v = std::make_shared< VariableTerm >( x );
+    auto x = std::make_shared< Identifier >( "x" );
+    auto v = std::make_shared< ConstantAtom >( x, Atom::Kind::PLAIN );
 
     auto y = std::make_shared< Identifier >( "y" );
     auto f = std::make_shared< FirstOrderFormula >( v );
 
-    t.add< Record >( y, Role::AXIOM, f );
-    */
+    t.add< FormulaDefinition >(
+        uToken, uToken, y, uToken, Role::axiom(), uToken, f, uToken, uToken );
 
     t.accept( dbg );
     t.accept( src );

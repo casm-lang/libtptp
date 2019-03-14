@@ -80,11 +80,10 @@ namespace libtptp
 
         const std::shared_ptr< Atom >& atom( void ) const;
 
+        void accept( Visitor& visitor ) override;
+
       private:
         const std::shared_ptr< Atom > m_atom;
-
-      public:
-        void accept( Visitor& visitor ) override;
     };
 
     // <variable> ::= <upper_word>
@@ -97,18 +96,17 @@ namespace libtptp
 
         const Identifier::Ptr& name( void ) const;
 
-        const libstdhl::Optional< Token::Ptr >& colon();
-        const libstdhl::Optional< std::shared_ptr< Type > >& type();
-        void setColon( Token::Ptr& colon );
-        void setType( std::shared_ptr< Type >& type );
+        const libstdhl::Optional< Token::Ptr >& colon( void );
+        const libstdhl::Optional< std::shared_ptr< Type > >& type( void );
+        void setColon( const Token::Ptr& colon );
+        void setType( const std::shared_ptr< Type >& type );
+
+        void accept( Visitor& visitor ) override;
 
       private:
         const Identifier::Ptr m_name;
         libstdhl::Optional< Token::Ptr > m_colon;
         libstdhl::Optional< std::shared_ptr< Type > > m_type;
-
-      public:
-        void accept( Visitor& visitor ) override;
     };
 
     // <tff_conditional_term> ::=
@@ -125,32 +123,32 @@ namespace libtptp
             const Token::Ptr& ite,
             const Token::Ptr& leftParen,
             const Logic::Ptr& condition,
-            const Token::Ptr& comma1,
+            const Token::Ptr& commaLeft,
             const Logic::Ptr& leftTerm,
-            const Token::Ptr& comma2,
+            const Token::Ptr& commaRight,
             const Logic::Ptr& rightTerm,
             const Token::Ptr& rightParen );
-
-        void accept( Visitor& visitor ) override final;
 
         const Token::Ptr& dollar( void ) const;
         const Token::Ptr& ite( void ) const;
         const Token::Ptr& leftParen( void ) const;
         const Logic::Ptr& condition( void ) const;
-        const Token::Ptr& comma1( void ) const;
+        const Token::Ptr& commaLeft( void ) const;
         const Logic::Ptr& leftTerm( void ) const;
-        const Token::Ptr& comma2( void ) const;
+        const Token::Ptr& commaRight( void ) const;
         const Logic::Ptr& rightTerm( void ) const;
         const Token::Ptr& rightParen( void ) const;
+
+        void accept( Visitor& visitor ) override final;
 
       private:
         const Token::Ptr m_dollar;
         const Token::Ptr m_ite;
         const Token::Ptr m_leftParen;
         const Logic::Ptr m_condition;
-        const Token::Ptr m_comma1;
+        const Token::Ptr m_commaLeft;
         const Logic::Ptr m_leftTerm;
-        const Token::Ptr m_comma2;
+        const Token::Ptr m_commaRight;
         const Logic::Ptr m_rightTerm;
         const Token::Ptr m_rightParen;
     };
@@ -168,32 +166,32 @@ namespace libtptp
             const Token::Ptr& let,
             const Token::Ptr& leftParen,
             const std::shared_ptr< Type >& types,
-            const Token::Ptr& comma1,
+            const Token::Ptr& commaLeft,
             const Logic::Ptr& definitions,
-            const Token::Ptr& comma2,
+            const Token::Ptr& commaRight,
             const Logic::Ptr& term,
             const Token::Ptr& rightParen );
-
-        void accept( Visitor& visitor ) override final;
 
         const Token::Ptr& dollar( void ) const;
         const Token::Ptr& let( void ) const;
         const Token::Ptr& leftParen( void ) const;
         const std::shared_ptr< Type >& types( void ) const;
-        const Token::Ptr& comma1( void ) const;
+        const Token::Ptr& commaLeft( void ) const;
         const Logic::Ptr& definitions( void ) const;
-        const Token::Ptr& comma2( void ) const;
+        const Token::Ptr& commaRight( void ) const;
         const Logic::Ptr& term( void ) const;
         const Token::Ptr& rightParen( void ) const;
+
+        void accept( Visitor& visitor ) override final;
 
       private:
         const Token::Ptr m_dollar;
         const Token::Ptr m_let;
         const Token::Ptr m_leftParen;
         const std::shared_ptr< Type > m_types;
-        const Token::Ptr m_comma1;
+        const Token::Ptr m_commaLeft;
         const Logic::Ptr m_definitions;
-        const Token::Ptr m_comma2;
+        const Token::Ptr m_commaRight;
         const Logic::Ptr m_term;
         const Token::Ptr m_rightParen;
     };

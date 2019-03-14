@@ -42,7 +42,7 @@
 #ifndef _LIBTPTP_SOURCE_TO_AST_PASS_H_
 #define _LIBTPTP_SOURCE_TO_AST_PASS_H_
 
-// #include <libtptp/ ... >
+#include <libtptp/Specification>
 
 #include <libpass/Pass>
 #include <libpass/analyze/LoadFilePass>
@@ -64,6 +64,9 @@ namespace libtptp
 
         u1 run( libpass::PassResult& pr ) override;
 
+        void setDebug( u1 debug );
+        u1 debug( void ) const;
+
       public:
         using Input = libpass::LoadFilePass::Output;
 
@@ -72,21 +75,22 @@ namespace libtptp
           public:
             using Ptr = std::shared_ptr< Output >;
 
-            Output( /* const Specification::Ptr& specification */ )
-            // : m_specification( specification )
+            Output( const Specification::Ptr& specification )
+            : m_specification( specification )
             {
-                // TODO: FIXME: @ppaulweber: @moosbruggerj provide correct implementation to store
-                // TPTP specifications
             }
 
-            // Specification::Ptr specification( void ) const
-            // {
-            //     return m_specification;
-            // }
+            Specification::Ptr specification( void ) const
+            {
+                return m_specification;
+            }
 
           private:
-            // Specification::Ptr m_specification;
+            Specification::Ptr m_specification;
         };
+
+      private:
+        u1 m_debug = false;
     };
 }
 

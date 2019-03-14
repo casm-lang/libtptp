@@ -65,6 +65,7 @@ namespace libtptp
             SYSTEM,
             TYPE,
         };
+
         using Ptr = std::shared_ptr< Atom >;
 
         Atom( const Node::ID id );
@@ -116,6 +117,7 @@ namespace libtptp
       public:
         void accept( Visitor& visitor ) override;
     };
+
     class ConstantAtom final : public Atom
     {
       public:
@@ -123,10 +125,10 @@ namespace libtptp
 
         explicit ConstantAtom( const Identifier::Ptr& constant, const Kind kind );
 
-        void accept( Visitor& visitor ) override final;
-
         const Identifier::Ptr& constant( void ) const;
         const Kind kind( void ) const;
+
+        void accept( Visitor& visitor ) override final;
 
       private:
         const Identifier::Ptr m_constant;
@@ -142,9 +144,9 @@ namespace libtptp
 
         explicit DefinedAtom( const Literal::Ptr& literal );
 
-        void accept( Visitor& visitor ) override final;
-
         const Literal::Ptr& literal( void ) const;
+
+        void accept( Visitor& visitor ) override final;
 
       private:
         const Literal::Ptr m_literal;
@@ -160,11 +162,11 @@ namespace libtptp
         explicit DefinitionAtom(
             const Logic::Ptr& lhs, const Token::Ptr& assignment, const Logic::Ptr& rhs );
 
-        void accept( Visitor& visitor ) override final;
-
         const Logic::Ptr& lhs( void ) const;
         const Token::Ptr& assignment( void ) const;
         const Logic::Ptr& rhs( void ) const;
+
+        void accept( Visitor& visitor ) override final;
 
       private:
         const Logic::Ptr m_lhs;
@@ -183,7 +185,7 @@ namespace libtptp
 
         void accept( Visitor& visitor ) override final;
 
-        Token::Ptr& connective( void );
+        const Token::Ptr& connective( void );
 
       private:
         Token::Ptr m_connective;

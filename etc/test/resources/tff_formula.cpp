@@ -39,8 +39,9 @@
 //  statement from your version.
 //
 
-//http://www.tptp.org/cgi-bin/SeeTPTP?Category=Problems&Domain=COM&File=COM003_1.p
-static const std::string tff_test_basic = R"***(%--------------------------------------------------------------------------
+// http://www.tptp.org/cgi-bin/SeeTPTP?Category=Problems&Domain=COM&File=COM003_1.p
+static const std::string tff_test_basic =
+    R"***(%--------------------------------------------------------------------------
 % File     : COM003_1 : TPTP v7.2.0. Released v5.0.0.
 % Domain   : Computing Theory
 % Problem  : The halting problem is undecidable
@@ -165,8 +166,9 @@ tff(prove_this,conjecture,(
 %--------------------------------------------------------------------------
 )***";
 
-//http://www.tptp.org/cgi-bin/SeeTPTP?Category=Problems&Domain=SWW&File=SWW516_5.p
-static const std::string tff_test_tf1 = R"***(%------------------------------------------------------------------------------
+// http://www.tptp.org/cgi-bin/SeeTPTP?Category=Problems&Domain=SWW&File=SWW516_5.p
+static const std::string tff_test_tf1 =
+    R"***(%------------------------------------------------------------------------------
 % File     : SWW516_5 : TPTP v7.2.0. Released v6.0.0.
 % Domain   : Software Verification
 % Problem  : Hoare's Logic with Procedures line 253
@@ -793,12 +795,12 @@ tff(conj_1,conjecture,(
 
 %------------------------------------------------------------------------------
 )***";
-// 
-//  Local variables: 
-//  mode: c++ 
-//  indent-tabs-mode: nil 
-//  c-basic-offset: 4 
-//  tab-width: 4 
-//  End: 
-//  vim:noexpandtab:sw=4:ts=4: 
-// 
+//
+//  Local variables:
+//  mode: c++
+//  indent-tabs-mode: nil
+//  c-basic-offset: 4
+//  tab-width: 4
+//  End:
+//  vim:noexpandtab:sw=4:ts=4:
+//

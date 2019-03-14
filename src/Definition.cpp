@@ -114,9 +114,9 @@ FormulaDefinition::FormulaDefinition(
     const Token::Ptr& keyword,
     const Token::Ptr& leftParen,
     const Identifier::Ptr& name,
-    const Token::Ptr& comma,
-    const FormulaRole::Ptr& role,
-    const Token::Ptr& comma2,
+    const Token::Ptr& commaRole,
+    const Role::Ptr& role,
+    const Token::Ptr& commaFormula,
     const Formula::Ptr& formula,
     const Token::Ptr& rightParen,
     const Token::Ptr& dot )
@@ -124,55 +124,63 @@ FormulaDefinition::FormulaDefinition(
 , m_keyword( keyword )
 , m_leftParen( leftParen )
 , m_name( name )
-, m_comma( comma )
+, m_commaRole( commaRole )
 , m_role( role )
-, m_comma2( comma2 )
+, m_commaFormula( commaFormula )
 , m_formula( formula )
 , m_rightParen( rightParen )
 , m_dot( dot )
 {
 }
 
-void FormulaDefinition::accept( Visitor& visitor )
-{
-    visitor.visit( *this );
-}
-
 const Token::Ptr& FormulaDefinition::keyword( void ) const
 {
     return m_keyword;
 }
+
 const Token::Ptr& FormulaDefinition::leftParen( void ) const
 {
     return m_leftParen;
 }
+
 const Identifier::Ptr& FormulaDefinition::name( void ) const
 {
     return m_name;
 }
-const Token::Ptr& FormulaDefinition::comma( void ) const
+
+const Token::Ptr& FormulaDefinition::commaRole( void ) const
 {
-    return m_comma;
+    return m_commaRole;
 }
-const FormulaRole::Ptr& FormulaDefinition::role( void ) const
+
+const Role::Ptr& FormulaDefinition::role( void ) const
 {
     return m_role;
 }
-const Token::Ptr& FormulaDefinition::comma2( void ) const
+
+const Token::Ptr& FormulaDefinition::commaFormula( void ) const
 {
-    return m_comma2;
+    return m_commaFormula;
 }
+
 const Formula::Ptr& FormulaDefinition::formula( void ) const
 {
     return m_formula;
 }
+
 const Token::Ptr& FormulaDefinition::rightParen( void ) const
 {
     return m_rightParen;
 }
+
 const Token::Ptr& FormulaDefinition::dot( void ) const
 {
     return m_dot;
+}
+
+void FormulaDefinition::accept( Visitor& visitor )
+{
+    visitor.visit( *this );
 }
 
 //

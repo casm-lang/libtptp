@@ -82,6 +82,7 @@ TEST( libtptp, fof_depth )
     libstdhl::File::remove( filename );
     EXPECT_EQ( libstdhl::File::exists( filename ), false );
 }
+
 TEST( libtptp, fof_variable )
 {
     PassManager pm;
@@ -115,6 +116,7 @@ TEST( libtptp, fof_variable )
     libstdhl::File::remove( filename );
     EXPECT_EQ( libstdhl::File::exists( filename ), false );
 }
+
 TEST( libtptp, fof_existential )
 {
     PassManager pm;
@@ -148,12 +150,13 @@ TEST( libtptp, fof_existential )
     libstdhl::File::remove( filename );
     EXPECT_EQ( libstdhl::File::exists( filename ), false );
 }
-// 
-//  Local variables: 
-//  mode: c++ 
-//  indent-tabs-mode: nil 
-//  c-basic-offset: 4 
-//  tab-width: 4 
-//  End: 
-//  vim:noexpandtab:sw=4:ts=4: 
-// 
+
+//
+//  Local variables:
+//  mode: c++
+//  indent-tabs-mode: nil
+//  c-basic-offset: 4
+//  tab-width: 4
+//  End:
+//  vim:noexpandtab:sw=4:ts=4:
+//

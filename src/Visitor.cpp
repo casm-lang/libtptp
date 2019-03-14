@@ -47,10 +47,10 @@
 #include "General.h"
 #include "Logic.h"
 #include "Node.h"
-#include "Record.h"
+#include "Role.h"
+#include "Specification.h"
 #include "Term.h"
 #include "Token.h"
-#include "Trace.h"
 #include "Type.h"
 
 using namespace libtptp;
@@ -59,14 +59,9 @@ using namespace libtptp;
 // RecursiveVisitor
 //
 
-void RecursiveVisitor::visit( Trace& node )
+void RecursiveVisitor::visit( Specification& node )
 {
-    node.records()->accept( *this );
-}
-void RecursiveVisitor::visit( Record& node )
-{
-    node.name()->accept( *this );
-    node.formula()->accept( *this );
+    node.definitions()->accept( *this );
 }
 
 // TODO: annotations
@@ -78,6 +73,7 @@ void RecursiveVisitor::visit( FirstOrderFormula& node )
         node.annotations().value()->accept( *this );
     }
 }
+
 void RecursiveVisitor::visit( TypedFirstOrderFormula& node )
 {
     node.logic()->accept( *this );
@@ -86,6 +82,7 @@ void RecursiveVisitor::visit( TypedFirstOrderFormula& node )
         node.annotations().value()->accept( *this );
     }
 }
+
 void RecursiveVisitor::visit( TypedHigherOrderFormula& node )
 {
     node.logic()->accept( *this );
@@ -94,6 +91,7 @@ void RecursiveVisitor::visit( TypedHigherOrderFormula& node )
         node.annotations().value()->accept( *this );
     }
 }
+
 void RecursiveVisitor::visit( TPTPProcessInstructionFormula& node )
 {
     node.logic()->accept( *this );
@@ -102,6 +100,7 @@ void RecursiveVisitor::visit( TPTPProcessInstructionFormula& node )
         node.annotations().value()->accept( *this );
     }
 }
+
 void RecursiveVisitor::visit( ClauseNormalFormFormula& node )
 {
     node.logic()->accept( *this );
@@ -110,6 +109,7 @@ void RecursiveVisitor::visit( ClauseNormalFormFormula& node )
         node.annotations().value()->accept( *this );
     }
 }
+
 void RecursiveVisitor::visit( TheoryComputableFunctionalsFormula& node )
 {
     node.logic()->accept( *this );
@@ -118,6 +118,7 @@ void RecursiveVisitor::visit( TheoryComputableFunctionalsFormula& node )
         node.annotations().value()->accept( *this );
     }
 }
+
 void RecursiveVisitor::visit( FormulaData& node )
 {
     node.dollar()->accept( *this );
@@ -130,7 +131,8 @@ void RecursiveVisitor::visit( FormulaData& node )
         node.annotations().value()->accept( *this );
     }
 }
-void RecursiveVisitor::visit( FormulaRole& node )
+
+void RecursiveVisitor::visit( Role& node )
 {
     node.word()->accept( *this );
 }
@@ -218,9 +220,9 @@ void RecursiveVisitor::visit( ConditionalTerm& node )
     node.ite()->accept( *this );
     node.leftParen()->accept( *this );
     node.condition()->accept( *this );
-    node.comma1()->accept( *this );
+    node.commaLeft()->accept( *this );
     node.leftTerm()->accept( *this );
-    node.comma2()->accept( *this );
+    node.commaRight()->accept( *this );
     node.rightTerm()->accept( *this );
     node.rightParen()->accept( *this );
     node.rightDelimiter()->accept( *this );
@@ -233,9 +235,9 @@ void RecursiveVisitor::visit( DefinitionTerm& node )
     node.let()->accept( *this );
     node.leftParen()->accept( *this );
     node.types()->accept( *this );
-    node.comma1()->accept( *this );
+    node.commaLeft()->accept( *this );
     node.definitions()->accept( *this );
-    node.comma2()->accept( *this );
+    node.commaRight()->accept( *this );
     node.term()->accept( *this );
     node.rightParen()->accept( *this );
     node.rightDelimiter()->accept( *this );
@@ -330,15 +332,16 @@ void RecursiveVisitor::visit( QuantifiedType& node )
 void RecursiveVisitor::visit( SubType& node )
 {
     node.leftDelimiter()->accept( *this );
-    node.lhs()->accept( *this );
-    node.subtypesign()->accept( *this );
-    node.rhs()->accept( *this );
+    node.leftAtom()->accept( *this );
+    node.subTypeSign()->accept( *this );
+    node.rightAtom()->accept( *this );
     node.rightDelimiter()->accept( *this );
 }
 
 void RecursiveVisitor::visit( Identifier& node )
 {
-    node.name()->accept( *this );
+    node.systemModifier()->accept( *this );
+    node.definedModifier()->accept( *this );
 }
 
 void RecursiveVisitor::visit( IntegerLiteral& node )
@@ -353,10 +356,8 @@ void RecursiveVisitor::visit( RealLiteral& node )
 {
 }
 
-void RecursiveVisitor::visit( StringLiteral& node )
+void RecursiveVisitor::visit( DistinctObjectLiteral& node )
 {
-    node.systemModifier()->accept( *this );
-    node.definedModifier()->accept( *this );
 }
 
 void RecursiveVisitor::visit( ListLiteral& node )
@@ -386,9 +387,9 @@ void RecursiveVisitor::visit( FormulaDefinition& node )
     node.keyword()->accept( *this );
     node.leftParen()->accept( *this );
     node.name()->accept( *this );
-    node.comma()->accept( *this );
+    node.commaRole()->accept( *this );
     node.role()->accept( *this );
-    node.comma2()->accept( *this );
+    node.commaFormula()->accept( *this );
     node.formula()->accept( *this );
     node.rightParen()->accept( *this );
     node.dot()->accept( *this );
@@ -465,12 +466,7 @@ void TraversalVisitor::handle( T& node )
     }
 }
 
-void TraversalVisitor::visit( Trace& node )
-{
-    handle( node );
-}
-
-void TraversalVisitor::visit( Record& node )
+void TraversalVisitor::visit( Specification& node )
 {
     handle( node );
 }
@@ -510,7 +506,7 @@ void TraversalVisitor::visit( FormulaData& node )
     handle( node );
 }
 
-void TraversalVisitor::visit( FormulaRole& node )
+void TraversalVisitor::visit( Role& node )
 {
     handle( node );
 }
@@ -640,7 +636,7 @@ void TraversalVisitor::visit( RealLiteral& node )
     handle( node );
 }
 
-void TraversalVisitor::visit( StringLiteral& node )
+void TraversalVisitor::visit( DistinctObjectLiteral& node )
 {
     handle( node );
 }

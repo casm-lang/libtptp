@@ -57,19 +57,33 @@ namespace libtptp
     /**
        @extends TPTP
     */
-    class Specification
+    class Specification final : public Node
+
     {
       public:
         using Ptr = std::shared_ptr< Specification >;
 
         Specification( void );
 
+        template < class T, typename... Args >
+        void add( Args&&... args )
+        {
+            m_definitions->add( std::make_shared< T >( std::forward< Args >( args )... ) );
+        }
+
         void setDefinitions( const Definitions::Ptr& defintions );
 
         const Definitions::Ptr& definitions( void ) const;
 
+        void setName( const std::string name );
+
+        const std::string& name( void ) const;
+
+        void accept( Visitor& visitor ) override;
+
       private:
         Definitions::Ptr m_definitions;
+        std::string m_name = "";
     };
 
     using Specifications = NodeList< Specification >;

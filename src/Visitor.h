@@ -49,8 +49,7 @@
 namespace libtptp
 {
     class Node;
-    class Trace;
-    class Record;
+    class Specification;
 
     class FirstOrderFormula;
     class TypedFirstOrderFormula;
@@ -59,7 +58,8 @@ namespace libtptp
     class ClauseNormalFormFormula;
     class TheoryComputableFunctionalsFormula;
     class FormulaData;
-    class FormulaRole;
+
+    class Role;
 
     class UnaryLogic;
     class BinaryLogic;
@@ -91,7 +91,7 @@ namespace libtptp
     class IntegerLiteral;
     class RationalLiteral;
     class RealLiteral;
-    class StringLiteral;
+    class DistinctObjectLiteral;
     class ListLiteral;
 
     class Token;
@@ -119,8 +119,7 @@ namespace libtptp
       public:
         virtual ~Visitor( void ) = default;
 
-        virtual void visit( Trace& node ) = 0;
-        virtual void visit( Record& node ) = 0;
+        virtual void visit( Specification& node ) = 0;
 
         virtual void visit( FirstOrderFormula& node ) = 0;
         virtual void visit( TypedFirstOrderFormula& node ) = 0;
@@ -129,7 +128,8 @@ namespace libtptp
         virtual void visit( ClauseNormalFormFormula& node ) = 0;
         virtual void visit( TheoryComputableFunctionalsFormula& node ) = 0;
         virtual void visit( FormulaData& node ) = 0;
-        virtual void visit( FormulaRole& node ) = 0;
+
+        virtual void visit( Role& node ) = 0;
 
         virtual void visit( UnaryLogic& node ) = 0;
         virtual void visit( BinaryLogic& node ) = 0;
@@ -161,7 +161,7 @@ namespace libtptp
         virtual void visit( IntegerLiteral& node ) = 0;
         virtual void visit( RationalLiteral& node ) = 0;
         virtual void visit( RealLiteral& node ) = 0;
-        virtual void visit( StringLiteral& node ) = 0;
+        virtual void visit( DistinctObjectLiteral& node ) = 0;
         virtual void visit( ListLiteral& node ) = 0;
 
         virtual void visit( Token& node ) = 0;
@@ -179,8 +179,7 @@ namespace libtptp
     class RecursiveVisitor : public Visitor
     {
       public:
-        void visit( Trace& node ) override;
-        void visit( Record& node ) override;
+        void visit( Specification& node ) override;
 
         void visit( FirstOrderFormula& node ) override;
         void visit( TypedFirstOrderFormula& node ) override;
@@ -189,7 +188,8 @@ namespace libtptp
         void visit( ClauseNormalFormFormula& node ) override;
         void visit( TheoryComputableFunctionalsFormula& node ) override;
         void visit( FormulaData& node ) override;
-        void visit( FormulaRole& node ) override;
+
+        void visit( Role& node ) override;
 
         void visit( UnaryLogic& node ) override;
         void visit( BinaryLogic& node ) override;
@@ -221,7 +221,7 @@ namespace libtptp
         void visit( IntegerLiteral& node ) override;
         void visit( RationalLiteral& node ) override;
         void visit( RealLiteral& node ) override;
-        void visit( StringLiteral& node ) override;
+        void visit( DistinctObjectLiteral& node ) override;
         void visit( ListLiteral& node ) override;
 
         void visit( Token& node ) override;
@@ -254,8 +254,7 @@ namespace libtptp
         void handle( T& node );
 
       public:
-        void visit( Trace& node ) override;
-        void visit( Record& node ) override;
+        void visit( Specification& node ) override;
 
         void visit( FirstOrderFormula& node ) override;
         void visit( TypedFirstOrderFormula& node ) override;
@@ -264,7 +263,7 @@ namespace libtptp
         void visit( ClauseNormalFormFormula& node ) override;
         void visit( TheoryComputableFunctionalsFormula& node ) override;
         void visit( FormulaData& node ) override;
-        void visit( FormulaRole& node ) override;
+        void visit( Role& node ) override;
 
         void visit( UnaryLogic& node ) override;
         void visit( BinaryLogic& node ) override;
@@ -296,7 +295,7 @@ namespace libtptp
         void visit( IntegerLiteral& node ) override;
         void visit( RationalLiteral& node ) override;
         void visit( RealLiteral& node ) override;
-        void visit( StringLiteral& node ) override;
+        void visit( DistinctObjectLiteral& node ) override;
         void visit( ListLiteral& node ) override;
 
         void visit( Token& node ) override;

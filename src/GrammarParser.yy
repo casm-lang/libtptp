@@ -138,7 +138,7 @@ END       0 "end of file"
 
 %type <Annotation::Ptr> Annotations
 
-%type <FormulaRole::Ptr> FormulaRole
+%type <Role::Ptr> FormulaRole
 %type <FormulaData::Ptr> FormulaData
 %type <BinaryLogic::Ptr> FofAndFormula FofOrFormula FofBinaryAssoc FofBinaryNonassoc FofBinaryFormula
 %type <Logic::Ptr> FofUnaryFormula
@@ -157,8 +157,8 @@ END       0 "end of file"
 
 %type <Logic::Ptr> FofFormula TpiFormula
 
-%type <StringLiteral::Ptr> SingleQuotedLiteral LowerWordLiteral DistinctObjectLiteral AtomicWord DollarWordLiteral DollarDollarWordLiteral AtomicDefinedWord AtomicSystemWord 
-
+%type <Identifier::Ptr> SingleQuotedLiteral LowerWordLiteral AtomicWord DollarWordLiteral DollarDollarWordLiteral AtomicDefinedWord AtomicSystemWord 
+%type <DistinctObjectLiteral::Ptr> DistinctObjectLiteral
 %type <IntegerLiteral::Ptr> IntegerLiteral
 %type <RationalLiteral::Ptr> RationalLiteral
 %type <RealLiteral::Ptr> RealLiteral
@@ -391,7 +391,7 @@ CnfAnnotated
 ;
 
 TpiAnnotated
-:TPI LPAREN Name COMMA FormulaRole COMMA TpiFormula RPAREN DOT
+: TPI LPAREN Name COMMA FormulaRole COMMA TpiFormula RPAREN DOT
   {
 	auto formula = libtptp::make< TPTPProcessInstructionFormula >(@7, $7);
 	$$ = libtptp::make< FormulaDefinition >(@$, $1, $2, $3, $4, $5, $6, formula, $8, $9);
@@ -2175,14 +2175,14 @@ TypeConstant
 TypeFunctor
 : AtomicWord
   {
-	$$ = libtptp::make< Identifier >(@$, $1);
+	$$ = $1;
   }
 ;
 
 DefinedType
 : AtomicDefinedWord
   {
-	$$ = libtptp::make< Identifier >(@$, $1);
+	$$ = $1;
   }
 ;
 
@@ -2239,7 +2239,7 @@ Constant
 Functor
 : AtomicWord
   {
-	$$ = libtptp::make< Identifier >(@$, $1);
+	$$ = $1;
   }
 ;
 
@@ -2253,7 +2253,7 @@ SystemConstant
 SystemFunctor
 : AtomicSystemWord
   {
-	$$ = libtptp::make< Identifier >(@$, $1);
+	$$ = $1;
   }
 ;
 
@@ -2267,7 +2267,7 @@ DefinedConstant
 DefinedFunctor
 : AtomicDefinedWord
   {
-	$$ = libtptp::make< Identifier >(@$, $1);
+	$$ = $1;
   }
 ;
 
@@ -2303,18 +2303,18 @@ NameList
 Name
 : AtomicWord
   {
-	$$ = libtptp::make< Identifier >(@$, $1);
+	$$ = $1;
   }
-| IntegerLiteral
+| INTEGER
   {
-	$$ = libtptp::make< Identifier >(@$, $1);
+	$$ = libtptp::make< Identifier >(@$, $1, Identifier::Kind::NUMBER);
   }
 ;
 
 FormulaRole
 : LowerWordLiteral
   {
-    $$ = libtptp::make< FormulaRole >( @$, $1 );
+    $$ = libtptp::make< Role >( @$, $1 );
   }
 ;
 
@@ -2336,6 +2336,7 @@ GeneralTerm
 GeneralData
 : AtomicWord
   {
+	//identifier
 	$$ = libtptp::make< GeneralData >(@$, $1);
   }
 | GeneralFunction
@@ -2363,8 +2364,7 @@ GeneralData
 GeneralFunction
 : AtomicWord LPAREN GeneralTerms RPAREN
   {
-	auto name = libtptp::make< Identifier >(@1, $1);
-	$$ = libtptp::make< GeneralFunction >(@$, name, $2, $3, $4);
+	$$ = libtptp::make< GeneralFunction >(@$, $1, $2, $3, $4);
   }
 ;
 
@@ -2485,7 +2485,7 @@ Number
 FileName
 : SingleQuotedLiteral
   {
-	$$ = libtptp::make<Identifier>(@$, $1);
+	$$ = $1;
   }
 ;
 
@@ -2512,8 +2512,7 @@ RationalLiteral
 Variable
 : UPPER_WORD
   {
-	auto literal = libtptp::make< StringLiteral >(@$, $1);
-	auto identifier = libtptp::make< Identifier >(@$, literal);
+	auto identifier = libtptp::make< Identifier >(@$, $1);
 	$$ = libtptp::make< VariableTerm >(@$, identifier);
   }
 ;
@@ -2521,35 +2520,35 @@ Variable
 DistinctObjectLiteral
 : DQUOTED
   {
-	$$ = libtptp::make< StringLiteral >(@$, $1);
+	$$ = libtptp::make< DistinctObjectLiteral >(@$, $1);
   }
 ;
 
 LowerWordLiteral
 : LOWER_WORD
   {
-	$$ = libtptp::make< StringLiteral >(@$, $1);
+	$$ = libtptp::make< Identifier >(@$, $1);
   }
 ;
 
 SingleQuotedLiteral
 : SINGLE_QUOTED
   {
-	$$ = libtptp::make< StringLiteral >(@$, $1);
+	$$ = libtptp::make< Identifier >(@$, $1);
   }
 ;
 
 DollarWordLiteral
 : DOLLAR LOWER_WORD
   {
-	$$ = libtptp::make< StringLiteral >(@$, $1, $2);
+	$$ = libtptp::make< Identifier >(@$, $1, $2);
   }
 ;
 
 DollarDollarWordLiteral
 : DOLLAR DOLLAR LOWER_WORD
   {
-	$$ = libtptp::make< StringLiteral >(@$, $1, $2, $3);
+	$$ = libtptp::make< Identifier >(@$, $1, $2, $3);
   }
 ;
 

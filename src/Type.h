@@ -51,8 +51,6 @@ namespace libtptp
         using Ptr = std::shared_ptr< Type >;
 
         explicit Type( const Node::ID id );
-
-      private:
     };
 
     using Types = NodeList< Type >;
@@ -64,9 +62,9 @@ namespace libtptp
 
         explicit AtomType( const Node::Ptr& atom );
 
-        void accept( Visitor& visitor ) override final;
-
         const Node::Ptr& atom( void ) const;
+
+        void accept( Visitor& visitor ) override final;
 
       private:
         const Node::Ptr m_atom;
@@ -83,6 +81,7 @@ namespace libtptp
             XPROD,
             UNION,
         };
+
         using Ptr = std::shared_ptr< BinaryType >;
 
         explicit BinaryType(
@@ -91,12 +90,12 @@ namespace libtptp
             const Type::Ptr& right,
             const Kind kind );
 
-        void accept( Visitor& visitor ) override final;
-
         const Type::Ptr& left( void ) const;
         const Token::Ptr& connectiveToken( void ) const;
         const Type::Ptr& right( void ) const;
-        const Kind& kind( void ) const;
+        Kind kind( void ) const;
+
+        void accept( Visitor& visitor ) override final;
 
       private:
         const Type::Ptr m_left;
@@ -115,11 +114,11 @@ namespace libtptp
         explicit TypedAtom(
             const Identifier::Ptr& atom, const Token::Ptr& colon, const Type::Ptr& type );
 
-        void accept( Visitor& visitor ) override final;
-
         const Type::Ptr& type( void ) const;
         const Token::Ptr& colon( void ) const;
         const Identifier::Ptr& atom( void ) const;
+
+        void accept( Visitor& visitor ) override final;
 
       private:
         const Identifier::Ptr m_atom;
@@ -139,11 +138,11 @@ namespace libtptp
             const Types::Ptr& tuples,
             const Token::Ptr& rightBraceToken );
 
-        void accept( Visitor& visitor ) override final;
-
         const Token::Ptr& leftBraceToken( void ) const;
         const Types::Ptr& tuples( void ) const;
         const Token::Ptr& rightBraceToken( void ) const;
+
+        void accept( Visitor& visitor ) override final;
 
       private:
         const Token::Ptr m_leftBraceToken;
@@ -166,14 +165,14 @@ namespace libtptp
             const Token::Ptr& colon,
             const Type::Ptr& type );
 
-        void accept( Visitor& visitor ) override final;
-
         const Token::Ptr& quantifierToken( void ) const;
         const Token::Ptr& leftParen( void ) const;
         const Nodes::Ptr& variables( void ) const;
         const Token::Ptr& rightParen( void ) const;
         const Token::Ptr& colon( void ) const;
         const Type::Ptr& type( void ) const;
+
+        void accept( Visitor& visitor ) override final;
 
       private:
         const Token::Ptr m_quantifierToken;
@@ -192,23 +191,25 @@ namespace libtptp
         using Ptr = std::shared_ptr< SubType >;
 
         explicit SubType(
-            const Identifier::Ptr& lhs, const Token::Ptr& subtypesign, const Identifier::Ptr& rhs );
+            const Identifier::Ptr& leftAtom,
+            const Token::Ptr& subTypeSign,
+            const Identifier::Ptr& rightAtom );
+
+        const Identifier::Ptr& leftAtom( void ) const;
+        const Token::Ptr& subTypeSign( void ) const;
+        const Identifier::Ptr& rightAtom( void ) const;
 
         void accept( Visitor& visitor ) override final;
 
-        const Identifier::Ptr& lhs( void ) const;
-        const Token::Ptr& subtypesign( void ) const;
-        const Identifier::Ptr& rhs( void ) const;
-
       private:
-        const Identifier::Ptr m_lhs;
-        const Token::Ptr m_subtypesign;
-        const Identifier::Ptr m_rhs;
+        const Identifier::Ptr m_leftAtom;
+        const Token::Ptr m_subTypeSign;
+        const Identifier::Ptr m_rightAtom;
     };
 
     using SubTypes = NodeList< SubType >;
 
-} /* libtptp */
+}
 
 #endif  //_LIBTPTP_TYPE_H_
 

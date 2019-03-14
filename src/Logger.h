@@ -59,7 +59,6 @@ namespace libtptp
 
         using libpass::PassLogger::error;
         void error( const std::vector< SourceLocation >& locations, const std::string& message );
-        // void error( const Exception& exception );
 
         using libpass::PassLogger::warning;
         void warning( const std::vector< SourceLocation >& locations, const std::string& message );

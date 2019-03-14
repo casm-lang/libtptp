@@ -55,14 +55,14 @@ GeneralData::GeneralData( const Node::Ptr& data )
 {
 }
 
-void GeneralData::accept( Visitor& visitor )
-{
-    visitor.visit( *this );
-}
-
 const Node::Ptr& GeneralData::data( void ) const
 {
     return m_data;
+}
+
+void GeneralData::accept( Visitor& visitor )
+{
+    visitor.visit( *this );
 }
 
 GeneralList::GeneralList( const ListLiteral::Ptr& list )
@@ -71,14 +71,14 @@ GeneralList::GeneralList( const ListLiteral::Ptr& list )
 {
 }
 
-void GeneralList::accept( Visitor& visitor )
-{
-    visitor.visit( *this );
-}
-
 const ListLiteral::Ptr& GeneralList::list( void ) const
 {
     return m_list;
+}
+
+void GeneralList::accept( Visitor& visitor )
+{
+    visitor.visit( *this );
 }
 
 GeneralAggregator::GeneralAggregator(
@@ -90,22 +90,24 @@ GeneralAggregator::GeneralAggregator(
 {
 }
 
-void GeneralAggregator::accept( Visitor& visitor )
-{
-    visitor.visit( *this );
-}
-
 const GeneralData::Ptr& GeneralAggregator::data( void ) const
 {
     return m_data;
 }
+
 const Token::Ptr& GeneralAggregator::colon( void ) const
 {
     return m_colon;
 }
+
 const GeneralTerm::Ptr& GeneralAggregator::term( void ) const
 {
     return m_term;
+}
+
+void GeneralAggregator::accept( Visitor& visitor )
+{
+    visitor.visit( *this );
 }
 
 GeneralFunction::GeneralFunction(
@@ -121,26 +123,29 @@ GeneralFunction::GeneralFunction(
 {
 }
 
-void GeneralFunction::accept( Visitor& visitor )
-{
-    visitor.visit( *this );
-}
-
 const Identifier::Ptr& GeneralFunction::name( void ) const
 {
     return m_name;
 }
+
 const Token::Ptr& GeneralFunction::leftParen( void ) const
 {
     return m_leftParen;
 }
+
 const Nodes::Ptr& GeneralFunction::arguments( void ) const
 {
     return m_arguments;
 }
+
 const Token::Ptr& GeneralFunction::rightParen( void ) const
 {
     return m_rightParen;
+}
+
+void GeneralFunction::accept( Visitor& visitor )
+{
+    visitor.visit( *this );
 }
 
 Annotation::Annotation(
@@ -162,20 +167,17 @@ Annotation::Annotation( const GeneralTerm::Ptr& source )
 {
 }
 
-void Annotation::accept( Visitor& visitor )
-{
-    visitor.visit( *this );
-}
-
 const GeneralTerm::Ptr& Annotation::source( void ) const
 {
     return m_source;
 }
+
 const libstdhl::Optional< const GeneralList::Ptr >& Annotation::usefulInfo( void ) const
 {
     return m_usefulInfo;
 }
-const Token::Ptr& Annotation::comma() const
+
+const Token::Ptr& Annotation::comma( void ) const
 {
     return m_comma;
 }
@@ -184,3 +186,18 @@ void Annotation::setDelimiter( const Token::Ptr& delimiter )
 {
     m_delimiter = delimiter;
 }
+
+void Annotation::accept( Visitor& visitor )
+{
+    visitor.visit( *this );
+}
+
+//
+//  Local variables:
+//  mode: c++
+//  indent-tabs-mode: nil
+//  c-basic-offset: 4
+//  tab-width: 4
+//  End:
+//  vim:noexpandtab:sw=4:ts=4:
+//

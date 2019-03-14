@@ -46,9 +46,8 @@
 #include <libtptp/Formula>
 #include <libtptp/Logic>
 #include <libtptp/Node>
-#include <libtptp/Record>
+#include <libtptp/Specification>
 #include <libtptp/Term>
-#include <libtptp/Trace>
 #include <libtptp/Version>
 #include <libtptp/Visitor>
 #include <libtptp/analyze/DumpDebugPass>

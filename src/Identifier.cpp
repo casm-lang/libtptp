@@ -45,15 +45,47 @@ using namespace libtptp;
 
 static const auto uToken = std::make_shared< Token >( Grammar::Token::UNRESOLVED );
 
-Identifier::Identifier( const Literal::Ptr& name )
-: Node( Node::ID::IDENTIFIER )
-, m_name( name )
+Identifier::Identifier( const std::string& name, Kind kind )
+: Identifier( uToken, uToken, name, kind )
 {
 }
 
-const Literal::Ptr& Identifier::name( void ) const
+Identifier::Identifier( const Token::Ptr& definedModifier, const std::string& name, Kind kind )
+: Identifier( uToken, definedModifier, name, kind )
+{
+}
+
+Identifier::Identifier(
+    const Token::Ptr& systemModifier,
+    const Token::Ptr& definedModifier,
+    const std::string& name,
+    Kind kind )
+: Node( Node::ID::IDENTIFIER )
+, m_systemModifier( systemModifier )
+, m_definedModifier( definedModifier )
+, m_name( name )
+, m_kind( kind )
+{
+}
+
+const Token::Ptr Identifier::systemModifier( void ) const
+{
+    return m_systemModifier;
+}
+
+const Token::Ptr Identifier::definedModifier( void ) const
+{
+    return m_definedModifier;
+}
+
+const std::string& Identifier::name( void ) const
 {
     return m_name;
+}
+
+const Identifier::Kind Identifier::kind( void ) const
+{
+    return m_kind;
 }
 
 void Identifier::accept( Visitor& visitor )

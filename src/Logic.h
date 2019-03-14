@@ -149,15 +149,14 @@ namespace libtptp
 
         u1 associative( void ) const;
 
+        void accept( Visitor& visitor ) override;
+
       private:
         const Logic::Ptr m_left;
         const Logic::Ptr m_right;
         const Token::Ptr m_connectiveToken;
         const Connective m_connective;
         const u1 m_associative;
-
-      public:
-        void accept( Visitor& visitor ) override;
     };
 
     class QuantifiedLogic final : public Logic
@@ -192,15 +191,14 @@ namespace libtptp
 
         std::string quantifierDescription( void ) const;
 
+        void accept( Visitor& visitor ) override;
+
       private:
         const Token::Ptr m_quantifierToken;
         const ListLiteral::Ptr m_variables;
         const Token::Ptr m_colon;
         const Logic::Ptr m_logic;
         const Quantifier m_quantifier;
-
-      public:
-        void accept( Visitor& visitor ) override;
     };
 
     class InfixLogic final : public Logic
@@ -218,11 +216,11 @@ namespace libtptp
             const std::pair< const Token::Ptr&, const Connective > connective,
             const Logic::Ptr& rhs );
 
-        void accept( Visitor& visitor ) override final;
-
         const Logic::Ptr& lhs( void ) const;
         const Token::Ptr& connectiveToken( void ) const;
         const Logic::Ptr& rhs( void ) const;
+
+        void accept( Visitor& visitor ) override final;
 
       private:
         const Logic::Ptr m_lhs;
@@ -244,11 +242,11 @@ namespace libtptp
             const Token::Ptr& rightBraceToken );
         explicit LogicTuple( const Token::Ptr& leftBraceToken, const Token::Ptr& rightBraceToken );
 
-        void accept( Visitor& visitor ) override final;
-
         const Token::Ptr& leftBraceToken( void ) const;
         const Logics::Ptr& tuples( void ) const;
         const Token::Ptr& rightBraceToken( void ) const;
+
+        void accept( Visitor& visitor ) override final;
 
       private:
         const Token::Ptr m_leftBraceToken;
@@ -276,13 +274,12 @@ namespace libtptp
 
         std::string connectiveDescription( void ) const;
 
+        void accept( Visitor& visitor ) override;
+
       private:
         const LogicTuple::Ptr m_left;
         const Token::Ptr m_connectiveToken;
         const LogicTuple::Ptr m_right;
-
-      public:
-        void accept( Visitor& visitor ) override;
     };
 
 }

@@ -61,8 +61,6 @@ namespace libtptp
         using Ptr = std::shared_ptr< Literal >;
 
         explicit Literal( const Node::ID id );
-
-      private:
     };
 
     using Literals = NodeList< Literal >;
@@ -72,7 +70,7 @@ namespace libtptp
       public:
         using Ptr = std::shared_ptr< ValueLiteral >;
 
-        explicit ValueLiteral( const Node::ID id, libstdhl::Type::Data value );
+        explicit ValueLiteral( const Node::ID id, const libstdhl::Type::Data value );
 
         const libstdhl::Type::Data& value( void ) const;
 
@@ -90,8 +88,6 @@ namespace libtptp
         explicit IntegerLiteral( const std::string& integer );
 
         void accept( Visitor& visitor ) override final;
-
-      private:
     };
 
     using IntegerLiterals = NodeList< IntegerLiteral >;
@@ -104,8 +100,6 @@ namespace libtptp
         explicit RationalLiteral( const std::string& rational );
 
         void accept( Visitor& visitor ) override final;
-
-      private:
     };
 
     using RationalLiterals = NodeList< RationalLiteral >;
@@ -118,56 +112,25 @@ namespace libtptp
         explicit RealLiteral( const std::string& real );
 
         void accept( Visitor& visitor ) override final;
-
-      private:
     };
 
     using RealLiterals = NodeList< RealLiteral >;
 
-    class StringLiteral final : public ValueLiteral
+    class DistinctObjectLiteral final : public ValueLiteral
     {
       public:
-        enum class Kind
-        {
-            SINGLE_QUOTED,
-            DOUBLE_QUOTED,
-            NOT_QUOTED
-        };
-        using Ptr = std::shared_ptr< StringLiteral >;
+        using Ptr = std::shared_ptr< DistinctObjectLiteral >;
 
-        explicit StringLiteral( const std::string& string );
-
-        explicit StringLiteral( const Token::Ptr& definedModifier, const std::string& string );
-        explicit StringLiteral(
-            const Token::Ptr& systemModifier,
-            const Token::Ptr& definedModifier,
-            const std::string& string );
-
-        const Token::Ptr systemModifier( void ) const;
-
-        const Token::Ptr definedModifier( void ) const;
+        explicit DistinctObjectLiteral( const std::string& string );
 
         void accept( Visitor& visitor ) override final;
-
-        const Kind& kind( void ) const;
-
-        const std::string kindName( void ) const;
-
-      private:
-        const Token::Ptr m_systemModifier;
-        const Token::Ptr m_definedModifier;
-        Kind m_kind;
     };
 
-    using StringLiterals = NodeList< StringLiteral >;
+    using DistinctObjectLiterals = NodeList< DistinctObjectLiteral >;
 
     class ListLiteral final : public Literal
     {
       public:
-        enum class Kind
-        {
-
-        };
         using Ptr = std::shared_ptr< ListLiteral >;
         explicit ListLiteral( const Token::Ptr& leftBraceToken, const Token::Ptr& rightBraceToken );
         explicit ListLiteral(
@@ -175,9 +138,9 @@ namespace libtptp
             const Nodes::Ptr& elements,
             const Token::Ptr& rightBraceToken );
 
-        const Token::Ptr& leftBraceToken() const;
+        const Token::Ptr& leftBraceToken( void ) const;
         const Nodes::Ptr& elements( void ) const;
-        const Token::Ptr& rightBraceToken() const;
+        const Token::Ptr& rightBraceToken( void ) const;
 
         void accept( Visitor& visitor ) override final;
 

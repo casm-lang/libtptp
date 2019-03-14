@@ -39,8 +39,8 @@
 //  statement from your version.
 //
 
-#ifndef _LIBTPTP_GENERAL_H
-#define _LIBTPTP_GENERAL_H
+#ifndef _LIBTPTP_GENERAL_H_
+#define _LIBTPTP_GENERAL_H_
 
 #include <libstdhl/Optional>
 #include <libtptp/Identifier>
@@ -54,9 +54,7 @@ namespace libtptp
       public:
         using Ptr = std::shared_ptr< GeneralTerm >;
 
-        explicit GeneralTerm( Node::ID id );
-
-      private:
+        explicit GeneralTerm( const Node::ID id );
     };
 
     using GeneralTerms = NodeList< GeneralTerm >;
@@ -67,9 +65,10 @@ namespace libtptp
         using Ptr = std::shared_ptr< GeneralData >;
 
         explicit GeneralData( const Node::Ptr& data );
-        void accept( Visitor& visitor ) override final;
 
         const Node::Ptr& data( void ) const;
+
+        void accept( Visitor& visitor ) override final;
 
       private:
         const Node::Ptr m_data;
@@ -84,9 +83,9 @@ namespace libtptp
 
         explicit GeneralList( const ListLiteral::Ptr& list );
 
-        void accept( Visitor& visitor ) override final;
-
         const ListLiteral::Ptr& list( void ) const;
+
+        void accept( Visitor& visitor ) override final;
 
       private:
         const ListLiteral::Ptr m_list;
@@ -102,11 +101,11 @@ namespace libtptp
         explicit GeneralAggregator(
             const GeneralData::Ptr& data, const Token::Ptr& colon, const GeneralTerm::Ptr& term );
 
-        void accept( Visitor& visitor ) override final;
-
         const GeneralData::Ptr& data( void ) const;
         const Token::Ptr& colon( void ) const;
         const GeneralTerm::Ptr& term( void ) const;
+
+        void accept( Visitor& visitor ) override final;
 
       private:
         const GeneralData::Ptr m_data;
@@ -127,12 +126,12 @@ namespace libtptp
             const Nodes::Ptr& arguments,
             const Token::Ptr& rightParen );
 
-        void accept( Visitor& visitor ) override final;
-
         const Identifier::Ptr& name( void ) const;
         const Token::Ptr& leftParen( void ) const;
         const Nodes::Ptr& arguments( void ) const;
         const Token::Ptr& rightParen( void ) const;
+
+        void accept( Visitor& visitor ) override final;
 
       private:
         const Identifier::Ptr m_name;
@@ -154,12 +153,12 @@ namespace libtptp
             const GeneralList::Ptr& usefulInfo );
         explicit Annotation( const GeneralTerm::Ptr& source );
 
-        void accept( Visitor& visitor ) override final;
-
         const GeneralTerm::Ptr& source( void ) const;
         const libstdhl::Optional< const GeneralList::Ptr >& usefulInfo( void ) const;
-        const Token::Ptr& comma() const;
+        const Token::Ptr& comma( void ) const;
         void setDelimiter( const Token::Ptr& delimiter );
+
+        void accept( Visitor& visitor ) override final;
 
       private:
         Token::Ptr m_delimiter;
@@ -170,9 +169,9 @@ namespace libtptp
 
     using Annotations = NodeList< Annotation >;
 
-} /* libtptp */
+}
 
-#endif /* end of include guard: _LIBTPTP_GENERAL_H */
+#endif  // _LIBTPTP_GENERAL_H
 
 //
 //  Local variables:

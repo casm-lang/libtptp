@@ -53,14 +53,14 @@ AtomType::AtomType( const Node::Ptr& atom )
 {
 }
 
-void AtomType::accept( Visitor& visitor )
-{
-    visitor.visit( *this );
-}
-
 const Node::Ptr& AtomType::atom( void ) const
 {
     return m_atom;
+}
+
+void AtomType::accept( Visitor& visitor )
+{
+    visitor.visit( *this );
 }
 
 //
@@ -80,11 +80,6 @@ BinaryType::BinaryType(
 {
 }
 
-void BinaryType::accept( Visitor& visitor )
-{
-    visitor.visit( *this );
-}
-
 const Type::Ptr& BinaryType::left( void ) const
 {
     return m_left;
@@ -100,7 +95,12 @@ const Type::Ptr& BinaryType::right( void ) const
     return m_right;
 }
 
-const BinaryType::Kind& BinaryType::kind( void ) const
+void BinaryType::accept( Visitor& visitor )
+{
+    visitor.visit( *this );
+}
+
+BinaryType::Kind BinaryType::kind( void ) const
 {
     return m_kind;
 }
@@ -115,11 +115,6 @@ TypedAtom::TypedAtom( const Identifier::Ptr& atom, const Token::Ptr& colon, cons
 , m_colon( colon )
 , m_type( type )
 {
-}
-
-void TypedAtom::accept( Visitor& visitor )
-{
-    visitor.visit( *this );
 }
 
 const Type::Ptr& TypedAtom::type( void ) const
@@ -137,6 +132,11 @@ const Identifier::Ptr& TypedAtom::atom( void ) const
     return m_atom;
 }
 
+void TypedAtom::accept( Visitor& visitor )
+{
+    visitor.visit( *this );
+}
+
 //
 // TupleType
 //
@@ -148,11 +148,6 @@ TupleType::TupleType(
 , m_tuples( tuples )
 , m_rightBraceToken( rightBraceToken )
 {
-}
-
-void TupleType::accept( Visitor& visitor )
-{
-    visitor.visit( *this );
 }
 
 const Token::Ptr& TupleType::leftBraceToken( void ) const
@@ -168,6 +163,11 @@ const Types::Ptr& TupleType::tuples( void ) const
 const Token::Ptr& TupleType::rightBraceToken( void ) const
 {
     return m_rightBraceToken;
+}
+
+void TupleType::accept( Visitor& visitor )
+{
+    visitor.visit( *this );
 }
 
 //
@@ -189,11 +189,6 @@ QuantifiedType::QuantifiedType(
 , m_colon( colon )
 , m_type( type )
 {
-}
-
-void QuantifiedType::accept( Visitor& visitor )
-{
-    visitor.visit( *this );
 }
 
 const Token::Ptr& QuantifiedType::quantifierToken( void ) const
@@ -226,16 +221,23 @@ const Type::Ptr& QuantifiedType::type( void ) const
     return m_type;
 }
 
+void QuantifiedType::accept( Visitor& visitor )
+{
+    visitor.visit( *this );
+}
+
 //
 // SubType
 //
 
 SubType::SubType(
-    const Identifier::Ptr& lhs, const Token::Ptr& subtypesign, const Identifier::Ptr& rhs )
+    const Identifier::Ptr& leftAtom,
+    const Token::Ptr& subtypesign,
+    const Identifier::Ptr& rightAtom )
 : Type( Node::ID::SUB_TYPE )
-, m_lhs( lhs )
-, m_subtypesign( subtypesign )
-, m_rhs( rhs )
+, m_leftAtom( leftAtom )
+, m_subTypeSign( subtypesign )
+, m_rightAtom( rightAtom )
 {
 }
 
@@ -244,19 +246,19 @@ void SubType::accept( Visitor& visitor )
     visitor.visit( *this );
 }
 
-const Identifier::Ptr& SubType::lhs( void ) const
+const Identifier::Ptr& SubType::leftAtom( void ) const
 {
-    return m_lhs;
+    return m_leftAtom;
 }
 
-const Token::Ptr& SubType::subtypesign( void ) const
+const Token::Ptr& SubType::subTypeSign( void ) const
 {
-    return m_subtypesign;
+    return m_subTypeSign;
 }
 
-const Identifier::Ptr& SubType::rhs( void ) const
+const Identifier::Ptr& SubType::rightAtom( void ) const
 {
-    return m_rhs;
+    return m_rightAtom;
 }
 
 //

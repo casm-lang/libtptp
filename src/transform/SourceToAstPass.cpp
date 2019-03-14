@@ -74,13 +74,13 @@ u1 SourceToAstPass::run( libpass::PassResult& pr )
     const auto name = fileName.substr( 0, fileName.rfind( "." ) );
 
     auto specification = std::make_shared< Specification >();
-    // specification->setName( name );
+    specification->setName( name );
 
     Lexer lexer( log, fileStream, std::cout );
     lexer.setFileName( filePath );
 
     Parser parser( log, lexer, *specification );
-    // parser.set_debug_level( m_debug );
+    parser.set_debug_level( m_debug );
 
     if( ( parser.parse() != 0 ) or not specification or ( log.errors() > 0 ) )
     {
@@ -88,10 +88,18 @@ u1 SourceToAstPass::run( libpass::PassResult& pr )
         return false;
     }
 
-    pr.setOutput< SourceToAstPass >( /*specification*/ );
-    // TODO: FIXME: @ppaulweber: @moosbruggerj provide correct implementation to store TPTP
-    // specifications
+    pr.setOutput< SourceToAstPass >( specification );
     return true;
+}
+
+void SourceToAstPass::setDebug( u1 debug )
+{
+    m_debug = debug;
+}
+
+u1 SourceToAstPass::debug( void ) const
+{
+    return m_debug;
 }
 
 //

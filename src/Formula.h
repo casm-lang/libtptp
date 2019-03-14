@@ -67,10 +67,7 @@ namespace libtptp
 
         const Logic::Ptr& logic( void ) const;
         const libstdhl::Optional< Annotation::Ptr >& annotations( void ) const;
-        void setAnnotations( Annotation::Ptr& annotations );
-
-        u1 isFOF( void ) const;
-        u1 isTFF( void ) const;
+        void setAnnotations( const Annotation::Ptr& annotations );
 
       private:
         const Logic::Ptr m_logic;
@@ -113,9 +110,8 @@ namespace libtptp
         explicit TypedHigherOrderFormula( const Logic::Ptr& logic );
 
         void accept( Visitor& visitor ) override final;
-
-      private:
     };
+
     class TPTPProcessInstructionFormula final : public Formula
     {
       public:
@@ -124,8 +120,6 @@ namespace libtptp
         explicit TPTPProcessInstructionFormula( const Logic::Ptr& logic );
 
         void accept( Visitor& visitor ) override final;
-
-      private:
     };
 
     class ClauseNormalFormFormula final : public Formula
@@ -136,8 +130,6 @@ namespace libtptp
         explicit ClauseNormalFormFormula( const Logic::Ptr& logic );
 
         void accept( Visitor& visitor ) override final;
-
-      private:
     };
 
     class TheoryComputableFunctionalsFormula final : public Formula
@@ -148,8 +140,6 @@ namespace libtptp
         explicit TheoryComputableFunctionalsFormula( const Logic::Ptr& logic );
 
         void accept( Visitor& visitor ) override final;
-
-      private:
     };
 
     class FormulaData final : public Formula
@@ -164,12 +154,12 @@ namespace libtptp
             const Logic::Ptr& formula,
             const Token::Ptr& rightParen );
 
-        void accept( Visitor& visitor ) override final;
-
         const Token::Ptr& dollar( void ) const;
         const Token::Ptr& formulaType( void ) const;
         const Token::Ptr& leftParen( void ) const;
         const Token::Ptr& rightParen( void ) const;
+
+        void accept( Visitor& visitor ) override final;
 
       private:
         const Token::Ptr m_dollar;
@@ -179,23 +169,6 @@ namespace libtptp
     };
 
     using FormulaDatas = NodeList< FormulaData >;
-
-    class FormulaRole final : public Node
-    {
-      public:
-        using Ptr = std::shared_ptr< FormulaRole >;
-
-        explicit FormulaRole( const StringLiteral::Ptr& word );
-
-        void accept( Visitor& visitor ) override final;
-
-        const StringLiteral::Ptr& word( void ) const;
-
-      private:
-        const StringLiteral::Ptr m_word;
-    };
-
-    using FormulaRoles = NodeList< FormulaRole >;
 
 }
 

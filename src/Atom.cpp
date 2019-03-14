@@ -108,11 +108,6 @@ ConstantAtom::ConstantAtom( const Identifier::Ptr& constant, const Kind kind )
 {
 }
 
-void ConstantAtom::accept( Visitor& visitor )
-{
-    visitor.visit( *this );
-}
-
 const Identifier::Ptr& ConstantAtom::constant( void ) const
 {
     return m_constant;
@@ -123,20 +118,25 @@ const ConstantAtom::Kind ConstantAtom::kind( void ) const
     return m_kind;
 }
 
+void ConstantAtom::accept( Visitor& visitor )
+{
+    visitor.visit( *this );
+}
+
 DefinedAtom::DefinedAtom( const Literal::Ptr& literal )
 : Atom( Node::ID::DEFINED_ATOM )
 , m_literal( literal )
 {
 }
 
-void DefinedAtom::accept( Visitor& visitor )
-{
-    visitor.visit( *this );
-}
-
 const Literal::Ptr& DefinedAtom::literal( void ) const
 {
     return m_literal;
+}
+
+void DefinedAtom::accept( Visitor& visitor )
+{
+    visitor.visit( *this );
 }
 
 DefinitionAtom::DefinitionAtom(
@@ -146,11 +146,6 @@ DefinitionAtom::DefinitionAtom(
 , m_assignment( assignment )
 , m_rhs( rhs )
 {
-}
-
-void DefinitionAtom::accept( Visitor& visitor )
-{
-    visitor.visit( *this );
 }
 
 const Logic::Ptr& DefinitionAtom::lhs( void ) const
@@ -168,6 +163,11 @@ const Logic::Ptr& DefinitionAtom::rhs( void ) const
     return m_rhs;
 }
 
+void DefinitionAtom::accept( Visitor& visitor )
+{
+    visitor.visit( *this );
+}
+
 ConnectiveAtom::ConnectiveAtom( Token::Ptr& connective )
 : Atom( Node::ID::CONNECTIVE_ATOM )
 , m_connective( connective )
@@ -179,7 +179,7 @@ void ConnectiveAtom::accept( Visitor& visitor )
     visitor.visit( *this );
 }
 
-Token::Ptr& ConnectiveAtom::connective( void )
+const Token::Ptr& ConnectiveAtom::connective( void )
 {
     return m_connective;
 }

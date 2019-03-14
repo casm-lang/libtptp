@@ -39,8 +39,9 @@
 //  statement from your version.
 //
 
-//http://www.tptp.org/cgi-bin/SeeTPTP?Category=Problems&Domain=ALG&File=ALG001-1.p
-static const std::string cnf_test_basic = R"***(%------------------------------------------------------------------------------
+// http://www.tptp.org/cgi-bin/SeeTPTP?Category=Problems&Domain=ALG&File=ALG001-1.p
+static const std::string cnf_test_basic =
+    R"***(%------------------------------------------------------------------------------
 % File     : ALG001-1 : TPTP v7.2.0. Released v1.0.0.
 % Domain   : General Algebra
 % Problem  : The composition of homomorphisms is a homomorphism
@@ -205,7 +206,7 @@ cnf(prove_composition_is_a_homomorphism,negated_conjecture,
 %------------------------------------------------------------------------------
 )***";
 
-//http://www.tptp.org/cgi-bin/SeeTPTP?Category=Axioms&File=LCL004-0.ax
+// http://www.tptp.org/cgi-bin/SeeTPTP?Category=Axioms&File=LCL004-0.ax
 static const std::string cnf_test_predicates = R"***(
 %------------------------------------------------------------------------------
 % File     : LCL004-0 : TPTP v7.2.0. Released v2.3.0.
@@ -265,12 +266,12 @@ cnf(rule_2,axiom,
 %      --theorem(implies(Y,Z))]).
 %------------------------------------------------------------------------------
 )***";
-// 
-//  Local variables: 
-//  mode: c++ 
-//  indent-tabs-mode: nil 
-//  c-basic-offset: 4 
-//  tab-width: 4 
-//  End: 
-//  vim:noexpandtab:sw=4:ts=4: 
-// 
+//
+//  Local variables:
+//  mode: c++
+//  indent-tabs-mode: nil
+//  c-basic-offset: 4
+//  tab-width: 4
+//  End:
+//  vim:noexpandtab:sw=4:ts=4:
+//

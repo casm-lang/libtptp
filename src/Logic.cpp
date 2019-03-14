@@ -325,11 +325,6 @@ InfixLogic::InfixLogic(
 {
 }
 
-void InfixLogic::accept( Visitor& visitor )
-{
-    visitor.visit( *this );
-}
-
 const Logic::Ptr& InfixLogic::lhs( void ) const
 {
     return m_lhs;
@@ -341,6 +336,11 @@ const Token::Ptr& InfixLogic::connectiveToken( void ) const
 const Logic::Ptr& InfixLogic::rhs( void ) const
 {
     return m_rhs;
+}
+
+void InfixLogic::accept( Visitor& visitor )
+{
+    visitor.visit( *this );
 }
 
 LogicTuple::LogicTuple(
@@ -356,11 +356,6 @@ LogicTuple::LogicTuple( const Token::Ptr& leftBraceToken, const Token::Ptr& righ
 {
 }
 
-void LogicTuple::accept( Visitor& visitor )
-{
-    visitor.visit( *this );
-}
-
 const Token::Ptr& LogicTuple::leftBraceToken( void ) const
 {
     return m_leftBraceToken;
@@ -372,6 +367,11 @@ const Logics::Ptr& LogicTuple::tuples( void ) const
 const Token::Ptr& LogicTuple::rightBraceToken( void ) const
 {
     return m_rightBraceToken;
+}
+
+void LogicTuple::accept( Visitor& visitor )
+{
+    visitor.visit( *this );
 }
 
 //

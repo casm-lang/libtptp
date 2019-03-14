@@ -41,7 +41,6 @@
 
 #include "Logger.h"
 
-// #include "Exception.h"
 #include "SourceLocation.h"
 
 #include <libstdhl/String>
@@ -81,12 +80,6 @@ void libtptp::Logger::error(
     items.add( libstdhl::Memory::make< libstdhl::Log::TextItem >( message ) );
     log< libstdhl::Log::Level::ID::ERROR >( items );
 }
-
-// void libtptp::Logger::error( const Exception& exception )
-// {
-//     error( exception.locations(), exception.what(), exception.errorCode() );
-//     info( "Backtrace:\n" + libstdhl::String::join( exception.backtrace(), "\n" ) );
-// }
 
 void libtptp::Logger::warning(
     const std::vector< SourceLocation >& locations, const std::string& message )

@@ -48,7 +48,8 @@ using namespace libtptp;
 //
 
 Specification::Specification( void )
-: m_definitions()
+: Node( Node::ID::SPECIFICATION )
+, m_definitions( std::make_shared< Definitions >() )
 {
 }
 
@@ -62,6 +63,20 @@ const Definitions::Ptr& Specification::definitions( void ) const
     return m_definitions;
 }
 
+void Specification::setName( const std::string name )
+{
+    m_name = name;
+}
+
+const std::string& Specification::name( void ) const
+{
+    return m_name;
+}
+
+void Specification::accept( Visitor& visitor )
+{
+    visitor.visit( *this );
+}
 //
 //  Local variables:
 //  mode: c++

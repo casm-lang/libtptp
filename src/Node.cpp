@@ -41,8 +41,6 @@
 
 #include "Node.h"
 
-#include "Record.h"
-
 #include <cassert>
 
 using namespace libtptp;
@@ -80,25 +78,9 @@ std::string Node::description( void ) const
         {
             return "identifier";
         }
-        case ID::TRACE:
+        case ID::SPECIFICATION:
         {
-            return "trace";
-        }
-        case ID::RECORD:
-        {
-            auto record = static_cast< const Record* >( this );
-            if( record->formula()->isFOF() )
-            {
-                return "fof";
-            }
-            else if( record->formula()->isTFF() )
-            {
-                return "tff";
-            }
-            else
-            {
-                assert( not"invalid formula record found" );
-            }
+            return "specification";
         }
 
         // definition
@@ -225,9 +207,9 @@ std::string Node::description( void ) const
         {
             return "real literal";
         }
-        case ID::STRING_LITERAL:
+        case ID::DISTINCT_OBJECT_LITERAL:
         {
-            return "string literal";
+            return "distinct object literal";
         }
         case ID::LIST_LITERAL:
         {

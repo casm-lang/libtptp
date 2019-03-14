@@ -60,8 +60,8 @@ namespace libtptp
             // generic
             NODE_LIST,
             IDENTIFIER,
-            TRACE,
-            RECORD,
+            SPECIFICATION,
+
             // Definition
             INCLUDE_DEFINITION,
             FORMULA_DEFINITION,
@@ -103,7 +103,7 @@ namespace libtptp
             INTEGER_LITERAL,
             RATIONAL_LITERAL,
             REAL_LITERAL,
-            STRING_LITERAL,
+            DISTINCT_OBJECT_LITERAL,
             LIST_LITERAL,
 
             FORMULA_ROLE,

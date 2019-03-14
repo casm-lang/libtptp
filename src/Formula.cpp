@@ -65,19 +65,9 @@ const libstdhl::Optional< Annotation::Ptr >& Formula::annotations( void ) const
     return m_annotations;
 }
 
-void Formula::setAnnotations( Annotation::Ptr& annotations )
+void Formula::setAnnotations( const Annotation::Ptr& annotations )
 {
     m_annotations = annotations;
-}
-
-u1 Formula::isFOF( void ) const
-{
-    return id() == Node::ID::FOF_FORMULA;
-}
-
-u1 Formula::isTFF( void ) const
-{
-    return id() == Node::ID::TFF_FORMULA;
 }
 
 //
@@ -162,11 +152,6 @@ FormulaData::FormulaData(
 {
 }
 
-void FormulaData::accept( Visitor& visitor )
-{
-    visitor.visit( *this );
-}
-
 const Token::Ptr& FormulaData::dollar( void ) const
 {
     return m_dollar;
@@ -187,24 +172,11 @@ const Token::Ptr& FormulaData::rightParen( void ) const
     return m_rightParen;
 }
 
-//
-// FormulaRole
-//
-
-FormulaRole::FormulaRole( const StringLiteral::Ptr& word )
-: Node( Node::ID::FORMULA_ROLE )
-{
-}
-
-void FormulaRole::accept( Visitor& visitor )
+void FormulaData::accept( Visitor& visitor )
 {
     visitor.visit( *this );
 }
 
-const StringLiteral::Ptr& FormulaRole::word( void ) const
-{
-    return m_word;
-}
 //
 //  Local variables:
 //  mode: c++

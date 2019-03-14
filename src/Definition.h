@@ -46,6 +46,7 @@
 #include <libtptp/General>
 #include <libtptp/Identifier>
 #include <libtptp/Node>
+#include <libtptp/Role>
 #include <libtptp/Token>
 
 /**
@@ -65,8 +66,6 @@ namespace libtptp
         using Ptr = std::shared_ptr< Definition >;
 
         Definition( const Node::ID id );
-
-      private:
     };
 
     using Definitions = NodeList< Definition >;
@@ -114,32 +113,32 @@ namespace libtptp
             const Token::Ptr& keyword,
             const Token::Ptr& leftParen,
             const Identifier::Ptr& name,
-            const Token::Ptr& comma,
-            const FormulaRole::Ptr& role,
-            const Token::Ptr& comma2,
+            const Token::Ptr& commaRole,
+            const Role::Ptr& role,
+            const Token::Ptr& commaFormula,
             const Formula::Ptr& formula,
             const Token::Ptr& rightParen,
             const Token::Ptr& dot );
 
-        void accept( Visitor& visitor ) override final;
-
         const Token::Ptr& keyword( void ) const;
         const Token::Ptr& leftParen( void ) const;
         const Identifier::Ptr& name( void ) const;
-        const Token::Ptr& comma( void ) const;
-        const FormulaRole::Ptr& role( void ) const;
-        const Token::Ptr& comma2( void ) const;
+        const Token::Ptr& commaRole( void ) const;
+        const Role::Ptr& role( void ) const;
+        const Token::Ptr& commaFormula( void ) const;
         const Formula::Ptr& formula( void ) const;
         const Token::Ptr& rightParen( void ) const;
         const Token::Ptr& dot( void ) const;
+
+        void accept( Visitor& visitor ) override final;
 
       private:
         const Token::Ptr m_keyword;
         const Token::Ptr m_leftParen;
         const Identifier::Ptr m_name;
-        const Token::Ptr m_comma;
-        const FormulaRole::Ptr m_role;
-        const Token::Ptr m_comma2;
+        const Token::Ptr m_commaRole;
+        const Role::Ptr m_role;
+        const Token::Ptr m_commaFormula;
         const Formula::Ptr m_formula;
         const Token::Ptr m_rightParen;
         const Token::Ptr m_dot;

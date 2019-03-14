@@ -56,12 +56,11 @@ add_library( ${PROJECT}-cpp OBJECT
   Logic.cpp
   Logger.cpp
   Node.cpp
-  Record.cpp
+  Role.cpp
   Specification.cpp
   Term.cpp
   Token.cpp
   Type.cpp
-  Trace.cpp
   Visitor.cpp
 
   analyze/DumpDebugPass.cpp
@@ -104,14 +103,12 @@ ecm_generate_headers( ${PROJECT}_HEADERS_CPP
     Logic
     Logger
     Node
-    Record
     Role
     Specification
     SourceLocation
     TPTP
     Term
     Token
-    Trace
     Type
     Visitor
     libtptp

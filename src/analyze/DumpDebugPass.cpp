@@ -45,9 +45,8 @@
 #include <libtptp/Formula>
 #include <libtptp/Logic>
 #include <libtptp/Node>
-#include <libtptp/Record>
+#include <libtptp/Specification>
 #include <libtptp/Term>
-#include <libtptp/Trace>
 
 #include <libpass/PassLogger>
 #include <libpass/PassRegistry>
@@ -90,12 +89,7 @@ DumpDebugVisitor::DumpDebugVisitor( std::ostream& stream )
 {
 }
 
-void DumpDebugVisitor::visit( Trace& node )
-{
-    dump( node );
-    RecursiveVisitor::visit( node );
-}
-void DumpDebugVisitor::visit( Record& node )
+void DumpDebugVisitor::visit( Specification& node )
 {
     dump( node );
     RecursiveVisitor::visit( node );

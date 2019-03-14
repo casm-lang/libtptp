@@ -39,7 +39,7 @@
 //  statement from your version.
 //
 
-//http://www.tptp.org/TPTP/Proposals/TPILanguage.html   
+// http://www.tptp.org/TPTP/Proposals/TPILanguage.html
 static const std::string tpi_test_example = R"***(    tpi(1,start_group,old_and_new_axioms).
     tpi(2,start_group,old_axioms).
     tpi(3,input,'Axioms/SYN001+1.ax').
@@ -67,12 +67,12 @@ static const std::string tpi_test_example = R"***(    tpi(1,start_group,old_and_
     tpi(20,write,'Conjecture status for all axioms:' & $getenv('SZS_STATUS')).
     tpi(21,exit,exit).
 )***";
-// 
-//  Local variables: 
-//  mode: c++ 
-//  indent-tabs-mode: nil 
-//  c-basic-offset: 4 
-//  tab-width: 4 
-//  End: 
-//  vim:noexpandtab:sw=4:ts=4: 
-// 
+//
+//  Local variables:
+//  mode: c++
+//  indent-tabs-mode: nil
+//  c-basic-offset: 4
+//  tab-width: 4
+//  End:
+//  vim:noexpandtab:sw=4:ts=4:
+//

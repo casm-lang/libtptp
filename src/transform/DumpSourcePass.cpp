@@ -47,12 +47,13 @@
 #include <libtptp/Literal>
 #include <libtptp/Logic>
 #include <libtptp/Node>
-#include <libtptp/Record>
+#include <libtptp/Specification>
 #include <libtptp/Term>
-#include <libtptp/Trace>
 
 #include <libpass/PassLogger>
 #include <libpass/PassRegistry>
+
+#include "../various/GrammarToken.h"
 
 #include <iostream>
 
@@ -92,26 +93,17 @@ DumpSourceVisitor::DumpSourceVisitor( std::ostream& stream )
 {
 }
 
-void DumpSourceVisitor::visit( Trace& node )
+void DumpSourceVisitor::visit( Specification& node )
 {
-    m_stream << "% " << node.description() << "\n";
+    m_stream << "% " << node.description() << ": " << node.name() << "\n";
 
-    node.records()->accept( *this );
+    node.definitions()->accept( *this );
 }
-void DumpSourceVisitor::visit( Record& node )
+
+void DumpSourceVisitor::visit( Identifier& node )
 {
-    m_stream << node.description();
-    m_stream << "( ";
-    node.name()->accept( *this );
-    m_stream << ", ";
-    m_stream << node.roleDescription();
-    m_stream << ", ";
-    node.formula()->accept( *this );
-    // m_stream << ", ";
-    // node.annotations()->accept( *this );
-    m_stream << " ).";
-    // node comments
-    m_stream << "\n";
+    RecursiveVisitor::visit( node );
+    m_stream << node.name();
 }
 
 void DumpSourceVisitor::visit( IntegerLiteral& node )
@@ -123,6 +115,8 @@ void DumpSourceVisitor::visit( IntegerLiteral& node )
 void DumpSourceVisitor::visit( RationalLiteral& node )
 {
     RecursiveVisitor::visit( node );
+    auto rational = static_cast< const libstdhl::Type::Rational& >( node.value() );
+    m_stream << rational.numerator().to_string() << "/" << rational.denominator().to_string();
 }
 
 void DumpSourceVisitor::visit( RealLiteral& node )
@@ -131,16 +125,20 @@ void DumpSourceVisitor::visit( RealLiteral& node )
     m_stream << node.value().to_string();
 }
 
-void DumpSourceVisitor::visit( StringLiteral& node )
+void DumpSourceVisitor::visit( DistinctObjectLiteral& node )
 {
     RecursiveVisitor::visit( node );
-    m_stream << node.value().to_string();
+    auto string = static_cast< const libstdhl::Type::String& >( node.value() );
+    m_stream << string.toString();
 }
 
 void DumpSourceVisitor::visit( Token& node )
 {
     RecursiveVisitor::visit( node );
-    m_stream << node.tokenString();
+    if( node.token() != libtptp::Grammar::Token::UNRESOLVED )
+    {
+        m_stream << node.tokenString();
+    }
 }
 //
 //  Local variables:

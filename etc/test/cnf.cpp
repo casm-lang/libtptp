@@ -116,12 +116,12 @@ TEST( libtptp, cnf_predicates )
     libstdhl::File::remove( filename );
     EXPECT_EQ( libstdhl::File::exists( filename ), false );
 }
-// 
-//  Local variables: 
-//  mode: c++ 
-//  indent-tabs-mode: nil 
-//  c-basic-offset: 4 
-//  tab-width: 4 
-//  End: 
-//  vim:noexpandtab:sw=4:ts=4: 
-// 
+//
+//  Local variables:
+//  mode: c++
+//  indent-tabs-mode: nil
+//  c-basic-offset: 4
+//  tab-width: 4
+//  End:
+//  vim:noexpandtab:sw=4:ts=4:
+//

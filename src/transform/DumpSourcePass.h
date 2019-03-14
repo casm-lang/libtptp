@@ -71,13 +71,14 @@ namespace libtptp
       public:
         DumpSourceVisitor( std::ostream& stream );
 
-        void visit( Trace& node ) override;
-        void visit( Record& node ) override;
+        void visit( Specification& node ) override;
+
+        void visit( Identifier& node ) override;
 
         void visit( IntegerLiteral& node ) override;
         void visit( RationalLiteral& node ) override;
         void visit( RealLiteral& node ) override;
-        void visit( StringLiteral& node ) override;
+        void visit( DistinctObjectLiteral& node ) override;
 
         void visit( Token& node ) override;
 

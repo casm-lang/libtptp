@@ -53,17 +53,37 @@ namespace libtptp
     class Identifier final : public Node
     {
       public:
+        enum class Kind
+        {
+            WORD,
+            NUMBER,
+        };
+
         using Ptr = std::shared_ptr< Identifier >;
 
-        explicit Identifier( const Literal::Ptr& name );
+        explicit Identifier( const std::string& name, Kind kind = Kind::WORD );
 
-      public:
-        const Literal::Ptr& name( void ) const;
+        explicit Identifier(
+            const Token::Ptr& definedModifier, const std::string& string, Kind kind = Kind::WORD );
+
+        explicit Identifier(
+            const Token::Ptr& systemModifier,
+            const Token::Ptr& definedModifier,
+            const std::string& string,
+            Kind kind = Kind::WORD );
+
+        const Token::Ptr systemModifier( void ) const;
+        const Token::Ptr definedModifier( void ) const;
+        const std::string& name( void ) const;
+        const Kind kind( void ) const;
 
         void accept( Visitor& visitor ) override final;
 
       private:
-        const Literal::Ptr m_name;
+        const Token::Ptr m_systemModifier;
+        const Token::Ptr m_definedModifier;
+        const std::string m_name;
+        Kind m_kind;
     };
 
     using Identifiers = NodeList< Identifier >;
