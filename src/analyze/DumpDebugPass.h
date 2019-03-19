@@ -3,6 +3,7 @@
 //  All rights reserved.
 //
 //  Developed by: Philipp Paulweber
+//                Jakob Moosbrugger
 //                <https://github.com/casm-lang/libtptp>
 //
 //  This file is part of libtptp.
@@ -71,8 +72,7 @@ namespace libtptp
       public:
         DumpDebugVisitor( std::ostream& stream );
 
-        void visit( Trace& node ) override;
-        void visit( Record& node ) override;
+        void visit( Specification& node ) override;
 
         void visit( FirstOrderFormula& node ) override;
         void visit( TypedFirstOrderFormula& node ) override;

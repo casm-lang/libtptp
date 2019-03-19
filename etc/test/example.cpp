@@ -3,6 +3,7 @@
 //  All rights reserved.
 //
 //  Developed by: Philipp Paulweber
+//                Jakob Moosbrugger
 //                <https://github.com/casm-lang/libtptp>
 //
 //  This file is part of libtptp.
@@ -41,25 +42,67 @@
 
 #include <libstdhl/Test>
 
+#include <libpass/libpass>
+
+#include "main.h"
+
 using namespace libtptp;
+using namespace libpass;
+
+static const auto uToken = std::make_shared< Token >( Grammar::Token::UNRESOLVED );
 
 TEST( libtptp, example )
 {
     DumpDebugVisitor dbg{ std::cout };
     DumpSourceVisitor src{ std::cout };
 
-    auto t = Trace();
+    auto t = Specification();
 
-    auto x = std::make_shared< Identifier >( "X" );
-    auto v = std::make_shared< VariableTerm >( x );
+    auto x = std::make_shared< Identifier >( "x" );
+    auto v = std::make_shared< ConstantAtom >( x, Atom::Kind::PLAIN );
 
     auto y = std::make_shared< Identifier >( "y" );
     auto f = std::make_shared< FirstOrderFormula >( v );
 
-    t.add< Record >( y, Role::AXIOM, f );
+    t.add< FormulaDefinition >(
+        uToken, uToken, y, uToken, Role::axiom(), uToken, f, uToken, uToken );
 
     t.accept( dbg );
     t.accept( src );
+}
+
+TEST( libtptp, include_file )
+{
+    PassManager pm;
+
+    libstdhl::Logger log( pm.stream() );
+    log.setSource( libstdhl::Memory::make< libstdhl::Log::Source >( TEST_NAME, TEST_NAME ) );
+
+    auto flush = [&pm]() {
+        libstdhl::Log::ApplicationFormatter f( TEST_NAME );
+        libstdhl::Log::OutputStreamSink c( std::cerr, f );
+        pm.stream().flush( c );
+    };
+
+    pm.add< SourceToAstPass >();
+    pm.setDefaultPass< SourceToAstPass >();
+
+    const std::string filename = TEST_NAME + ".tptp";
+    auto file = libstdhl::File::open( filename, std::fstream::out );
+    file << " include ( 'testfile' ). " << std::endl;
+    file << " include ( 'testfile2', [somemethod, 'some_method', 3] ). ";
+    file.close();
+
+    const auto input = libstdhl::Memory::make< LoadFilePass::Input >( filename );
+    PassResult pr;
+    pr.setInputData< LoadFilePass >( input );
+    pm.setDefaultResult( pr );
+
+    EXPECT_EQ( pm.run( flush ), true );
+
+    pm.result().output< LoadFilePass >()->close();
+    libstdhl::File::remove( filename );
+    EXPECT_EQ( libstdhl::File::exists( filename ), false );
 }
 
 //

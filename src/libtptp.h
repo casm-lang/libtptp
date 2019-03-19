@@ -3,6 +3,7 @@
 //  All rights reserved.
 //
 //  Developed by: Philipp Paulweber
+//                Jakob Moosbrugger
 //                <https://github.com/casm-lang/libtptp>
 //
 //  This file is part of libtptp.
@@ -46,13 +47,14 @@
 #include <libtptp/Formula>
 #include <libtptp/Logic>
 #include <libtptp/Node>
-#include <libtptp/Record>
+#include <libtptp/Specification>
 #include <libtptp/Term>
-#include <libtptp/Trace>
 #include <libtptp/Version>
 #include <libtptp/Visitor>
 #include <libtptp/analyze/DumpDebugPass>
+#include <libtptp/transform/AstDumpDotPass>
 #include <libtptp/transform/DumpSourcePass>
+#include <libtptp/transform/SourceToAstPass>
 
 /**
    @brief    TODO

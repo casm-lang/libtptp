@@ -3,6 +3,7 @@
 //  All rights reserved.
 //
 //  Developed by: Philipp Paulweber
+//                Jakob Moosbrugger
 //                <https://github.com/casm-lang/libtptp>
 //
 //  This file is part of libtptp.
@@ -41,8 +42,6 @@
 
 #include "Node.h"
 
-#include "Record.h"
-
 #include <cassert>
 
 using namespace libtptp;
@@ -55,6 +54,16 @@ Node::Node( Node::ID id )
 Node::ID Node::id( void ) const
 {
     return m_id;
+}
+
+void Node::setSourceLocation( const SourceLocation& sourceLocation )
+{
+    m_sourceLocation = sourceLocation;
+}
+
+const SourceLocation& Node::sourceLocation( void ) const
+{
+    return m_sourceLocation;
 }
 
 std::string Node::description( void ) const
@@ -70,35 +79,44 @@ std::string Node::description( void ) const
         {
             return "identifier";
         }
-        case ID::TRACE:
+        case ID::SPECIFICATION:
         {
-            return "trace";
-        }
-        case ID::RECORD:
-        {
-            auto record = static_cast< const Record* >( this );
-            if( record->formula()->isFOF() )
-            {
-                return "fof";
-            }
-            else if( record->formula()->isTFF() )
-            {
-                return "tff";
-            }
-            else
-            {
-                assert( not"invalid formula record found" );
-            }
+            return "specification";
         }
 
+        // definition
+        case ID::INCLUDE_DEFINITION:
+        {
+            return "include";
+        }
+        case ID::FORMULA_DEFINITION:
+        {
+            return "formula definition";
+        }
         // formulae
         case ID::FOF_FORMULA:
         {
-            return "fof_formula";
+            return "fof formula";
         }
         case ID::TFF_FORMULA:
         {
-            return "tff_formula";
+            return "tff formula";
+        }
+        case ID::THF_FORMULA:
+        {
+            return "thf formula";
+        }
+        case ID::TPI_FORMULA:
+        {
+            return "tpi formula";
+        }
+        case ID::CNF_FORMULA:
+        {
+            return "cnf formula";
+        }
+        case ID::TCF_FORMULA:
+        {
+            return "rcf formula";
         }
 
         // logics
@@ -122,6 +140,14 @@ std::string Node::description( void ) const
         {
             return "sequent logic";
         }
+        case ID::INFIX_LOGIC:
+        {
+            return "infix logic";
+        }
+        case ID::LOGIC_TUPLE:
+        {
+            return "logic tuple";
+        }
 
         // terms
         case ID::FUNCTION_TERM:
@@ -136,32 +162,118 @@ std::string Node::description( void ) const
         {
             return "conditional term";
         }
+        case ID::DEFINITION_TERM:
+        {
+            return "definition term";
+        }
+        case ID::CONNECTIVE_ATOM:
+        {
+            return "connective atom";
+        }
 
         // atoms
         case ID::FUNCTOR_ATOM:
         {
             return "functor atom";
         }
+        case ID::CONSTANT_ATOM:
+        {
+            return "constant atom";
+        }
+        case ID::DEFINED_ATOM:
+        {
+            return "defined atom";
+        }
+        case ID::DEFINITION_ATOM:
+        {
+            return "definition atom";
+        }
+
+        // token
+        case ID::TOKEN:
+        {
+            return "token";
+        }
+
+        // literals
+        case ID::INTEGER_LITERAL:
+        {
+            return "integer literal";
+        }
+        case ID::RATIONAL_LITERAL:
+        {
+            return "rational literal";
+        }
+        case ID::REAL_LITERAL:
+        {
+            return "real literal";
+        }
+        case ID::DISTINCT_OBJECT_LITERAL:
+        {
+            return "distinct object literal";
+        }
+        case ID::LIST_LITERAL:
+        {
+            return "list literal";
+        }
+
+        case ID::FORMULA_ROLE:
+        {
+            return "formula role";
+        }
+        case ID::FORMULA_DATA:
+        {
+            return "formula data";
+        }
+
+        case ID::GENERAL_DATA:
+        {
+            return "general data";
+        }
+        case ID::GENERAL_LIST:
+        {
+            return "general list";
+        }
+        case ID::GENERAL_AGGREGATOR:
+        {
+            return "general aggregator";
+        }
+        case ID::GENERAL_FUNCTION:
+        {
+            return "general function";
+        }
+        case ID::ANNOTATION:
+        {
+            return "annotation";
+        }
+        case ID::ATOM_TYPE:
+        {
+            return "atom type";
+        }
+        case ID::SUB_TYPE:
+        {
+            return "sub type";
+        }
+        case ID::QUANTIFIED_TYPE:
+        {
+            return "quantified type";
+        }
+        case ID::TUPLE_TYPE:
+        {
+            return "tuple type";
+        }
+        case ID::TYPED_ATOM:
+        {
+            return "typed atom";
+        }
+        case ID::BINARY_TYPE:
+        {
+            return "binary type";
+        }
     }
 
     assert( !" internal error! " );
     return std::string();
-}
-
-Identifier::Identifier( const std::string& name )
-: Node( Node::ID::IDENTIFIER )
-, m_name( name )
-{
-}
-
-const std::string& Identifier::name( void ) const
-{
-    return m_name;
-}
-
-void Identifier::accept( Visitor& visitor )
-{
-    visitor.visit( *this );
 }
 
 //

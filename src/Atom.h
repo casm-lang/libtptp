@@ -3,6 +3,7 @@
 //  All rights reserved.
 //
 //  Developed by: Philipp Paulweber
+//                Jakob Moosbrugger
 //                <https://github.com/casm-lang/libtptp>
 //
 //  This file is part of libtptp.
@@ -58,6 +59,14 @@ namespace libtptp
     class Atom : public Term
     {
       public:
+        enum class Kind
+        {
+            PLAIN,
+            DEFINED,
+            SYSTEM,
+            TYPE,
+        };
+
         using Ptr = std::shared_ptr< Atom >;
 
         Atom( const Node::ID id );
@@ -84,28 +93,107 @@ namespace libtptp
         // <fof_system_term>         ::= <system_constant>
         //                             | <system_functor>(<fof_arguments>)
 
-        enum class Kind
-        {
-            PLAIN,
-            DEFINED,
-            SYSTEM,
-        };
-
         using Ptr = std::shared_ptr< FunctorAtom >;
 
-        FunctorAtom( const Identifier::Ptr& name, const Terms::Ptr& arguments );
+        FunctorAtom(
+            const Identifier::Ptr& name,
+            const Token::Ptr& leftParen,
+            const Logics::Ptr& arguments,
+            const Token::Ptr& rightParen,
+            const Kind kind );
 
         const Identifier::Ptr& name( void ) const;
-
-        const Terms::Ptr& arguments( void ) const;
+        const Token::Ptr& leftParen( void ) const;
+        const Logics::Ptr& arguments( void ) const;
+        const Token::Ptr& rightParen( void ) const;
+        const Kind kind( void ) const;
 
       private:
         const Identifier::Ptr m_name;
-        const Terms::Ptr m_arguments;
+        const Token::Ptr m_leftParen;
+        const Logics::Ptr m_arguments;
+        const Token::Ptr m_rightParen;
+        const Kind m_kind;
 
       public:
         void accept( Visitor& visitor ) override;
     };
+
+    class ConstantAtom final : public Atom
+    {
+      public:
+        using Ptr = std::shared_ptr< ConstantAtom >;
+
+        explicit ConstantAtom( const Identifier::Ptr& constant, const Kind kind );
+
+        const Identifier::Ptr& constant( void ) const;
+        const Kind kind( void ) const;
+
+        void accept( Visitor& visitor ) override final;
+
+      private:
+        const Identifier::Ptr m_constant;
+        const Kind m_kind;
+    };
+
+    using ConstantAtoms = NodeList< ConstantAtom >;
+
+    class DefinedAtom final : public Atom
+    {
+      public:
+        using Ptr = std::shared_ptr< DefinedAtom >;
+
+        explicit DefinedAtom( const Literal::Ptr& literal );
+
+        const Literal::Ptr& literal( void ) const;
+
+        void accept( Visitor& visitor ) override final;
+
+      private:
+        const Literal::Ptr m_literal;
+    };
+
+    using DefinedAtoms = NodeList< DefinedAtom >;
+
+    class DefinitionAtom final : public Atom
+    {
+      public:
+        using Ptr = std::shared_ptr< DefinitionAtom >;
+
+        explicit DefinitionAtom(
+            const Logic::Ptr& lhs, const Token::Ptr& assignment, const Logic::Ptr& rhs );
+
+        const Logic::Ptr& lhs( void ) const;
+        const Token::Ptr& assignment( void ) const;
+        const Logic::Ptr& rhs( void ) const;
+
+        void accept( Visitor& visitor ) override final;
+
+      private:
+        const Logic::Ptr m_lhs;
+        const Token::Ptr m_assignment;
+        const Logic::Ptr m_rhs;
+    };
+
+    using DefinitionAtoms = NodeList< DefinitionAtom >;
+
+    class ConnectiveAtom final : public Atom
+    {
+      public:
+        using Ptr = std::shared_ptr< ConnectiveAtom >;
+
+        explicit ConnectiveAtom( Token::Ptr& connective );
+
+        void accept( Visitor& visitor ) override final;
+
+        const Token::Ptr& connective( void );
+
+      private:
+        Token::Ptr m_connective;
+    };
+
+    using ConnectiveAtoms = NodeList< ConnectiveAtom >;
+
 }
 
 #endif  // _LIBTPTP_ATOM_H_

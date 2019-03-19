@@ -3,6 +3,7 @@
 #   All rights reserved.
 #
 #   Developed by: Philipp Paulweber
+#                 Jakob Moosbrugger
 #                 <https://github.com/casm-lang/libtptp>
 #
 #   This file is part of libtptp.
@@ -48,15 +49,29 @@ include_directories(
 
 add_library( ${PROJECT}-cpp OBJECT
   Atom.cpp
-  Logic.cpp
+  Definition.cpp
   Formula.cpp
+  General.cpp
+  Identifier.cpp
+  Literal.cpp
+  Logic.cpp
+  Logger.cpp
   Node.cpp
-  Record.cpp
+  Role.cpp
+  Specification.cpp
   Term.cpp
-  Trace.cpp
+  Token.cpp
+  Type.cpp
   Visitor.cpp
+
   analyze/DumpDebugPass.cpp
+
+  transform/AstDumpDotPass.cpp
   transform/DumpSourcePass.cpp
+  transform/SourceToAstPass.cpp
+
+  various/GrammarParser.cpp
+  various/GrammarLexer.cpp
   )
 
 
@@ -82,14 +97,21 @@ ecm_generate_headers( ${PROJECT}_HEADERS_CPP
     CAMELCASE
   HEADER_NAMES
     Atom
-    Logic
+    Definition
     Formula
+    General
+    Identifier
+    Literal
+    Logic
+    Logger
     Node
-    Record
     Role
+    Specification
+    SourceLocation
     TPTP
     Term
-    Trace
+    Token
+    Type
     Visitor
     libtptp
   PREFIX
@@ -132,7 +154,9 @@ ecm_generate_headers( ${PROJECT}_TRANSFORM_HEADERS_CPP
   ORIGINAL
     CAMELCASE
   HEADER_NAMES
+    AstDumpDotPass
     DumpSourcePass
+    SourceToAstPass
   PREFIX
     ${PROJECT}/transform
   RELATIVE

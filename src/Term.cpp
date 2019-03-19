@@ -3,6 +3,7 @@
 //  All rights reserved.
 //
 //  Developed by: Philipp Paulweber
+//                Jakob Moosbrugger
 //                <https://github.com/casm-lang/libtptp>
 //
 //  This file is part of libtptp.
@@ -42,6 +43,7 @@
 #include "Term.h"
 
 #include "Atom.h"
+#include "Type.h"
 
 using namespace libtptp;
 
@@ -81,12 +83,34 @@ void FunctionTerm::accept( Visitor& visitor )
 VariableTerm::VariableTerm( const Identifier::Ptr& name )
 : Term( Node::ID::VARIABLE_TERM )
 , m_name( name )
+, m_colon()
+, m_type()
 {
 }
 
 const Identifier::Ptr& VariableTerm::name( void ) const
 {
     return m_name;
+}
+
+const libstdhl::Optional< Token::Ptr >& VariableTerm::colon( void )
+{
+    return m_colon;
+}
+
+const libstdhl::Optional< Type::Ptr >& VariableTerm::type( void )
+{
+    return m_type;
+}
+
+void VariableTerm::setColon( const Token::Ptr& colon )
+{
+    m_colon = colon;
+}
+
+void VariableTerm::setType( const Type::Ptr& type )
+{
+    m_type = type;
 }
 
 void VariableTerm::accept( Visitor& visitor )
@@ -99,12 +123,41 @@ void VariableTerm::accept( Visitor& visitor )
 //
 
 ConditionalTerm::ConditionalTerm(
-    const Logic::Ptr& condition, const Term::Ptr& left, const Term::Ptr& right )
+    const Token::Ptr& dollar,
+    const Token::Ptr& ite,
+    const Token::Ptr& leftParen,
+    const Logic::Ptr& condition,
+    const Token::Ptr& commaLeft,
+    const Logic::Ptr& leftTerm,
+    const Token::Ptr& commaRight,
+    const Logic::Ptr& rightTerm,
+    const Token::Ptr& rightParen )
 : Term( Node::ID::CONDITIONAL_TERM )
+, m_dollar( dollar )
+, m_ite( ite )
+, m_leftParen( leftParen )
 , m_condition( condition )
-, m_left( left )
-, m_right( right )
+, m_commaLeft( commaLeft )
+, m_leftTerm( leftTerm )
+, m_commaRight( commaRight )
+, m_rightTerm( rightTerm )
+, m_rightParen( rightParen )
 {
+}
+
+const Token::Ptr& ConditionalTerm::dollar( void ) const
+{
+    return m_dollar;
+}
+
+const Token::Ptr& ConditionalTerm::ite( void ) const
+{
+    return m_ite;
+}
+
+const Token::Ptr& ConditionalTerm::leftParen( void ) const
+{
+    return m_leftParen;
 }
 
 const Logic::Ptr& ConditionalTerm::condition( void ) const
@@ -112,17 +165,105 @@ const Logic::Ptr& ConditionalTerm::condition( void ) const
     return m_condition;
 }
 
-const Term::Ptr& ConditionalTerm::left( void ) const
+const Token::Ptr& ConditionalTerm::commaLeft( void ) const
 {
-    return m_left;
+    return m_commaLeft;
 }
 
-const Term::Ptr& ConditionalTerm::right( void ) const
+const Logic::Ptr& ConditionalTerm::leftTerm( void ) const
 {
-    return m_right;
+    return m_leftTerm;
+}
+
+const Token::Ptr& ConditionalTerm::commaRight( void ) const
+{
+    return m_commaRight;
+}
+
+const Logic::Ptr& ConditionalTerm::rightTerm( void ) const
+{
+    return m_rightTerm;
+}
+
+const Token::Ptr& ConditionalTerm::rightParen( void ) const
+{
+    return m_rightParen;
 }
 
 void ConditionalTerm::accept( Visitor& visitor )
+{
+    visitor.visit( *this );
+}
+
+DefinitionTerm::DefinitionTerm(
+    const Token::Ptr& dollar,
+    const Token::Ptr& let,
+    const Token::Ptr& leftParen,
+    const std::shared_ptr< Type >& types,
+    const Token::Ptr& commaLeft,
+    const Logic::Ptr& definitions,
+    const Token::Ptr& commaRight,
+    const Logic::Ptr& term,
+    const Token::Ptr& rightParen )
+: Term( Node::ID::DEFINITION_TERM )
+, m_dollar( dollar )
+, m_let( let )
+, m_leftParen( leftParen )
+, m_types( types )
+, m_commaLeft( commaLeft )
+, m_definitions( definitions )
+, m_commaRight( commaRight )
+, m_term( term )
+, m_rightParen( rightParen )
+{
+}
+
+const Token::Ptr& DefinitionTerm::dollar( void ) const
+{
+    return m_dollar;
+}
+
+const Token::Ptr& DefinitionTerm::let( void ) const
+{
+    return m_let;
+}
+
+const Token::Ptr& DefinitionTerm::leftParen( void ) const
+{
+    return m_leftParen;
+}
+
+const std::shared_ptr< Type >& DefinitionTerm::types( void ) const
+{
+    return m_types;
+}
+
+const Token::Ptr& DefinitionTerm::commaLeft( void ) const
+{
+    return m_commaLeft;
+}
+
+const Logic::Ptr& DefinitionTerm::definitions( void ) const
+{
+    return m_definitions;
+}
+
+const Token::Ptr& DefinitionTerm::commaRight( void ) const
+{
+    return m_commaRight;
+}
+
+const Logic::Ptr& DefinitionTerm::term( void ) const
+{
+    return m_term;
+}
+
+const Token::Ptr& DefinitionTerm::rightParen( void ) const
+{
+    return m_rightParen;
+}
+
+void DefinitionTerm::accept( Visitor& visitor )
 {
     visitor.visit( *this );
 }

@@ -3,6 +3,7 @@
 //  All rights reserved.
 //
 //  Developed by: Philipp Paulweber
+//                Jakob Moosbrugger
 //                <https://github.com/casm-lang/libtptp>
 //
 //  This file is part of libtptp.
@@ -43,14 +44,17 @@
 
 #include <libtptp/Atom>
 #include <libtptp/Formula>
+#include <libtptp/Identifier>
+#include <libtptp/Literal>
 #include <libtptp/Logic>
 #include <libtptp/Node>
-#include <libtptp/Record>
+#include <libtptp/Specification>
 #include <libtptp/Term>
-#include <libtptp/Trace>
 
 #include <libpass/PassLogger>
 #include <libpass/PassRegistry>
+
+#include "../various/GrammarToken.h"
 
 #include <iostream>
 
@@ -90,110 +94,53 @@ DumpSourceVisitor::DumpSourceVisitor( std::ostream& stream )
 {
 }
 
-void DumpSourceVisitor::visit( Trace& node )
+void DumpSourceVisitor::visit( Specification& node )
 {
-    m_stream << "% " << node.description() << "\n";
+    m_stream << "% " << node.description() << ": " << node.name() << "\n";
 
-    node.records()->accept( *this );
-}
-void DumpSourceVisitor::visit( Record& node )
-{
-    m_stream << node.description();
-    m_stream << "( ";
-    node.name()->accept( *this );
-    m_stream << ", ";
-    m_stream << node.roleDescription();
-    m_stream << ", ";
-    node.formula()->accept( *this );
-    // m_stream << ", ";
-    // node.annotations()->accept( *this );
-    m_stream << " ).";
-    // node comments
-    m_stream << "\n";
-}
-
-void DumpSourceVisitor::visit( FirstOrderFormula& node )
-{
-    RecursiveVisitor::visit( node );
-}
-void DumpSourceVisitor::visit( TypedFirstOrderFormula& node )
-{
-    RecursiveVisitor::visit( node );
-}
-
-void DumpSourceVisitor::visit( UnaryLogic& node )
-{
-    m_stream << node.connectiveToken();
-    node.logic()->accept( *this );
-}
-void DumpSourceVisitor::visit( BinaryLogic& node )
-{
-    node.left()->accept( *this );
-    m_stream << " ";
-    m_stream << node.connectiveToken();
-    m_stream << " ";
-    node.right()->accept( *this );
-}
-void DumpSourceVisitor::visit( QuantifiedLogic& node )
-{
-    m_stream << node.connectiveToken();
-    m_stream << " ";
-    node.variables()->accept( *this );
-    m_stream << " : ";
-    node.logic()->accept( *this );
-}
-void DumpSourceVisitor::visit( SequentLogic& node )
-{
-    node.left()->accept( *this );
-    m_stream << " ";
-    m_stream << node.connectiveToken();
-    m_stream << " ";
-    node.right()->accept( *this );
-}
-
-void DumpSourceVisitor::visit( FunctionTerm& node )
-{
-    RecursiveVisitor::visit( node );
-}
-void DumpSourceVisitor::visit( VariableTerm& node )
-{
-    RecursiveVisitor::visit( node );
-}
-void DumpSourceVisitor::visit( ConditionalTerm& node )
-{
-    m_stream << "$ite_t( ";
-    node.condition()->accept( *this );
-    m_stream << ", ";
-    node.left()->accept( *this );
-    m_stream << ", ";
-    node.right()->accept( *this );
-    m_stream << " )";
-}
-
-void DumpSourceVisitor::visit( FunctorAtom& node )
-{
-    node.name()->accept( *this );
-
-    m_stream << "( ";
-
-    u1 first = true;
-    assert( node.arguments() );
-    for( auto& argument : *node.arguments() )
-    {
-        m_stream << ( first ? "" : ", " );
-        first = false;
-
-        argument->accept( *this );
-    }
-
-    m_stream << " )";
+    node.definitions()->accept( *this );
 }
 
 void DumpSourceVisitor::visit( Identifier& node )
 {
+    RecursiveVisitor::visit( node );
     m_stream << node.name();
 }
 
+void DumpSourceVisitor::visit( IntegerLiteral& node )
+{
+    RecursiveVisitor::visit( node );
+    m_stream << node.value().to_string();
+}
+
+void DumpSourceVisitor::visit( RationalLiteral& node )
+{
+    RecursiveVisitor::visit( node );
+    auto rational = static_cast< const libstdhl::Type::Rational& >( node.value() );
+    m_stream << rational.numerator().to_string() << "/" << rational.denominator().to_string();
+}
+
+void DumpSourceVisitor::visit( RealLiteral& node )
+{
+    RecursiveVisitor::visit( node );
+    m_stream << node.value().to_string();
+}
+
+void DumpSourceVisitor::visit( DistinctObjectLiteral& node )
+{
+    RecursiveVisitor::visit( node );
+    auto string = static_cast< const libstdhl::Type::String& >( node.value() );
+    m_stream << string.toString();
+}
+
+void DumpSourceVisitor::visit( Token& node )
+{
+    RecursiveVisitor::visit( node );
+    if( node.token() != libtptp::Grammar::Token::UNRESOLVED )
+    {
+        m_stream << node.tokenString();
+    }
+}
 //
 //  Local variables:
 //  mode: c++

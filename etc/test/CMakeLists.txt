@@ -3,6 +3,7 @@
 #   All rights reserved.
 #
 #   Developed by: Philipp Paulweber
+#                 Jakob Moosbrugger
 #                 <https://github.com/casm-lang/libtptp>
 #
 #   This file is part of libtptp.
@@ -49,4 +50,13 @@ include_directories(
 
 add_library( ${PROJECT}-test OBJECT
   main.cpp
+  astToDot.cpp
+  cnf.cpp
+  example.cpp
+  fof.cpp
+  general.cpp
+  tff.cpp
+  thf.cpp
+  tpi.cpp
+
   )

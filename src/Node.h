@@ -3,6 +3,7 @@
 //  All rights reserved.
 //
 //  Developed by: Philipp Paulweber
+//                Jakob Moosbrugger
 //                <https://github.com/casm-lang/libtptp>
 //
 //  This file is part of libtptp.
@@ -43,6 +44,7 @@
 #define _LIBTPTP_NODE_H_
 
 #include <libstdhl/List>
+#include <libtptp/SourceLocation>
 #include <libtptp/Visitor>
 
 namespace libtptp
@@ -50,6 +52,7 @@ namespace libtptp
     /**
        @extends TPTP
      */
+
     class Node : public std::enable_shared_from_this< Node >
     {
       public:
@@ -58,12 +61,19 @@ namespace libtptp
             // generic
             NODE_LIST,
             IDENTIFIER,
-            TRACE,
-            RECORD,
+            SPECIFICATION,
+
+            // Definition
+            INCLUDE_DEFINITION,
+            FORMULA_DEFINITION,
 
             // formulae
             FOF_FORMULA,
             TFF_FORMULA,
+            THF_FORMULA,
+            TPI_FORMULA,
+            CNF_FORMULA,
+            TCF_FORMULA,
 
             // logics
             UNITARY_LOGIC,
@@ -71,14 +81,49 @@ namespace libtptp
             BINARY_LOGIC,
             QUANTIFIED_LOGIC,
             SEQUENT_LOGIC,
+            INFIX_LOGIC,
+            LOGIC_TUPLE,
 
             // terms
             FUNCTION_TERM,
             VARIABLE_TERM,
             CONDITIONAL_TERM,
+            DEFINITION_TERM,
+            CONNECTIVE_ATOM,
 
             // atoms
             FUNCTOR_ATOM,
+            CONSTANT_ATOM,
+            DEFINED_ATOM,
+            DEFINITION_ATOM,
+
+            // other
+            TOKEN,
+
+            // literals
+            INTEGER_LITERAL,
+            RATIONAL_LITERAL,
+            REAL_LITERAL,
+            DISTINCT_OBJECT_LITERAL,
+            LIST_LITERAL,
+
+            FORMULA_ROLE,
+            FORMULA_DATA,
+
+            // general
+            GENERAL_DATA,
+            GENERAL_LIST,
+            GENERAL_AGGREGATOR,
+            GENERAL_FUNCTION,
+            ANNOTATION,
+
+            // types
+            ATOM_TYPE,
+            SUB_TYPE,
+            QUANTIFIED_TYPE,
+            TUPLE_TYPE,
+            TYPED_ATOM,
+            BINARY_TYPE,
         };
 
       public:
@@ -98,6 +143,9 @@ namespace libtptp
 
         // Comments comments( void ) const;
 
+        void setSourceLocation( const SourceLocation& sourceLocation );
+        const SourceLocation& sourceLocation( void ) const;
+
         /**
            @return A short description about the node type.
          */
@@ -113,6 +161,7 @@ namespace libtptp
 
       private:
         const ID m_id;
+        SourceLocation m_sourceLocation;
     };
 
     template < typename T >
@@ -137,22 +186,15 @@ namespace libtptp
         }
     };
 
-    class Identifier final : public Node
+    using Nodes = NodeList< Node >;
+
+    template < typename T, typename... Args >
+    typename T::Ptr make( const SourceLocation& sourceLocation, Args&&... args )
     {
-      public:
-        using Ptr = std::shared_ptr< Identifier >;
-
-        explicit Identifier( const std::string& name );
-
-        const std::string& name( void ) const;
-
-        void accept( Visitor& visitor ) override final;
-
-      private:
-        std::string m_name;
-    };
-
-    using Identifiers = NodeList< Identifier >;
+        auto node = std::make_shared< T >( std::forward< Args >( args )... );
+        node->setSourceLocation( sourceLocation );
+        return node;
+    }
 }
 
 #endif  // _LIBTPTP_NODE_H_

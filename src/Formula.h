@@ -3,6 +3,7 @@
 //  All rights reserved.
 //
 //  Developed by: Philipp Paulweber
+//                Jakob Moosbrugger
 //                <https://github.com/casm-lang/libtptp>
 //
 //  This file is part of libtptp.
@@ -42,6 +43,8 @@
 #ifndef _LIBTPTP_FORMULA_H_
 #define _LIBTPTP_FORMULA_H_
 
+#include <libstdhl/Optional>
+#include <libtptp/General>
 #include <libtptp/Logic>
 #include <libtptp/Node>
 
@@ -64,12 +67,12 @@ namespace libtptp
         Formula( const Node::ID id, const Logic::Ptr& logic );
 
         const Logic::Ptr& logic( void ) const;
-
-        u1 isFOF( void ) const;
-        u1 isTFF( void ) const;
+        const libstdhl::Optional< Annotation::Ptr >& annotations( void ) const;
+        void setAnnotations( const Annotation::Ptr& annotations );
 
       private:
         const Logic::Ptr m_logic;
+        libstdhl::Optional< Annotation::Ptr > m_annotations;
     };
 
     using Formulas = NodeList< Formula >;
@@ -99,6 +102,75 @@ namespace libtptp
       public:
         void accept( Visitor& visitor ) override;
     };
+
+    class TypedHigherOrderFormula final : public Formula
+    {
+      public:
+        using Ptr = std::shared_ptr< TypedHigherOrderFormula >;
+
+        explicit TypedHigherOrderFormula( const Logic::Ptr& logic );
+
+        void accept( Visitor& visitor ) override final;
+    };
+
+    class TPTPProcessInstructionFormula final : public Formula
+    {
+      public:
+        using Ptr = std::shared_ptr< TPTPProcessInstructionFormula >;
+
+        explicit TPTPProcessInstructionFormula( const Logic::Ptr& logic );
+
+        void accept( Visitor& visitor ) override final;
+    };
+
+    class ClauseNormalFormFormula final : public Formula
+    {
+      public:
+        using Ptr = std::shared_ptr< ClauseNormalFormFormula >;
+
+        explicit ClauseNormalFormFormula( const Logic::Ptr& logic );
+
+        void accept( Visitor& visitor ) override final;
+    };
+
+    class TheoryComputableFunctionalsFormula final : public Formula
+    {
+      public:
+        using Ptr = std::shared_ptr< TheoryComputableFunctionalsFormula >;
+
+        explicit TheoryComputableFunctionalsFormula( const Logic::Ptr& logic );
+
+        void accept( Visitor& visitor ) override final;
+    };
+
+    class FormulaData final : public Formula
+    {
+      public:
+        using Ptr = std::shared_ptr< FormulaData >;
+
+        explicit FormulaData(
+            const Token::Ptr& dollar,
+            const Token::Ptr& formulaType,
+            const Token::Ptr& leftParen,
+            const Logic::Ptr& formula,
+            const Token::Ptr& rightParen );
+
+        const Token::Ptr& dollar( void ) const;
+        const Token::Ptr& formulaType( void ) const;
+        const Token::Ptr& leftParen( void ) const;
+        const Token::Ptr& rightParen( void ) const;
+
+        void accept( Visitor& visitor ) override final;
+
+      private:
+        const Token::Ptr m_dollar;
+        const Token::Ptr m_formulaType;
+        const Token::Ptr m_leftParen;
+        const Token::Ptr m_rightParen;
+    };
+
+    using FormulaDatas = NodeList< FormulaData >;
+
 }
 
 #endif  // _LIBTPTP_FORMULA_H_

@@ -3,6 +3,7 @@
 //  All rights reserved.
 //
 //  Developed by: Philipp Paulweber
+//                Jakob Moosbrugger
 //                <https://github.com/casm-lang/libtptp>
 //
 //  This file is part of libtptp.
@@ -56,10 +57,18 @@ Atom::Atom( const ID id )
 // FunctorAtom
 //
 
-FunctorAtom::FunctorAtom( const Identifier::Ptr& name, const Terms::Ptr& arguments )
+FunctorAtom::FunctorAtom(
+    const Identifier::Ptr& name,
+    const Token::Ptr& leftParen,
+    const Logics::Ptr& arguments,
+    const Token::Ptr& rightParen,
+    const Kind kind )
 : Atom( Node::ID::FUNCTOR_ATOM )
 , m_name( name )
+, m_leftParen( leftParen )
 , m_arguments( arguments )
+, m_rightParen( rightParen )
+, m_kind( kind )
 {
 }
 
@@ -68,14 +77,112 @@ const Identifier::Ptr& FunctorAtom::name( void ) const
     return m_name;
 }
 
-const Terms::Ptr& FunctorAtom::arguments( void ) const
+const Token::Ptr& FunctorAtom::leftParen( void ) const
+{
+    return m_leftParen;
+}
+
+const Logics::Ptr& FunctorAtom::arguments( void ) const
 {
     return m_arguments;
+}
+
+const Token::Ptr& FunctorAtom::rightParen( void ) const
+{
+    return m_rightParen;
+}
+
+const FunctorAtom::Kind FunctorAtom::kind( void ) const
+{
+    return m_kind;
 }
 
 void FunctorAtom::accept( Visitor& visitor )
 {
     visitor.visit( *this );
+}
+
+ConstantAtom::ConstantAtom( const Identifier::Ptr& constant, const Kind kind )
+: Atom( Node::ID::CONSTANT_ATOM )
+, m_constant( constant )
+, m_kind( kind )
+{
+}
+
+const Identifier::Ptr& ConstantAtom::constant( void ) const
+{
+    return m_constant;
+}
+
+const ConstantAtom::Kind ConstantAtom::kind( void ) const
+{
+    return m_kind;
+}
+
+void ConstantAtom::accept( Visitor& visitor )
+{
+    visitor.visit( *this );
+}
+
+DefinedAtom::DefinedAtom( const Literal::Ptr& literal )
+: Atom( Node::ID::DEFINED_ATOM )
+, m_literal( literal )
+{
+}
+
+const Literal::Ptr& DefinedAtom::literal( void ) const
+{
+    return m_literal;
+}
+
+void DefinedAtom::accept( Visitor& visitor )
+{
+    visitor.visit( *this );
+}
+
+DefinitionAtom::DefinitionAtom(
+    const Logic::Ptr& lhs, const Token::Ptr& assignment, const Logic::Ptr& rhs )
+: Atom( Node::ID::DEFINITION_ATOM )
+, m_lhs( lhs )
+, m_assignment( assignment )
+, m_rhs( rhs )
+{
+}
+
+const Logic::Ptr& DefinitionAtom::lhs( void ) const
+{
+    return m_lhs;
+}
+
+const Token::Ptr& DefinitionAtom::assignment( void ) const
+{
+    return m_assignment;
+}
+
+const Logic::Ptr& DefinitionAtom::rhs( void ) const
+{
+    return m_rhs;
+}
+
+void DefinitionAtom::accept( Visitor& visitor )
+{
+    visitor.visit( *this );
+}
+
+ConnectiveAtom::ConnectiveAtom( Token::Ptr& connective )
+: Atom( Node::ID::CONNECTIVE_ATOM )
+, m_connective( connective )
+{
+}
+
+void ConnectiveAtom::accept( Visitor& visitor )
+{
+    visitor.visit( *this );
+}
+
+const Token::Ptr& ConnectiveAtom::connective( void )
+{
+    return m_connective;
 }
 
 //

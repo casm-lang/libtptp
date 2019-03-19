@@ -3,6 +3,7 @@
 //  All rights reserved.
 //
 //  Developed by: Philipp Paulweber
+//                Jakob Moosbrugger
 //                <https://github.com/casm-lang/libtptp>
 //
 //  This file is part of libtptp.
@@ -39,30 +40,34 @@
 //  statement from your version.
 //
 
-#include "Trace.h"
-
-using namespace libtptp;
-
-//
-// Trace
-//
-
-Trace::Trace( void )
-: Node( Node::ID::TRACE )
-, m_records( std::make_shared< Records >() )
-{
-}
-
-const Records::Ptr& Trace::records( void ) const
-{
-    return m_records;
-}
-
-void Trace::accept( Visitor& visitor )
-{
-    visitor.visit( *this );
-}
-
+// http://www.tptp.org/TPTP/Proposals/TPILanguage.html
+static const std::string tpi_test_example = R"***(    tpi(1,start_group,old_and_new_axioms).
+    tpi(2,start_group,old_axioms).
+    tpi(3,input,'Axioms/SYN001+1.ax').
+    tpi(4,start_group,new_axioms).
+    tpi(5,input,'Axioms/SYN001+2.ax').
+    tpi(6,end_group,old_axioms).
+    tpi(7,input,'Axioms/SYN002+1.ax').
+    tpi(8,end_group,new_axioms).
+    tpi(9,end_group,old_and_new_axioms).
+    tpi(10,input,'Axioms/SYN003+1.ax').
+    tpi(11,start_group,the_conjecture).
+    fof(a,conjecture,qq).
+    tpi(12,end_group,the_conjecture).
+    tpi(13,execute,
+        'SZS_STATUS' = '$TPTP_HOME/Systems/E---1.6/eprover -s --auto --cpu-limit=300 --tstp-format $getgroups(old_axioms,the_conjecture)').
+    tpi(14,write,'Conjecture status for old axioms:' & $getenv('SZS_STATUS')).
+    tpi(15,execute,
+        'SZS_STATUS' = '$TPTP_HOME/Systems/E---1.6/eprover -s --auto --cpu-limit=300 --tstp-format $getgroups(new_axioms,the_conjecture)').
+    tpi(16,write,'Conjecture status for replacement axioms:' & $getenv('SZS_STATUS')).
+    tpi(17,execute,
+        'SZS_STATUS' = '$TPTP_HOME/Systems/E---1.6/eprover -s --auto --cpu-limit=300 --tstp-format $getgroups(old_and_new_axioms,the_conjecture)').
+    tpi(18,write,'Conjecture status for old and new axioms:' & $getenv('SZS_STATUS')).
+    tpi(19,execute,
+        'SZS_STATUS' = '$TPTP_HOME/Systems/E---1.6/eprover -s --auto --cpu-limit=300 --tstp-format $getgroups(tpi)').
+    tpi(20,write,'Conjecture status for all axioms:' & $getenv('SZS_STATUS')).
+    tpi(21,exit,exit).
+)***";
 //
 //  Local variables:
 //  mode: c++

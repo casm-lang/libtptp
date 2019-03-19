@@ -3,6 +3,7 @@
 //  All rights reserved.
 //
 //  Developed by: Philipp Paulweber
+//                Jakob Moosbrugger
 //                <https://github.com/casm-lang/libtptp>
 //
 //  This file is part of libtptp.
@@ -60,14 +61,14 @@ const Logic::Ptr& Formula::logic( void ) const
     return m_logic;
 }
 
-u1 Formula::isFOF( void ) const
+const libstdhl::Optional< Annotation::Ptr >& Formula::annotations( void ) const
 {
-    return id() == Node::ID::FOF_FORMULA;
+    return m_annotations;
 }
 
-u1 Formula::isTFF( void ) const
+void Formula::setAnnotations( const Annotation::Ptr& annotations )
 {
-    return id() == Node::ID::TFF_FORMULA;
+    m_annotations = annotations;
 }
 
 //
@@ -94,6 +95,85 @@ TypedFirstOrderFormula::TypedFirstOrderFormula( const Logic::Ptr& logic )
 }
 
 void TypedFirstOrderFormula::accept( Visitor& visitor )
+{
+    visitor.visit( *this );
+}
+
+TypedHigherOrderFormula::TypedHigherOrderFormula( const Logic::Ptr& logic )
+: Formula( Node::ID::THF_FORMULA, logic )
+{
+}
+
+void TypedHigherOrderFormula::accept( Visitor& visitor )
+{
+    visitor.visit( *this );
+}
+
+TPTPProcessInstructionFormula::TPTPProcessInstructionFormula( const Logic::Ptr& logic )
+: Formula( Node::ID::TPI_FORMULA, logic )
+{
+}
+
+void TPTPProcessInstructionFormula::accept( Visitor& visitor )
+{
+    visitor.visit( *this );
+}
+
+ClauseNormalFormFormula::ClauseNormalFormFormula( const Logic::Ptr& logic )
+: Formula( Node::ID::CNF_FORMULA, logic )
+{
+}
+
+void ClauseNormalFormFormula::accept( Visitor& visitor )
+{
+    visitor.visit( *this );
+}
+
+TheoryComputableFunctionalsFormula::TheoryComputableFunctionalsFormula( const Logic::Ptr& logic )
+: Formula( Node::ID::TCF_FORMULA, logic )
+{
+}
+
+void TheoryComputableFunctionalsFormula::accept( Visitor& visitor )
+{
+    visitor.visit( *this );
+}
+
+FormulaData::FormulaData(
+    const Token::Ptr& dollar,
+    const Token::Ptr& formulaType,
+    const Token::Ptr& leftParen,
+    const Logic::Ptr& formula,
+    const Token::Ptr& rightParen )
+: Formula( Node::ID::FORMULA_DATA, formula )
+, m_dollar( dollar )
+, m_formulaType( formulaType )
+, m_leftParen( leftParen )
+, m_rightParen( rightParen )
+{
+}
+
+const Token::Ptr& FormulaData::dollar( void ) const
+{
+    return m_dollar;
+}
+
+const Token::Ptr& FormulaData::formulaType( void ) const
+{
+    return m_formulaType;
+}
+
+const Token::Ptr& FormulaData::leftParen( void ) const
+{
+    return m_leftParen;
+}
+
+const Token::Ptr& FormulaData::rightParen( void ) const
+{
+    return m_rightParen;
+}
+
+void FormulaData::accept( Visitor& visitor )
 {
     visitor.visit( *this );
 }

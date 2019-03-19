@@ -3,6 +3,7 @@
 //  All rights reserved.
 //
 //  Developed by: Philipp Paulweber
+//                Jakob Moosbrugger
 //                <https://github.com/casm-lang/libtptp>
 //
 //  This file is part of libtptp.
@@ -49,24 +50,61 @@
 namespace libtptp
 {
     class Node;
-    class Trace;
-    class Record;
+    class Specification;
 
     class FirstOrderFormula;
     class TypedFirstOrderFormula;
+    class TypedHigherOrderFormula;
+    class TPTPProcessInstructionFormula;
+    class ClauseNormalFormFormula;
+    class TheoryComputableFunctionalsFormula;
+    class FormulaData;
+
+    class Role;
 
     class UnaryLogic;
     class BinaryLogic;
     class QuantifiedLogic;
+    class InfixLogic;
+    class LogicTuple;
     class SequentLogic;
 
     class FunctionTerm;
     class VariableTerm;
     class ConditionalTerm;
+    class DefinitionTerm;
 
     class FunctorAtom;
+    class ConstantAtom;
+    class DefinedAtom;
+    class DefinitionAtom;
+    class ConnectiveAtom;
+
+    class AtomType;
+    class BinaryType;
+    class TypedAtom;
+    class TupleType;
+    class QuantifiedType;
+    class SubType;
 
     class Identifier;
+
+    class IntegerLiteral;
+    class RationalLiteral;
+    class RealLiteral;
+    class DistinctObjectLiteral;
+    class ListLiteral;
+
+    class Token;
+
+    class IncludeDefinition;
+    class FormulaDefinition;
+
+    class GeneralData;
+    class GeneralList;
+    class GeneralAggregator;
+    class GeneralFunction;
+    class Annotation;
 
     enum Traversal : u8
     {
@@ -82,50 +120,124 @@ namespace libtptp
       public:
         virtual ~Visitor( void ) = default;
 
-        virtual void visit( Trace& node ) = 0;
-        virtual void visit( Record& node ) = 0;
+        virtual void visit( Specification& node ) = 0;
 
         virtual void visit( FirstOrderFormula& node ) = 0;
         virtual void visit( TypedFirstOrderFormula& node ) = 0;
+        virtual void visit( TypedHigherOrderFormula& node ) = 0;
+        virtual void visit( TPTPProcessInstructionFormula& node ) = 0;
+        virtual void visit( ClauseNormalFormFormula& node ) = 0;
+        virtual void visit( TheoryComputableFunctionalsFormula& node ) = 0;
+        virtual void visit( FormulaData& node ) = 0;
+
+        virtual void visit( Role& node ) = 0;
 
         virtual void visit( UnaryLogic& node ) = 0;
         virtual void visit( BinaryLogic& node ) = 0;
         virtual void visit( QuantifiedLogic& node ) = 0;
+        virtual void visit( InfixLogic& node ) = 0;
+        virtual void visit( LogicTuple& node ) = 0;
         virtual void visit( SequentLogic& node ) = 0;
 
         virtual void visit( FunctionTerm& node ) = 0;
         virtual void visit( VariableTerm& node ) = 0;
         virtual void visit( ConditionalTerm& node ) = 0;
+        virtual void visit( DefinitionTerm& node ) = 0;
 
         virtual void visit( FunctorAtom& node ) = 0;
+        virtual void visit( ConstantAtom& node ) = 0;
+        virtual void visit( DefinedAtom& node ) = 0;
+        virtual void visit( DefinitionAtom& node ) = 0;
+        virtual void visit( ConnectiveAtom& node ) = 0;
+
+        virtual void visit( AtomType& node ) = 0;
+        virtual void visit( BinaryType& node ) = 0;
+        virtual void visit( TypedAtom& node ) = 0;
+        virtual void visit( TupleType& node ) = 0;
+        virtual void visit( QuantifiedType& node ) = 0;
+        virtual void visit( SubType& node ) = 0;
 
         virtual void visit( Identifier& node ) = 0;
+
+        virtual void visit( IntegerLiteral& node ) = 0;
+        virtual void visit( RationalLiteral& node ) = 0;
+        virtual void visit( RealLiteral& node ) = 0;
+        virtual void visit( DistinctObjectLiteral& node ) = 0;
+        virtual void visit( ListLiteral& node ) = 0;
+
+        virtual void visit( Token& node ) = 0;
+
+        virtual void visit( IncludeDefinition& node ) = 0;
+        virtual void visit( FormulaDefinition& node ) = 0;
+
+        virtual void visit( GeneralData& node ) = 0;
+        virtual void visit( GeneralList& node ) = 0;
+        virtual void visit( GeneralAggregator& node ) = 0;
+        virtual void visit( GeneralFunction& node ) = 0;
+        virtual void visit( Annotation& node ) = 0;
     };
 
     class RecursiveVisitor : public Visitor
     {
       public:
-        void visit( Trace& node ) override;
-        void visit( Record& node ) override;
+        void visit( Specification& node ) override;
 
         void visit( FirstOrderFormula& node ) override;
         void visit( TypedFirstOrderFormula& node ) override;
+        void visit( TypedHigherOrderFormula& node ) override;
+        void visit( TPTPProcessInstructionFormula& node ) override;
+        void visit( ClauseNormalFormFormula& node ) override;
+        void visit( TheoryComputableFunctionalsFormula& node ) override;
+        void visit( FormulaData& node ) override;
+
+        void visit( Role& node ) override;
 
         void visit( UnaryLogic& node ) override;
         void visit( BinaryLogic& node ) override;
         void visit( QuantifiedLogic& node ) override;
+        void visit( InfixLogic& node ) override;
+        void visit( LogicTuple& node ) override;
         void visit( SequentLogic& node ) override;
 
         void visit( FunctionTerm& node ) override;
         void visit( VariableTerm& node ) override;
         void visit( ConditionalTerm& node ) override;
+        void visit( DefinitionTerm& node ) override;
 
         void visit( FunctorAtom& node ) override;
+        void visit( ConstantAtom& node ) override;
+        void visit( DefinedAtom& node ) override;
+        void visit( DefinitionAtom& node ) override;
+        void visit( ConnectiveAtom& node ) override;
+
+        void visit( AtomType& node ) override;
+        void visit( BinaryType& node ) override;
+        void visit( TypedAtom& node ) override;
+        void visit( TupleType& node ) override;
+        void visit( QuantifiedType& node ) override;
+        void visit( SubType& node ) override;
 
         void visit( Identifier& node ) override;
+
+        void visit( IntegerLiteral& node ) override;
+        void visit( RationalLiteral& node ) override;
+        void visit( RealLiteral& node ) override;
+        void visit( DistinctObjectLiteral& node ) override;
+        void visit( ListLiteral& node ) override;
+
+        void visit( Token& node ) override;
+
+        void visit( IncludeDefinition& node ) override;
+        void visit( FormulaDefinition& node ) override;
+
+        void visit( GeneralData& node ) override;
+        void visit( GeneralList& node ) override;
+        void visit( GeneralAggregator& node ) override;
+        void visit( GeneralFunction& node ) override;
+        void visit( Annotation& node ) override;
     };
 
-    class TraversalVisitor : public Visitor
+    class TraversalVisitor : public RecursiveVisitor
     {
       public:
         TraversalVisitor( const Traversal order, std::function< void( Node& ) > callback );
@@ -139,25 +251,64 @@ namespace libtptp
 
         std::function< void( Node& ) > m_callback;
 
+        template < class T >
+        void handle( T& node );
+
       public:
-        void visit( Trace& node ) override;
-        void visit( Record& node ) override;
+        void visit( Specification& node ) override;
 
         void visit( FirstOrderFormula& node ) override;
         void visit( TypedFirstOrderFormula& node ) override;
+        void visit( TypedHigherOrderFormula& node ) override;
+        void visit( TPTPProcessInstructionFormula& node ) override;
+        void visit( ClauseNormalFormFormula& node ) override;
+        void visit( TheoryComputableFunctionalsFormula& node ) override;
+        void visit( FormulaData& node ) override;
+        void visit( Role& node ) override;
 
         void visit( UnaryLogic& node ) override;
         void visit( BinaryLogic& node ) override;
         void visit( QuantifiedLogic& node ) override;
+        void visit( InfixLogic& node ) override;
+        void visit( LogicTuple& node ) override;
         void visit( SequentLogic& node ) override;
 
         void visit( FunctionTerm& node ) override;
         void visit( VariableTerm& node ) override;
         void visit( ConditionalTerm& node ) override;
+        void visit( DefinitionTerm& node ) override;
 
         void visit( FunctorAtom& node ) override;
+        void visit( ConstantAtom& node ) override;
+        void visit( DefinedAtom& node ) override;
+        void visit( DefinitionAtom& node ) override;
+        void visit( ConnectiveAtom& node ) override;
+
+        void visit( AtomType& node ) override;
+        void visit( BinaryType& node ) override;
+        void visit( TypedAtom& node ) override;
+        void visit( TupleType& node ) override;
+        void visit( QuantifiedType& node ) override;
+        void visit( SubType& node ) override;
 
         void visit( Identifier& node ) override;
+
+        void visit( IntegerLiteral& node ) override;
+        void visit( RationalLiteral& node ) override;
+        void visit( RealLiteral& node ) override;
+        void visit( DistinctObjectLiteral& node ) override;
+        void visit( ListLiteral& node ) override;
+
+        void visit( Token& node ) override;
+
+        void visit( IncludeDefinition& node ) override;
+        void visit( FormulaDefinition& node ) override;
+
+        void visit( GeneralData& node ) override;
+        void visit( GeneralList& node ) override;
+        void visit( GeneralAggregator& node ) override;
+        void visit( GeneralFunction& node ) override;
+        void visit( Annotation& node ) override;
     };
 }
 

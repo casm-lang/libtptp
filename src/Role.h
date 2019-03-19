@@ -3,6 +3,7 @@
 //  All rights reserved.
 //
 //  Developed by: Philipp Paulweber
+//                Jakob Moosbrugger
 //                <https://github.com/casm-lang/libtptp>
 //
 //  This file is part of libtptp.
@@ -42,6 +43,8 @@
 #ifndef _LIBTPTP_ROLE_H_
 #define _LIBTPTP_ROLE_H_
 
+#include <libtptp/Identifier>
+
 /**
    @brief    TODO
 
@@ -54,20 +57,62 @@ namespace libtptp
        @extends TPTP
     */
 
-    enum class Role
+    class Role final : public Node
     {
-        AXIOM,               //!<  TODO: PPA: FIXME: description
-        HYPOTHESIS,          //!<  TODO: PPA: FIXME: description
-        DEFINITION,          //!<  TODO: PPA: FIXME: description
-        ASSUMPTION,          //!<  TODO: PPA: FIXME: description
-        LEMMA,               //!<  TODO: PPA: FIXME: description
-        THEOREM,             //!<  TODO: PPA: FIXME: description
-        CONJECTURE,          //!<  TODO: PPA: FIXME: description
-        NEGATED_CONJECTURE,  //!<  TODO: PPA: FIXME: description
-        PLAIN,               //!<  TODO: PPA: FIXME: description
-        TYPE,                //!<  TODO: PPA: FIXME: description
-        UNKNOWN,             //!<  TODO: PPA: FIXME: description
+      public:
+        enum class Kind
+        {
+            AXIOM,
+            HYPOTHESIS,
+            DEFINITION,
+            ASSUMPTION,
+            LEMMA,
+            THEOREM,
+            COROLLARY,
+            CONJECTURE,
+            NEGATED_CONJECTURE,
+            PLAIN,
+            TYPE,
+            FI_DOMAIN,
+            FI_FUNCTORS,
+            FI_PREDICATES,
+            UNKNOWN,
+        };
+
+        using Ptr = std::shared_ptr< Role >;
+
+        explicit Role( const Identifier::Ptr& word );
+        explicit Role( const Identifier::Ptr& word, Kind kind );
+
+        const Identifier::Ptr& word( void ) const;
+        Kind kind( void ) const;
+
+        static const Role::Ptr& axiom( void );
+        static const Role::Ptr& hypothesis( void );
+        static const Role::Ptr& definition( void );
+        static const Role::Ptr& assumption( void );
+        static const Role::Ptr& lemma( void );
+        static const Role::Ptr& theorem( void );
+        static const Role::Ptr& corollary( void );
+        static const Role::Ptr& conjecture( void );
+        static const Role::Ptr& negated_conjecture( void );
+        static const Role::Ptr& plain( void );
+        static const Role::Ptr& type( void );
+        static const Role::Ptr& fi_domain( void );
+        static const Role::Ptr& fi_functors( void );
+        static const Role::Ptr& fi_predicates( void );
+        static const Role::Ptr& unknown( void );
+
+        void accept( Visitor& visitor ) override final;
+
+      private:
+        const Identifier::Ptr m_word;
+        const Kind m_kind;
+
+        Kind parseKind( const Identifier::Ptr& word );
     };
+
+    using Roles = NodeList< Role >;
 }
 
 #endif  // _LIBTPTP_ROLE_H_

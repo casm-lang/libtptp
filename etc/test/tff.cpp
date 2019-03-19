@@ -3,6 +3,7 @@
 //  All rights reserved.
 //
 //  Developed by: Philipp Paulweber
+//                Jakob Moosbrugger
 //                <https://github.com/casm-lang/libtptp>
 //
 //  This file is part of libtptp.
@@ -39,91 +40,82 @@
 //  statement from your version.
 //
 
-#include "Record.h"
+#include <libstdhl/Test>
+
+#include <libpass/libpass>
+
+#include "main.h"
+#include "resources/tff_formula.cpp"
 
 using namespace libtptp;
+using namespace libpass;
 
-//
-// Record
-//
-
-Record::Record( const Identifier::Ptr& name, const Role role, const Formula::Ptr& formula )
-: Node( Node::ID::RECORD )
-, m_name( name )
-, m_role( role )
-, m_formula( formula )
+TEST( libtptp, tff_basic )
 {
+    PassManager pm;
+
+    libstdhl::Logger log( pm.stream() );
+    log.setSource( libstdhl::Memory::make< libstdhl::Log::Source >( TEST_NAME, TEST_NAME ) );
+
+    auto flush = [&pm]() {
+        libstdhl::Log::ApplicationFormatter f( TEST_NAME );
+        libstdhl::Log::OutputStreamSink c( std::cerr, f );
+        pm.stream().flush( c );
+    };
+
+    pm.add< SourceToAstPass >();
+    pm.setDefaultPass< SourceToAstPass >();
+
+    const std::string filename = TEST_NAME + ".tptp";
+    auto file = libstdhl::File::open( filename, std::fstream::out );
+    file << tff_test_basic;
+
+    file.close();
+
+    const auto input = libstdhl::Memory::make< LoadFilePass::Input >( filename );
+    PassResult pr;
+    pr.setInputData< LoadFilePass >( input );
+    pm.setDefaultResult( pr );
+
+    EXPECT_EQ( pm.run( flush ), true );
+
+    pm.result().output< LoadFilePass >()->close();
+    libstdhl::File::remove( filename );
+    EXPECT_EQ( libstdhl::File::exists( filename ), false );
 }
 
-const Identifier::Ptr& Record::name( void ) const
+TEST( libtptp, tff_tf1 )
 {
-    return m_name;
-}
+    PassManager pm;
 
-const Role Record::role( void ) const
-{
-    return m_role;
-}
+    libstdhl::Logger log( pm.stream() );
+    log.setSource( libstdhl::Memory::make< libstdhl::Log::Source >( TEST_NAME, TEST_NAME ) );
 
-std::string Record::roleDescription( void ) const
-{
-    switch( role() )
-    {
-        case Role::AXIOM:
-        {
-            return "axiom";
-        }
-        case Role::HYPOTHESIS:
-        {
-            return "hypothesis";
-        }
-        case Role::DEFINITION:
-        {
-            return "definition";
-        }
-        case Role::ASSUMPTION:
-        {
-            return "assumption";
-        }
-        case Role::LEMMA:
-        {
-            return "lemma";
-        }
-        case Role::THEOREM:
-        {
-            return "theorem";
-        }
-        case Role::CONJECTURE:
-        {
-            return "conjecture";
-        }
-        case Role::NEGATED_CONJECTURE:
-        {
-            return "negated_conjecture";
-        }
-        case Role::PLAIN:
-        {
-            return "plain";
-        }
-        case Role::TYPE:
-        {
-            return "type";
-        }
-        case Role::UNKNOWN:
-        {
-            return "unknown";
-        }
-    }
-}
+    auto flush = [&pm]() {
+        libstdhl::Log::ApplicationFormatter f( TEST_NAME );
+        libstdhl::Log::OutputStreamSink c( std::cerr, f );
+        pm.stream().flush( c );
+    };
 
-const Formula::Ptr& Record::formula( void ) const
-{
-    return m_formula;
-}
+    pm.add< SourceToAstPass >();
+    pm.setDefaultPass< SourceToAstPass >();
 
-void Record::accept( Visitor& visitor )
-{
-    visitor.visit( *this );
+    const std::string filename = TEST_NAME + ".tptp";
+    auto file = libstdhl::File::open( filename, std::fstream::out );
+    file << tff_test_tf1;
+
+    file.close();
+
+    const auto input = libstdhl::Memory::make< LoadFilePass::Input >( filename );
+    PassResult pr;
+    pr.setInputData< LoadFilePass >( input );
+    pm.setDefaultResult( pr );
+
+    EXPECT_EQ( pm.run( flush ), true );
+
+    pm.result().output< LoadFilePass >()->close();
+    libstdhl::File::remove( filename );
+    EXPECT_EQ( libstdhl::File::exists( filename ), false );
 }
 
 //

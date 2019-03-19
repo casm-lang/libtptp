@@ -3,6 +3,7 @@
 //  All rights reserved.
 //
 //  Developed by: Philipp Paulweber
+//                Jakob Moosbrugger
 //                <https://github.com/casm-lang/libtptp>
 //
 //  This file is part of libtptp.
@@ -42,6 +43,7 @@
 #ifndef _LIBTPTP_TERM_H_
 #define _LIBTPTP_TERM_H_
 
+#include <libstdhl/Optional>
 #include <libtptp/Logic>
 
 /**
@@ -66,6 +68,7 @@ namespace libtptp
     using Terms = NodeList< Term >;
 
     class Atom;
+    class Type;
 
     // <fof_function_term> ::= <fof_plain_term> | <fof_defined_term> |
     // <fof_system_term>
@@ -78,11 +81,10 @@ namespace libtptp
 
         const std::shared_ptr< Atom >& atom( void ) const;
 
+        void accept( Visitor& visitor ) override;
+
       private:
         const std::shared_ptr< Atom > m_atom;
-
-      public:
-        void accept( Visitor& visitor ) override;
     };
 
     // <variable> ::= <upper_word>
@@ -95,11 +97,17 @@ namespace libtptp
 
         const Identifier::Ptr& name( void ) const;
 
+        const libstdhl::Optional< Token::Ptr >& colon( void );
+        const libstdhl::Optional< std::shared_ptr< Type > >& type( void );
+        void setColon( const Token::Ptr& colon );
+        void setType( const std::shared_ptr< Type >& type );
+
+        void accept( Visitor& visitor ) override;
+
       private:
         const Identifier::Ptr m_name;
-
-      public:
-        void accept( Visitor& visitor ) override;
+        libstdhl::Optional< Token::Ptr > m_colon;
+        libstdhl::Optional< std::shared_ptr< Type > > m_type;
     };
 
     // <tff_conditional_term> ::=
@@ -111,23 +119,86 @@ namespace libtptp
       public:
         using Ptr = std::shared_ptr< ConditionalTerm >;
 
-        ConditionalTerm(
-            const Logic::Ptr& condition, const Term::Ptr& left, const Term::Ptr& right );
+        explicit ConditionalTerm(
+            const Token::Ptr& dollar,
+            const Token::Ptr& ite,
+            const Token::Ptr& leftParen,
+            const Logic::Ptr& condition,
+            const Token::Ptr& commaLeft,
+            const Logic::Ptr& leftTerm,
+            const Token::Ptr& commaRight,
+            const Logic::Ptr& rightTerm,
+            const Token::Ptr& rightParen );
 
+        const Token::Ptr& dollar( void ) const;
+        const Token::Ptr& ite( void ) const;
+        const Token::Ptr& leftParen( void ) const;
         const Logic::Ptr& condition( void ) const;
+        const Token::Ptr& commaLeft( void ) const;
+        const Logic::Ptr& leftTerm( void ) const;
+        const Token::Ptr& commaRight( void ) const;
+        const Logic::Ptr& rightTerm( void ) const;
+        const Token::Ptr& rightParen( void ) const;
 
-        const Term::Ptr& left( void ) const;
-
-        const Term::Ptr& right( void ) const;
+        void accept( Visitor& visitor ) override final;
 
       private:
+        const Token::Ptr m_dollar;
+        const Token::Ptr m_ite;
+        const Token::Ptr m_leftParen;
         const Logic::Ptr m_condition;
-        const Term::Ptr m_left;
-        const Term::Ptr m_right;
-
-      public:
-        void accept( Visitor& visitor ) override;
+        const Token::Ptr m_commaLeft;
+        const Logic::Ptr m_leftTerm;
+        const Token::Ptr m_commaRight;
+        const Logic::Ptr m_rightTerm;
+        const Token::Ptr m_rightParen;
     };
+
+    using ConditionalTerms = NodeList< ConditionalTerm >;
+
+    class Type;
+    class DefinitionTerm final : public Term
+    {
+      public:
+        using Ptr = std::shared_ptr< DefinitionTerm >;
+
+        explicit DefinitionTerm(
+            const Token::Ptr& dollar,
+            const Token::Ptr& let,
+            const Token::Ptr& leftParen,
+            const std::shared_ptr< Type >& types,
+            const Token::Ptr& commaLeft,
+            const Logic::Ptr& definitions,
+            const Token::Ptr& commaRight,
+            const Logic::Ptr& term,
+            const Token::Ptr& rightParen );
+
+        const Token::Ptr& dollar( void ) const;
+        const Token::Ptr& let( void ) const;
+        const Token::Ptr& leftParen( void ) const;
+        const std::shared_ptr< Type >& types( void ) const;
+        const Token::Ptr& commaLeft( void ) const;
+        const Logic::Ptr& definitions( void ) const;
+        const Token::Ptr& commaRight( void ) const;
+        const Logic::Ptr& term( void ) const;
+        const Token::Ptr& rightParen( void ) const;
+
+        void accept( Visitor& visitor ) override final;
+
+      private:
+        const Token::Ptr m_dollar;
+        const Token::Ptr m_let;
+        const Token::Ptr m_leftParen;
+        const std::shared_ptr< Type > m_types;
+        const Token::Ptr m_commaLeft;
+        const Logic::Ptr m_definitions;
+        const Token::Ptr m_commaRight;
+        const Logic::Ptr m_term;
+        const Token::Ptr m_rightParen;
+    };
+
+    using DefinitionTerms = NodeList< DefinitionTerm >;
+
 }
 
 #endif  // _LIBTPTP_TERM_H_

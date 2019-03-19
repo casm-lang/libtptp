@@ -3,6 +3,7 @@
 //  All rights reserved.
 //
 //  Developed by: Philipp Paulweber
+//                Jakob Moosbrugger
 //                <https://github.com/casm-lang/libtptp>
 //
 //  This file is part of libtptp.
@@ -39,51 +40,49 @@
 //  statement from your version.
 //
 
-#ifndef _LIBTPTP_RECORD_H_
-#define _LIBTPTP_RECORD_H_
+#include <libstdhl/Test>
 
-#include <libtptp/Formula>
-#include <libtptp/Node>
-#include <libtptp/Role>
+#include <libpass/libpass>
 
-/**
-   @brief    TODO
+#include "main.h"
+#include "resources/tpi_formula.cpp"
 
-   TODO
-*/
+using namespace libtptp;
+using namespace libpass;
 
-namespace libtptp
+TEST( libtptp, tpi_example )
 {
-    /**
-       @extends TPTP
-    */
-    class Record : public Node
-    {
-      public:
-        using Ptr = std::shared_ptr< Record >;
+    PassManager pm;
 
-        Record( const Identifier::Ptr& identifier, const Role role, const Formula::Ptr& formula );
+    libstdhl::Logger log( pm.stream() );
+    log.setSource( libstdhl::Memory::make< libstdhl::Log::Source >( TEST_NAME, TEST_NAME ) );
 
-        const Identifier::Ptr& name( void ) const;
-
-        const Role role( void ) const;
-
-        std::string roleDescription( void ) const;
-
-        const Formula::Ptr& formula( void ) const;
-
-        void accept( Visitor& visitor ) override;
-
-      private:
-        Identifier::Ptr m_name;
-        Role m_role;
-        Formula::Ptr m_formula;
+    auto flush = [&pm]() {
+        libstdhl::Log::ApplicationFormatter f( TEST_NAME );
+        libstdhl::Log::OutputStreamSink c( std::cerr, f );
+        pm.stream().flush( c );
     };
 
-    using Records = NodeList< Record >;
-}
+    pm.add< SourceToAstPass >();
+    pm.setDefaultPass< SourceToAstPass >();
 
-#endif  // _LIBTPTP_RECORD_H_
+    const std::string filename = TEST_NAME + ".tptp";
+    auto file = libstdhl::File::open( filename, std::fstream::out );
+    file << tpi_test_example;
+
+    file.close();
+
+    const auto input = libstdhl::Memory::make< LoadFilePass::Input >( filename );
+    PassResult pr;
+    pr.setInputData< LoadFilePass >( input );
+    pm.setDefaultResult( pr );
+
+    EXPECT_EQ( pm.run( flush ), true );
+
+    pm.result().output< LoadFilePass >()->close();
+    libstdhl::File::remove( filename );
+    EXPECT_EQ( libstdhl::File::exists( filename ), false );
+}
 
 //
 //  Local variables:

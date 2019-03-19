@@ -3,6 +3,7 @@
 //  All rights reserved.
 //
 //  Developed by: Philipp Paulweber
+//                Jakob Moosbrugger
 //                <https://github.com/casm-lang/libtptp>
 //
 //  This file is part of libtptp.
@@ -42,6 +43,7 @@
 #ifndef _LIBTPTP_LOGIC_H_
 #define _LIBTPTP_LOGIC_H_
 
+#include <libtptp/Identifier>
 #include <libtptp/Node>
 
 /**
@@ -55,28 +57,25 @@ namespace libtptp
     /**
        @extends TPTP
     */
+    class Term;
     class Logic : public Node
     {
       public:
         using Ptr = std::shared_ptr< Logic >;
 
         Logic( const Node::ID id );
+        const Token::Ptr& leftDelimiter( void ) const;
+        const Token::Ptr& rightDelimiter( void ) const;
+
+        void setLeftDelimiter( const Token::Ptr& leftDelimiter );
+        void setRightDelimiter( const Token::Ptr& rightDelimiter );
+
+      private:
+        Token::Ptr m_leftDelimiter;
+        Token::Ptr m_rightDelimiter;
     };
 
     using Logics = NodeList< Logic >;
-
-    class UnitaryLogic final : public Logic
-    {
-      public:
-        using Ptr = std::shared_ptr< UnitaryLogic >;
-
-        UnitaryLogic( void );
-
-        // private:
-
-      public:
-        void accept( Visitor& visitor ) override;
-    };
 
     class UnaryLogic final : public Logic
     {
@@ -84,21 +83,31 @@ namespace libtptp
         enum class Connective
         {
             NEGATION,  //!< ~ (not)
+
+            // TH1
+            UNIVERSAL_QUANTIFICATION,    //!!
+            EXISTENTIAL_QUANTIFICATION,  //??
+            INDEFINITE_DESCRIPTION,      //@@+
+            DEFINITE_DESCRIPTION,        //@@-
+            EQUALITY,                    //@=
         };
 
         using Ptr = std::shared_ptr< UnaryLogic >;
 
-        UnaryLogic( const Logic::Ptr& logic, const Connective connective );
+        UnaryLogic(
+            const std::pair< const Token::Ptr&, const Connective > connective,
+            const Logic::Ptr& logic );
 
         const Logic::Ptr& logic( void ) const;
 
         const Connective connective( void ) const;
 
-        std::string connectiveToken( void ) const;
+        const Token::Ptr& connectiveToken( void ) const;
 
         std::string connectiveDescription( void ) const;
 
       private:
+        const Token::Ptr m_connectiveToken;
         const Logic::Ptr m_logic;
         const Connective m_connective;
 
@@ -119,11 +128,15 @@ namespace libtptp
             REVERSE_IMPLICATION,  //!< non-associative <=
             NEGATED_DISJUNCTION,  //!< non-associative ~| (nor)
             NEGATED_CONJUNCTION,  //!< non-associative ~& (nand)
+            APPLY,                //!< associative @ (at)
         };
 
         using Ptr = std::shared_ptr< BinaryLogic >;
 
-        BinaryLogic( const Logic::Ptr& left, const Logic::Ptr& right, const Connective connective );
+        BinaryLogic(
+            const Logic::Ptr& left,
+            const std::pair< const Token::Ptr&, Connective > connective,
+            const Logic::Ptr& right );
 
         const Logic::Ptr& left( void ) const;
 
@@ -131,79 +144,145 @@ namespace libtptp
 
         const Connective connective( void ) const;
 
-        std::string connectiveToken( void ) const;
+        const Token::Ptr& connectiveToken( void ) const;
 
         std::string connectiveDescription( void ) const;
 
         u1 associative( void ) const;
 
+        void accept( Visitor& visitor ) override;
+
       private:
         const Logic::Ptr m_left;
         const Logic::Ptr m_right;
+        const Token::Ptr m_connectiveToken;
         const Connective m_connective;
         const u1 m_associative;
-
-      public:
-        void accept( Visitor& visitor ) override;
     };
 
     class QuantifiedLogic final : public Logic
     {
       public:
-        enum class Connective
+        enum class Quantifier
         {
             UNIVERSAL,    //!< !
             EXISTENTIAL,  //!< ?
+
+            // TODO: change to useful names
+            EXCLAMATIONGREATER,  // !>
+            QUESTIONMARKSTAR,    // ?*
+            CARET,               // ^
+            ATPLUS,              // @+
+            ATMINUS,             // @-
         };
 
         using Ptr = std::shared_ptr< QuantifiedLogic >;
 
         QuantifiedLogic(
-            const Logic::Ptr& logic,
-            const Identifiers::Ptr& variables,
-            const Connective connective );
+            const std::pair< const Token::Ptr&, const Quantifier > quantifier,
+            const ListLiteral::Ptr& variables,
+            const Token::Ptr& colon,
+            const Logic::Ptr& logic );
 
+        const Token::Ptr& quantifierToken( void ) const;
+        const ListLiteral::Ptr& variables( void ) const;
+        const Token::Ptr& colon( void ) const;
         const Logic::Ptr& logic( void ) const;
+        const Quantifier quantifier( void ) const;
 
-        const Identifiers::Ptr& variables( void ) const;
+        std::string quantifierDescription( void ) const;
 
-        const Connective connective( void ) const;
-
-        std::string connectiveToken( void ) const;
-
-        std::string connectiveDescription( void ) const;
+        void accept( Visitor& visitor ) override;
 
       private:
+        const Token::Ptr m_quantifierToken;
+        const ListLiteral::Ptr m_variables;
+        const Token::Ptr m_colon;
         const Logic::Ptr m_logic;
-        const Identifiers::Ptr m_variables;
-        const Connective m_connective;
-
-      public:
-        void accept( Visitor& visitor ) override;
+        const Quantifier m_quantifier;
     };
+
+    class InfixLogic final : public Logic
+    {
+      public:
+        enum class Connective
+        {
+            INEQUALITY,  // !=
+            EQUALITY,    // =
+        };
+        using Ptr = std::shared_ptr< InfixLogic >;
+
+        explicit InfixLogic(
+            const Logic::Ptr& lhs,
+            const std::pair< const Token::Ptr&, const Connective > connective,
+            const Logic::Ptr& rhs );
+
+        const Logic::Ptr& lhs( void ) const;
+        const Token::Ptr& connectiveToken( void ) const;
+        const Logic::Ptr& rhs( void ) const;
+
+        void accept( Visitor& visitor ) override final;
+
+      private:
+        const Logic::Ptr m_lhs;
+        const Token::Ptr m_connectiveToken;
+        const Logic::Ptr m_rhs;
+        const Connective m_connective;
+    };
+
+    using InfixLogics = NodeList< InfixLogic >;
+
+    class LogicTuple final : public Logic
+    {
+      public:
+        using Ptr = std::shared_ptr< LogicTuple >;
+
+        explicit LogicTuple(
+            const Token::Ptr& leftBraceToken,
+            const Logics::Ptr& tuples,
+            const Token::Ptr& rightBraceToken );
+        explicit LogicTuple( const Token::Ptr& leftBraceToken, const Token::Ptr& rightBraceToken );
+
+        const Token::Ptr& leftBraceToken( void ) const;
+        const Logics::Ptr& tuples( void ) const;
+        const Token::Ptr& rightBraceToken( void ) const;
+
+        void accept( Visitor& visitor ) override final;
+
+      private:
+        const Token::Ptr m_leftBraceToken;
+        const Logics::Ptr m_tuples;
+        const Token::Ptr m_rightBraceToken;
+    };
+
+    using LogicTuples = NodeList< LogicTuple >;
 
     class SequentLogic final : public Logic
     {
       public:
         using Ptr = std::shared_ptr< SequentLogic >;
 
-        SequentLogic( const Logics::Ptr& left, const Logics::Ptr& right );
+        SequentLogic(
+            const LogicTuple::Ptr& left,
+            const Token::Ptr& connectiveToken,
+            const LogicTuple::Ptr& right );
 
-        const Logics::Ptr& left( void ) const;
+        const LogicTuple::Ptr& left( void ) const;
 
-        const Logics::Ptr& right( void ) const;
+        const LogicTuple::Ptr& right( void ) const;
 
-        std::string connectiveToken( void ) const;
+        const Token::Ptr& connectiveToken( void ) const;
 
         std::string connectiveDescription( void ) const;
 
-      private:
-        const Logics::Ptr m_left;
-        const Logics::Ptr m_right;
-
-      public:
         void accept( Visitor& visitor ) override;
+
+      private:
+        const LogicTuple::Ptr m_left;
+        const Token::Ptr m_connectiveToken;
+        const LogicTuple::Ptr m_right;
     };
+
 }
 
 #endif  // _LIBTPTP_LOGIC_H_

@@ -3,6 +3,7 @@
 //  All rights reserved.
 //
 //  Developed by: Philipp Paulweber
+//                Jakob Moosbrugger
 //                <https://github.com/casm-lang/libtptp>
 //
 //  This file is part of libtptp.
@@ -39,11 +40,13 @@
 //  statement from your version.
 //
 
-#ifndef _LIBTPTP_TRACE_H_
-#define _LIBTPTP_TRACE_H_
+#ifndef _LIBTPTP_SOURCE_TO_AST_PASS_H_
+#define _LIBTPTP_SOURCE_TO_AST_PASS_H_
 
-#include <libtptp/Node>
-#include <libtptp/Record>
+#include <libtptp/Specification>
+
+#include <libpass/Pass>
+#include <libpass/analyze/LoadFilePass>
 
 /**
    @brief    TODO
@@ -53,32 +56,46 @@
 
 namespace libtptp
 {
-    /**
-       @extends TPTP
-    */
-    class Trace final : public Node
+    class SourceToAstPass final : public libpass::Pass
     {
       public:
-        using Ptr = std::shared_ptr< Trace >;
+        static char id;
 
-        Trace( void );
+        void usage( libpass::PassUsage& pu ) override;
 
-        template < class T, typename... Args >
-        void add( Args&&... args )
+        u1 run( libpass::PassResult& pr ) override;
+
+        void setDebug( u1 debug );
+        u1 debug( void ) const;
+
+      public:
+        using Input = libpass::LoadFilePass::Output;
+
+        class Output : public libpass::PassData
         {
-            m_records->add( std::make_shared< T >( std::forward< Args >( args )... ) );
-        }
+          public:
+            using Ptr = std::shared_ptr< Output >;
 
-        const Records::Ptr& records( void ) const;
+            Output( const Specification::Ptr& specification )
+            : m_specification( specification )
+            {
+            }
 
-        void accept( Visitor& visitor ) override;
+            Specification::Ptr specification( void ) const
+            {
+                return m_specification;
+            }
+
+          private:
+            Specification::Ptr m_specification;
+        };
 
       private:
-        Records::Ptr m_records;
+        u1 m_debug = false;
     };
 }
 
-#endif  // _LIBTPTP_TRACE_H_
+#endif  // _LIBTPTP_SOURCE_TO_AST_PASS_H_
 
 //
 //  Local variables:

@@ -3,6 +3,7 @@
 #   All rights reserved.
 #
 #   Developed by: Philipp Paulweber
+#                 Jakob Moosbrugger
 #                 <https://github.com/casm-lang/libtptp>
 #
 #   This file is part of libtptp.
@@ -68,6 +69,52 @@ include( CPack )
 add_subdirectory( src )
 add_subdirectory( etc
   EXCLUDE_FROM_ALL
+  )
+
+
+#
+# grammar
+#
+
+set( DEF_GRAMMAR_PARSER "${CMAKE_CURRENT_SOURCE_DIR}/src/GrammarParser.yy" )
+set( CXX_GRAMMAR_PARSER "${CMAKE_CURRENT_BINARY_DIR}/src/various/GrammarParser.cpp" )
+
+add_custom_command(
+  OUTPUT  ${CXX_GRAMMAR_PARSER}
+  COMMAND make -C ${CMAKE_CURRENT_SOURCE_DIR} ${CXX_GRAMMAR_PARSER}
+  DEPENDS ${DEF_GRAMMAR_PARSER}
+  COMMENT ""
+)
+
+set( DEF_GRAMMAR_LEXER "${CMAKE_CURRENT_SOURCE_DIR}/src/GrammarLexer.l" )
+set( CXX_GRAMMAR_LEXER "${CMAKE_CURRENT_BINARY_DIR}/src/various/GrammarLexer.cpp" )
+
+add_custom_command(
+  OUTPUT         ${CXX_GRAMMAR_LEXER}
+  COMMAND        make -C ${CMAKE_CURRENT_SOURCE_DIR} ${CXX_GRAMMAR_LEXER}
+  DEPENDS        ${DEF_GRAMMAR_LEXER}
+  COMMENT        ""
+  )
+
+set( DEF_GRAMMAR_TOKEN "${CMAKE_CURRENT_SOURCE_DIR}/src/GrammarToken.hpp" )
+set( CXX_GRAMMAR_TOKEN "${CMAKE_CURRENT_BINARY_DIR}/src/various/GrammarToken.h" )
+
+add_custom_command(
+  OUTPUT         ${CXX_GRAMMAR_TOKEN}
+  COMMAND        make -C ${CMAKE_CURRENT_SOURCE_DIR} ${CXX_GRAMMAR_TOKEN}
+  DEPENDS        ${DEF_GRAMMAR_TOKEN}
+  COMMENT        ""
+  )
+
+add_custom_target( ${PROJECT}-grammar ALL
+  DEPENDS
+    ${CXX_GRAMMAR_PARSER}
+    ${CXX_GRAMMAR_LEXER}
+    ${CXX_GRAMMAR_TOKEN}
+  )
+
+add_dependencies( ${PROJECT}-cpp
+  ${PROJECT}-grammar
   )
 
 
