@@ -109,9 +109,9 @@ namespace libtptp
 
       private:
         const Identifier::Ptr m_name;
-        const Token::Ptr& m_leftParen;
+        const Token::Ptr m_leftParen;
         const Logics::Ptr m_arguments;
-        const Token::Ptr& m_rightParen;
+        const Token::Ptr m_rightParen;
         const Kind m_kind;
 
       public:

@@ -39,33 +39,37 @@
 //  statement from your version.
 //
 
-#ifndef _LIBTPTP_H_
-#define _LIBTPTP_H_
+#ifndef _LIBTPTP_AST_DUMP_DOT_PASS_H_
+#define _LIBTPTP_AST_DUMP_DOT_PASS_H_
 
-#include <libtptp/Atom>
-#include <libtptp/Formula>
-#include <libtptp/Logic>
-#include <libtptp/Node>
-#include <libtptp/Specification>
-#include <libtptp/Term>
-#include <libtptp/Version>
-#include <libtptp/Visitor>
-#include <libtptp/analyze/DumpDebugPass>
-#include <libtptp/transform/AstDumpDotPass>
-#include <libtptp/transform/DumpSourcePass>
-#include <libtptp/transform/SourceToAstPass>
-
-/**
-   @brief    TODO
-
-   TODO
-*/
+#include <libpass/Pass>
+#include <libpass/PassResult>
+#include <libpass/PassUsage>
 
 namespace libtptp
 {
+    /**
+     * @brief Generates a DOT graph of the AST
+     */
+
+    class AstDumpDotPass final : public libpass::Pass
+    {
+      public:
+        static char id;
+
+        void usage( libpass::PassUsage& pu ) override;
+
+        u1 run( libpass::PassResult& pr ) override;
+
+        void setOutputPath( const std::string& outputPath );
+        const std::string& outputPath( void ) const;
+
+      private:
+        std::string m_outputPath = "";
+    };
 }
 
-#endif  // _LIBTPTP_H_
+#endif  // _LIBTPTP_AST_DUMP_DOT_PASS_H_
 
 //
 //  Local variables:

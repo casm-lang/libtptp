@@ -49,6 +49,7 @@ include_directories(
 
 add_library( ${PROJECT}-test OBJECT
   main.cpp
+  astToDot.cpp
   cnf.cpp
   example.cpp
   fof.cpp

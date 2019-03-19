@@ -65,6 +65,7 @@ add_library( ${PROJECT}-cpp OBJECT
 
   analyze/DumpDebugPass.cpp
 
+  transform/AstDumpDotPass.cpp
   transform/DumpSourcePass.cpp
   transform/SourceToAstPass.cpp
 
@@ -152,6 +153,7 @@ ecm_generate_headers( ${PROJECT}_TRANSFORM_HEADERS_CPP
   ORIGINAL
     CAMELCASE
   HEADER_NAMES
+    AstDumpDotPass
     DumpSourcePass
     SourceToAstPass
   PREFIX
