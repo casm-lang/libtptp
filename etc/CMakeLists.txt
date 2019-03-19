@@ -1,8 +1,9 @@
 #
-#   Copyright (C) 2017-2018 CASM Organization <https://casm-lang.org>
+#   Copyright (C) 2017-2019 CASM Organization <https://casm-lang.org>
 #   All rights reserved.
 #
 #   Developed by: Philipp Paulweber
+#                 Jakob Moosbrugger
 #                 <https://github.com/casm-lang/libtptp>
 #
 #   This file is part of libtptp.

@@ -1,8 +1,9 @@
 //
-//  Copyright (C) 2017-2018 CASM Organization <https://casm-lang.org>
+//  Copyright (C) 2017-2019 CASM Organization <https://casm-lang.org>
 //  All rights reserved.
 //
 //  Developed by: Philipp Paulweber
+//                Jakob Moosbrugger
 //                <https://github.com/casm-lang/libtptp>
 //
 //  This file is part of libtptp.
@@ -37,6 +38,7 @@
 //  may extend this exception to your version of the library, but you are
 //  not obliged to do so. If you do not wish to do so, delete this exception
 //  statement from your version.
+//
 
 #include "General.h"
 #include "various/GrammarToken.h"

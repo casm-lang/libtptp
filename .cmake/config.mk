@@ -1,8 +1,9 @@
 #
-#   Copyright (C) 2017-2018 CASM Organization <https://casm-lang.org>
+#   Copyright (C) 2017-2019 CASM Organization <https://casm-lang.org>
 #   All rights reserved.
 #
 #   Developed by: Philipp Paulweber
+#                 Jakob Moosbrugger
 #                 <https://github.com/casm-lang/libtptp>
 #
 #   This file is part of libtptp.
@@ -364,6 +365,7 @@ DEPS  = $(TYPES:%=%-deps)
 ANALY = $(TYPES:%=%-analyze)
 ALL   = $(TYPES:%=%-all)
 
+
 ENV_CMAKE_FLAGS  = -G$(ENV_GEN)
 ENV_CMAKE_FLAGS += -DCMAKE_BUILD_TYPE=$(TYPE)
 
@@ -429,9 +431,12 @@ sync: debug-sync
 
 sync-all: $(TYPES:%=%-sync)
 
-ifeq ("$(wildcard $(OBJ)/CMakeCache.txt)","")
-$(SYNCS):%-sync: $(OBJ) info-build
+$(OBJ)/CMakeCache.txt: $(OBJ) info-build
 	@cd $(OBJ) && cmake $(ENV_CMAKE_FLAGS) ..
+
+ifeq ("$(wildcard $(OBJ)/CMakeCache.txt)","")
+$(SYNCS):%-sync: $(OBJ)
+	@$(MAKE) --no-print-directory TYPE=$(patsubst %-sync,%,$@) $(OBJ)/CMakeCache.txt
 else
 $(SYNCS):%-sync: $(OBJ)
 	@cmake --build $(OBJ) --config $(patsubst %-sync,%,$@) --target rebuild_cache -- $(ENV_BUILD_FLAGS)
@@ -439,6 +444,7 @@ endif
 
 $(TYPES):%: %-sync
 	@cmake --build $(OBJ) --config $(patsubst %-sync,%,$@) --target $(TARGET) -- $(ENV_BUILD_FLAGS)
+
 
 all: debug-all
 
@@ -632,7 +638,7 @@ info-repo:
 		$$path \
 		`git rev-parse --short HEAD` \
 		`git describe --tags --always --dirty` \
-		`git branch | grep -e "\* " | sed "s/* //g"`' | sed '/Entering/d'
+		`git branch | grep "* " | sed "s/* //g" | sed "s/ /-/g"`' | sed '/Entering/d'
 
 info-variables:
 	$(foreach v, $(.VARIABLES), $(info $(v) = $($(v))))

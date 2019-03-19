@@ -1,8 +1,9 @@
 # 
-#   Copyright (C) 2017-2018 CASM Organization <https://casm-lang.org>
+#   Copyright (C) 2017-2019 CASM Organization <https://casm-lang.org>
 #   All rights reserved.
 # 
 #   Developed by: Philipp Paulweber
+#                 Jakob Moosbrugger
 #                 <https://github.com/casm-lang/libtptp>
 # 
 #   This file is part of libtptp.
@@ -45,12 +46,12 @@
 
 * libtptp: Thousands of Problems for Theorem Provers Library
 
-[[https://gitter.im/casm-lang/libcasm-ir][https://badges.gitter.im/casm-lang/libtptp.png]]
-[[https://ci.casm-lang.org/teams/main/pipelines/development/jobs/libcasm-ir-master][ @@html:<img src="https://ci.casm-lang.org/api/v1/teams/main/pipelines/development/jobs/libtptp-master/badge">@@ ]]
-[[https://cirrus-ci.com/github/casm-lang/libcasm-ir][https://api.cirrus-ci.com/github/casm-lang/libtptp.svg]]
-[[https://codecov.io/gh/casm-lang/libcasm-ir][https://codecov.io/gh/casm-lang/libtptp/badge.svg]]
-[[https://github.com/casm-lang/libcasm-ir/tags][https://img.shields.io/github/tag/casm-lang/libtptp.svg]]
-[[https://github.com/casm-lang/libcasm-ir/blob/master/LICENSE.txt][https://img.shields.io/badge/license-GPLv3%2BLE-blue.svg]]
+[[https://gitter.im/casm-lang/libtptp][https://badges.gitter.im/casm-lang/libtptp.png]]
+[[https://ci.casm-lang.org/teams/main/pipelines/development/jobs/libtptp-master][ @@html:<img src="https://ci.casm-lang.org/api/v1/teams/main/pipelines/development/jobs/libtptp-master/badge">@@ ]]
+[[https://cirrus-ci.com/github/casm-lang/libtptp][https://api.cirrus-ci.com/github/casm-lang/libtptp.svg]]
+[[https://codecov.io/gh/casm-lang/libtptp][https://codecov.io/gh/casm-lang/libtptp/badge.svg]]
+[[https://github.com/casm-lang/libtptp/tags][https://img.shields.io/github/tag/casm-lang/libtptp.svg]]
+[[https://github.com/casm-lang/libtptp/blob/master/LICENSE.txt][https://img.shields.io/badge/license-GPLv3%2BLE-blue.svg]]
 
 
 TBD
@@ -67,10 +68,11 @@ with an additional permission ("GPL Linking Exception").
 
 #+begin_src
 
-Copyright (C) 2017-2018 CASM Organization <https://casm-lang.org>
+Copyright (C) 2017-2019 CASM Organization <https://casm-lang.org>
 All rights reserved.
 
 Developed by: Philipp Paulweber
+              Jakob Moosbrugger
               <https://github.com/casm-lang/libtptp>
 
 This file is part of libtptp.
