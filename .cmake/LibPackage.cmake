@@ -332,9 +332,6 @@ endfunction()
 #
 
 function( package_git NAME )
-  # generates ${CMAKE_BINARY_DIR}/compile_commands.json
-  set( CMAKE_EXPORT_COMPILE_COMMANDS ON PARENT_SCOPE )
-
   execute_process(
     COMMAND             git describe --always --tags --dirty
     WORKING_DIRECTORY   ${CMAKE_SOURCE_DIR}
