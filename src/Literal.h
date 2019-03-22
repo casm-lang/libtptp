@@ -43,7 +43,6 @@
 #ifndef _LIBTPTP_LITERAL_H_
 #define _LIBTPTP_LITERAL_H_
 
-#include <various/GrammarToken.h>
 #include <cassert>
 #include <libstdhl/Type>
 #include <libstdhl/data/type/Data>

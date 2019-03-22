@@ -44,8 +44,6 @@
 
 using namespace libtptp;
 
-static const auto uToken = std::make_shared< Token >( Grammar::Token::UNRESOLVED );
-
 Literal::Literal( const Node::ID id )
 : Node( id )
 {

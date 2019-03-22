@@ -60,7 +60,6 @@ add_library( ${PROJECT}-cpp OBJECT
   Role.cpp
   Specification.cpp
   Term.cpp
-  Token.cpp
   Type.cpp
   Visitor.cpp
 
@@ -72,6 +71,7 @@ add_library( ${PROJECT}-cpp OBJECT
 
   various/GrammarParser.cpp
   various/GrammarLexer.cpp
+  various/Token.cpp
   )
 
 
@@ -110,7 +110,6 @@ ecm_generate_headers( ${PROJECT}_HEADERS_CPP
     SourceLocation
     TPTP
     Term
-    Token
     Type
     Visitor
     libtptp
@@ -124,6 +123,26 @@ install(
     ${${PROJECT}_HEADERS}
     ${${PROJECT}_HEADERS_CPP}
     ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT}/Version
+  DESTINATION
+    "include/${PROJECT}"
+  )
+
+ecm_generate_headers( ${PROJECT}_VARIOUS_HEADERS_CPP
+  ORIGINAL
+    CAMELCASE
+  HEADER_NAMES
+    Token
+  PREFIX
+    ${PROJECT}
+  RELATIVE
+    various
+  REQUIRED_HEADERS
+    ${PROJECT}_VARIOUS_HEADERS
+)
+install(
+  FILES
+    ${${PROJECT}_VARIOUS_HEADERS}
+    ${${PROJECT}_VARIOUS_HEADERS_CPP}
   DESTINATION
     "include/${PROJECT}"
   )

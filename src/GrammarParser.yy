@@ -98,14 +98,13 @@
 
     //#include "../../src/SourceLocation.h"
     #include "../../src/Lexer.h"
-    #include "../../src/various/GrammarToken.h"
 
     #include <libstdhl/Type>
 
     #undef yylex
     #define yylex m_lexer.nextToken
 
-	static const auto uToken = std::make_shared<Token>(Grammar::Token::UNRESOLVED );
+	static const auto uToken = TokenBuilder::UNRESOLVED();
     // static Lexer helper functions shall be located here 
 }
 

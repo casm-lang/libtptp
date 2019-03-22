@@ -42,19 +42,17 @@
 
 #include "Logic.h"
 #include "Term.h"
-#include "various/GrammarToken.h"
 
 using namespace libtptp;
 
-static const auto unresolvedToken = std::make_shared< Token >( Grammar::Token::UNRESOLVED );
 //
 // Logic
 //
 
 Logic::Logic( const ID id )
 : Node( id )
-, m_leftDelimiter( unresolvedToken )
-, m_rightDelimiter( unresolvedToken )
+, m_leftDelimiter( TokenBuilder::UNRESOLVED() )
+, m_rightDelimiter( TokenBuilder::UNRESOLVED() )
 {
 }
 

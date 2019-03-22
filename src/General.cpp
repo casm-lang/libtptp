@@ -41,10 +41,7 @@
 //
 
 #include "General.h"
-#include "various/GrammarToken.h"
 using namespace libtptp;
-
-static const auto uToken = std::make_shared< Token >( Grammar::Token::UNRESOLVED );
 
 GeneralTerm::GeneralTerm( const Node::ID id )
 : Node( id )
@@ -153,7 +150,7 @@ void GeneralFunction::accept( Visitor& visitor )
 Annotation::Annotation(
     const GeneralTerm::Ptr& source, const Token::Ptr& comma, const GeneralList::Ptr& usefulInfo )
 : Node( Node::ID::ANNOTATION )
-, m_delimiter( uToken )
+, m_delimiter( TokenBuilder::UNRESOLVED() )
 , m_source( source )
 , m_comma( comma )
 , m_usefulInfo( usefulInfo )
@@ -164,7 +161,7 @@ Annotation::Annotation( const GeneralTerm::Ptr& source )
 : Node( Node::ID::ANNOTATION )
 , m_delimiter()
 , m_source( source )
-, m_comma( uToken )
+, m_comma( TokenBuilder::UNRESOLVED() )
 , m_usefulInfo()
 {
 }

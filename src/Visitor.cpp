@@ -42,17 +42,17 @@
 
 #include "Visitor.h"
 
-#include "Atom.h"
-#include "Definition.h"
-#include "Formula.h"
-#include "General.h"
-#include "Logic.h"
-#include "Node.h"
-#include "Role.h"
-#include "Specification.h"
-#include "Term.h"
-#include "Token.h"
-#include "Type.h"
+#include <libtptp/Atom>
+#include <libtptp/Definition>
+#include <libtptp/Formula>
+#include <libtptp/General>
+#include <libtptp/Logic>
+#include <libtptp/Node>
+#include <libtptp/Role>
+#include <libtptp/Specification>
+#include <libtptp/Term>
+#include <libtptp/Token>
+#include <libtptp/Type>
 
 using namespace libtptp;
 

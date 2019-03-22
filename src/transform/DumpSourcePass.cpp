@@ -54,8 +54,6 @@
 #include <libpass/PassLogger>
 #include <libpass/PassRegistry>
 
-#include "../various/GrammarToken.h"
-
 #include <iostream>
 
 using namespace libtptp;

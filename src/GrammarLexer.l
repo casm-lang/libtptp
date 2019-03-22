@@ -42,7 +42,7 @@
 #include "../../src/Lexer.h"
 
 #include <libtptp/Logger>
-#include "various/GrammarToken.h"
+#include <libtptp/Token.h>
 #include "../../src/SourceLocation.h"
 
 using namespace libtptp;
