@@ -49,6 +49,7 @@ include_directories(
 
 add_library( ${PROJECT}-cpp OBJECT
   Atom.cpp
+  Context.cpp
   Definition.cpp
   Formula.cpp
   General.cpp
@@ -97,6 +98,7 @@ ecm_generate_headers( ${PROJECT}_HEADERS_CPP
     CAMELCASE
   HEADER_NAMES
     Atom
+    Context
     Definition
     Formula
     General

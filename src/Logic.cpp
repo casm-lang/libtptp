@@ -506,13 +506,13 @@ LogicTuple::LogicTuple( const Token::Ptr& leftBraceToken, const Token::Ptr& righ
 {
 }
 
-LogicTuple::LogicTuple( const Logics::Ptr& tuples )
-: LogicTuple( TokenBuilder::LSQPAREN(), tuples, TokenBuilder::RSQPAREN() )
+LogicTuple::LogicTuple( const Context& context, const Logics::Ptr& tuples )
+: LogicTuple( bracesFromContext( context ).first, tuples, bracesFromContext( context ).second )
 {
 }
 
-LogicTuple::LogicTuple()
-: LogicTuple( TokenBuilder::LSQPAREN(), TokenBuilder::RSQPAREN() )
+LogicTuple::LogicTuple( const Context& context )
+: LogicTuple( bracesFromContext( context ).first, bracesFromContext( context ).second )
 {
 }
 
@@ -534,6 +534,15 @@ void LogicTuple::accept( Visitor& visitor )
     visitor.visit( *this );
 }
 
+const std::pair< Token::Ptr, Token::Ptr > LogicTuple::bracesFromContext(
+    const Context& context ) const
+{
+    if( context.flags().isSet( Context::FormulaFlag::FOF ) )
+    {
+        return std::make_pair( TokenBuilder::LCURPAREN(), TokenBuilder::RCURPAREN() );
+    }
+    return std::make_pair( TokenBuilder::LSQPAREN(), TokenBuilder::RSQPAREN() );
+}
 //
 // SequentLogic
 //

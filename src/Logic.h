@@ -43,6 +43,7 @@
 #ifndef _LIBTPTP_LOGIC_H_
 #define _LIBTPTP_LOGIC_H_
 
+#include <libtptp/Context>
 #include <libtptp/Identifier>
 #include <libtptp/Node>
 
@@ -259,9 +260,8 @@ namespace libtptp
             const Logics::Ptr& tuples,
             const Token::Ptr& rightBraceToken );
         explicit LogicTuple( const Token::Ptr& leftBraceToken, const Token::Ptr& rightBraceToken );
-        explicit LogicTuple( const Logics::Ptr& tuples );
-        explicit LogicTuple();
-        // TODO: @moosbruggerj FofFormulaTuple uses curly parenthesis
+        explicit LogicTuple( const Context& context, const Logics::Ptr& tuples );
+        explicit LogicTuple( const Context& context );
 
         const Token::Ptr& leftBraceToken( void ) const;
         const Logics::Ptr& tuples( void ) const;
@@ -270,6 +270,7 @@ namespace libtptp
         void accept( Visitor& visitor ) override final;
 
       private:
+        const std::pair< Token::Ptr, Token::Ptr > bracesFromContext( const Context& context ) const;
         const Token::Ptr m_leftBraceToken;
         const Logics::Ptr m_tuples;
         const Token::Ptr m_rightBraceToken;
