@@ -65,24 +65,18 @@ namespace libtptp
         explicit Identifier( const std::string& name, Kind kind = Kind::WORD );
 
         explicit Identifier(
-            const Token::Ptr& definedModifier, const std::string& string, Kind kind = Kind::WORD );
+            const Token::Ptr& modifier, const std::string& string, Kind kind = Kind::WORD );
 
-        explicit Identifier(
-            const Token::Ptr& systemModifier,
-            const Token::Ptr& definedModifier,
-            const std::string& string,
-            Kind kind = Kind::WORD );
-
-        const Token::Ptr systemModifier( void ) const;
-        const Token::Ptr definedModifier( void ) const;
+        const Token::Ptr& modifier( void ) const;
         const std::string& name( void ) const;
         const Kind kind( void ) const;
 
         void accept( Visitor& visitor ) override final;
 
       private:
-        const Token::Ptr m_systemModifier;
-        const Token::Ptr m_definedModifier;
+        const std::pair< const Token::Ptr, const std::string > modifierTokenFromName(
+            const std::string& name ) const;
+        const Token::Ptr m_modifier;
         const std::string m_name;
         Kind m_kind;
     };

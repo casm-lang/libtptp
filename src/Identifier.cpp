@@ -44,39 +44,22 @@
 
 using namespace libtptp;
 
-static const auto uToken = std::make_shared< Token >( Grammar::Token::UNRESOLVED );
-
 Identifier::Identifier( const std::string& name, Kind kind )
-: Identifier( uToken, uToken, name, kind )
+: Identifier( modifierTokenFromName( name ).first, modifierTokenFromName( name ).second, kind )
 {
 }
 
-Identifier::Identifier( const Token::Ptr& definedModifier, const std::string& name, Kind kind )
-: Identifier( uToken, definedModifier, name, kind )
-{
-}
-
-Identifier::Identifier(
-    const Token::Ptr& systemModifier,
-    const Token::Ptr& definedModifier,
-    const std::string& name,
-    Kind kind )
+Identifier::Identifier( const Token::Ptr& modifier, const std::string& name, Kind kind )
 : Node( Node::ID::IDENTIFIER )
-, m_systemModifier( systemModifier )
-, m_definedModifier( definedModifier )
+, m_modifier( modifier )
 , m_name( name )
 , m_kind( kind )
 {
 }
 
-const Token::Ptr Identifier::systemModifier( void ) const
+const Token::Ptr& Identifier::modifier( void ) const
 {
-    return m_systemModifier;
-}
-
-const Token::Ptr Identifier::definedModifier( void ) const
-{
-    return m_definedModifier;
+    return m_modifier;
 }
 
 const std::string& Identifier::name( void ) const
@@ -94,6 +77,20 @@ void Identifier::accept( Visitor& visitor )
     visitor.visit( *this );
 }
 
+const std::pair< const Token::Ptr, const std::string > Identifier::modifierTokenFromName(
+    const std::string& name ) const
+{
+    if( name.size() > 2 && name[ 0 ] == '$' && name[ 1 ] == '$' )
+    {
+        return std::make_pair< const Token::Ptr&, const std::string >(
+            TokenBuilder::DOLLARDOLLAR(), name.substr( 2 ) );
+    }
+    if( name.size() > 1 && name[ 0 ] == '$' )
+    {
+        return std::make_pair( TokenBuilder::DOLLAR(), name.substr( 1 ) );
+    }
+    return std::make_pair( TokenBuilder::UNRESOLVED(), name );
+}
 //
 //  Local variables:
 //  mode: c++

@@ -341,8 +341,7 @@ void RecursiveVisitor::visit( SubType& node )
 
 void RecursiveVisitor::visit( Identifier& node )
 {
-    node.systemModifier()->accept( *this );
-    node.definedModifier()->accept( *this );
+    node.modifier()->accept( *this );
 }
 
 void RecursiveVisitor::visit( IntegerLiteral& node )

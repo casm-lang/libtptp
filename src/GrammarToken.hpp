@@ -40,7 +40,6 @@
 //  statement from your version.
 //
 
-
 TPI             "tpi"
 THF             "thf"
 TFF             "tff"
@@ -56,6 +55,7 @@ LET             "let"
 AT              "@"
 AND             "&"
 DOLLAR          "$"
+DOLLARDOLLAR    "$$"
 COLON           ":"
 COMMA           ","
 DOT             "."

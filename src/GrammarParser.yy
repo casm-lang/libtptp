@@ -2335,7 +2335,6 @@ GeneralTerm
 GeneralData
 : AtomicWord
   {
-	//identifier
 	$$ = libtptp::make< GeneralData >(@$, $1);
   }
 | GeneralFunction
@@ -2545,9 +2544,9 @@ DollarWordLiteral
 ;
 
 DollarDollarWordLiteral
-: DOLLAR DOLLAR LOWER_WORD
+: DOLLARDOLLAR LOWER_WORD
   {
-	$$ = libtptp::make< Identifier >(@$, $1, $2, $3);
+	$$ = libtptp::make< Identifier >(@$, $1, $2);
   }
 ;
 
