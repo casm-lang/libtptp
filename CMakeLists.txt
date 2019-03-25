@@ -120,7 +120,8 @@ add_custom_target( ${PROJECT}-grammar ALL
   DEPENDS
     ${CXX_GRAMMAR_PARSER}
     ${CXX_GRAMMAR_LEXER}
-    ${CXX_GRAMMAR_TOKEN}
+    ${CXX_GRAMMAR_TOKEN_HEADER}
+    ${CXX_GRAMMAR_TOKEN_BODY}
   )
 
 add_dependencies( ${PROJECT}-cpp
