@@ -77,6 +77,7 @@ namespace libtptp
     };
 
     using Logics = NodeList< Logic >;
+    using ListLogicElements = ListElements< Logic >;
 
     class UnaryLogic final : public Logic
     {
@@ -257,14 +258,14 @@ namespace libtptp
 
         explicit LogicTuple(
             const Token::Ptr& leftBraceToken,
-            const Logics::Ptr& tuples,
+            const ListLogicElements::Ptr& tuples,
             const Token::Ptr& rightBraceToken );
         explicit LogicTuple( const Token::Ptr& leftBraceToken, const Token::Ptr& rightBraceToken );
-        explicit LogicTuple( const Context& context, const Logics::Ptr& tuples );
+        explicit LogicTuple( const Context& context, const ListLogicElements::Ptr& tuples );
         explicit LogicTuple( const Context& context );
 
         const Token::Ptr& leftBraceToken( void ) const;
-        const Logics::Ptr& tuples( void ) const;
+        const ListLogicElements::Ptr& tuples( void ) const;
         const Token::Ptr& rightBraceToken( void ) const;
 
         void accept( Visitor& visitor ) override final;
@@ -272,7 +273,7 @@ namespace libtptp
       private:
         const std::pair< Token::Ptr, Token::Ptr > bracesFromContext( const Context& context ) const;
         const Token::Ptr m_leftBraceToken;
-        const Logics::Ptr m_tuples;
+        const ListLogicElements::Ptr m_tuples;
         const Token::Ptr m_rightBraceToken;
     };
 

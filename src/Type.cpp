@@ -172,7 +172,9 @@ void TypedAtom::accept( Visitor& visitor )
 //
 
 TupleType::TupleType(
-    const Token::Ptr& leftBraceToken, const Types::Ptr& tuples, const Token::Ptr& rightBraceToken )
+    const Token::Ptr& leftBraceToken,
+    const ListTypeElements::Ptr& tuples,
+    const Token::Ptr& rightBraceToken )
 : Type( Node::ID::TUPLE_TYPE )
 , m_leftBraceToken( leftBraceToken )
 , m_tuples( tuples )
@@ -180,7 +182,7 @@ TupleType::TupleType(
 {
 }
 
-TupleType::TupleType( const Types::Ptr& tuples )
+TupleType::TupleType( const ListTypeElements::Ptr& tuples )
 : TupleType( TokenBuilder::LSQPAREN(), tuples, TokenBuilder::RSQPAREN() )
 {
 }
@@ -190,7 +192,7 @@ const Token::Ptr& TupleType::leftBraceToken( void ) const
     return m_leftBraceToken;
 }
 
-const Types::Ptr& TupleType::tuples( void ) const
+const ListTypeElements::Ptr& TupleType::tuples( void ) const
 {
     return m_tuples;
 }
@@ -212,7 +214,7 @@ void TupleType::accept( Visitor& visitor )
 QuantifiedType::QuantifiedType(
     const Token::Ptr& quantifierToken,
     const Token::Ptr& leftParen,
-    const Nodes::Ptr& variables,
+    const ListNodeElements::Ptr& variables,
     const Token::Ptr& rightParen,
     const Token::Ptr& colon,
     const Type::Ptr& type )
@@ -226,7 +228,7 @@ QuantifiedType::QuantifiedType(
 {
 }
 
-QuantifiedType::QuantifiedType( const Nodes::Ptr& variables, const Type::Ptr& type )
+QuantifiedType::QuantifiedType( const ListNodeElements::Ptr& variables, const Type::Ptr& type )
 : QuantifiedType(
       TokenBuilder::EXCLAMATIONGREATER(),
       TokenBuilder::LSQPAREN(),
@@ -247,7 +249,7 @@ const Token::Ptr& QuantifiedType::leftParen( void ) const
     return m_leftParen;
 }
 
-const Nodes::Ptr& QuantifiedType::variables( void ) const
+const ListNodeElements::Ptr& QuantifiedType::variables( void ) const
 {
     return m_variables;
 }

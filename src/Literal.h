@@ -50,6 +50,7 @@
 #include <libstdhl/data/type/Integer>
 #include <libstdhl/data/type/Rational>
 #include <libstdhl/data/type/String>
+#include <libtptp/Helper>
 #include <libtptp/Node>
 #include <libtptp/Token>
 
@@ -135,20 +136,20 @@ namespace libtptp
         explicit ListLiteral( const Token::Ptr& leftBraceToken, const Token::Ptr& rightBraceToken );
         explicit ListLiteral(
             const Token::Ptr& leftBraceToken,
-            const Nodes::Ptr& elements,
+            const ListNodeElements::Ptr& elements,
             const Token::Ptr& rightBraceToken );
-        explicit ListLiteral( const Nodes::Ptr& elements );
+        explicit ListLiteral( const ListNodeElements::Ptr& elements );
         explicit ListLiteral();
 
         const Token::Ptr& leftBraceToken( void ) const;
-        const Nodes::Ptr& elements( void ) const;
+        const ListNodeElements::Ptr& elements( void ) const;
         const Token::Ptr& rightBraceToken( void ) const;
 
         void accept( Visitor& visitor ) override final;
 
       private:
         const Token::Ptr m_leftBraceToken;
-        const Nodes::Ptr m_elements;
+        const ListNodeElements::Ptr m_elements;
         const Token::Ptr m_rightBraceToken;
     };
 

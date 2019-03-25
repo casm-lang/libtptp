@@ -494,7 +494,9 @@ const Token::Ptr& InfixLogic::connectiveTokenFromConnective( Connective connecti
 }
 
 LogicTuple::LogicTuple(
-    const Token::Ptr& leftBraceToken, const Logics::Ptr& tuples, const Token::Ptr& rightBraceToken )
+    const Token::Ptr& leftBraceToken,
+    const ListLogicElements::Ptr& tuples,
+    const Token::Ptr& rightBraceToken )
 : Logic( Node::ID::LOGIC_TUPLE )
 , m_leftBraceToken( leftBraceToken )
 , m_tuples( tuples )
@@ -502,11 +504,11 @@ LogicTuple::LogicTuple(
 {
 }
 LogicTuple::LogicTuple( const Token::Ptr& leftBraceToken, const Token::Ptr& rightBraceToken )
-: LogicTuple( leftBraceToken, std::make_shared< Logics >(), rightBraceToken )
+: LogicTuple( leftBraceToken, std::make_shared< ListLogicElements >(), rightBraceToken )
 {
 }
 
-LogicTuple::LogicTuple( const Context& context, const Logics::Ptr& tuples )
+LogicTuple::LogicTuple( const Context& context, const ListLogicElements::Ptr& tuples )
 : LogicTuple( bracesFromContext( context ).first, tuples, bracesFromContext( context ).second )
 {
 }
@@ -520,7 +522,7 @@ const Token::Ptr& LogicTuple::leftBraceToken( void ) const
 {
     return m_leftBraceToken;
 }
-const Logics::Ptr& LogicTuple::tuples( void ) const
+const ListLogicElements::Ptr& LogicTuple::tuples( void ) const
 {
     return m_tuples;
 }

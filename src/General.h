@@ -126,14 +126,15 @@ namespace libtptp
         explicit GeneralFunction(
             const Identifier::Ptr& name,
             const Token::Ptr& leftParen,
-            const Nodes::Ptr& arguments,
+            const ListNodeElements::Ptr& arguments,
             const Token::Ptr& rightParen );
 
-        explicit GeneralFunction( const Identifier::Ptr& name, const Nodes::Ptr& arguments );
+        explicit GeneralFunction(
+            const Identifier::Ptr& name, const ListNodeElements::Ptr& arguments );
 
         const Identifier::Ptr& name( void ) const;
         const Token::Ptr& leftParen( void ) const;
-        const Nodes::Ptr& arguments( void ) const;
+        const ListNodeElements::Ptr& arguments( void ) const;
         const Token::Ptr& rightParen( void ) const;
 
         void accept( Visitor& visitor ) override final;
@@ -141,7 +142,7 @@ namespace libtptp
       private:
         const Identifier::Ptr m_name;
         const Token::Ptr m_leftParen;
-        const Nodes::Ptr m_arguments;
+        const ListNodeElements::Ptr m_arguments;
         const Token::Ptr m_rightParen;
     };
 

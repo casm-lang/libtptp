@@ -117,7 +117,7 @@ void GeneralAggregator::accept( Visitor& visitor )
 GeneralFunction::GeneralFunction(
     const Identifier::Ptr& name,
     const Token::Ptr& leftParen,
-    const Nodes::Ptr& arguments,
+    const ListNodeElements::Ptr& arguments,
     const Token::Ptr& rightParen )
 : GeneralTerm( Node::ID::GENERAL_FUNCTION )
 , m_name( name )
@@ -127,7 +127,8 @@ GeneralFunction::GeneralFunction(
 {
 }
 
-GeneralFunction::GeneralFunction( const Identifier::Ptr& name, const Nodes::Ptr& arguments )
+GeneralFunction::GeneralFunction(
+    const Identifier::Ptr& name, const ListNodeElements::Ptr& arguments )
 : GeneralFunction( name, TokenBuilder::LPAREN(), arguments, TokenBuilder::RPAREN() )
 {
 }
@@ -142,7 +143,7 @@ const Token::Ptr& GeneralFunction::leftParen( void ) const
     return m_leftParen;
 }
 
-const Nodes::Ptr& GeneralFunction::arguments( void ) const
+const ListNodeElements::Ptr& GeneralFunction::arguments( void ) const
 {
     return m_arguments;
 }

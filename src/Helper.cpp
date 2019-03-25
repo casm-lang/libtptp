@@ -40,111 +40,54 @@
 //  statement from your version.
 //
 
-#include "Literal.h"
+#include "Helper.h"
 
 using namespace libtptp;
-
-Literal::Literal( const Node::ID id )
-: Node( id )
+/*
+ListElement::ListElement( const Token::Ptr& delimiter, const Node::Ptr& element )
+: Node( Node::ID::LIST_ELEMENT )
+, m_delimiter( delimiter )
+, m_element( element )
 {
 }
 
-ValueLiteral::ValueLiteral( const Node::ID id, libstdhl::Type::Data value )
-: Literal( id )
-, m_value( value )
+const Token::Ptr& ListElement::delimiter( void ) const
 {
+    return m_delimiter;
 }
 
-const libstdhl::Type::Data& ValueLiteral::value( void ) const
+const Node::Ptr& ListElement::element( void ) const
 {
-    return m_value;
+    return m_element;
 }
 
-IntegerLiteral::IntegerLiteral( const std::string& integer )
-: ValueLiteral( Node::ID::INTEGER_LITERAL, libstdhl::Type::createInteger( integer ) )
-{
-}
-
-void IntegerLiteral::accept( Visitor& visitor )
+void ListElement::accept( Visitor& visitor )
 {
     visitor.visit( *this );
 }
 
-RationalLiteral::RationalLiteral( const std::string& rational )
-: ValueLiteral( Node::ID::RATIONAL_LITERAL, libstdhl::Type::createRational( rational ) )
+ListElements::ListElements()
+: NodeList()
 {
 }
 
-void RationalLiteral::accept( Visitor& visitor )
+void ListElements::add( const Token::Ptr& delimiter, const Node::Ptr& element )
 {
-    visitor.visit( *this );
+    add( std::make_shared< ListElement >( delimiter, element ) );
 }
 
-RealLiteral::RealLiteral( const std::string& real )
-: ValueLiteral( Node::ID::REAL_LITERAL, libstdhl::Type::createDecimal( real ) )
+void ListElements::add( const Node::Ptr& element )
 {
+    if( size() == 0 )
+    {
+        add( std::make_shared< ListElement >( TokenBuilder::UNRESOLVED(), element ) );
+    }
+    else
+    {
+        add( std::make_shared< ListElement >( TokenBuilder::COMMA(), element ) );
+    }
 }
-
-void RealLiteral::accept( Visitor& visitor )
-{
-    visitor.visit( *this );
-}
-
-DistinctObjectLiteral::DistinctObjectLiteral( const std::string& string )
-: ValueLiteral( Node::ID::DISTINCT_OBJECT_LITERAL, libstdhl::Type::createString( string ) )
-{
-}
-
-void DistinctObjectLiteral::accept( Visitor& visitor )
-{
-    visitor.visit( *this );
-}
-
-ListLiteral::ListLiteral( const Token::Ptr& leftBraceToken, const Token::Ptr& rightBraceToken )
-: ListLiteral( leftBraceToken, std::make_shared< ListNodeElements >(), rightBraceToken )
-{
-}
-
-ListLiteral::ListLiteral(
-    const Token::Ptr& leftBraceToken,
-    const ListNodeElements::Ptr& elements,
-    const Token::Ptr& rightBraceToken )
-: Literal( Node::ID::LIST_LITERAL )
-, m_leftBraceToken( leftBraceToken )
-, m_elements( elements )
-, m_rightBraceToken( rightBraceToken )
-{
-}
-ListLiteral::ListLiteral( const ListNodeElements::Ptr& elements )
-: ListLiteral( TokenBuilder::LSQPAREN(), elements, TokenBuilder::RSQPAREN() )
-{
-}
-
-ListLiteral::ListLiteral()
-: ListLiteral( TokenBuilder::LSQPAREN(), TokenBuilder::RSQPAREN() )
-{
-}
-
-const Token::Ptr& ListLiteral::leftBraceToken() const
-{
-    return m_leftBraceToken;
-}
-
-const ListNodeElements::Ptr& ListLiteral::elements( void ) const
-{
-    return m_elements;
-}
-
-const Token::Ptr& ListLiteral::rightBraceToken() const
-{
-    return m_rightBraceToken;
-}
-
-void ListLiteral::accept( Visitor& visitor )
-{
-    visitor.visit( *this );
-}
-
+*/
 //
 //  Local variables:
 //  mode: c++
