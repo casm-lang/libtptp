@@ -153,6 +153,12 @@ FormulaData::FormulaData(
 {
 }
 
+FormulaData::FormulaData( const Token::Ptr& formulaType, const Logic::Ptr& formula )
+: FormulaData(
+      TokenBuilder::DOLLAR(), formulaType, TokenBuilder::LPAREN(), formula, TokenBuilder::RPAREN() )
+{
+}
+
 const Token::Ptr& FormulaData::dollar( void ) const
 {
     return m_dollar;

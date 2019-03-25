@@ -72,6 +72,12 @@ FunctorAtom::FunctorAtom(
 {
 }
 
+FunctorAtom::FunctorAtom(
+    const Identifier::Ptr& name, const Logics::Ptr& arguments, const Kind kind )
+: FunctorAtom( name, TokenBuilder::LPAREN(), arguments, TokenBuilder::RPAREN(), kind )
+{
+}
+
 const Identifier::Ptr& FunctorAtom::name( void ) const
 {
     return m_name;
@@ -146,6 +152,11 @@ DefinitionAtom::DefinitionAtom(
 , m_lhs( lhs )
 , m_assignment( assignment )
 , m_rhs( rhs )
+{
+}
+
+DefinitionAtom::DefinitionAtom( const Logic::Ptr& lhs, const Logic::Ptr& rhs )
+: DefinitionAtom( lhs, TokenBuilder::ASSIGNMENT(), rhs )
 {
 }
 

@@ -86,6 +86,11 @@ UnaryLogic::UnaryLogic(
 {
 }
 
+UnaryLogic::UnaryLogic( const Connective connective, const Logic::Ptr& logic )
+: UnaryLogic( std::make_pair( connectiveTokenFromConnective( connective ), connective ), logic )
+{
+}
+
 const Logic::Ptr& UnaryLogic::logic( void ) const
 {
     return m_logic;
@@ -137,6 +142,37 @@ void UnaryLogic::accept( Visitor& visitor )
     visitor.visit( *this );
 }
 
+const Token::Ptr& UnaryLogic::connectiveTokenFromConnective( Connective connective ) const
+{
+    switch( connective )
+    {
+        case Connective::NEGATION:
+        {
+            return TokenBuilder::TILDE();
+        }
+        case Connective::UNIVERSAL_QUANTIFICATION:
+        {
+            return TokenBuilder::DOUBLEEXCLAMATION();
+        }
+        case Connective::EXISTENTIAL_QUANTIFICATION:
+        {
+            return TokenBuilder::DOUBLEQUESTIONMARK();
+        }
+        case Connective::INDEFINITE_DESCRIPTION:
+        {
+            return TokenBuilder::DOUBLEATPLUS();
+        }
+        case Connective::DEFINITE_DESCRIPTION:
+        {
+            return TokenBuilder::DOUBLEATMINUS();
+        }
+        case Connective::EQUALITY:
+        {
+            return TokenBuilder::ATEQUAL();
+        }
+    }
+}
+
 //
 // BinaryLogic
 //
@@ -153,6 +189,13 @@ BinaryLogic::BinaryLogic(
 , m_associative(
       m_connective == BinaryLogic::Connective::DISJUNCTION or
       m_connective == BinaryLogic::Connective::CONJUNCTION )
+{
+}
+
+BinaryLogic::BinaryLogic(
+    const Logic::Ptr& left, const Connective connective, const Logic::Ptr& right )
+: BinaryLogic(
+      left, std::make_pair( connectiveTokenFromConnective( connective ), connective ), right )
 {
 }
 
@@ -229,6 +272,49 @@ void BinaryLogic::accept( Visitor& visitor )
     visitor.visit( *this );
 }
 
+const Token::Ptr& BinaryLogic::connectiveTokenFromConnective( Connective connective ) const
+{
+    switch( connective )
+    {
+        case Connective::DISJUNCTION:
+        {
+            return TokenBuilder::VLINE();
+        }
+        case Connective::CONJUNCTION:
+        {
+            return TokenBuilder::AND();
+        }
+        case Connective::EQUIVALENCE:
+        {
+            return TokenBuilder::EQUALITY();
+        }
+        case Connective::NON_EQUIVALENCE:
+        {
+            return TokenBuilder::INEQUALITY();
+        }
+        case Connective::IMPLICATION:
+        {
+            return TokenBuilder::IMPLICATION();
+        }
+        case Connective::REVERSE_IMPLICATION:
+        {
+            return TokenBuilder::RIMPLICATION();
+        }
+        case Connective::NEGATED_DISJUNCTION:
+        {
+            return TokenBuilder::NOR();
+        }
+        case Connective::NEGATED_CONJUNCTION:
+        {
+            return TokenBuilder::NAND();
+        }
+        case Connective::APPLY:
+        {
+            return TokenBuilder::AT();
+        }
+    }
+}
+
 //
 // QuantifiedLogic
 //
@@ -244,6 +330,16 @@ QuantifiedLogic::QuantifiedLogic(
 , m_colon( colon )
 , m_logic( logic )
 , m_quantifier( quantifier.second )
+{
+}
+
+QuantifiedLogic::QuantifiedLogic(
+    const Quantifier quantifier, const ListLiteral::Ptr& variables, const Logic::Ptr& logic )
+: QuantifiedLogic(
+      std::make_pair( quantifierTokenFromQuantifier( quantifier ), quantifier ),
+      variables,
+      TokenBuilder::COLON(),
+      logic )
 {
 }
 
@@ -312,6 +408,41 @@ void QuantifiedLogic::accept( Visitor& visitor )
     visitor.visit( *this );
 }
 
+const Token::Ptr& QuantifiedLogic::quantifierTokenFromQuantifier( Quantifier quantifier ) const
+{
+    switch( quantifier )
+    {
+        case Quantifier::UNIVERSAL:
+        {
+            return TokenBuilder::EXCLAMATION();
+        }
+        case Quantifier::EXISTENTIAL:
+        {
+            return TokenBuilder::QUESTIONMARK();
+        }
+        case Quantifier::EXCLAMATIONGREATER:
+        {
+            return TokenBuilder::EXCLAMATIONGREATER();
+        }
+        case Quantifier::QUESTIONMARKSTAR:
+        {
+            return TokenBuilder::QUESTIONMARKSTAR();
+        }
+        case Quantifier::CARET:
+        {
+            return TokenBuilder::CARET();
+        }
+        case Quantifier::ATPLUS:
+        {
+            return TokenBuilder::ATPLUS();
+        }
+        case Quantifier::ATMINUS:
+        {
+            return TokenBuilder::ATMINUS();
+        }
+    }
+}
+
 InfixLogic::InfixLogic(
     const Logic::Ptr& lhs,
     const std::pair< const Token::Ptr&, const Connective > connective,
@@ -321,6 +452,11 @@ InfixLogic::InfixLogic(
 , m_connectiveToken( connective.first )
 , m_rhs( rhs )
 , m_connective( connective.second )
+{
+}
+
+InfixLogic::InfixLogic( const Logic::Ptr& lhs, const Connective connective, const Logic::Ptr& rhs )
+: InfixLogic( lhs, std::make_pair( connectiveTokenFromConnective( connective ), connective ), rhs )
 {
 }
 
@@ -342,6 +478,21 @@ void InfixLogic::accept( Visitor& visitor )
     visitor.visit( *this );
 }
 
+const Token::Ptr& InfixLogic::connectiveTokenFromConnective( Connective connective ) const
+{
+    switch( connective )
+    {
+        case Connective::INEQUALITY:
+        {
+            return TokenBuilder::INFIXINEQUALITY();
+        }
+        case Connective::EQUALITY:
+        {
+            return TokenBuilder::EQUAL();
+        }
+    }
+}
+
 LogicTuple::LogicTuple(
     const Token::Ptr& leftBraceToken, const Logics::Ptr& tuples, const Token::Ptr& rightBraceToken )
 : Logic( Node::ID::LOGIC_TUPLE )
@@ -352,6 +503,16 @@ LogicTuple::LogicTuple(
 }
 LogicTuple::LogicTuple( const Token::Ptr& leftBraceToken, const Token::Ptr& rightBraceToken )
 : LogicTuple( leftBraceToken, std::make_shared< Logics >(), rightBraceToken )
+{
+}
+
+LogicTuple::LogicTuple( const Logics::Ptr& tuples )
+: LogicTuple( TokenBuilder::LSQPAREN(), tuples, TokenBuilder::RSQPAREN() )
+{
+}
+
+LogicTuple::LogicTuple()
+: LogicTuple( TokenBuilder::LSQPAREN(), TokenBuilder::RSQPAREN() )
 {
 }
 
@@ -383,6 +544,11 @@ SequentLogic::SequentLogic(
 , m_left( left )
 , m_connectiveToken( connectiveToken )
 , m_right( right )
+{
+}
+
+SequentLogic::SequentLogic( const LogicTuple::Ptr& left, const LogicTuple::Ptr& right )
+: SequentLogic( left, TokenBuilder::GENTZENARROW(), right )
 {
 }
 

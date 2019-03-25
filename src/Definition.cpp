@@ -77,6 +77,19 @@ IncludeDefinition::IncludeDefinition(
 {
 }
 
+IncludeDefinition::IncludeDefinition(
+    const Identifier::Ptr& filename, const ListLiteral::Ptr& formulaSelection )
+: IncludeDefinition(
+      TokenBuilder::INCLUDE(),
+      TokenBuilder::LPAREN(),
+      filename,
+      TokenBuilder::COMMA(),
+      formulaSelection,
+      TokenBuilder::RPAREN(),
+      TokenBuilder::DOT() )
+{
+}
+
 const Token::Ptr& IncludeDefinition::includeToken( void ) const
 {
     return m_includeToken;
@@ -134,6 +147,21 @@ FormulaDefinition::FormulaDefinition(
 {
 }
 
+FormulaDefinition::FormulaDefinition(
+    const Identifier::Ptr& name, const Role::Ptr& role, const Formula::Ptr& formula )
+: FormulaDefinition(
+      keywordFromFormula( formula ),
+      TokenBuilder::LPAREN(),
+      name,
+      TokenBuilder::COMMA(),
+      role,
+      TokenBuilder::COMMA(),
+      formula,
+      TokenBuilder::RPAREN(),
+      TokenBuilder::DOT() )
+{
+}
+
 const Token::Ptr& FormulaDefinition::keyword( void ) const
 {
     return m_keyword;
@@ -184,6 +212,39 @@ void FormulaDefinition::accept( Visitor& visitor )
     visitor.visit( *this );
 }
 
+const Token::Ptr& FormulaDefinition::keywordFromFormula( const Formula::Ptr& formula ) const
+{
+    switch( formula->id() )
+    {
+        case Node::ID::FOF_FORMULA:
+        {
+            return TokenBuilder::FOF();
+        }
+        case Node::ID::TFF_FORMULA:
+        {
+            return TokenBuilder::TFF();
+        }
+        case Node::ID::THF_FORMULA:
+        {
+            return TokenBuilder::THF();
+        }
+        case Node::ID::TPI_FORMULA:
+        {
+            return TokenBuilder::TPI();
+        }
+        case Node::ID::CNF_FORMULA:
+        {
+            return TokenBuilder::CNF();
+        }
+        case Node::ID::TCF_FORMULA:
+        {
+            return TokenBuilder::TCF();
+        }
+        default:
+            break;
+    }
+    assert( !"invalid formula id" );
+}
 //
 //  Local variables:
 //  mode: c++

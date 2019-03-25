@@ -137,6 +137,8 @@ namespace libtptp
             const Token::Ptr& leftBraceToken,
             const Nodes::Ptr& elements,
             const Token::Ptr& rightBraceToken );
+        explicit ListLiteral( const Nodes::Ptr& elements );
+        explicit ListLiteral();
 
         const Token::Ptr& leftBraceToken( void ) const;
         const Nodes::Ptr& elements( void ) const;

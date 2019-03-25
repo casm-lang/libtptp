@@ -85,6 +85,9 @@ namespace libtptp
             const Token::Ptr& rightParenToken,
             const Token::Ptr& dotToken );
 
+        IncludeDefinition(
+            const Identifier::Ptr& filename, const ListLiteral::Ptr& formulaSelection );
+
         const Token::Ptr& includeToken( void ) const;
         const Token::Ptr& leftParenToken( void ) const;
         const Identifier::Ptr& filename( void ) const;
@@ -121,6 +124,9 @@ namespace libtptp
             const Token::Ptr& rightParen,
             const Token::Ptr& dot );
 
+        explicit FormulaDefinition(
+            const Identifier::Ptr& name, const Role::Ptr& role, const Formula::Ptr& formula );
+
         const Token::Ptr& keyword( void ) const;
         const Token::Ptr& leftParen( void ) const;
         const Identifier::Ptr& name( void ) const;
@@ -134,6 +140,7 @@ namespace libtptp
         void accept( Visitor& visitor ) override final;
 
       private:
+        const Token::Ptr& keywordFromFormula( const Formula::Ptr& formula ) const;
         const Token::Ptr m_keyword;
         const Token::Ptr m_leftParen;
         const Identifier::Ptr m_name;

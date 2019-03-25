@@ -94,9 +94,11 @@ namespace libtptp
 
         using Ptr = std::shared_ptr< UnaryLogic >;
 
-        UnaryLogic(
+        explicit UnaryLogic(
             const std::pair< const Token::Ptr&, const Connective > connective,
             const Logic::Ptr& logic );
+
+        explicit UnaryLogic( const Connective connective, const Logic::Ptr& logic );
 
         const Logic::Ptr& logic( void ) const;
 
@@ -107,6 +109,7 @@ namespace libtptp
         std::string connectiveDescription( void ) const;
 
       private:
+        const Token::Ptr& connectiveTokenFromConnective( Connective connective ) const;
         const Token::Ptr m_connectiveToken;
         const Logic::Ptr m_logic;
         const Connective m_connective;
@@ -138,6 +141,8 @@ namespace libtptp
             const std::pair< const Token::Ptr&, Connective > connective,
             const Logic::Ptr& right );
 
+        BinaryLogic( const Logic::Ptr& left, const Connective connective, const Logic::Ptr& right );
+
         const Logic::Ptr& left( void ) const;
 
         const Logic::Ptr& right( void ) const;
@@ -153,6 +158,7 @@ namespace libtptp
         void accept( Visitor& visitor ) override;
 
       private:
+        const Token::Ptr& connectiveTokenFromConnective( Connective connective ) const;
         const Logic::Ptr m_left;
         const Logic::Ptr m_right;
         const Token::Ptr m_connectiveToken;
@@ -184,6 +190,11 @@ namespace libtptp
             const Token::Ptr& colon,
             const Logic::Ptr& logic );
 
+        QuantifiedLogic(
+            const Quantifier quantifier,
+            const ListLiteral::Ptr& variables,
+            const Logic::Ptr& logic );
+
         const Token::Ptr& quantifierToken( void ) const;
         const ListLiteral::Ptr& variables( void ) const;
         const Token::Ptr& colon( void ) const;
@@ -195,6 +206,8 @@ namespace libtptp
         void accept( Visitor& visitor ) override;
 
       private:
+        const Token::Ptr& quantifierTokenFromQuantifier( Quantifier quantifier ) const;
+
         const Token::Ptr m_quantifierToken;
         const ListLiteral::Ptr m_variables;
         const Token::Ptr m_colon;
@@ -217,6 +230,9 @@ namespace libtptp
             const std::pair< const Token::Ptr&, const Connective > connective,
             const Logic::Ptr& rhs );
 
+        explicit InfixLogic(
+            const Logic::Ptr& lhs, const Connective connective, const Logic::Ptr& rhs );
+
         const Logic::Ptr& lhs( void ) const;
         const Token::Ptr& connectiveToken( void ) const;
         const Logic::Ptr& rhs( void ) const;
@@ -224,6 +240,7 @@ namespace libtptp
         void accept( Visitor& visitor ) override final;
 
       private:
+        const Token::Ptr& connectiveTokenFromConnective( Connective connective ) const;
         const Logic::Ptr m_lhs;
         const Token::Ptr m_connectiveToken;
         const Logic::Ptr m_rhs;
@@ -242,6 +259,9 @@ namespace libtptp
             const Logics::Ptr& tuples,
             const Token::Ptr& rightBraceToken );
         explicit LogicTuple( const Token::Ptr& leftBraceToken, const Token::Ptr& rightBraceToken );
+        explicit LogicTuple( const Logics::Ptr& tuples );
+        explicit LogicTuple();
+        // TODO: @moosbruggerj FofFormulaTuple uses curly parenthesis
 
         const Token::Ptr& leftBraceToken( void ) const;
         const Logics::Ptr& tuples( void ) const;
@@ -266,6 +286,8 @@ namespace libtptp
             const LogicTuple::Ptr& left,
             const Token::Ptr& connectiveToken,
             const LogicTuple::Ptr& right );
+
+        SequentLogic( const LogicTuple::Ptr& left, const LogicTuple::Ptr& right );
 
         const LogicTuple::Ptr& left( void ) const;
 

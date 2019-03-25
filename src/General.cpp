@@ -89,6 +89,11 @@ GeneralAggregator::GeneralAggregator(
 {
 }
 
+GeneralAggregator::GeneralAggregator( const GeneralData::Ptr& data, const GeneralTerm::Ptr& term )
+: GeneralAggregator( data, TokenBuilder::COLON(), term )
+{
+}
+
 const GeneralData::Ptr& GeneralAggregator::data( void ) const
 {
     return m_data;
@@ -119,6 +124,11 @@ GeneralFunction::GeneralFunction(
 , m_leftParen( leftParen )
 , m_arguments( arguments )
 , m_rightParen( rightParen )
+{
+}
+
+GeneralFunction::GeneralFunction( const Identifier::Ptr& name, const Nodes::Ptr& arguments )
+: GeneralFunction( name, TokenBuilder::LPAREN(), arguments, TokenBuilder::RPAREN() )
 {
 }
 
@@ -159,10 +169,15 @@ Annotation::Annotation(
 
 Annotation::Annotation( const GeneralTerm::Ptr& source )
 : Node( Node::ID::ANNOTATION )
-, m_delimiter()
+, m_delimiter( TokenBuilder::UNRESOLVED() )
 , m_source( source )
 , m_comma( TokenBuilder::UNRESOLVED() )
 , m_usefulInfo()
+{
+}
+
+Annotation::Annotation( const GeneralTerm::Ptr& source, const GeneralList::Ptr& usefulInfo )
+: Annotation( source, TokenBuilder::COMMA(), usefulInfo )
 {
 }
 

@@ -91,6 +91,8 @@ namespace libtptp
             const Type::Ptr& right,
             const Kind kind );
 
+        explicit BinaryType( const Type::Ptr& left, const Type::Ptr& right, const Kind kind );
+
         const Type::Ptr& left( void ) const;
         const Token::Ptr& connectiveToken( void ) const;
         const Type::Ptr& right( void ) const;
@@ -99,6 +101,7 @@ namespace libtptp
         void accept( Visitor& visitor ) override final;
 
       private:
+        const Token::Ptr& connectiveTokenFromKind( Kind kind ) const;
         const Type::Ptr m_left;
         const Token::Ptr m_connectiveToken;
         const Type::Ptr m_right;
@@ -114,6 +117,7 @@ namespace libtptp
 
         explicit TypedAtom(
             const Identifier::Ptr& atom, const Token::Ptr& colon, const Type::Ptr& type );
+        explicit TypedAtom( const Identifier::Ptr& atom, const Type::Ptr& type );
 
         const Type::Ptr& type( void ) const;
         const Token::Ptr& colon( void ) const;
@@ -138,6 +142,8 @@ namespace libtptp
             const Token::Ptr& leftBraceToken,
             const Types::Ptr& tuples,
             const Token::Ptr& rightBraceToken );
+
+        explicit TupleType( const Types::Ptr& tuples );
 
         const Token::Ptr& leftBraceToken( void ) const;
         const Types::Ptr& tuples( void ) const;
@@ -165,6 +171,8 @@ namespace libtptp
             const Token::Ptr& rightParen,
             const Token::Ptr& colon,
             const Type::Ptr& type );
+
+        explicit QuantifiedType( const Nodes::Ptr& variables, const Type::Ptr& type );
 
         const Token::Ptr& quantifierToken( void ) const;
         const Token::Ptr& leftParen( void ) const;
@@ -195,6 +203,8 @@ namespace libtptp
             const Identifier::Ptr& leftAtom,
             const Token::Ptr& subTypeSign,
             const Identifier::Ptr& rightAtom );
+
+        explicit SubType( const Identifier::Ptr& leftAtom, const Identifier::Ptr& rightAtom );
 
         const Identifier::Ptr& leftAtom( void ) const;
         const Token::Ptr& subTypeSign( void ) const;

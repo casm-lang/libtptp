@@ -64,8 +64,7 @@ TEST( libtptp, example )
     auto y = std::make_shared< Identifier >( "y" );
     auto f = std::make_shared< FirstOrderFormula >( v );
 
-    t.add< FormulaDefinition >(
-        uToken, uToken, y, uToken, Role::axiom(), uToken, f, uToken, uToken );
+    t.add< FormulaDefinition >( y, Role::axiom(), f );
 
     t.accept( dbg );
     t.accept( src );

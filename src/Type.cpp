@@ -81,6 +81,11 @@ BinaryType::BinaryType(
 {
 }
 
+BinaryType::BinaryType( const Type::Ptr& left, const Type::Ptr& right, const Kind kind )
+: BinaryType( left, connectiveTokenFromKind( kind ), right, kind )
+{
+}
+
 const Type::Ptr& BinaryType::left( void ) const
 {
     return m_left;
@@ -96,14 +101,33 @@ const Type::Ptr& BinaryType::right( void ) const
     return m_right;
 }
 
+BinaryType::Kind BinaryType::kind( void ) const
+{
+    return m_kind;
+}
+
 void BinaryType::accept( Visitor& visitor )
 {
     visitor.visit( *this );
 }
 
-BinaryType::Kind BinaryType::kind( void ) const
+const Token::Ptr& BinaryType::connectiveTokenFromKind( Kind kind ) const
 {
-    return m_kind;
+    switch( kind )
+    {
+        case Kind::MAPPING:
+        {
+            return TokenBuilder::GREATER();
+        }
+        case Kind::XPROD:
+        {
+            return TokenBuilder::STAR();
+        }
+        case Kind::UNION:
+        {
+            return TokenBuilder::PLUS();
+        }
+    }
 }
 
 //
@@ -115,6 +139,11 @@ TypedAtom::TypedAtom( const Identifier::Ptr& atom, const Token::Ptr& colon, cons
 , m_atom( atom )
 , m_colon( colon )
 , m_type( type )
+{
+}
+
+TypedAtom::TypedAtom( const Identifier::Ptr& atom, const Type::Ptr& type )
+: TypedAtom( atom, TokenBuilder::COLON(), type )
 {
 }
 
@@ -148,6 +177,11 @@ TupleType::TupleType(
 , m_leftBraceToken( leftBraceToken )
 , m_tuples( tuples )
 , m_rightBraceToken( rightBraceToken )
+{
+}
+
+TupleType::TupleType( const Types::Ptr& tuples )
+: TupleType( TokenBuilder::LSQPAREN(), tuples, TokenBuilder::RSQPAREN() )
 {
 }
 
@@ -189,6 +223,17 @@ QuantifiedType::QuantifiedType(
 , m_rightParen( rightParen )
 , m_colon( colon )
 , m_type( type )
+{
+}
+
+QuantifiedType::QuantifiedType( const Nodes::Ptr& variables, const Type::Ptr& type )
+: QuantifiedType(
+      TokenBuilder::EXCLAMATIONGREATER(),
+      TokenBuilder::LSQPAREN(),
+      variables,
+      TokenBuilder::RSQPAREN(),
+      TokenBuilder::COLON(),
+      type )
 {
 }
 
@@ -239,6 +284,11 @@ SubType::SubType(
 , m_leftAtom( leftAtom )
 , m_subTypeSign( subtypesign )
 , m_rightAtom( rightAtom )
+{
+}
+
+SubType::SubType( const Identifier::Ptr& leftAtom, const Identifier::Ptr& rightAtom )
+: SubType( leftAtom, TokenBuilder::SUBTYPESIGN(), rightAtom )
 {
 }
 
