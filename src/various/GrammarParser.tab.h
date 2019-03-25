@@ -651,6 +651,28 @@ namespace libtptp {
       // FormulaSelection
       char dummy28[sizeof (ListLiteral::Ptr)];
 
+      // ThfLetDefnList
+      // ThfFormulaList
+      // ThfArguments
+      // TfxLetDefnList
+      // TffArguments
+      // TffTypeArguments
+      // FofArguments
+      // FofFormulaTupleList
+      char dummy29[sizeof (ListLogicElements::Ptr)];
+
+      // ThfVariableList
+      // TffVariableList
+      // FofVariableList
+      // NameList
+      // GeneralTerms
+      char dummy30[sizeof (ListNodeElements::Ptr)];
+
+      // ThfAtomTypingList
+      // TffAtomTypingList
+      // TffTypeList
+      char dummy31[sizeof (ListTypeElements::Ptr)];
+
       // TpiFormula
       // ThfFormula
       // ThfLogicFormula
@@ -685,65 +707,48 @@ namespace libtptp {
       // CnfFormula
       // Disjunction
       // Literal
-      char dummy29[sizeof (Logic::Ptr)];
+      char dummy32[sizeof (Logic::Ptr)];
 
       // ThfTuple
       // TfxTuple
       // FofFormulaTuple
-      char dummy30[sizeof (LogicTuple::Ptr)];
-
-      // ThfLetDefnList
-      // ThfFormulaList
-      // ThfArguments
-      // TfxLetDefnList
-      // TffArguments
-      // TffTypeArguments
-      // FofArguments
-      // FofFormulaTupleList
-      char dummy31[sizeof (Logics::Ptr)];
-
-      // ThfVariableList
-      // TffVariableList
-      // FofVariableList
-      // NameList
-      // GeneralTerms
-      char dummy32[sizeof (Nodes::Ptr)];
+      char dummy33[sizeof (LogicTuple::Ptr)];
 
       // ThfQuantifiedFormula
       // TffQuantifiedFormula
       // TcfQuantifiedFormula
       // FofQuantifiedFormula
-      char dummy33[sizeof (QuantifiedLogic::Ptr)];
+      char dummy34[sizeof (QuantifiedLogic::Ptr)];
 
       // ThfQuantifier
       // Th1Quantifier
       // Th0Quantifier
       // FofQuantifier
-      char dummy34[sizeof (QuantifiedQuantifier_t)];
+      char dummy35[sizeof (QuantifiedQuantifier_t)];
 
       // Tf1QuantifiedType
-      char dummy35[sizeof (QuantifiedType::Ptr)];
+      char dummy36[sizeof (QuantifiedType::Ptr)];
 
       // RationalLiteral
-      char dummy36[sizeof (RationalLiteral::Ptr)];
+      char dummy37[sizeof (RationalLiteral::Ptr)];
 
       // RealLiteral
-      char dummy37[sizeof (RealLiteral::Ptr)];
+      char dummy38[sizeof (RealLiteral::Ptr)];
 
       // FormulaRole
-      char dummy38[sizeof (Role::Ptr)];
+      char dummy39[sizeof (Role::Ptr)];
 
       // ThfSequent
       // TfxSequent
       // FofSequent
-      char dummy39[sizeof (SequentLogic::Ptr)];
+      char dummy40[sizeof (SequentLogic::Ptr)];
 
       // Specification
-      char dummy40[sizeof (Specification::Ptr)];
+      char dummy41[sizeof (Specification::Ptr)];
 
       // ThfSubtype
       // TffSubtype
-      char dummy41[sizeof (SubType::Ptr)];
+      char dummy42[sizeof (SubType::Ptr)];
 
       // ThfDefinedAtomic
       // TffAtomicFormula
@@ -753,7 +758,7 @@ namespace libtptp {
       // FofDefinedPlainFormula
       // FofSystemAtomicFormula
       // FofTerm
-      char dummy42[sizeof (Term::Ptr)];
+      char dummy43[sizeof (Term::Ptr)];
 
       // "tpi"
       // "thf"
@@ -806,10 +811,10 @@ namespace libtptp {
       // "-->"
       // "<<"
       // "include"
-      char dummy43[sizeof (Token::Ptr)];
+      char dummy44[sizeof (Token::Ptr)];
 
       // TfxTupleType
-      char dummy44[sizeof (TupleType::Ptr)];
+      char dummy45[sizeof (TupleType::Ptr)];
 
       // ThfLetTypes
       // ThfTopLevelType
@@ -817,16 +822,11 @@ namespace libtptp {
       // TffTopLevelType
       // TffMonotype
       // TffUnitaryType
-      char dummy45[sizeof (Type::Ptr)];
+      char dummy46[sizeof (Type::Ptr)];
 
       // ThfAtomTyping
       // TffAtomTyping
-      char dummy46[sizeof (TypedAtom::Ptr)];
-
-      // ThfAtomTypingList
-      // TffAtomTypingList
-      // TffTypeList
-      char dummy47[sizeof (Types::Ptr)];
+      char dummy47[sizeof (TypedAtom::Ptr)];
 
       // ThfUnaryConnective
       // Th1UnaryConnective
@@ -1002,10 +1002,11 @@ namespace libtptp {
       basic_symbol (typename Base::kind_type t, YY_RVREF (InfixLogic::Ptr) v, YY_RVREF (location_type) l);
       basic_symbol (typename Base::kind_type t, YY_RVREF (IntegerLiteral::Ptr) v, YY_RVREF (location_type) l);
       basic_symbol (typename Base::kind_type t, YY_RVREF (ListLiteral::Ptr) v, YY_RVREF (location_type) l);
+      basic_symbol (typename Base::kind_type t, YY_RVREF (ListLogicElements::Ptr) v, YY_RVREF (location_type) l);
+      basic_symbol (typename Base::kind_type t, YY_RVREF (ListNodeElements::Ptr) v, YY_RVREF (location_type) l);
+      basic_symbol (typename Base::kind_type t, YY_RVREF (ListTypeElements::Ptr) v, YY_RVREF (location_type) l);
       basic_symbol (typename Base::kind_type t, YY_RVREF (Logic::Ptr) v, YY_RVREF (location_type) l);
       basic_symbol (typename Base::kind_type t, YY_RVREF (LogicTuple::Ptr) v, YY_RVREF (location_type) l);
-      basic_symbol (typename Base::kind_type t, YY_RVREF (Logics::Ptr) v, YY_RVREF (location_type) l);
-      basic_symbol (typename Base::kind_type t, YY_RVREF (Nodes::Ptr) v, YY_RVREF (location_type) l);
       basic_symbol (typename Base::kind_type t, YY_RVREF (QuantifiedLogic::Ptr) v, YY_RVREF (location_type) l);
       basic_symbol (typename Base::kind_type t, YY_RVREF (QuantifiedQuantifier_t) v, YY_RVREF (location_type) l);
       basic_symbol (typename Base::kind_type t, YY_RVREF (QuantifiedType::Ptr) v, YY_RVREF (location_type) l);
@@ -1020,7 +1021,6 @@ namespace libtptp {
       basic_symbol (typename Base::kind_type t, YY_RVREF (TupleType::Ptr) v, YY_RVREF (location_type) l);
       basic_symbol (typename Base::kind_type t, YY_RVREF (Type::Ptr) v, YY_RVREF (location_type) l);
       basic_symbol (typename Base::kind_type t, YY_RVREF (TypedAtom::Ptr) v, YY_RVREF (location_type) l);
-      basic_symbol (typename Base::kind_type t, YY_RVREF (Types::Ptr) v, YY_RVREF (location_type) l);
       basic_symbol (typename Base::kind_type t, YY_RVREF (UnaryConnective_t) v, YY_RVREF (location_type) l);
       basic_symbol (typename Base::kind_type t, YY_RVREF (UnaryLogic::Ptr) v, YY_RVREF (location_type) l);
       basic_symbol (typename Base::kind_type t, YY_RVREF (ValueLiteral::Ptr) v, YY_RVREF (location_type) l);
@@ -1811,6 +1811,31 @@ namespace libtptp {
         value.YY_MOVE_OR_COPY< ListLiteral::Ptr > (YY_MOVE (other.value));
         break;
 
+      case 104: // ThfLetDefnList
+      case 107: // ThfFormulaList
+      case 109: // ThfArguments
+      case 151: // TfxLetDefnList
+      case 155: // TffArguments
+      case 162: // TffTypeArguments
+      case 196: // FofArguments
+      case 201: // FofFormulaTupleList
+        value.YY_MOVE_OR_COPY< ListLogicElements::Ptr > (YY_MOVE (other.value));
+        break;
+
+      case 87: // ThfVariableList
+      case 132: // TffVariableList
+      case 184: // FofVariableList
+      case 229: // NameList
+      case 235: // GeneralTerms
+        value.YY_MOVE_OR_COPY< ListNodeElements::Ptr > (YY_MOVE (other.value));
+        break;
+
+      case 101: // ThfAtomTypingList
+      case 147: // TffAtomTypingList
+      case 166: // TffTypeList
+        value.YY_MOVE_OR_COPY< ListTypeElements::Ptr > (YY_MOVE (other.value));
+        break;
+
       case 74: // TpiFormula
       case 75: // ThfFormula
       case 76: // ThfLogicFormula
@@ -1852,25 +1877,6 @@ namespace libtptp {
       case 154: // TfxTuple
       case 200: // FofFormulaTuple
         value.YY_MOVE_OR_COPY< LogicTuple::Ptr > (YY_MOVE (other.value));
-        break;
-
-      case 104: // ThfLetDefnList
-      case 107: // ThfFormulaList
-      case 109: // ThfArguments
-      case 151: // TfxLetDefnList
-      case 155: // TffArguments
-      case 162: // TffTypeArguments
-      case 196: // FofArguments
-      case 201: // FofFormulaTupleList
-        value.YY_MOVE_OR_COPY< Logics::Ptr > (YY_MOVE (other.value));
-        break;
-
-      case 87: // ThfVariableList
-      case 132: // TffVariableList
-      case 184: // FofVariableList
-      case 229: // NameList
-      case 235: // GeneralTerms
-        value.YY_MOVE_OR_COPY< Nodes::Ptr > (YY_MOVE (other.value));
         break;
 
       case 86: // ThfQuantifiedFormula
@@ -1999,12 +2005,6 @@ namespace libtptp {
       case 110: // ThfAtomTyping
       case 156: // TffAtomTyping
         value.YY_MOVE_OR_COPY< TypedAtom::Ptr > (YY_MOVE (other.value));
-        break;
-
-      case 101: // ThfAtomTypingList
-      case 147: // TffAtomTypingList
-      case 166: // TffTypeList
-        value.YY_MOVE_OR_COPY< Types::Ptr > (YY_MOVE (other.value));
         break;
 
       case 208: // ThfUnaryConnective
@@ -2252,6 +2252,27 @@ namespace libtptp {
   {}
 
   template <typename Base>
+  Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, YY_RVREF (ListLogicElements::Ptr) v, YY_RVREF (location_type) l)
+    : Base (t)
+    , value (YY_MOVE (v))
+    , location (YY_MOVE (l))
+  {}
+
+  template <typename Base>
+  Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, YY_RVREF (ListNodeElements::Ptr) v, YY_RVREF (location_type) l)
+    : Base (t)
+    , value (YY_MOVE (v))
+    , location (YY_MOVE (l))
+  {}
+
+  template <typename Base>
+  Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, YY_RVREF (ListTypeElements::Ptr) v, YY_RVREF (location_type) l)
+    : Base (t)
+    , value (YY_MOVE (v))
+    , location (YY_MOVE (l))
+  {}
+
+  template <typename Base>
   Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, YY_RVREF (Logic::Ptr) v, YY_RVREF (location_type) l)
     : Base (t)
     , value (YY_MOVE (v))
@@ -2260,20 +2281,6 @@ namespace libtptp {
 
   template <typename Base>
   Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, YY_RVREF (LogicTuple::Ptr) v, YY_RVREF (location_type) l)
-    : Base (t)
-    , value (YY_MOVE (v))
-    , location (YY_MOVE (l))
-  {}
-
-  template <typename Base>
-  Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, YY_RVREF (Logics::Ptr) v, YY_RVREF (location_type) l)
-    : Base (t)
-    , value (YY_MOVE (v))
-    , location (YY_MOVE (l))
-  {}
-
-  template <typename Base>
-  Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, YY_RVREF (Nodes::Ptr) v, YY_RVREF (location_type) l)
     : Base (t)
     , value (YY_MOVE (v))
     , location (YY_MOVE (l))
@@ -2372,13 +2379,6 @@ namespace libtptp {
 
   template <typename Base>
   Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, YY_RVREF (TypedAtom::Ptr) v, YY_RVREF (location_type) l)
-    : Base (t)
-    , value (YY_MOVE (v))
-    , location (YY_MOVE (l))
-  {}
-
-  template <typename Base>
-  Parser::basic_symbol<Base>::basic_symbol (typename Base::kind_type t, YY_RVREF (Types::Ptr) v, YY_RVREF (location_type) l)
     : Base (t)
     , value (YY_MOVE (v))
     , location (YY_MOVE (l))
@@ -2620,6 +2620,31 @@ namespace libtptp {
         value.template destroy< ListLiteral::Ptr > ();
         break;
 
+      case 104: // ThfLetDefnList
+      case 107: // ThfFormulaList
+      case 109: // ThfArguments
+      case 151: // TfxLetDefnList
+      case 155: // TffArguments
+      case 162: // TffTypeArguments
+      case 196: // FofArguments
+      case 201: // FofFormulaTupleList
+        value.template destroy< ListLogicElements::Ptr > ();
+        break;
+
+      case 87: // ThfVariableList
+      case 132: // TffVariableList
+      case 184: // FofVariableList
+      case 229: // NameList
+      case 235: // GeneralTerms
+        value.template destroy< ListNodeElements::Ptr > ();
+        break;
+
+      case 101: // ThfAtomTypingList
+      case 147: // TffAtomTypingList
+      case 166: // TffTypeList
+        value.template destroy< ListTypeElements::Ptr > ();
+        break;
+
       case 74: // TpiFormula
       case 75: // ThfFormula
       case 76: // ThfLogicFormula
@@ -2661,25 +2686,6 @@ namespace libtptp {
       case 154: // TfxTuple
       case 200: // FofFormulaTuple
         value.template destroy< LogicTuple::Ptr > ();
-        break;
-
-      case 104: // ThfLetDefnList
-      case 107: // ThfFormulaList
-      case 109: // ThfArguments
-      case 151: // TfxLetDefnList
-      case 155: // TffArguments
-      case 162: // TffTypeArguments
-      case 196: // FofArguments
-      case 201: // FofFormulaTupleList
-        value.template destroy< Logics::Ptr > ();
-        break;
-
-      case 87: // ThfVariableList
-      case 132: // TffVariableList
-      case 184: // FofVariableList
-      case 229: // NameList
-      case 235: // GeneralTerms
-        value.template destroy< Nodes::Ptr > ();
         break;
 
       case 86: // ThfQuantifiedFormula
@@ -2808,12 +2814,6 @@ namespace libtptp {
       case 110: // ThfAtomTyping
       case 156: // TffAtomTyping
         value.template destroy< TypedAtom::Ptr > ();
-        break;
-
-      case 101: // ThfAtomTypingList
-      case 147: // TffAtomTypingList
-      case 166: // TffTypeList
-        value.template destroy< Types::Ptr > ();
         break;
 
       case 208: // ThfUnaryConnective
@@ -3047,6 +3047,31 @@ namespace libtptp {
         value.move< ListLiteral::Ptr > (YY_MOVE (s.value));
         break;
 
+      case 104: // ThfLetDefnList
+      case 107: // ThfFormulaList
+      case 109: // ThfArguments
+      case 151: // TfxLetDefnList
+      case 155: // TffArguments
+      case 162: // TffTypeArguments
+      case 196: // FofArguments
+      case 201: // FofFormulaTupleList
+        value.move< ListLogicElements::Ptr > (YY_MOVE (s.value));
+        break;
+
+      case 87: // ThfVariableList
+      case 132: // TffVariableList
+      case 184: // FofVariableList
+      case 229: // NameList
+      case 235: // GeneralTerms
+        value.move< ListNodeElements::Ptr > (YY_MOVE (s.value));
+        break;
+
+      case 101: // ThfAtomTypingList
+      case 147: // TffAtomTypingList
+      case 166: // TffTypeList
+        value.move< ListTypeElements::Ptr > (YY_MOVE (s.value));
+        break;
+
       case 74: // TpiFormula
       case 75: // ThfFormula
       case 76: // ThfLogicFormula
@@ -3088,25 +3113,6 @@ namespace libtptp {
       case 154: // TfxTuple
       case 200: // FofFormulaTuple
         value.move< LogicTuple::Ptr > (YY_MOVE (s.value));
-        break;
-
-      case 104: // ThfLetDefnList
-      case 107: // ThfFormulaList
-      case 109: // ThfArguments
-      case 151: // TfxLetDefnList
-      case 155: // TffArguments
-      case 162: // TffTypeArguments
-      case 196: // FofArguments
-      case 201: // FofFormulaTupleList
-        value.move< Logics::Ptr > (YY_MOVE (s.value));
-        break;
-
-      case 87: // ThfVariableList
-      case 132: // TffVariableList
-      case 184: // FofVariableList
-      case 229: // NameList
-      case 235: // GeneralTerms
-        value.move< Nodes::Ptr > (YY_MOVE (s.value));
         break;
 
       case 86: // ThfQuantifiedFormula
@@ -3235,12 +3241,6 @@ namespace libtptp {
       case 110: // ThfAtomTyping
       case 156: // TffAtomTyping
         value.move< TypedAtom::Ptr > (YY_MOVE (s.value));
-        break;
-
-      case 101: // ThfAtomTypingList
-      case 147: // TffAtomTypingList
-      case 166: // TffTypeList
-        value.move< Types::Ptr > (YY_MOVE (s.value));
         break;
 
       case 208: // ThfUnaryConnective
