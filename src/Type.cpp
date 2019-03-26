@@ -68,6 +68,8 @@ void AtomType::accept( Visitor& visitor )
 // Binary Type
 //
 
+const Token::Ptr connectiveTokenFromKind( BinaryType::Kind kind );
+
 BinaryType::BinaryType(
     const Type::Ptr& left,
     const Token::Ptr& connectiveToken,
@@ -111,19 +113,19 @@ void BinaryType::accept( Visitor& visitor )
     visitor.visit( *this );
 }
 
-const Token::Ptr& BinaryType::connectiveTokenFromKind( Kind kind ) const
+const Token::Ptr connectiveTokenFromKind( BinaryType::Kind kind )
 {
     switch( kind )
     {
-        case Kind::MAPPING:
+        case BinaryType::Kind::MAPPING:
         {
             return TokenBuilder::GREATER();
         }
-        case Kind::XPROD:
+        case BinaryType::Kind::XPROD:
         {
             return TokenBuilder::STAR();
         }
-        case Kind::UNION:
+        case BinaryType::Kind::UNION:
         {
             return TokenBuilder::PLUS();
         }

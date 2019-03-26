@@ -44,6 +44,9 @@
 
 using namespace libtptp;
 
+const std::pair< const Token::Ptr, const std::string > modifierTokenFromName(
+    const std::string& name );
+
 Identifier::Identifier( const std::string& name, Kind kind )
 : Identifier( modifierTokenFromName( name ).first, modifierTokenFromName( name ).second, kind )
 {
@@ -77,8 +80,8 @@ void Identifier::accept( Visitor& visitor )
     visitor.visit( *this );
 }
 
-const std::pair< const Token::Ptr, const std::string > Identifier::modifierTokenFromName(
-    const std::string& name ) const
+const std::pair< const Token::Ptr, const std::string > modifierTokenFromName(
+    const std::string& name )
 {
     if( name.size() > 2 && name[ 0 ] == '$' && name[ 1 ] == '$' )
     {

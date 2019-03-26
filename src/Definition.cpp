@@ -124,6 +124,8 @@ void IncludeDefinition::accept( Visitor& visitor )
     visitor.visit( *this );
 }
 
+const Token::Ptr keywordFromFormula( const Formula::Ptr& formula );
+
 FormulaDefinition::FormulaDefinition(
     const Token::Ptr& keyword,
     const Token::Ptr& leftParen,
@@ -212,7 +214,7 @@ void FormulaDefinition::accept( Visitor& visitor )
     visitor.visit( *this );
 }
 
-const Token::Ptr& FormulaDefinition::keywordFromFormula( const Formula::Ptr& formula ) const
+const Token::Ptr keywordFromFormula( const Formula::Ptr& formula )
 {
     switch( formula->id() )
     {

@@ -115,6 +115,7 @@ ListLiteral::ListLiteral(
 , m_rightBraceToken( rightBraceToken )
 {
 }
+
 ListLiteral::ListLiteral( const ListNodeElements::Ptr& elements )
 : ListLiteral( TokenBuilder::LSQPAREN(), elements, TokenBuilder::RSQPAREN() )
 {

@@ -74,8 +74,6 @@ namespace libtptp
         void accept( Visitor& visitor ) override final;
 
       private:
-        const std::pair< const Token::Ptr, const std::string > modifierTokenFromName(
-            const std::string& name ) const;
         const Token::Ptr m_modifier;
         const std::string m_name;
         Kind m_kind;

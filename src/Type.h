@@ -102,7 +102,6 @@ namespace libtptp
         void accept( Visitor& visitor ) override final;
 
       private:
-        const Token::Ptr& connectiveTokenFromKind( Kind kind ) const;
         const Type::Ptr m_left;
         const Token::Ptr m_connectiveToken;
         const Type::Ptr m_right;

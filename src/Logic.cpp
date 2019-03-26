@@ -77,6 +77,8 @@ void Logic::setRightDelimiter( const Token::Ptr& rightDelimiter )
 // UnaryLogic
 //
 
+const Token::Ptr connectiveTokenFromConnective( UnaryLogic::Connective connective );
+
 UnaryLogic::UnaryLogic(
     const std::pair< const Token::Ptr&, const Connective > connective, const Logic::Ptr& logic )
 : Logic( Node::ID::UNARY_LOGIC )
@@ -142,31 +144,31 @@ void UnaryLogic::accept( Visitor& visitor )
     visitor.visit( *this );
 }
 
-const Token::Ptr& UnaryLogic::connectiveTokenFromConnective( Connective connective ) const
+const Token::Ptr connectiveTokenFromConnective( UnaryLogic::Connective connective )
 {
     switch( connective )
     {
-        case Connective::NEGATION:
+        case UnaryLogic::Connective::NEGATION:
         {
             return TokenBuilder::TILDE();
         }
-        case Connective::UNIVERSAL_QUANTIFICATION:
+        case UnaryLogic::Connective::UNIVERSAL_QUANTIFICATION:
         {
             return TokenBuilder::DOUBLEEXCLAMATION();
         }
-        case Connective::EXISTENTIAL_QUANTIFICATION:
+        case UnaryLogic::Connective::EXISTENTIAL_QUANTIFICATION:
         {
             return TokenBuilder::DOUBLEQUESTIONMARK();
         }
-        case Connective::INDEFINITE_DESCRIPTION:
+        case UnaryLogic::Connective::INDEFINITE_DESCRIPTION:
         {
             return TokenBuilder::DOUBLEATPLUS();
         }
-        case Connective::DEFINITE_DESCRIPTION:
+        case UnaryLogic::Connective::DEFINITE_DESCRIPTION:
         {
             return TokenBuilder::DOUBLEATMINUS();
         }
-        case Connective::EQUALITY:
+        case UnaryLogic::Connective::EQUALITY:
         {
             return TokenBuilder::ATEQUAL();
         }
@@ -176,6 +178,8 @@ const Token::Ptr& UnaryLogic::connectiveTokenFromConnective( Connective connecti
 //
 // BinaryLogic
 //
+
+const Token::Ptr connectiveTokenFromConnective( BinaryLogic::Connective connective );
 
 BinaryLogic::BinaryLogic(
     const Logic::Ptr& left,
@@ -272,43 +276,43 @@ void BinaryLogic::accept( Visitor& visitor )
     visitor.visit( *this );
 }
 
-const Token::Ptr& BinaryLogic::connectiveTokenFromConnective( Connective connective ) const
+const Token::Ptr connectiveTokenFromConnective( BinaryLogic::Connective connective )
 {
     switch( connective )
     {
-        case Connective::DISJUNCTION:
+        case BinaryLogic::Connective::DISJUNCTION:
         {
             return TokenBuilder::VLINE();
         }
-        case Connective::CONJUNCTION:
+        case BinaryLogic::Connective::CONJUNCTION:
         {
             return TokenBuilder::AND();
         }
-        case Connective::EQUIVALENCE:
+        case BinaryLogic::Connective::EQUIVALENCE:
         {
             return TokenBuilder::EQUALITY();
         }
-        case Connective::NON_EQUIVALENCE:
+        case BinaryLogic::Connective::NON_EQUIVALENCE:
         {
             return TokenBuilder::INEQUALITY();
         }
-        case Connective::IMPLICATION:
+        case BinaryLogic::Connective::IMPLICATION:
         {
             return TokenBuilder::IMPLICATION();
         }
-        case Connective::REVERSE_IMPLICATION:
+        case BinaryLogic::Connective::REVERSE_IMPLICATION:
         {
             return TokenBuilder::RIMPLICATION();
         }
-        case Connective::NEGATED_DISJUNCTION:
+        case BinaryLogic::Connective::NEGATED_DISJUNCTION:
         {
             return TokenBuilder::NOR();
         }
-        case Connective::NEGATED_CONJUNCTION:
+        case BinaryLogic::Connective::NEGATED_CONJUNCTION:
         {
             return TokenBuilder::NAND();
         }
-        case Connective::APPLY:
+        case BinaryLogic::Connective::APPLY:
         {
             return TokenBuilder::AT();
         }
@@ -318,6 +322,8 @@ const Token::Ptr& BinaryLogic::connectiveTokenFromConnective( Connective connect
 //
 // QuantifiedLogic
 //
+
+const Token::Ptr quantifierTokenFromQuantifier( QuantifiedLogic::Quantifier quantifier );
 
 QuantifiedLogic::QuantifiedLogic(
     const std::pair< const Token::Ptr&, const Quantifier > quantifier,
@@ -408,40 +414,42 @@ void QuantifiedLogic::accept( Visitor& visitor )
     visitor.visit( *this );
 }
 
-const Token::Ptr& QuantifiedLogic::quantifierTokenFromQuantifier( Quantifier quantifier ) const
+const Token::Ptr quantifierTokenFromQuantifier( QuantifiedLogic::Quantifier quantifier )
 {
     switch( quantifier )
     {
-        case Quantifier::UNIVERSAL:
+        case QuantifiedLogic::Quantifier::UNIVERSAL:
         {
             return TokenBuilder::EXCLAMATION();
         }
-        case Quantifier::EXISTENTIAL:
+        case QuantifiedLogic::Quantifier::EXISTENTIAL:
         {
             return TokenBuilder::QUESTIONMARK();
         }
-        case Quantifier::EXCLAMATIONGREATER:
+        case QuantifiedLogic::Quantifier::EXCLAMATIONGREATER:
         {
             return TokenBuilder::EXCLAMATIONGREATER();
         }
-        case Quantifier::QUESTIONMARKSTAR:
+        case QuantifiedLogic::Quantifier::QUESTIONMARKSTAR:
         {
             return TokenBuilder::QUESTIONMARKSTAR();
         }
-        case Quantifier::CARET:
+        case QuantifiedLogic::Quantifier::CARET:
         {
             return TokenBuilder::CARET();
         }
-        case Quantifier::ATPLUS:
+        case QuantifiedLogic::Quantifier::ATPLUS:
         {
             return TokenBuilder::ATPLUS();
         }
-        case Quantifier::ATMINUS:
+        case QuantifiedLogic::Quantifier::ATMINUS:
         {
             return TokenBuilder::ATMINUS();
         }
     }
 }
+
+const Token::Ptr connectiveTokenFromConnective( InfixLogic::Connective connective );
 
 InfixLogic::InfixLogic(
     const Logic::Ptr& lhs,
@@ -478,20 +486,22 @@ void InfixLogic::accept( Visitor& visitor )
     visitor.visit( *this );
 }
 
-const Token::Ptr& InfixLogic::connectiveTokenFromConnective( Connective connective ) const
+const Token::Ptr connectiveTokenFromConnective( InfixLogic::Connective connective )
 {
     switch( connective )
     {
-        case Connective::INEQUALITY:
+        case InfixLogic::Connective::INEQUALITY:
         {
             return TokenBuilder::INFIXINEQUALITY();
         }
-        case Connective::EQUALITY:
+        case InfixLogic::Connective::EQUALITY:
         {
             return TokenBuilder::EQUAL();
         }
     }
 }
+
+const std::pair< Token::Ptr, Token::Ptr > bracesFromContext( const Context& context );
 
 LogicTuple::LogicTuple(
     const Token::Ptr& leftBraceToken,
@@ -536,8 +546,7 @@ void LogicTuple::accept( Visitor& visitor )
     visitor.visit( *this );
 }
 
-const std::pair< Token::Ptr, Token::Ptr > LogicTuple::bracesFromContext(
-    const Context& context ) const
+const std::pair< Token::Ptr, Token::Ptr > bracesFromContext( const Context& context )
 {
     if( context.flags().isSet( Context::FormulaFlag::FOF ) )
     {

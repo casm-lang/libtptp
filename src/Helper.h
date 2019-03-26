@@ -116,7 +116,7 @@ namespace libtptp
     using ListNodeElements = ListElements< Node >;
 
 }
-#endif /* _LIBTPTP_HELPER_H_ */
+#endif  // _LIBTPTP_HELPER_H_
 //
 //  Local variables:
 //  mode: c++

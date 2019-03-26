@@ -53,7 +53,6 @@ add_library( ${PROJECT}-cpp OBJECT
   Definition.cpp
   Formula.cpp
   General.cpp
-  Helper.cpp
   Identifier.cpp
   Literal.cpp
   Logic.cpp

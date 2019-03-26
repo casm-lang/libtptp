@@ -140,7 +140,6 @@ namespace libtptp
         void accept( Visitor& visitor ) override final;
 
       private:
-        const Token::Ptr& keywordFromFormula( const Formula::Ptr& formula ) const;
         const Token::Ptr m_keyword;
         const Token::Ptr m_leftParen;
         const Identifier::Ptr m_name;

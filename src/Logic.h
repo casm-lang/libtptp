@@ -111,7 +111,6 @@ namespace libtptp
         std::string connectiveDescription( void ) const;
 
       private:
-        const Token::Ptr& connectiveTokenFromConnective( Connective connective ) const;
         const Token::Ptr m_connectiveToken;
         const Logic::Ptr m_logic;
         const Connective m_connective;
@@ -160,7 +159,6 @@ namespace libtptp
         void accept( Visitor& visitor ) override;
 
       private:
-        const Token::Ptr& connectiveTokenFromConnective( Connective connective ) const;
         const Logic::Ptr m_left;
         const Logic::Ptr m_right;
         const Token::Ptr m_connectiveToken;
@@ -208,8 +206,6 @@ namespace libtptp
         void accept( Visitor& visitor ) override;
 
       private:
-        const Token::Ptr& quantifierTokenFromQuantifier( Quantifier quantifier ) const;
-
         const Token::Ptr m_quantifierToken;
         const ListLiteral::Ptr m_variables;
         const Token::Ptr m_colon;
@@ -242,7 +238,6 @@ namespace libtptp
         void accept( Visitor& visitor ) override final;
 
       private:
-        const Token::Ptr& connectiveTokenFromConnective( Connective connective ) const;
         const Logic::Ptr m_lhs;
         const Token::Ptr m_connectiveToken;
         const Logic::Ptr m_rhs;
@@ -271,7 +266,6 @@ namespace libtptp
         void accept( Visitor& visitor ) override final;
 
       private:
-        const std::pair< Token::Ptr, Token::Ptr > bracesFromContext( const Context& context ) const;
         const Token::Ptr m_leftBraceToken;
         const ListLogicElements::Ptr m_tuples;
         const Token::Ptr m_rightBraceToken;
