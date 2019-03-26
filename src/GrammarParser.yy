@@ -98,14 +98,13 @@
 
     //#include "../../src/SourceLocation.h"
     #include "../../src/Lexer.h"
-    #include "../../src/various/GrammarToken.h"
 
     #include <libstdhl/Type>
 
     #undef yylex
     #define yylex m_lexer.nextToken
 
-	static const auto uToken = std::make_shared<Token>(Grammar::Token::UNRESOLVED );
+	static const auto uToken = TokenBuilder::UNRESOLVED();
     // static Lexer helper functions shall be located here 
 }
 
@@ -128,7 +127,7 @@ END       0 "end of file"
 %type <FormulaDefinition::Ptr> AnnotatedFormula ThfAnnotated TffAnnotated TcfAnnotated FofAnnotated CnfAnnotated TpiAnnotated
 
 %type <Identifier::Ptr> FileName Name Functor Constant DefinedFunctor DefinedConstant SystemFunctor SystemConstant TypeConstant TypeFunctor DefinedType Atom UntypedAtom
-%type <Nodes::Ptr> NameList
+%type <ListNodeElements::Ptr> NameList
 %type <ListLiteral::Ptr> FormulaSelection
 
 // definitions
@@ -146,7 +145,7 @@ END       0 "end of file"
 %type <InfixLogic::Ptr> FofInfixUnary FofDefinedInfixFormula
 %type <SequentLogic::Ptr> FofSequent
 %type <Logic::Ptr> FofLogicFormula FofUnitFormula FofUnitaryFormula FofAtomicFormula FofDefinedAtomicFormula CnfFormula Literal Disjunction
-%type <Logics::Ptr> FofFormulaTupleList FofArguments
+%type <ListLogicElements::Ptr> FofFormulaTupleList FofArguments
 %type <LogicTuple::Ptr> FofFormulaTuple
 
 %type <Term::Ptr> FofTerm FofPlainAtomicFormula FofDefinedPlainFormula FofSystemAtomicFormula
@@ -169,7 +168,7 @@ END       0 "end of file"
 %type <GeneralData::Ptr> GeneralData
 %type <GeneralList::Ptr> GeneralList
 %type <GeneralFunction::Ptr> GeneralFunction
-%type <Nodes::Ptr> GeneralTerms FofVariableList
+%type <ListNodeElements::Ptr> GeneralTerms FofVariableList
 
 %type <UnaryConnective_t> UnaryConnective
 %type <BinaryConnective_t> AssocConnective NonassocConnective
@@ -185,7 +184,7 @@ END       0 "end of file"
 %type <InfixLogic::Ptr> TffInfixUnary TffDefinedInfix
 %type <LogicTuple::Ptr> TfxTuple
 %type <SequentLogic::Ptr> TfxSequent
-%type <Logics::Ptr> TfxLetDefnList TffArguments TffTypeArguments
+%type <ListLogicElements::Ptr> TfxLetDefnList TffArguments TffTypeArguments
 
 %type <Term::Ptr> TffAtomicFormula TffDefinedAtomic TffDefinedPlain
 %type <ConditionalTerm::Ptr> TfxConditional
@@ -201,9 +200,9 @@ END       0 "end of file"
 %type <BinaryType::Ptr> TffMappingType TffXprodType
 %type <TupleType::Ptr> TfxTupleType
 %type <SubType::Ptr> TffSubtype
-%type <Types::Ptr> TffAtomTypingList TffTypeList
+%type <ListTypeElements::Ptr> TffAtomTypingList TffTypeList
 
-%type <Nodes::Ptr> TffVariableList
+%type <ListNodeElements::Ptr> TffVariableList
 
 //THF
 %type <Logic::Ptr> ThfFormula ThfLogicFormula  ThfBinaryFormula ThfUnitFormula ThfPreunitFormula ThfUnitaryFormula ThfUnaryFormula ThfAtomicFormula ThfPlainAtomic ThfLetDefns ThfUnitaryTerm
@@ -213,7 +212,7 @@ END       0 "end of file"
 %type <InfixLogic::Ptr> ThfInfixUnary ThfDefinedInfix
 %type <LogicTuple::Ptr> ThfTuple
 %type <SequentLogic::Ptr> ThfSequent
-%type <Logics::Ptr> ThfLetDefnList ThfFormulaList ThfArguments
+%type <ListLogicElements::Ptr> ThfLetDefnList ThfFormulaList ThfArguments
 
 %type <Term::Ptr> ThfDefinedAtomic
 %type <VariableTerm::Ptr> ThfTypedVariable
@@ -230,9 +229,9 @@ END       0 "end of file"
 %type <AtomType::Ptr> ThfUnitaryType ThfApplyType
 %type <BinaryType::Ptr> ThfBinaryType ThfMappingType ThfXprodType ThfUnionType
 %type <SubType::Ptr> ThfSubtype
-%type <Types::Ptr> ThfAtomTypingList
+%type <ListTypeElements::Ptr> ThfAtomTypingList
 
-%type <Nodes::Ptr> ThfVariableList
+%type <ListNodeElements::Ptr> ThfVariableList
 
 %type <UnaryConnective_t> ThfUnaryConnective Th1UnaryConnective
 %type <QuantifiedQuantifier_t> Th0Quantifier Th1Quantifier ThfQuantifier
@@ -599,15 +598,14 @@ ThfQuantifiedFormula
 ThfVariableList
 : ThfTypedVariable
   {
-	auto list = libtptp::make< Nodes >(@$);
+	auto list = libtptp::make< ListNodeElements >(@$);
 	list->add($1);
 	$$ = list;
   }
 | ThfVariableList COMMA ThfTypedVariable
   {
-	//TODO: @moosbruggerj use comma token
 	auto list = $1;
-	list->add($3);
+	list->add($2, $3);
 	$$ = list;
   }
 ;
@@ -760,15 +758,14 @@ ThfLetTypes
 ThfAtomTypingList
 : ThfAtomTyping
   {
-	auto list = libtptp::make< Types >(@$);
+	auto list = libtptp::make< ListTypeElements >(@$);
 	list->add($1);
 	$$ = list;
   }
 | ThfAtomTypingList COMMA ThfAtomTyping
   {
-	//TODO: @moosbruggerj use comma token
 	auto list = $1;
-	list->add($3);
+	list->add($2, $3);
 	$$ = list;
   }
 ;
@@ -795,15 +792,14 @@ ThfLetDefnList
 : ThfLetDefn
   {
 	//could be of type DefinitionAtoms, but Logics is expected
-	auto list = libtptp::make< Logics >(@$);
+	auto list = libtptp::make< ListLogicElements >(@$);
 	list->add($1);
 	$$ = list;
   }
 | ThfLetDefnList COMMA ThfLetDefn
   {
-	//TODO: @moosbruggerj use comma token
 	auto list = $1;
-	list->add($3);
+	list->add($2, $3);
 	$$ = list;
   }
 ;
@@ -840,15 +836,14 @@ ThfTuple
 ThfFormulaList
 : ThfLogicFormula
   {
-	auto list = libtptp::make< Logics >(@$);
+	auto list = libtptp::make< ListLogicElements >(@$);
 	list->add($1);
 	$$ = list;
   }
 | ThfFormulaList COMMA ThfLogicFormula 
   {
-	//TODO: @moosbruggerj use comma token
 	auto list = $1;
-	list->add($3);
+	list->add($2, $3);
 	$$ = list;
   }
 ;
@@ -1159,15 +1154,14 @@ TffVariableList
 : TffVariable
   {
 	//TODO: @moosbruggerj use correct type
-	auto list = libtptp::make< Nodes >(@$);
+	auto list = libtptp::make< ListNodeElements >(@$);
 	list->add($1);
 	$$ = list;
   }
 | TffVariableList COMMA TffVariable
   {
-	//TODO: @moosbruggerj use comma token
 	auto list = $1;
-	list->add($3);
+	list->add($2, $3);
 	$$ = list;
   }
 ;
@@ -1317,15 +1311,14 @@ TfxLetTypes
 TffAtomTypingList
 : TffAtomTyping
   {
-	auto list = libtptp::make< Types >(@$);
+	auto list = libtptp::make< ListTypeElements >(@$);
 	list->add($1);
 	$$ = list;
   }
 | TffAtomTypingList COMMA TffAtomTyping
   {
-	//TODO: @moosbruggerj use comma token
 	auto list = $1;
-	list->add($3);
+	list->add($2, $3);
 	$$ = list;
   }
 ;
@@ -1362,15 +1355,14 @@ TfxLetLhs
 TfxLetDefnList
 : TfxLetDefn
   {
-	auto list = libtptp::make< Logics >(@$);
+	auto list = libtptp::make< ListLogicElements >(@$);
 	list->add($1);
 	$$ = list;
   }
 | TfxLetDefnList COMMA TfxLetDefn
   {
-	//TODO: @moosbruggerj use comma token
 	auto list = $1;
-	list->add($3);
+	list->add($2, $3);
 	$$ = list;
   }
 ;
@@ -1430,15 +1422,14 @@ TfxTuple
 TffArguments
 : TffTerm
   {
-	auto list = libtptp::make< Logics >(@$);
+	auto list = libtptp::make< ListLogicElements >(@$);
 	list->add($1);
 	$$ = list;
   }
 | TffArguments COMMA TffTerm 
   {
-	//TODO: @moosbruggerj use comma token
 	auto list = $1;
-	list->add($3);
+	list->add($2, $3);
 	$$ = list;
   }
 ;
@@ -1541,15 +1532,14 @@ TffAtomicType
 TffTypeArguments
 : TffAtomicType
   {
-	auto list = libtptp::make< Logics >(@$);
+	auto list = libtptp::make< ListLogicElements >(@$);
 	list->add($1);
 	$$ = list;
   }
 | TffTypeArguments COMMA TffAtomicType
   {
-	//TODO: @moosbruggerj use comma token
 	auto list = $1;
-	list->add($3);
+	list->add($2, $3);
 	$$ = list;
   }
 ;
@@ -1582,15 +1572,14 @@ TfxTupleType
 TffTypeList
 : TffTopLevelType
   {
-	auto list = libtptp::make< Types >(@$);
+	auto list = libtptp::make< ListTypeElements >(@$);
 	list->add($1);
 	$$ = list;
   }
 | TffTypeList COMMA TffTopLevelType
   {
-	//TODO: @moosbruggerj use comma token
 	auto list = $1;
-	list->add($3);
+	list->add($2, $3);
 	$$ = list;
   }
 ;
@@ -1790,15 +1779,14 @@ FofVariableList
 : Variable
   {
 	//TODO: @moosbruggerj make variableTerms list
-	auto variables = libtptp::make< Nodes >(@$);
+	auto variables = libtptp::make< ListNodeElements >(@$);
 	variables->add($1);
 	$$ = variables;
   }
 | FofVariableList COMMA Variable
   {
-	//TODO: @moosbruggerj use comma token
 	auto variables = $1;
-	variables->add($3);
+	variables->add($2, $3);
 	$$ = variables;
   }
 ;
@@ -1911,15 +1899,14 @@ FofSystemTerm
 FofArguments
 : FofTerm
   {
-	auto terms = libtptp::make< Logics >(@$);
+	auto terms = libtptp::make< ListLogicElements >(@$);
 	terms->add($1);
 	$$ = terms;
   }
 | FofArguments COMMA FofTerm
   {
-	//TODO: @moosbruggerj use comma token
 	auto terms = $1;
-	terms->add($3);
+	terms->add($2, $3);
 	$$ = terms;
   }
 ;
@@ -1977,15 +1964,14 @@ FofFormulaTuple
 FofFormulaTupleList
 : FofLogicFormula
   {
-	auto list = libtptp::make< Logics >(@$);
+	auto list = libtptp::make< ListLogicElements >(@$);
 	list->add($1);
 	$$ = list;
   }
 | FofFormulaTupleList COMMA FofLogicFormula
   {
-	//TODO: @moosbruggerj use comma token
 	auto list = $1;
-	list->add($3);
+	list->add($2, $3);
 	$$ = list;
   }
 ;
@@ -2287,15 +2273,14 @@ NameList
   {
 	//TODO: @moosbruggerj change to identifiers list
 	//const auto list = libtptp::make< Identifiers >(@$);
-	const auto list = libtptp::make< Nodes >(@$);
+	const auto list = libtptp::make< ListNodeElements >(@$);
 	list->add($1);
 	$$ = list;
   }
 | NameList COMMA Name
   {
-	//TODO: @moosbruggerj use comma token
 	const auto list = $1;
-	list->add($3);
+	list->add($2, $3);
 	$$ = list;
   }
 ;
@@ -2336,7 +2321,6 @@ GeneralTerm
 GeneralData
 : AtomicWord
   {
-	//identifier
 	$$ = libtptp::make< GeneralData >(@$, $1);
   }
 | GeneralFunction
@@ -2371,16 +2355,14 @@ GeneralFunction
 GeneralTerms
 : GeneralTerm 
   {
-	auto list = libtptp::make< Nodes >(@$);
+	auto list = libtptp::make< ListNodeElements >(@$);
 	list->add($1);
 	$$ = list;
   }
 | GeneralTerms COMMA GeneralTerm
   {
-	//TODO: @moosbruggerj use comma token
-	
     auto terms = $1;
-    terms->add($3);
+    terms->add($2, $3);
     $$ = terms;
   }
 ;
@@ -2546,9 +2528,9 @@ DollarWordLiteral
 ;
 
 DollarDollarWordLiteral
-: DOLLAR DOLLAR LOWER_WORD
+: DOLLARDOLLAR LOWER_WORD
   {
-	$$ = libtptp::make< Identifier >(@$, $1, $2, $3);
+	$$ = libtptp::make< Identifier >(@$, $1, $2);
   }
 ;
 

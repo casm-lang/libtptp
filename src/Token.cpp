@@ -41,10 +41,25 @@
 //
 
 #include "Token.h"
-
-#include "various/GrammarToken.h"
+#include <cassert>
 
 using namespace libtptp;
+
+namespace libtptp
+{
+    namespace Grammar
+    {
+        static std::string tokenAsString( const Token token )
+        {
+            switch( token )
+            {
+                /*<<token_as_string>>*/
+            }
+            assert( !"internal error" );
+            return std::string();
+        }
+    }
+}
 
 //
 //
@@ -71,6 +86,8 @@ void Token::accept( Visitor& visitor )
 {
     visitor.visit( *this );
 }
+
+/*<<builder_implementation>>*/
 
 //
 //  Local variables:

@@ -44,8 +44,6 @@
 
 using namespace libtptp;
 
-static const auto uToken = std::make_shared< Token >( Grammar::Token::UNRESOLVED );
-
 Literal::Literal( const Node::ID id )
 : Node( id )
 {
@@ -103,13 +101,13 @@ void DistinctObjectLiteral::accept( Visitor& visitor )
 }
 
 ListLiteral::ListLiteral( const Token::Ptr& leftBraceToken, const Token::Ptr& rightBraceToken )
-: ListLiteral( leftBraceToken, std::make_shared< Nodes >(), rightBraceToken )
+: ListLiteral( leftBraceToken, std::make_shared< ListNodeElements >(), rightBraceToken )
 {
 }
 
 ListLiteral::ListLiteral(
     const Token::Ptr& leftBraceToken,
-    const Nodes::Ptr& elements,
+    const ListNodeElements::Ptr& elements,
     const Token::Ptr& rightBraceToken )
 : Literal( Node::ID::LIST_LITERAL )
 , m_leftBraceToken( leftBraceToken )
@@ -118,12 +116,22 @@ ListLiteral::ListLiteral(
 {
 }
 
+ListLiteral::ListLiteral( const ListNodeElements::Ptr& elements )
+: ListLiteral( TokenBuilder::LSQPAREN(), elements, TokenBuilder::RSQPAREN() )
+{
+}
+
+ListLiteral::ListLiteral()
+: ListLiteral( TokenBuilder::LSQPAREN(), TokenBuilder::RSQPAREN() )
+{
+}
+
 const Token::Ptr& ListLiteral::leftBraceToken() const
 {
     return m_leftBraceToken;
 }
 
-const Nodes::Ptr& ListLiteral::elements( void ) const
+const ListNodeElements::Ptr& ListLiteral::elements( void ) const
 {
     return m_elements;
 }

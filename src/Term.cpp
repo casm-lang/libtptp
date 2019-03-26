@@ -145,6 +145,21 @@ ConditionalTerm::ConditionalTerm(
 {
 }
 
+ConditionalTerm::ConditionalTerm(
+    const Logic::Ptr& condition, const Logic::Ptr& leftTerm, const Logic::Ptr& rightTerm )
+: ConditionalTerm(
+      TokenBuilder::DOLLAR(),
+      TokenBuilder::ITE(),
+      TokenBuilder::LPAREN(),
+      condition,
+      TokenBuilder::COMMA(),
+      leftTerm,
+      TokenBuilder::COMMA(),
+      rightTerm,
+      TokenBuilder::RPAREN() )
+{
+}
+
 const Token::Ptr& ConditionalTerm::dollar( void ) const
 {
     return m_dollar;
@@ -215,6 +230,21 @@ DefinitionTerm::DefinitionTerm(
 , m_commaRight( commaRight )
 , m_term( term )
 , m_rightParen( rightParen )
+{
+}
+
+DefinitionTerm::DefinitionTerm(
+    const Type::Ptr& types, const Logic::Ptr& definitions, const Logic::Ptr& term )
+: DefinitionTerm(
+      TokenBuilder::DOLLAR(),
+      TokenBuilder::LET(),
+      TokenBuilder::LPAREN(),
+      types,
+      TokenBuilder::COMMA(),
+      definitions,
+      TokenBuilder::COMMA(),
+      term,
+      TokenBuilder::RPAREN() )
 {
 }
 

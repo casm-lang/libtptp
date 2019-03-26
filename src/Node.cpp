@@ -194,6 +194,10 @@ std::string Node::description( void ) const
         {
             return "token";
         }
+        case ID::LIST_ELEMENT:
+        {
+            return "list element";
+        }
 
         // literals
         case ID::INTEGER_LITERAL:

@@ -43,6 +43,7 @@
 #ifndef _LIBTPTP_LOGIC_H_
 #define _LIBTPTP_LOGIC_H_
 
+#include <libtptp/Context>
 #include <libtptp/Identifier>
 #include <libtptp/Node>
 
@@ -76,6 +77,7 @@ namespace libtptp
     };
 
     using Logics = NodeList< Logic >;
+    using ListLogicElements = ListElements< Logic >;
 
     class UnaryLogic final : public Logic
     {
@@ -94,9 +96,11 @@ namespace libtptp
 
         using Ptr = std::shared_ptr< UnaryLogic >;
 
-        UnaryLogic(
+        explicit UnaryLogic(
             const std::pair< const Token::Ptr&, const Connective > connective,
             const Logic::Ptr& logic );
+
+        explicit UnaryLogic( const Connective connective, const Logic::Ptr& logic );
 
         const Logic::Ptr& logic( void ) const;
 
@@ -137,6 +141,8 @@ namespace libtptp
             const Logic::Ptr& left,
             const std::pair< const Token::Ptr&, Connective > connective,
             const Logic::Ptr& right );
+
+        BinaryLogic( const Logic::Ptr& left, const Connective connective, const Logic::Ptr& right );
 
         const Logic::Ptr& left( void ) const;
 
@@ -184,6 +190,11 @@ namespace libtptp
             const Token::Ptr& colon,
             const Logic::Ptr& logic );
 
+        QuantifiedLogic(
+            const Quantifier quantifier,
+            const ListLiteral::Ptr& variables,
+            const Logic::Ptr& logic );
+
         const Token::Ptr& quantifierToken( void ) const;
         const ListLiteral::Ptr& variables( void ) const;
         const Token::Ptr& colon( void ) const;
@@ -217,6 +228,9 @@ namespace libtptp
             const std::pair< const Token::Ptr&, const Connective > connective,
             const Logic::Ptr& rhs );
 
+        explicit InfixLogic(
+            const Logic::Ptr& lhs, const Connective connective, const Logic::Ptr& rhs );
+
         const Logic::Ptr& lhs( void ) const;
         const Token::Ptr& connectiveToken( void ) const;
         const Logic::Ptr& rhs( void ) const;
@@ -239,19 +253,21 @@ namespace libtptp
 
         explicit LogicTuple(
             const Token::Ptr& leftBraceToken,
-            const Logics::Ptr& tuples,
+            const ListLogicElements::Ptr& tuples,
             const Token::Ptr& rightBraceToken );
         explicit LogicTuple( const Token::Ptr& leftBraceToken, const Token::Ptr& rightBraceToken );
+        explicit LogicTuple( const Context& context, const ListLogicElements::Ptr& tuples );
+        explicit LogicTuple( const Context& context );
 
         const Token::Ptr& leftBraceToken( void ) const;
-        const Logics::Ptr& tuples( void ) const;
+        const ListLogicElements::Ptr& tuples( void ) const;
         const Token::Ptr& rightBraceToken( void ) const;
 
         void accept( Visitor& visitor ) override final;
 
       private:
         const Token::Ptr m_leftBraceToken;
-        const Logics::Ptr m_tuples;
+        const ListLogicElements::Ptr m_tuples;
         const Token::Ptr m_rightBraceToken;
     };
 
@@ -266,6 +282,8 @@ namespace libtptp
             const LogicTuple::Ptr& left,
             const Token::Ptr& connectiveToken,
             const LogicTuple::Ptr& right );
+
+        SequentLogic( const LogicTuple::Ptr& left, const LogicTuple::Ptr& right );
 
         const LogicTuple::Ptr& left( void ) const;
 

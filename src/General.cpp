@@ -41,10 +41,7 @@
 //
 
 #include "General.h"
-#include "various/GrammarToken.h"
 using namespace libtptp;
-
-static const auto uToken = std::make_shared< Token >( Grammar::Token::UNRESOLVED );
 
 GeneralTerm::GeneralTerm( const Node::ID id )
 : Node( id )
@@ -92,6 +89,11 @@ GeneralAggregator::GeneralAggregator(
 {
 }
 
+GeneralAggregator::GeneralAggregator( const GeneralData::Ptr& data, const GeneralTerm::Ptr& term )
+: GeneralAggregator( data, TokenBuilder::COLON(), term )
+{
+}
+
 const GeneralData::Ptr& GeneralAggregator::data( void ) const
 {
     return m_data;
@@ -115,13 +117,19 @@ void GeneralAggregator::accept( Visitor& visitor )
 GeneralFunction::GeneralFunction(
     const Identifier::Ptr& name,
     const Token::Ptr& leftParen,
-    const Nodes::Ptr& arguments,
+    const ListNodeElements::Ptr& arguments,
     const Token::Ptr& rightParen )
 : GeneralTerm( Node::ID::GENERAL_FUNCTION )
 , m_name( name )
 , m_leftParen( leftParen )
 , m_arguments( arguments )
 , m_rightParen( rightParen )
+{
+}
+
+GeneralFunction::GeneralFunction(
+    const Identifier::Ptr& name, const ListNodeElements::Ptr& arguments )
+: GeneralFunction( name, TokenBuilder::LPAREN(), arguments, TokenBuilder::RPAREN() )
 {
 }
 
@@ -135,7 +143,7 @@ const Token::Ptr& GeneralFunction::leftParen( void ) const
     return m_leftParen;
 }
 
-const Nodes::Ptr& GeneralFunction::arguments( void ) const
+const ListNodeElements::Ptr& GeneralFunction::arguments( void ) const
 {
     return m_arguments;
 }
@@ -153,7 +161,7 @@ void GeneralFunction::accept( Visitor& visitor )
 Annotation::Annotation(
     const GeneralTerm::Ptr& source, const Token::Ptr& comma, const GeneralList::Ptr& usefulInfo )
 : Node( Node::ID::ANNOTATION )
-, m_delimiter( uToken )
+, m_delimiter( TokenBuilder::UNRESOLVED() )
 , m_source( source )
 , m_comma( comma )
 , m_usefulInfo( usefulInfo )
@@ -162,10 +170,15 @@ Annotation::Annotation(
 
 Annotation::Annotation( const GeneralTerm::Ptr& source )
 : Node( Node::ID::ANNOTATION )
-, m_delimiter()
+, m_delimiter( TokenBuilder::UNRESOLVED() )
 , m_source( source )
-, m_comma( uToken )
+, m_comma( TokenBuilder::UNRESOLVED() )
 , m_usefulInfo()
+{
+}
+
+Annotation::Annotation( const GeneralTerm::Ptr& source, const GeneralList::Ptr& usefulInfo )
+: Annotation( source, TokenBuilder::COMMA(), usefulInfo )
 {
 }
 

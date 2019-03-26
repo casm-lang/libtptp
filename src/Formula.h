@@ -155,6 +155,8 @@ namespace libtptp
             const Logic::Ptr& formula,
             const Token::Ptr& rightParen );
 
+        explicit FormulaData( const Token::Ptr& formulaType, const Logic::Ptr& formula );
+
         const Token::Ptr& dollar( void ) const;
         const Token::Ptr& formulaType( void ) const;
         const Token::Ptr& leftParen( void ) const;

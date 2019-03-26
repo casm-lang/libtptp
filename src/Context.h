@@ -40,50 +40,46 @@
 //  statement from your version.
 //
 
-#ifndef _LIBTPTP_IDENTIFIER_H_
-#define _LIBTPTP_IDENTIFIER_H_
+#ifndef _LIBTPTP_CONTEXT_H_
+#define _LIBTPTP_CONTEXT_H_
 
-#include <libtptp/Literal>
-#include <libtptp/Node>
+#include <libstdhl/Enum>
 
 namespace libtptp
 {
-    /**
-       @extends TPTP
-     */
-    class Identifier final : public Node
+    class Context
     {
       public:
-        enum class Kind
+        enum class FormulaFlag
         {
-            WORD,
-            NUMBER,
+            FOF,
+            THF,
+            TFF,
+            TPI,
+            CNF,
+            TCF,
         };
 
-        using Ptr = std::shared_ptr< Identifier >;
+        using FormulaFlags = libstdhl::Enum::Flags< FormulaFlag >;
 
-        explicit Identifier( const std::string& name, Kind kind = Kind::WORD );
+        explicit Context( const FormulaFlags& flags );
+        virtual ~Context() = default;
 
-        explicit Identifier(
-            const Token::Ptr& modifier, const std::string& string, Kind kind = Kind::WORD );
+        const FormulaFlags& flags( void ) const;
 
-        const Token::Ptr& modifier( void ) const;
-        const std::string& name( void ) const;
-        const Kind kind( void ) const;
-
-        void accept( Visitor& visitor ) override final;
+        static const Context fof( void );
+        static const Context thf( void );
+        static const Context tff( void );
+        static const Context tpi( void );
+        static const Context cnf( void );
+        static const Context tcf( void );
 
       private:
-        const Token::Ptr m_modifier;
-        const std::string m_name;
-        Kind m_kind;
+        const FormulaFlags m_flags;
     };
-
-    using Identifiers = NodeList< Identifier >;
-
 }
 
-#endif  // _LIBTPTP_IDENTIFIER_H_
+#endif  // _LIBTPTP_CONTEXT_H_
 
 //
 //  Local variables:
@@ -93,3 +89,4 @@ namespace libtptp
 //  tab-width: 4
 //  End:
 //  vim:noexpandtab:sw=4:ts=4:
+//

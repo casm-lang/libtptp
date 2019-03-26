@@ -55,6 +55,7 @@ namespace libtptp
     };
 
     using Types = NodeList< Type >;
+    using ListTypeElements = ListElements< Type >;
 
     class AtomType final : public Type
     {
@@ -91,6 +92,8 @@ namespace libtptp
             const Type::Ptr& right,
             const Kind kind );
 
+        explicit BinaryType( const Type::Ptr& left, const Type::Ptr& right, const Kind kind );
+
         const Type::Ptr& left( void ) const;
         const Token::Ptr& connectiveToken( void ) const;
         const Type::Ptr& right( void ) const;
@@ -114,6 +117,7 @@ namespace libtptp
 
         explicit TypedAtom(
             const Identifier::Ptr& atom, const Token::Ptr& colon, const Type::Ptr& type );
+        explicit TypedAtom( const Identifier::Ptr& atom, const Type::Ptr& type );
 
         const Type::Ptr& type( void ) const;
         const Token::Ptr& colon( void ) const;
@@ -136,18 +140,20 @@ namespace libtptp
 
         explicit TupleType(
             const Token::Ptr& leftBraceToken,
-            const Types::Ptr& tuples,
+            const ListTypeElements::Ptr& tuples,
             const Token::Ptr& rightBraceToken );
 
+        explicit TupleType( const ListTypeElements::Ptr& tuples );
+
         const Token::Ptr& leftBraceToken( void ) const;
-        const Types::Ptr& tuples( void ) const;
+        const ListTypeElements::Ptr& tuples( void ) const;
         const Token::Ptr& rightBraceToken( void ) const;
 
         void accept( Visitor& visitor ) override final;
 
       private:
         const Token::Ptr m_leftBraceToken;
-        const Types::Ptr m_tuples;
+        const ListTypeElements::Ptr m_tuples;
         const Token::Ptr m_rightBraceToken;
     };
 
@@ -161,14 +167,16 @@ namespace libtptp
         explicit QuantifiedType(
             const Token::Ptr& quantifierToken,
             const Token::Ptr& leftParen,
-            const Nodes::Ptr& variables,
+            const ListNodeElements::Ptr& variables,
             const Token::Ptr& rightParen,
             const Token::Ptr& colon,
             const Type::Ptr& type );
 
+        explicit QuantifiedType( const ListNodeElements::Ptr& variables, const Type::Ptr& type );
+
         const Token::Ptr& quantifierToken( void ) const;
         const Token::Ptr& leftParen( void ) const;
-        const Nodes::Ptr& variables( void ) const;
+        const ListNodeElements::Ptr& variables( void ) const;
         const Token::Ptr& rightParen( void ) const;
         const Token::Ptr& colon( void ) const;
         const Type::Ptr& type( void ) const;
@@ -178,7 +186,7 @@ namespace libtptp
       private:
         const Token::Ptr m_quantifierToken;
         const Token::Ptr m_leftParen;
-        const Nodes::Ptr m_variables;
+        const ListNodeElements::Ptr m_variables;
         const Token::Ptr m_rightParen;
         const Token::Ptr m_colon;
         const Type::Ptr m_type;
@@ -195,6 +203,8 @@ namespace libtptp
             const Identifier::Ptr& leftAtom,
             const Token::Ptr& subTypeSign,
             const Identifier::Ptr& rightAtom );
+
+        explicit SubType( const Identifier::Ptr& leftAtom, const Identifier::Ptr& rightAtom );
 
         const Identifier::Ptr& leftAtom( void ) const;
         const Token::Ptr& subTypeSign( void ) const;

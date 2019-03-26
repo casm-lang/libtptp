@@ -60,7 +60,7 @@ Atom::Atom( const ID id )
 FunctorAtom::FunctorAtom(
     const Identifier::Ptr& name,
     const Token::Ptr& leftParen,
-    const Logics::Ptr& arguments,
+    const ListLogicElements::Ptr& arguments,
     const Token::Ptr& rightParen,
     const Kind kind )
 : Atom( Node::ID::FUNCTOR_ATOM )
@@ -69,6 +69,12 @@ FunctorAtom::FunctorAtom(
 , m_arguments( arguments )
 , m_rightParen( rightParen )
 , m_kind( kind )
+{
+}
+
+FunctorAtom::FunctorAtom(
+    const Identifier::Ptr& name, const ListLogicElements::Ptr& arguments, const Kind kind )
+: FunctorAtom( name, TokenBuilder::LPAREN(), arguments, TokenBuilder::RPAREN(), kind )
 {
 }
 
@@ -82,7 +88,7 @@ const Token::Ptr& FunctorAtom::leftParen( void ) const
     return m_leftParen;
 }
 
-const Logics::Ptr& FunctorAtom::arguments( void ) const
+const ListLogicElements::Ptr& FunctorAtom::arguments( void ) const
 {
     return m_arguments;
 }
@@ -146,6 +152,11 @@ DefinitionAtom::DefinitionAtom(
 , m_lhs( lhs )
 , m_assignment( assignment )
 , m_rhs( rhs )
+{
+}
+
+DefinitionAtom::DefinitionAtom( const Logic::Ptr& lhs, const Logic::Ptr& rhs )
+: DefinitionAtom( lhs, TokenBuilder::ASSIGNMENT(), rhs )
 {
 }
 

@@ -99,6 +99,7 @@ namespace libtptp
 
             // other
             TOKEN,
+            LIST_ELEMENT,
 
             // literals
             INTEGER_LITERAL,
@@ -165,7 +166,7 @@ namespace libtptp
     };
 
     template < typename T >
-    class NodeList final
+    class NodeList
     : public Node
     , public libstdhl::List< T >
     {

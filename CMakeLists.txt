@@ -96,13 +96,23 @@ add_custom_command(
   COMMENT        ""
   )
 
-set( DEF_GRAMMAR_TOKEN "${CMAKE_CURRENT_SOURCE_DIR}/src/GrammarToken.hpp" )
-set( CXX_GRAMMAR_TOKEN "${CMAKE_CURRENT_BINARY_DIR}/src/various/GrammarToken.h" )
+set( DEF_GRAMMAR_TOKEN_HEADER "${CMAKE_CURRENT_SOURCE_DIR}/src/GrammarToken.hpp" )
+set( CXX_GRAMMAR_TOKEN_HEADER "${CMAKE_CURRENT_BINARY_DIR}/src/various/Token.h" )
 
 add_custom_command(
-  OUTPUT         ${CXX_GRAMMAR_TOKEN}
-  COMMAND        make -C ${CMAKE_CURRENT_SOURCE_DIR} ${CXX_GRAMMAR_TOKEN}
-  DEPENDS        ${DEF_GRAMMAR_TOKEN}
+  OUTPUT         ${CXX_GRAMMAR_TOKEN_HEADER}
+  COMMAND        make -C ${CMAKE_CURRENT_SOURCE_DIR} ${CXX_GRAMMAR_TOKEN_HEADER}
+  DEPENDS        ${DEF_GRAMMAR_TOKEN_HEADER}
+  COMMENT        ""
+  )
+
+set( DEF_GRAMMAR_TOKEN_BODY "${CMAKE_CURRENT_SOURCE_DIR}/src/GrammarToken.hpp" )
+set( CXX_GRAMMAR_TOKEN_BODY "${CMAKE_CURRENT_BINARY_DIR}/src/various/Token.cpp" )
+
+add_custom_command(
+  OUTPUT         ${CXX_GRAMMAR_TOKEN_BODY}
+  COMMAND        make -C ${CMAKE_CURRENT_SOURCE_DIR} ${CXX_GRAMMAR_TOKEN_BODY}
+  DEPENDS        ${DEF_GRAMMAR_TOKEN_BODY}
   COMMENT        ""
   )
 
@@ -110,7 +120,8 @@ add_custom_target( ${PROJECT}-grammar ALL
   DEPENDS
     ${CXX_GRAMMAR_PARSER}
     ${CXX_GRAMMAR_LEXER}
-    ${CXX_GRAMMAR_TOKEN}
+    ${CXX_GRAMMAR_TOKEN_HEADER}
+    ${CXX_GRAMMAR_TOKEN_BODY}
   )
 
 add_dependencies( ${PROJECT}-cpp
@@ -228,3 +239,4 @@ feature_summary( WHAT
   PACKAGES_NOT_FOUND
   DISABLED_FEATURES
   )
+

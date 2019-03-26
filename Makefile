@@ -60,7 +60,8 @@ YF  = -Wall -v -g -x
 
 GRAMMAR  = $(OBJ)/src/various/GrammarParser.cpp
 GRAMMAR += $(OBJ)/src/various/GrammarLexer.cpp
-GRAMMAR += $(OBJ)/src/various/GrammarToken.h
+GRAMMAR += $(OBJ)/src/various/Token.h
+GRAMMAR += $(OBJ)/src/various/Token.cpp
 # GRAMMAR += src/various/Grammar.txt
 
 grammar: $(GRAMMAR)
@@ -88,13 +89,19 @@ src/various/GrammarParser.cpp: src/GrammarParser.yy src/GrammarToken.hpp
 	cd src/various && $(YC) $(YF) -b src/various/ --output GrammarParser.cpp --defines=GrammarParser.tab.h ../../obj/$<
 
 
-%/src/various/GrammarToken.h: src/various/GrammarToken.h
+%/src/various/Token.h: src/various/Token.h
 	mkdir -p "`dirname $@`"
 	cp -f "$<" "$@"
 
-src/various/GrammarToken.h: src/GrammarToken.hpp
-	etc/script.sh generate-token "`pwd`/$<" "`pwd`/$@"
+src/various/Token.h: src/Token.h src/GrammarToken.hpp
+	etc/script.sh generate-token-header "`pwd`/$<" "`pwd`/$@ $(filter %.hpp,$^)"
 
+%/src/various/Token.cpp: src/various/Token.cpp
+	mkdir -p "`dirname $@`"
+	cp -f "$<" "$@"
+
+src/various/Token.cpp: src/Token.cpp src/GrammarToken.hpp
+	etc/script.sh generate-token-body "`pwd`/$<" "`pwd`/$@ $(filter %.hpp,$^)"
 
 src/various/GrammarParser.output: src/various/GrammarParser.cpp
 src/various/GrammarParser.dot:    src/various/GrammarParser.cpp

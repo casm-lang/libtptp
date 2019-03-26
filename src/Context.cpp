@@ -40,105 +40,50 @@
 //  statement from your version.
 //
 
-#include "DumpSourcePass.h"
-
-#include <libtptp/Atom>
-#include <libtptp/Formula>
-#include <libtptp/Identifier>
-#include <libtptp/Literal>
-#include <libtptp/Logic>
-#include <libtptp/Node>
-#include <libtptp/Specification>
-#include <libtptp/Term>
-
-#include <libpass/PassLogger>
-#include <libpass/PassRegistry>
-
-#include <iostream>
+#include "Context.h"
 
 using namespace libtptp;
 
-char DumpSourcePass::id = 0;
-
-static libpass::PassRegistration< DumpSourcePass > PASS(
-    "TptpDumpSourcePass",
-    "translates the TPTP fromat to the ASCII source code representation",
-    "tptp-dump",
-    0 );
-
-void DumpSourcePass::usage( libpass::PassUsage& pu )
+Context::Context( const FormulaFlags& flags )
+: m_flags( flags )
 {
 }
 
-u1 DumpSourcePass::run( libpass::PassResult& pr )
+const Context::FormulaFlags& Context::flags( void ) const
 {
-    libpass::PassLogger log( &id, stream() );
-
-    // const auto data = pr.result< X >();
-    // const auto tptp = data->tptp();
-
-    DumpSourceVisitor visitor{ std::cout };
-    // data->specification()->accept( visitor );
-
-    return true;
+    return m_flags;
 }
 
-//
-// DumpSourceVisitor
-//
-
-DumpSourceVisitor::DumpSourceVisitor( std::ostream& stream )
-: m_stream( stream )
+const Context Context::fof( void )
 {
+    return Context( { FormulaFlag::FOF } );
 }
 
-void DumpSourceVisitor::visit( Specification& node )
+const Context Context::thf( void )
 {
-    m_stream << "% " << node.description() << ": " << node.name() << "\n";
-
-    node.definitions()->accept( *this );
+    return Context( { FormulaFlag::THF } );
 }
 
-void DumpSourceVisitor::visit( Identifier& node )
+const Context Context::tff( void )
 {
-    RecursiveVisitor::visit( node );
-    m_stream << node.name();
+    return Context( { FormulaFlag::TFF } );
 }
 
-void DumpSourceVisitor::visit( IntegerLiteral& node )
+const Context Context::tpi( void )
 {
-    RecursiveVisitor::visit( node );
-    m_stream << node.value().to_string();
+    return Context( { FormulaFlag::TPI } );
 }
 
-void DumpSourceVisitor::visit( RationalLiteral& node )
+const Context Context::cnf( void )
 {
-    RecursiveVisitor::visit( node );
-    auto rational = static_cast< const libstdhl::Type::Rational& >( node.value() );
-    m_stream << rational.numerator().to_string() << "/" << rational.denominator().to_string();
+    return Context( { FormulaFlag::CNF } );
 }
 
-void DumpSourceVisitor::visit( RealLiteral& node )
+const Context Context::tcf( void )
 {
-    RecursiveVisitor::visit( node );
-    m_stream << node.value().to_string();
+    return Context( { FormulaFlag::TCF } );
 }
 
-void DumpSourceVisitor::visit( DistinctObjectLiteral& node )
-{
-    RecursiveVisitor::visit( node );
-    auto string = static_cast< const libstdhl::Type::String& >( node.value() );
-    m_stream << string.toString();
-}
-
-void DumpSourceVisitor::visit( Token& node )
-{
-    RecursiveVisitor::visit( node );
-    if( node.token() != libtptp::Grammar::Token::UNRESOLVED )
-    {
-        m_stream << node.tokenString();
-    }
-}
 //
 //  Local variables:
 //  mode: c++

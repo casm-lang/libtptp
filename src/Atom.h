@@ -98,20 +98,23 @@ namespace libtptp
         FunctorAtom(
             const Identifier::Ptr& name,
             const Token::Ptr& leftParen,
-            const Logics::Ptr& arguments,
+            const ListLogicElements::Ptr& arguments,
             const Token::Ptr& rightParen,
             const Kind kind );
 
+        FunctorAtom(
+            const Identifier::Ptr& name, const ListLogicElements::Ptr& arguments, const Kind kind );
+
         const Identifier::Ptr& name( void ) const;
         const Token::Ptr& leftParen( void ) const;
-        const Logics::Ptr& arguments( void ) const;
+        const ListLogicElements::Ptr& arguments( void ) const;
         const Token::Ptr& rightParen( void ) const;
         const Kind kind( void ) const;
 
       private:
         const Identifier::Ptr m_name;
         const Token::Ptr m_leftParen;
-        const Logics::Ptr m_arguments;
+        const ListLogicElements::Ptr m_arguments;
         const Token::Ptr m_rightParen;
         const Kind m_kind;
 
@@ -162,6 +165,8 @@ namespace libtptp
 
         explicit DefinitionAtom(
             const Logic::Ptr& lhs, const Token::Ptr& assignment, const Logic::Ptr& rhs );
+
+        explicit DefinitionAtom( const Logic::Ptr& lhs, const Logic::Ptr& rhs );
 
         const Logic::Ptr& lhs( void ) const;
         const Token::Ptr& assignment( void ) const;

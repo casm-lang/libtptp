@@ -68,6 +68,8 @@ void AtomType::accept( Visitor& visitor )
 // Binary Type
 //
 
+const Token::Ptr connectiveTokenFromKind( BinaryType::Kind kind );
+
 BinaryType::BinaryType(
     const Type::Ptr& left,
     const Token::Ptr& connectiveToken,
@@ -78,6 +80,11 @@ BinaryType::BinaryType(
 , m_connectiveToken( connectiveToken )
 , m_right( right )
 , m_kind( kind )
+{
+}
+
+BinaryType::BinaryType( const Type::Ptr& left, const Type::Ptr& right, const Kind kind )
+: BinaryType( left, connectiveTokenFromKind( kind ), right, kind )
 {
 }
 
@@ -96,14 +103,33 @@ const Type::Ptr& BinaryType::right( void ) const
     return m_right;
 }
 
+BinaryType::Kind BinaryType::kind( void ) const
+{
+    return m_kind;
+}
+
 void BinaryType::accept( Visitor& visitor )
 {
     visitor.visit( *this );
 }
 
-BinaryType::Kind BinaryType::kind( void ) const
+const Token::Ptr connectiveTokenFromKind( BinaryType::Kind kind )
 {
-    return m_kind;
+    switch( kind )
+    {
+        case BinaryType::Kind::MAPPING:
+        {
+            return TokenBuilder::GREATER();
+        }
+        case BinaryType::Kind::XPROD:
+        {
+            return TokenBuilder::STAR();
+        }
+        case BinaryType::Kind::UNION:
+        {
+            return TokenBuilder::PLUS();
+        }
+    }
 }
 
 //
@@ -115,6 +141,11 @@ TypedAtom::TypedAtom( const Identifier::Ptr& atom, const Token::Ptr& colon, cons
 , m_atom( atom )
 , m_colon( colon )
 , m_type( type )
+{
+}
+
+TypedAtom::TypedAtom( const Identifier::Ptr& atom, const Type::Ptr& type )
+: TypedAtom( atom, TokenBuilder::COLON(), type )
 {
 }
 
@@ -143,11 +174,18 @@ void TypedAtom::accept( Visitor& visitor )
 //
 
 TupleType::TupleType(
-    const Token::Ptr& leftBraceToken, const Types::Ptr& tuples, const Token::Ptr& rightBraceToken )
+    const Token::Ptr& leftBraceToken,
+    const ListTypeElements::Ptr& tuples,
+    const Token::Ptr& rightBraceToken )
 : Type( Node::ID::TUPLE_TYPE )
 , m_leftBraceToken( leftBraceToken )
 , m_tuples( tuples )
 , m_rightBraceToken( rightBraceToken )
+{
+}
+
+TupleType::TupleType( const ListTypeElements::Ptr& tuples )
+: TupleType( TokenBuilder::LSQPAREN(), tuples, TokenBuilder::RSQPAREN() )
 {
 }
 
@@ -156,7 +194,7 @@ const Token::Ptr& TupleType::leftBraceToken( void ) const
     return m_leftBraceToken;
 }
 
-const Types::Ptr& TupleType::tuples( void ) const
+const ListTypeElements::Ptr& TupleType::tuples( void ) const
 {
     return m_tuples;
 }
@@ -178,7 +216,7 @@ void TupleType::accept( Visitor& visitor )
 QuantifiedType::QuantifiedType(
     const Token::Ptr& quantifierToken,
     const Token::Ptr& leftParen,
-    const Nodes::Ptr& variables,
+    const ListNodeElements::Ptr& variables,
     const Token::Ptr& rightParen,
     const Token::Ptr& colon,
     const Type::Ptr& type )
@@ -192,6 +230,17 @@ QuantifiedType::QuantifiedType(
 {
 }
 
+QuantifiedType::QuantifiedType( const ListNodeElements::Ptr& variables, const Type::Ptr& type )
+: QuantifiedType(
+      TokenBuilder::EXCLAMATIONGREATER(),
+      TokenBuilder::LSQPAREN(),
+      variables,
+      TokenBuilder::RSQPAREN(),
+      TokenBuilder::COLON(),
+      type )
+{
+}
+
 const Token::Ptr& QuantifiedType::quantifierToken( void ) const
 {
     return m_quantifierToken;
@@ -202,7 +251,7 @@ const Token::Ptr& QuantifiedType::leftParen( void ) const
     return m_leftParen;
 }
 
-const Nodes::Ptr& QuantifiedType::variables( void ) const
+const ListNodeElements::Ptr& QuantifiedType::variables( void ) const
 {
     return m_variables;
 }
@@ -239,6 +288,11 @@ SubType::SubType(
 , m_leftAtom( leftAtom )
 , m_subTypeSign( subtypesign )
 , m_rightAtom( rightAtom )
+{
+}
+
+SubType::SubType( const Identifier::Ptr& leftAtom, const Identifier::Ptr& rightAtom )
+: SubType( leftAtom, TokenBuilder::SUBTYPESIGN(), rightAtom )
 {
 }
 

@@ -49,7 +49,10 @@ namespace libtptp
 {
     namespace Grammar
     {
-        enum class Token : u8;
+        enum class Token : u8
+        {
+            /*<<token_definitions>>*/
+        };
     }
 
     class Token final : public Node
@@ -70,6 +73,15 @@ namespace libtptp
     };
 
     using Tokens = NodeList< Token >;
+
+    class TokenBuilder final
+    {
+      public:
+        explicit TokenBuilder() = delete;
+
+        /*<<token_builder_definitions>>*/
+    };
+
 }
 
 #endif  // _LIBTPTP_TOKEN_H_

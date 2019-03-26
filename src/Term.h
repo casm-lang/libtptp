@@ -130,6 +130,9 @@ namespace libtptp
             const Logic::Ptr& rightTerm,
             const Token::Ptr& rightParen );
 
+        explicit ConditionalTerm(
+            const Logic::Ptr& condition, const Logic::Ptr& leftTerm, const Logic::Ptr& rightTerm );
+
         const Token::Ptr& dollar( void ) const;
         const Token::Ptr& ite( void ) const;
         const Token::Ptr& leftParen( void ) const;
@@ -172,6 +175,11 @@ namespace libtptp
             const Token::Ptr& commaRight,
             const Logic::Ptr& term,
             const Token::Ptr& rightParen );
+
+        explicit DefinitionTerm(
+            const std::shared_ptr< Type >& types,
+            const Logic::Ptr& definitions,
+            const Logic::Ptr& term );
 
         const Token::Ptr& dollar( void ) const;
         const Token::Ptr& let( void ) const;

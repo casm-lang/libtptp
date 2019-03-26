@@ -102,6 +102,8 @@ namespace libtptp
         explicit GeneralAggregator(
             const GeneralData::Ptr& data, const Token::Ptr& colon, const GeneralTerm::Ptr& term );
 
+        explicit GeneralAggregator( const GeneralData::Ptr& data, const GeneralTerm::Ptr& term );
+
         const GeneralData::Ptr& data( void ) const;
         const Token::Ptr& colon( void ) const;
         const GeneralTerm::Ptr& term( void ) const;
@@ -124,12 +126,15 @@ namespace libtptp
         explicit GeneralFunction(
             const Identifier::Ptr& name,
             const Token::Ptr& leftParen,
-            const Nodes::Ptr& arguments,
+            const ListNodeElements::Ptr& arguments,
             const Token::Ptr& rightParen );
+
+        explicit GeneralFunction(
+            const Identifier::Ptr& name, const ListNodeElements::Ptr& arguments );
 
         const Identifier::Ptr& name( void ) const;
         const Token::Ptr& leftParen( void ) const;
-        const Nodes::Ptr& arguments( void ) const;
+        const ListNodeElements::Ptr& arguments( void ) const;
         const Token::Ptr& rightParen( void ) const;
 
         void accept( Visitor& visitor ) override final;
@@ -137,7 +142,7 @@ namespace libtptp
       private:
         const Identifier::Ptr m_name;
         const Token::Ptr m_leftParen;
-        const Nodes::Ptr m_arguments;
+        const ListNodeElements::Ptr m_arguments;
         const Token::Ptr m_rightParen;
     };
 
@@ -152,7 +157,10 @@ namespace libtptp
             const GeneralTerm::Ptr& source,
             const Token::Ptr& comma,
             const GeneralList::Ptr& usefulInfo );
+
         explicit Annotation( const GeneralTerm::Ptr& source );
+
+        explicit Annotation( const GeneralTerm::Ptr& source, const GeneralList::Ptr& usefulInfo );
 
         const GeneralTerm::Ptr& source( void ) const;
         const libstdhl::Optional< const GeneralList::Ptr >& usefulInfo( void ) const;

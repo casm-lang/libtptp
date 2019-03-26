@@ -40,51 +40,83 @@
 //  statement from your version.
 //
 
-#ifndef _LIBTPTP_IDENTIFIER_H_
-#define _LIBTPTP_IDENTIFIER_H_
+#ifndef _LIBTPTP_HELPER_H_
+#define _LIBTPTP_HELPER_H_
 
-#include <libtptp/Literal>
 #include <libtptp/Node>
+#include <libtptp/Token>
 
 namespace libtptp
 {
-    /**
-       @extends TPTP
-     */
-    class Identifier final : public Node
+    template < class T >
+    class ListElement final : public Node
     {
       public:
-        enum class Kind
+        using Ptr = std::shared_ptr< ListElement< T > >;
+
+        explicit ListElement( const Token::Ptr& delimiter, const typename T::Ptr& element )
+        : Node( Node::ID::LIST_ELEMENT )
+        , m_delimiter( delimiter )
+        , m_element( element )
         {
-            WORD,
-            NUMBER,
-        };
+        }
 
-        using Ptr = std::shared_ptr< Identifier >;
+        const Token::Ptr& delimiter( void ) const
+        {
+            return m_delimiter;
+        }
 
-        explicit Identifier( const std::string& name, Kind kind = Kind::WORD );
+        const typename T::Ptr& element( void ) const
+        {
+            return m_element;
+        }
 
-        explicit Identifier(
-            const Token::Ptr& modifier, const std::string& string, Kind kind = Kind::WORD );
-
-        const Token::Ptr& modifier( void ) const;
-        const std::string& name( void ) const;
-        const Kind kind( void ) const;
-
-        void accept( Visitor& visitor ) override final;
+        void accept( Visitor& visitor ) override final
+        {
+            delimiter()->accept( visitor );
+            element()->accept( visitor );
+        }
 
       private:
-        const Token::Ptr m_modifier;
-        const std::string m_name;
-        Kind m_kind;
+        const Token::Ptr m_delimiter;
+        const typename T::Ptr m_element;
     };
 
-    using Identifiers = NodeList< Identifier >;
+    template < class T >
+    class ListElements final : public NodeList< ListElement< T > >
+    {
+      public:
+        using Ptr = std::shared_ptr< ListElements< T > >;
+
+        explicit ListElements( void )
+        : NodeList< ListElement< T > >()
+        {
+        }
+
+        void add( const Token::Ptr& delimiter, const typename T::Ptr& element )
+        {
+            NodeList< ListElement< T > >::add(
+                std::make_shared< ListElement< T > >( delimiter, element ) );
+        }
+        void add( const typename T::Ptr& element )
+        {
+            if( this->size() == 0 )
+            {
+                NodeList< ListElement< T > >::add(
+                    std::make_shared< ListElement< T > >( TokenBuilder::UNRESOLVED(), element ) );
+            }
+            else
+            {
+                NodeList< ListElement< T > >::add(
+                    std::make_shared< ListElement< T > >( TokenBuilder::COMMA(), element ) );
+            }
+        }
+    };
+
+    using ListNodeElements = ListElements< Node >;
 
 }
-
-#endif  // _LIBTPTP_IDENTIFIER_H_
-
+#endif  // _LIBTPTP_HELPER_H_
 //
 //  Local variables:
 //  mode: c++
@@ -93,3 +125,4 @@ namespace libtptp
 //  tab-width: 4
 //  End:
 //  vim:noexpandtab:sw=4:ts=4:
+//
