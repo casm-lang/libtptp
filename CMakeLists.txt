@@ -224,6 +224,7 @@ export(
 install(
   FILES
     .cmake/Find${PROJECT}.cmake
+    .cmake/Findlibz3.cmake
   DESTINATION
     "share/cmake/Module/${PROJECT}"
   )
