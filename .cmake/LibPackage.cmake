@@ -519,6 +519,23 @@ function( package_git_submodule PREFIX VERSION MODE TMP ) # ${ARGN} search paths
 	set( ${PREFIX}_ALWAYS_BUILD 1 )
       endif()
 
+      set( ${PREFIX}_ALWAYS_BUILD 0 )
+      if( NOT "${MAKE_DIFF_HASH}" STREQUAL "${REPO_DIFF_HASH}" )
+	set( ${PREFIX}_ALWAYS_BUILD 1 )
+      endif()
+
+      set( ${PREFIX}_BUILD_TYPE ${CMAKE_BUILD_TYPE} )
+
+      # patch build type names for libz3
+      if( "${PREFIX}" STREQUAL "libz3" )
+	if( "${${PREFIX}_BUILD_TYPE}" STREQUAL "debug" )
+	  set( ${PREFIX}_BUILD_TYPE "Debug" )
+	endif()
+	if( "${${PREFIX}_BUILD_TYPE}" STREQUAL "release" )
+	  set( ${PREFIX}_BUILD_TYPE "Release" )
+	endif()
+      endif()
+
       Externalproject_Add( ${PREFIX}
 	SOURCE_DIR       ${${PREFIX}_REPO_DIR}
 	BINARY_DIR       ${${PREFIX}_MAKE_DIR}
@@ -529,7 +546,7 @@ function( package_git_submodule PREFIX VERSION MODE TMP ) # ${ARGN} search paths
 	--no-warn-unused-cli
 	-G ${CMAKE_GENERATOR}
 	-DCMAKE_INSTALL_PREFIX:PATH=${${PREFIX}_ROOT_DIR}
-	-DCMAKE_BUILD_TYPE:STRING=${CMAKE_BUILD_TYPE}
+	-DCMAKE_BUILD_TYPE:STRING=${${PREFIX}_BUILD_TYPE}
 	-DCMAKE_C_COMPILER:FILEPATH=${CMAKE_C_COMPILER}
 	-DCMAKE_C_STANDARD=${CMAKE_C_STANDARD}
 	-DCMAKE_C_EXTENSIONS=${CMAKE_C_EXTENSIONS}
