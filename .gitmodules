@@ -60,3 +60,7 @@
 	url = https://github.com/casm-lang/libpass
 	branch = master
 
+[submodule "lib/z3"]
+	path = lib/z3
+	url = https://github.com/casm-lang/libz3
+	branch = master
