@@ -44,8 +44,6 @@
 
 #include <z3++.h>
 
-using namespace;
-
 /**
    Demonstration of how Z3 can be used to prove validity of
    De Morgan's Duality Law: {e not(x and y) <-> (not x) or ( not y) }
