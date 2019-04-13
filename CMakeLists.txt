@@ -138,10 +138,7 @@ add_library( ${PROJECT} STATIC
   $<TARGET_OBJECTS:${PROJECT}-cpp>
   )
 
-if( ${LIBSTDHL_FOUND}
-AND ${LIBPASS_FOUND}
-AND ${LIBZ3_FOUND}
-)
+if( ${LIBZ3_FOUND} )
   target_link_libraries( ${PROJECT}
     ${LIBSTDHL_LIBRARY}
     ${LIBPASS_LIBRARY}
