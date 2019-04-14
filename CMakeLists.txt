@@ -59,7 +59,6 @@ package_git_submodule( libgtest master REQUIRED build ../gtest lib/gtest )
 package_git_submodule( libhayai master REQUIRED build ../hayai lib/hayai )
 package_git_submodule( libz3    master REQUIRED build ../z3    lib/z3    )
 package_git_deps( libstdhl>libpass )
-package_git_deps( libpass>libz3 )
 
 find_package( Threads REQUIRED )
 
