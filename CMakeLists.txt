@@ -57,6 +57,7 @@ package_git_submodule( libstdhl master REQUIRED obj   ../stdhl lib/stdhl )
 package_git_submodule( libpass  master REQUIRED obj   ../pass  lib/pass  )
 package_git_submodule( libgtest master REQUIRED build ../gtest lib/gtest )
 package_git_submodule( libhayai master REQUIRED build ../hayai lib/hayai )
+package_git_submodule( libz3    master REQUIRED build ../z3    lib/z3    )
 package_git_deps( libstdhl>libpass )
 
 find_package( Threads REQUIRED )
@@ -137,8 +138,12 @@ add_library( ${PROJECT} STATIC
   $<TARGET_OBJECTS:${PROJECT}-cpp>
   )
 
-if( ${LIBPASS_FOUND} )
+if( ${LIBZ3_FOUND}
+AND ${LIBPASS_FOUND}
+AND ${LIBSTDHL_FOUND}
+)
   target_link_libraries( ${PROJECT}
+    ${LIBZ3_LIBRARY}
     ${LIBPASS_LIBRARY}
     ${LIBSTDHL_LIBRARY}
     )
@@ -222,6 +227,7 @@ export(
 install(
   FILES
     .cmake/Find${PROJECT}.cmake
+    .cmake/Findlibz3.cmake
   DESTINATION
     "share/cmake/Module/${PROJECT}"
   )

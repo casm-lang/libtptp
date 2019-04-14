@@ -45,6 +45,7 @@ include_directories(
   ${LIBGTEST_INCLUDE_DIR}
   ${LIBSTDHL_INCLUDE_DIR}
   ${LIBPASS_INCLUDE_DIR}
+  ${LIBZ3_INCLUDE_DIR}
   )
 
 
@@ -58,5 +59,5 @@ add_library( ${PROJECT}-test OBJECT
   tff.cpp
   thf.cpp
   tpi.cpp
-
+  z3.cpp
   )

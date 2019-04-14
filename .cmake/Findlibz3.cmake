@@ -40,8 +40,31 @@
 #   statement from your version.
 #
 
-/.attic
-/.idea
-/.vscode
-/.z3-trace
-/obj
+# LIBZ3_FOUND        - system has found the package
+# LIBZ3_INCLUDE_DIR  - the package include directory
+# LIBZ3_LIBRARY      - the package library
+
+include( LibPackage )
+
+libfind_pkg_check_modules( LIBZ3_PKGCONF libz3 )
+
+find_path( LIBZ3_INCLUDE_DIR
+  NAMES z3.h
+  PATHS ${LIBZ3_PKGCONF_INCLUDE_DIRS}
+  )
+
+find_library( LIBZ3_LIBRARY
+  NAMES z3 libz3
+  PATHS ${LIBZ3_PKGCONF_LIBRARY_DIRS}
+  )
+
+set( LIBZ3_PROCESS_INCLUDES LIBZ3_INCLUDE_DIR )
+set( LIBZ3_PROCESS_LIBS     LIBZ3_LIBRARY )
+
+libfind_process( LIBZ3 )
+
+if( EXISTS "${LIBZ3_LIBRARY}" AND ${LIBZ3_LIBRARY} )
+  set( LIBZ3_FOUND TRUE PARENT_SCOPE )
+else()
+  set( LIBZ3_FOUND FALSE PARENT_SCOPE )
+endif()

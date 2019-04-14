@@ -44,6 +44,7 @@ include_directories(
   ${PROJECT_BINARY_DIR}/src
   ${LIBSTDHL_INCLUDE_DIR}
   ${LIBPASS_INCLUDE_DIR}
+  ${LIBZ3_INCLUDE_DIR}
   )
 
 
