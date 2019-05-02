@@ -121,8 +121,9 @@ TEST( libtptp, ast_dump )
 
     const auto& data = pm.result().output< SourceToAstPass >();
     const auto& specification = data->specification();
-    DumpSourceVisitor visitor{ std::cout };
-    visitor.visit( *specification );
+    // TODO: @moosbruggerj fix me
+    // DumpSourceVisitor visitor{ std::cout };
+    // visitor.visit( *specification );
 
     pm.result().output< LoadFilePass >()->close();
     libstdhl::File::remove( filename );

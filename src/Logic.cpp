@@ -472,10 +472,17 @@ const Logic::Ptr& InfixLogic::lhs( void ) const
 {
     return m_lhs;
 }
+
 const Token::Ptr& InfixLogic::connectiveToken( void ) const
 {
     return m_connectiveToken;
 }
+
+InfixLogic::Connective InfixLogic::connective( void ) const
+{
+    return m_connective;
+}
+
 const Logic::Ptr& InfixLogic::rhs( void ) const
 {
     return m_rhs;

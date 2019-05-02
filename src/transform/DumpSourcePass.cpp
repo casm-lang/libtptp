@@ -50,6 +50,7 @@
 #include <libtptp/Node>
 #include <libtptp/Specification>
 #include <libtptp/Term>
+#include <libtptp/Visitor>
 
 #include <libpass/PassLogger>
 #include <libpass/PassRegistry>
@@ -66,22 +67,25 @@ static libpass::PassRegistration< DumpSourcePass > PASS(
     "tptp-dump",
     0 );
 
-void DumpSourcePass::usage( libpass::PassUsage& pu )
+class DumpSourceVisitor final : public RecursiveVisitor
 {
-}
+  public:
+    DumpSourceVisitor( std::ostream& stream );
 
-u1 DumpSourcePass::run( libpass::PassResult& pr )
-{
-    libpass::PassLogger log( &id, stream() );
+    void visit( Specification& node ) override;
 
-    // const auto data = pr.result< X >();
-    // const auto tptp = data->tptp();
+    void visit( Identifier& node ) override;
 
-    DumpSourceVisitor visitor{ std::cout };
-    // data->specification()->accept( visitor );
+    void visit( IntegerLiteral& node ) override;
+    void visit( RationalLiteral& node ) override;
+    void visit( RealLiteral& node ) override;
+    void visit( DistinctObjectLiteral& node ) override;
 
-    return true;
-}
+    void visit( Token& node ) override;
+
+  private:
+    std::ostream& m_stream;
+};
 
 //
 // DumpSourceVisitor
@@ -138,6 +142,23 @@ void DumpSourceVisitor::visit( Token& node )
     {
         m_stream << node.tokenString();
     }
+}
+
+void DumpSourcePass::usage( libpass::PassUsage& pu )
+{
+    pu.require< SourceToAstPass >();
+}
+
+u1 DumpSourcePass::run( libpass::PassResult& pr )
+{
+    libpass::PassLogger log( &id, stream() );
+
+    const auto data = pr.output< SourceToAstPass >();
+
+    DumpSourceVisitor visitor{ std::cout };
+    data->specification()->accept( visitor );
+
+    return true;
 }
 //
 //  Local variables:

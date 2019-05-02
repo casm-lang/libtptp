@@ -49,6 +49,11 @@ Context::Context( const FormulaFlags& flags )
 {
 }
 
+Context::FormulaFlags& Context::flags( void )
+{
+    return m_flags;
+}
+
 const Context::FormulaFlags& Context::flags( void ) const
 {
     return m_flags;

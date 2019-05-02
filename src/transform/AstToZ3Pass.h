@@ -1,5 +1,5 @@
 //
-//  Copyright (C) 2017-2021 CASM Organization <https://casm-lang.org>
+//  Copyright (C) 2017-2019 CASM Organization <https://casm-lang.org>
 //  All rights reserved.
 //
 //  Developed by: Philipp Paulweber
@@ -40,8 +40,8 @@
 //  statement from your version.
 //
 
-#ifndef _LIBTPTP_AST_DUMP_DOT_PASS_H_
-#define _LIBTPTP_AST_DUMP_DOT_PASS_H_
+#ifndef _LIBTPTP_AST_TO_Z3_PASS_H_
+#define _LIBTPTP_AST_TO_Z3_PASS_H_
 
 #include <libpass/Pass>
 #include <libpass/PassResult>
@@ -51,10 +51,10 @@
 namespace libtptp
 {
     /**
-     * @brief Generates a DOT graph of the AST
+     * @brief
      */
 
-    class AstDumpDotPass final : public libpass::Pass
+    class AstToZ3Pass final : public libpass::Pass
     {
       public:
         using Input = SourceToAstPass::Output;
@@ -65,15 +65,11 @@ namespace libtptp
 
         u1 run( libpass::PassResult& pr ) override;
 
-        void setOutputPath( const std::string& outputPath );
-        const std::string& outputPath( void ) const;
-
       private:
-        std::string m_outputPath = "";
     };
 }
 
-#endif  // _LIBTPTP_AST_DUMP_DOT_PASS_H_
+#endif  // _LIBTPTP_AST_TO_Z3_PASS_H_
 
 //
 //  Local variables:

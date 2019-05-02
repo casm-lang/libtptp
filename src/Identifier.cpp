@@ -75,6 +75,26 @@ const Identifier::Kind Identifier::kind( void ) const
     return m_kind;
 }
 
+const std::string Identifier::innerName( void ) const
+{
+    if( kind() == Kind::NUMBER )
+    {
+        return name();
+    }
+    else if( kind() == Kind::WORD )
+    {
+        if( m_name[ 0 ] == '\'' )
+        {
+            return m_name.substr( 1, m_name.size() - 2 );
+        }
+        else
+        {
+            return name();
+        }
+    }
+    throw std::logic_error( "invalid kind" );
+}
+
 void Identifier::accept( Visitor& visitor )
 {
     visitor.visit( *this );

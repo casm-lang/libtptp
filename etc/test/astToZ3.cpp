@@ -1,5 +1,5 @@
 //
-//  Copyright (C) 2017-2021 CASM Organization <https://casm-lang.org>
+//  Copyright (C) 2017-2019 CASM Organization <https://casm-lang.org>
 //  All rights reserved.
 //
 //  Developed by: Philipp Paulweber
@@ -40,40 +40,24 @@
 //  statement from your version.
 //
 
-#ifndef _LIBTPTP_AST_DUMP_DOT_PASS_H_
-#define _LIBTPTP_AST_DUMP_DOT_PASS_H_
+#include <libstdhl/Test>
 
-#include <libpass/Pass>
-#include <libpass/PassResult>
-#include <libpass/PassUsage>
-#include <libtptp/transform/SourceToAstPass>
+#include <libpass/libpass>
 
-namespace libtptp
-{
-    /**
-     * @brief Generates a DOT graph of the AST
-     */
+#include <libtptp/transform/AstToZ3Pass>
 
-    class AstDumpDotPass final : public libpass::Pass
-    {
-      public:
-        using Input = SourceToAstPass::Output;
+#include "macros.cpp"
 
-        static char id;
+#include "main.h"
 
-        void usage( libpass::PassUsage& pu ) override;
+using namespace libtptp;
+using namespace libpass;
 
-        u1 run( libpass::PassResult& pr ) override;
+static const std::string source_fof_constant = R"***(
+fof(constant, theorem, x).
+)***";
 
-        void setOutputPath( const std::string& outputPath );
-        const std::string& outputPath( void ) const;
-
-      private:
-        std::string m_outputPath = "";
-    };
-}
-
-#endif  // _LIBTPTP_AST_DUMP_DOT_PASS_H_
+SOURCE_TEST( z3, AstToZ3Pass, source_fof_constant, true, _fof_constant, );
 
 //
 //  Local variables:

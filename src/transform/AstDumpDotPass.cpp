@@ -432,7 +432,6 @@ void AstDumpDotVisitor::visit( Annotation& node )
 void AstDumpDotPass::usage( libpass::PassUsage& pu )
 {
     pu.require< SourceToAstPass >();
-    // pu.repeatUntil< ConsistencyCheckPass >();
 }
 
 u1 AstDumpDotPass::run( libpass::PassResult& pr )

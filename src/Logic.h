@@ -233,6 +233,7 @@ namespace libtptp
 
         const Logic::Ptr& lhs( void ) const;
         const Token::Ptr& connectiveToken( void ) const;
+        Connective connective( void ) const;
         const Logic::Ptr& rhs( void ) const;
 
         void accept( Visitor& visitor ) override final;
