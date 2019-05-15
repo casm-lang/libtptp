@@ -192,13 +192,6 @@ void RecursiveVisitor::visit( SequentLogic& node )
     node.rightDelimiter()->accept( *this );
 }
 
-void RecursiveVisitor::visit( FunctionTerm& node )
-{
-    node.leftDelimiter()->accept( *this );
-    node.atom()->accept( *this );
-    node.rightDelimiter()->accept( *this );
-}
-
 void RecursiveVisitor::visit( VariableTerm& node )
 {
     node.leftDelimiter()->accept( *this );
@@ -537,11 +530,6 @@ void TraversalVisitor::visit( LogicTuple& node )
 }
 
 void TraversalVisitor::visit( SequentLogic& node )
-{
-    handle( node );
-}
-
-void TraversalVisitor::visit( FunctionTerm& node )
 {
     handle( node );
 }

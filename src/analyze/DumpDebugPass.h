@@ -82,7 +82,6 @@ namespace libtptp
         void visit( QuantifiedLogic& node ) override;
         void visit( SequentLogic& node ) override;
 
-        void visit( FunctionTerm& node ) override;
         void visit( VariableTerm& node ) override;
         void visit( ConditionalTerm& node ) override;
 

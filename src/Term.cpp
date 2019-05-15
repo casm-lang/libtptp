@@ -57,26 +57,6 @@ Term::Term( const ID id )
 }
 
 //
-// FunctionTerm
-//
-
-FunctionTerm::FunctionTerm( const Atom::Ptr& atom )
-: Term( Node::ID::FUNCTION_TERM )
-, m_atom( atom )
-{
-}
-
-const Atom::Ptr& FunctionTerm::atom( void ) const
-{
-    return m_atom;
-}
-
-void FunctionTerm::accept( Visitor& visitor )
-{
-    visitor.visit( *this );
-}
-
-//
 // VariableTerm
 //
 

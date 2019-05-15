@@ -128,11 +128,6 @@ void DumpDebugVisitor::visit( SequentLogic& node )
     RecursiveVisitor::visit( node );
 }
 
-void DumpDebugVisitor::visit( FunctionTerm& node )
-{
-    dump( node );
-    RecursiveVisitor::visit( node );
-}
 void DumpDebugVisitor::visit( VariableTerm& node )
 {
     dump( node );

@@ -69,7 +69,6 @@ namespace libtptp
     class LogicTuple;
     class SequentLogic;
 
-    class FunctionTerm;
     class VariableTerm;
     class ConditionalTerm;
     class DefinitionTerm;
@@ -139,7 +138,6 @@ namespace libtptp
         virtual void visit( LogicTuple& node ) = 0;
         virtual void visit( SequentLogic& node ) = 0;
 
-        virtual void visit( FunctionTerm& node ) = 0;
         virtual void visit( VariableTerm& node ) = 0;
         virtual void visit( ConditionalTerm& node ) = 0;
         virtual void visit( DefinitionTerm& node ) = 0;
@@ -199,7 +197,6 @@ namespace libtptp
         void visit( LogicTuple& node ) override;
         void visit( SequentLogic& node ) override;
 
-        void visit( FunctionTerm& node ) override;
         void visit( VariableTerm& node ) override;
         void visit( ConditionalTerm& node ) override;
         void visit( DefinitionTerm& node ) override;
@@ -273,7 +270,6 @@ namespace libtptp
         void visit( LogicTuple& node ) override;
         void visit( SequentLogic& node ) override;
 
-        void visit( FunctionTerm& node ) override;
         void visit( VariableTerm& node ) override;
         void visit( ConditionalTerm& node ) override;
         void visit( DefinitionTerm& node ) override;

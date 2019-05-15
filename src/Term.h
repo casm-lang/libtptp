@@ -67,25 +67,7 @@ namespace libtptp
 
     using Terms = NodeList< Term >;
 
-    class Atom;
     class Type;
-
-    // <fof_function_term> ::= <fof_plain_term> | <fof_defined_term> |
-    // <fof_system_term>
-    class FunctionTerm final : public Term
-    {
-      public:
-        using Ptr = std::shared_ptr< FunctionTerm >;
-
-        FunctionTerm( const std::shared_ptr< Atom >& atom );
-
-        const std::shared_ptr< Atom >& atom( void ) const;
-
-        void accept( Visitor& visitor ) override;
-
-      private:
-        const std::shared_ptr< Atom > m_atom;
-    };
 
     // <variable> ::= <upper_word>
     class VariableTerm final : public Term

@@ -180,7 +180,6 @@ class AstToZ3Visitor : public RecursiveVisitor
     void visit( LogicTuple& node ) override;
     void visit( SequentLogic& node ) override;
 
-    void visit( FunctionTerm& node ) override;
     void visit( VariableTerm& node ) override;
     void visit( ConditionalTerm& node ) override;
     void visit( DefinitionTerm& node ) override;
@@ -220,7 +219,32 @@ class AstToZ3Visitor : public RecursiveVisitor
     z3::solver& solver( void );
 
   private:
+    bool checkArgNum(
+        const SourceLocation& loc, const std::string& name, size_t expected, size_t actual );
 };
+
+//////////////////////////////////
+///// Helpers
+//////////////////////////////////
+z3::expr toInt( const z3::expr& real )
+{
+    return z3::expr( real.ctx(), Z3_mk_real2int( real.ctx(), real ) );
+}
+
+z3::expr toReal( const z3::expr& real )
+{
+    return z3::expr( real.ctx(), Z3_mk_int2real( real.ctx(), real ) );
+}
+
+z3::expr ceil( const z3::expr& e )
+{
+    return -toReal( toInt( -e ) );
+}
+
+z3::expr truncate( z3::expr e )
+{
+    return z3::ite( e >= 0, toInt( e ), ceil( e ) );
+}
 
 VariableManager::VariableManager( z3::context& context )
 : m_universal( context.uninterpreted_sort( "$i" ) )
@@ -410,37 +434,37 @@ void AstToZ3Visitor::visit( TypedFirstOrderFormula& node )
 
 void AstToZ3Visitor::visit( TypedHigherOrderFormula& node )
 {
-    throw std::logic_error( "not implemented" );
+    throw std::logic_error( "TypedHigherOrderFormula not implemented" );
 }
 
 void AstToZ3Visitor::visit( TPTPProcessInstructionFormula& node )
 {
-    throw std::logic_error( "not implemented" );
+    throw std::logic_error( "TPTPProcessInstructionFormula not implemented" );
 }
 
 void AstToZ3Visitor::visit( ClauseNormalFormFormula& node )
 {
-    throw std::logic_error( "not implemented" );
+    throw std::logic_error( "ClauseNormalFormFormula not implemented" );
 }
 
 void AstToZ3Visitor::visit( TheoryComputableFunctionalsFormula& node )
 {
-    throw std::logic_error( "not implemented" );
+    throw std::logic_error( "TheoryComputableFunctionalsFormula not implemented" );
 }
 
 void AstToZ3Visitor::visit( FormulaData& node )
 {
-    throw std::logic_error( "not implemented" );
+    throw std::logic_error( "FormulaData not implemented" );
 }
 
 void AstToZ3Visitor::visit( Role& node )
 {
-    throw std::logic_error( "not implemented" );
+    throw std::logic_error( "Role not implemented" );
 }
 
 void AstToZ3Visitor::visit( UnaryLogic& node )
 {
-    RecursiveVisitor::visit( node );
+    node.logic()->accept( *this );
     auto logic = m_stack.pop< z3::expr >();
 
     switch( node.connective() )
@@ -448,26 +472,37 @@ void AstToZ3Visitor::visit( UnaryLogic& node )
         case UnaryLogic::Connective::NEGATION:
         {
             logic = !logic;
+            break;
         }
         case UnaryLogic::Connective::EQUALITY:
         {
-            throw std::logic_error( "not implemented" );
+            m_log.error( { node.sourceLocation() }, "UnaryLogic::Connective::Equality" );
+            throw std::logic_error( "UnaryLogic::Connective::EQUALITY not implemented" );
+            break;
         }
         case UnaryLogic::Connective::INDEFINITE_DESCRIPTION:
         {
-            throw std::logic_error( "not implemented" );
+            throw std::logic_error(
+                "UnaryLogic::Connective::INDEFINITE_DESCRIPTION not implemented" );
+            break;
         }
         case UnaryLogic::Connective::UNIVERSAL_QUANTIFICATION:
         {
-            throw std::logic_error( "not implemented" );
+            throw std::logic_error(
+                "UnaryLogic::Connective::UNIVERSAL_QUANTIFICATION not implemented" );
+            break;
         }
         case UnaryLogic::Connective::DEFINITE_DESCRIPTION:
         {
-            throw std::logic_error( "not implemented" );
+            throw std::logic_error(
+                "UnaryLogic::Connective::DEFINITE_DESCRIPTION not implemented" );
+            break;
         }
         case UnaryLogic::Connective::EXISTENTIAL_QUANTIFICATION:
         {
-            throw std::logic_error( "not implemented" );
+            throw std::logic_error(
+                "UnaryLogic::Connective::EXISTENTIAL_QUANTIFICATION not implemented" );
+            break;
         }
     }
     m_stack.push( logic );
@@ -487,38 +522,47 @@ void AstToZ3Visitor::visit( BinaryLogic& node )
         case BinaryLogic::Connective::DISJUNCTION:
         {
             logic = left || right;
+            break;
         }
         case BinaryLogic::Connective::CONJUNCTION:
         {
             logic = left && right;
+            break;
         }
         case BinaryLogic::Connective::EQUIVALENCE:
         {
             logic = left == right;
+            break;
         }
         case BinaryLogic::Connective::NON_EQUIVALENCE:
         {
             logic = left != right;
+            break;
         }
         case BinaryLogic::Connective::IMPLICATION:
         {
             logic = z3::implies( left, right );
+            break;
         }
         case BinaryLogic::Connective::REVERSE_IMPLICATION:
         {
             logic = z3::implies( right, left );
+            break;
         }
         case BinaryLogic::Connective::NEGATED_DISJUNCTION:
         {
             logic = !( left || right );
+            break;
         }
         case BinaryLogic::Connective::NEGATED_CONJUNCTION:
         {
             logic = !( left && right );
+            break;
         }
         case BinaryLogic::Connective::APPLY:
         {
-            throw std::logic_error( "not implemented" );
+            throw std::logic_error( "BinaryLogic::Connective::APPLY not implemented" );
+            break;
         }
     }
     m_stack.push( logic );
@@ -526,17 +570,22 @@ void AstToZ3Visitor::visit( BinaryLogic& node )
 
 void AstToZ3Visitor::visit( QuantifiedLogic& node )
 {
-    throw std::logic_error( "not implemented" );
+    // throw std::logic_error( "QuantifiedLogic not implemented" );
 
     m_variables.pushScope();
     m_astContext->flags() |= Context::FormulaFlag::CREATE_BOUND;
 
-    z3::expr_vector bound( m_context );
+    // TODO: @moosbruggerj refactor
+    // z3::expr_vector bound( m_context );
+    node.variables()->accept( *this );
+    z3::expr_vector bound = m_stack.pop< z3::expr_vector >();
+    /*
     for( auto var : *( node.variables()->elements() ) )
     {
         var->accept( *this );
         bound.push_back( m_stack.pop< z3::expr >() );
     }
+    */
 
     m_astContext->flags().unset( Context::FormulaFlag::CREATE_BOUND );
     node.logic()->accept( *this );
@@ -561,10 +610,12 @@ void AstToZ3Visitor::visit( InfixLogic& node )
         case InfixLogic::Connective::EQUALITY:
         {
             logic = left == right;
+            break;
         }
         case InfixLogic::Connective::INEQUALITY:
         {
             logic = left != right;
+            break;
         }
     }
     m_stack.push( logic );
@@ -593,10 +644,6 @@ void AstToZ3Visitor::visit( SequentLogic& node )
 
     auto logic = z3::implies( z3::mk_and( left ), z3::mk_or( right ) );
     m_stack.push( logic );
-}
-
-void AstToZ3Visitor::visit( FunctionTerm& node )
-{
 }
 
 void AstToZ3Visitor::visit( VariableTerm& node )
@@ -653,17 +700,191 @@ void AstToZ3Visitor::visit( VariableTerm& node )
 
 void AstToZ3Visitor::visit( ConditionalTerm& node )
 {
-    throw std::logic_error( "not implemented" );
+    node.condition()->accept( *this );
+    auto cond = m_stack.pop< z3::expr >();
+
+    node.leftTerm()->accept( *this );
+    auto then = m_stack.pop< z3::expr >();
+
+    node.rightTerm()->accept( *this );
+    auto el = m_stack.pop< z3::expr >();
+
+    z3::expr var = z3::ite( cond, then, el );
+    m_stack.push( var );
 }
 
 void AstToZ3Visitor::visit( DefinitionTerm& node )
 {
-    throw std::logic_error( "not implemented" );
+    throw std::logic_error( "DefinitionTerm not implemented" );
 }
 
 void AstToZ3Visitor::visit( FunctorAtom& node )
 {
-    throw std::logic_error( "not implemented" );
+    z3::expr var( m_context );
+    z3::expr_vector args( m_context );
+    for( auto& el : *node.arguments() )
+    {
+        el->element()->accept( *this );
+        args.push_back( m_stack.pop< z3::expr >() );
+    }
+
+    switch( node.kind() )
+    {
+        case Atom::Kind::PLAIN:
+        {
+            throw std::logic_error( "Atom::Kind::PLAIN not implemented" );
+            break;
+        }
+        case Atom::Kind::DEFINED:
+        {
+            std::string name = node.name()->innerName();
+            if( name == "uminus" )
+            {
+                if( checkArgNum( node.sourceLocation(), "$uminus", 1, args.size() ) )
+                {
+                    var = -args[ 0 ];
+                }
+            }
+            else if( name == "sum" )
+            {
+                if( checkArgNum( node.sourceLocation(), "$sum", 2, args.size() ) )
+                {
+                    // if(args[0].is_arith() && args[1].is_arith())
+                    var = args[ 0 ] + args[ 1 ];
+                }
+            }
+            else if( name == "difference" )
+            {
+                if( checkArgNum( node.sourceLocation(), "$difference", 2, args.size() ) )
+                {
+                    var = args[ 0 ] - args[ 1 ];
+                }
+            }
+            else if( name == "product" )
+            {
+                if( checkArgNum( node.sourceLocation(), "$product", 2, args.size() ) )
+                {
+                    var = args[ 0 ] * args[ 1 ];
+                }
+            }
+            else if( name == "quotient" )
+            {
+                if( checkArgNum( node.sourceLocation(), "$quotient", 2, args.size() ) )
+                {
+                    var = args[ 0 ] / args[ 1 ];
+                }
+            }
+            else if( name == "quotient_e" )
+            {
+                if( checkArgNum( node.sourceLocation(), "$quotient_e", 2, args.size() ) )
+                {
+                    var = args[ 0 ] / args[ 1 ];
+                }
+            }
+            else if( name == "quotient_t" )
+            {
+                if( checkArgNum( node.sourceLocation(), "$quotient_t", 2, args.size() ) )
+                {
+                    throw std::logic_error( "not implemented" );
+                }
+            }
+            else if( name == "quotient_f" )
+            {
+                if( checkArgNum( node.sourceLocation(), "$quotient_f", 2, args.size() ) )
+                {
+                    throw std::logic_error( "not implemented" );
+                }
+            }
+            else if( name == "remainder_e" )
+            {
+                if( checkArgNum( node.sourceLocation(), "$remainder_e", 2, args.size() ) )
+                {
+                    throw std::logic_error( "not implemented" );
+                }
+            }
+            else if( name == "remainder_t" )
+            {
+                if( checkArgNum( node.sourceLocation(), "$remainder_t", 2, args.size() ) )
+                {
+                    throw std::logic_error( "not implemented" );
+                }
+            }
+            else if( name == "remainder_f" )
+            {
+                if( checkArgNum( node.sourceLocation(), "$remainder_f", 2, args.size() ) )
+                {
+                    throw std::logic_error( "not implemented" );
+                }
+            }
+            else if( name == "floor" )
+            {
+                if( checkArgNum( node.sourceLocation(), "$floor", 1, args.size() ) )
+                {
+                    var = toReal( toInt( args[ 0 ] ) );
+                }
+            }
+            else if( name == "ceiling" )
+            {
+                if( checkArgNum( node.sourceLocation(), "$ceiling", 1, args.size() ) )
+                {
+                    var = ceil( args[ 0 ] );
+                }
+            }
+            else if( name == "truncate" )
+            {
+                if( checkArgNum( node.sourceLocation(), "$truncate", 1, args.size() ) )
+                {
+                    var = truncate( args[ 0 ] );
+                }
+            }
+            else if( name == "round" )
+            {
+                if( checkArgNum( node.sourceLocation(), "$round", 1, args.size() ) )
+                {
+                    throw std::logic_error( "not implemented" );
+                }
+            }
+            else if( name == "to_int" )
+            {
+                if( checkArgNum( node.sourceLocation(), "$to_int", 1, args.size() ) )
+                {
+                    var = toInt( args[ 0 ] );
+                }
+            }
+            else if( name == "to_rat" )
+            {
+                if( checkArgNum( node.sourceLocation(), "$to_rat", 1, args.size() ) )
+                {
+                    var = toReal( args[ 0 ] );
+                }
+            }
+            else if( name == "to_real" )
+            {
+                if( checkArgNum( node.sourceLocation(), "$to_real", 1, args.size() ) )
+                {
+                    var = toReal( args[ 0 ] );
+                }
+            }
+            else
+            {
+                std::stringstream errstr;
+                errstr << "functor '$" << name << "' not defined.";
+                m_log.error( { node.sourceLocation() }, errstr.str() );
+            }
+            break;
+        }
+        case Atom::Kind::SYSTEM:
+        {
+            throw std::logic_error( "Atom::Kind::SYSTEM not implemented" );
+            break;
+        }
+        case Atom::Kind::TYPE:
+        {
+            throw std::logic_error( "Atom::Kind::TYPE not implemented" );
+            break;
+        }
+    }
+    m_stack.push( var );
 }
 
 void AstToZ3Visitor::visit( ConstantAtom& node )
@@ -707,12 +928,12 @@ void AstToZ3Visitor::visit( DefinedAtom& node )
 
 void AstToZ3Visitor::visit( DefinitionAtom& node )
 {
-    throw std::logic_error( "not implemented" );
+    throw std::logic_error( "DefinitionAtom not implemented" );
 }
 
 void AstToZ3Visitor::visit( ConnectiveAtom& node )
 {
-    throw std::logic_error( "not implemented" );
+    throw std::logic_error( "ConnectiveAtom not implemented" );
 }
 
 void AstToZ3Visitor::visit( AtomType& node )
@@ -741,6 +962,7 @@ void AstToZ3Visitor::visit( SubType& node )
 
 void AstToZ3Visitor::visit( Identifier& node )
 {
+    throw std::logic_error( "internal error: Identifier::accept is not supposed to be called." );
 }
 
 void AstToZ3Visitor::visit( IntegerLiteral& node )
@@ -773,6 +995,16 @@ void AstToZ3Visitor::visit( DistinctObjectLiteral& node )
 
 void AstToZ3Visitor::visit( ListLiteral& node )
 {
+    // mustn't be called from general list or name list in include
+    // TODO: @moosbruggerj refactor
+    z3::expr_vector vec( m_context );
+    for( auto el : *node.elements() )
+    {
+        el->element()->accept( *this );
+        vec.push_back( m_stack.pop< z3::expr >() );
+    }
+
+    m_stack.push( vec );
 }
 
 void AstToZ3Visitor::visit( Token& node )
@@ -814,6 +1046,20 @@ void AstToZ3Visitor::visit( Annotation& node )
 z3::solver& AstToZ3Visitor::solver( void )
 {
     return m_solver;
+}
+
+bool AstToZ3Visitor::checkArgNum(
+    const SourceLocation& loc, const std::string& name, size_t expected, size_t actual )
+{
+    if( expected != actual )
+    {
+        std::stringstream errstr;
+        errstr << "functor '" << name << "' expects " << expected << " arguments, " << actual
+               << " provided.";
+        m_log.error( { loc }, errstr.str() );
+        return false;
+    }
+    return true;
 }
 
 void AstToZ3Pass::usage( libpass::PassUsage& pu )

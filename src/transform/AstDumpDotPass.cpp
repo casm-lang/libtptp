@@ -122,7 +122,6 @@ class AstDumpDotVisitor : public RecursiveVisitor
     void visit( LogicTuple& node ) override;
     void visit( SequentLogic& node ) override;
 
-    void visit( FunctionTerm& node ) override;
     void visit( VariableTerm& node ) override;
     void visit( ConditionalTerm& node ) override;
     void visit( DefinitionTerm& node ) override;
@@ -269,11 +268,6 @@ void AstDumpDotVisitor::visit( LogicTuple& node )
 }
 
 void AstDumpDotVisitor::visit( SequentLogic& node )
-{
-    handle( node );
-}
-
-void AstDumpDotVisitor::visit( FunctionTerm& node )
 {
     handle( node );
 }

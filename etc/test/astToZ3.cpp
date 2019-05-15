@@ -57,7 +57,19 @@ static const std::string source_fof_constant = R"***(
 fof(constant, theorem, x).
 )***";
 
+static const std::string source_fof_de_morgan = R"***(
+fof(demorgan, conjecture, ~((~x | ~y) <=> ~(x & y))).
+)***";
+
+static const std::string source_fof_quantified = R"***(
+fof(quantified, conjecture, ?[X, Y]: $sum(X, 1) = Y).
+)***";
+
 SOURCE_TEST( z3, AstToZ3Pass, source_fof_constant, true, _fof_constant, );
+
+SOURCE_TEST( z3, AstToZ3Pass, source_fof_de_morgan, true, _fof_de_morgan, );
+
+//SOURCE_TEST( z3, AstToZ3Pass, source_fof_quantified, true, _fof_quantified, );
 
 //
 //  Local variables:
