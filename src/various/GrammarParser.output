@@ -720,7 +720,7 @@ Nonterminals, with rules where they appear
     ThfQuantifiedFormula <QuantifiedLogic::Ptr> (86)
         on left: 57
         on right: 53
-    ThfVariableList <ListNodeElements::Ptr> (87)
+    ThfVariableList <ListVariableElements::Ptr> (87)
         on left: 58 59
         on right: 57 59
     ThfTypedVariable <VariableTerm::Ptr> (88)
@@ -759,19 +759,19 @@ Nonterminals, with rules where they appear
     ThfLet <DefinitionTerm::Ptr> (99)
         on left: 82
         on right: 73
-    ThfLetTypes <Type::Ptr> (100)
+    ThfLetTypes <Atom::Ptr> (100)
         on left: 83 84
         on right: 82
-    ThfAtomTypingList <ListTypeElements::Ptr> (101)
+    ThfAtomTypingList <ListAtomElements::Ptr> (101)
         on left: 85 86
         on right: 84 86
-    ThfLetDefns <Logic::Ptr> (102)
+    ThfLetDefns <Atom::Ptr> (102)
         on left: 87 88
         on right: 82
     ThfLetDefn <DefinitionAtom::Ptr> (103)
         on left: 89
         on right: 87 90 91
-    ThfLetDefnList <ListLogicElements::Ptr> (104)
+    ThfLetDefnList <ListAtomElements::Ptr> (104)
         on left: 90 91
         on right: 88 91
     ThfUnitaryTerm <Logic::Ptr> (105)
@@ -789,25 +789,25 @@ Nonterminals, with rules where they appear
     ThfArguments <ListLogicElements::Ptr> (109)
         on left: 103
         on right: 78 79 80
-    ThfAtomTyping <TypedAtom::Ptr> (110)
+    ThfAtomTyping <TypeAtom::Ptr> (110)
         on left: 104 105
         on right: 28 83 85 86 105
     ThfTopLevelType <Type::Ptr> (111)
         on left: 106 107 108
         on right: 60 104
-    ThfUnitaryType <AtomType::Ptr> (112)
+    ThfUnitaryType <ApplyType::Ptr> (112)
         on left: 109
         on right: 106 114 115 116 117 118 119
-    ThfApplyType <AtomType::Ptr> (113)
+    ThfApplyType <ApplyType::Ptr> (113)
         on left: 110
         on right: 108
-    ThfBinaryType <BinaryType::Ptr> (114)
+    ThfBinaryType <Type::Ptr> (114)
         on left: 111 112 113
         on right: 37
     ThfMappingType <BinaryType::Ptr> (115)
         on left: 114 115
         on right: 107 111 115
-    ThfXprodType <BinaryType::Ptr> (116)
+    ThfXprodType <RelationType::Ptr> (116)
         on left: 116 117
         on right: 112 117
     ThfUnionType <BinaryType::Ptr> (117)
@@ -855,7 +855,7 @@ Nonterminals, with rules where they appear
     TffQuantifiedFormula <QuantifiedLogic::Ptr> (131)
         on left: 150
         on right: 145
-    TffVariableList <ListNodeElements::Ptr> (132)
+    TffVariableList <ListVariableElements::Ptr> (132)
         on left: 151 152
         on right: 150 152 204 229
     TffVariable <VariableTerm::Ptr> (133)
@@ -897,13 +897,13 @@ Nonterminals, with rules where they appear
     TfxLet <DefinitionTerm::Ptr> (145)
         on left: 174
         on right: 169
-    TfxLetTypes <Type::Ptr> (146)
+    TfxLetTypes <Atom::Ptr> (146)
         on left: 175 176
         on right: 174
-    TffAtomTypingList <ListTypeElements::Ptr> (147)
+    TffAtomTypingList <ListAtomElements::Ptr> (147)
         on left: 177 178
         on right: 176 178
-    TfxLetDefns <Logic::Ptr> (148)
+    TfxLetDefns <Atom::Ptr> (148)
         on left: 179 180
         on right: 174
     TfxLetDefn <DefinitionAtom::Ptr> (149)
@@ -912,7 +912,7 @@ Nonterminals, with rules where they appear
     TfxLetLhs <Logic::Ptr> (150)
         on left: 182 183
         on right: 181
-    TfxLetDefnList <ListLogicElements::Ptr> (151)
+    TfxLetDefnList <ListAtomElements::Ptr> (151)
         on left: 184 185
         on right: 180 185
     TffTerm <Logic::Ptr> (152)
@@ -927,7 +927,7 @@ Nonterminals, with rules where they appear
     TffArguments <ListLogicElements::Ptr> (155)
         on left: 196 197
         on right: 164 167 172 195 197
-    TffAtomTyping <TypedAtom::Ptr> (156)
+    TffAtomTyping <TypeAtom::Ptr> (156)
         on left: 198 199
         on right: 124 175 177 178 199 226
     TffTopLevelType <Type::Ptr> (157)
@@ -942,16 +942,16 @@ Nonterminals, with rules where they appear
     TffUnitaryType <Type::Ptr> (160)
         on left: 207 208
         on right: 216 217
-    TffAtomicType <AtomType::Ptr> (161)
+    TffAtomicType <Type::Ptr> (161)
         on left: 209 210 211 212 213
         on right: 155 200 205 207 214 215 216 217 218
-    TffTypeArguments <ListLogicElements::Ptr> (162)
+    TffTypeArguments <ListTypeElements::Ptr> (162)
         on left: 214 215
         on right: 211 215
     TffMappingType <BinaryType::Ptr> (163)
         on left: 216
         on right: 201 206
-    TffXprodType <BinaryType::Ptr> (164)
+    TffXprodType <RelationType::Ptr> (164)
         on left: 217 218
         on right: 208 218
     TfxTupleType <TupleType::Ptr> (165)
@@ -1011,7 +1011,7 @@ Nonterminals, with rules where they appear
     FofQuantifiedFormula <QuantifiedLogic::Ptr> (183)
         on left: 252
         on right: 249
-    FofVariableList <ListNodeElements::Ptr> (184)
+    FofVariableList <ListVariableElements::Ptr> (184)
         on left: 253 254
         on right: 252 254
     FofAtomicFormula <Logic::Ptr> (185)
