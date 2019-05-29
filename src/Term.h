@@ -92,6 +92,9 @@ namespace libtptp
         libstdhl::Optional< std::shared_ptr< Type > > m_type;
     };
 
+    using VariableTerms = NodeList< VariableTerm >;
+    using ListVariableElements = ListElements< VariableTerm >;
+
     // <tff_conditional_term> ::=
     // $ite_t(<tff_logic_formula>,<fof_term>,<fof_term>)
     // <fof_conditional_term> ::=
@@ -141,7 +144,7 @@ namespace libtptp
 
     using ConditionalTerms = NodeList< ConditionalTerm >;
 
-    class Type;
+    class Atom;
     class DefinitionTerm final : public Term
     {
       public:
@@ -151,24 +154,24 @@ namespace libtptp
             const Token::Ptr& dollar,
             const Token::Ptr& let,
             const Token::Ptr& leftParen,
-            const std::shared_ptr< Type >& types,
+            const std::shared_ptr< Atom >& types,
             const Token::Ptr& commaLeft,
-            const Logic::Ptr& definitions,
+            const std::shared_ptr< Atom >& definitions,
             const Token::Ptr& commaRight,
             const Logic::Ptr& term,
             const Token::Ptr& rightParen );
 
         explicit DefinitionTerm(
-            const std::shared_ptr< Type >& types,
-            const Logic::Ptr& definitions,
+            const std::shared_ptr< Atom >& types,
+            const std::shared_ptr< Atom >& definitions,
             const Logic::Ptr& term );
 
         const Token::Ptr& dollar( void ) const;
         const Token::Ptr& let( void ) const;
         const Token::Ptr& leftParen( void ) const;
-        const std::shared_ptr< Type >& types( void ) const;
+        const std::shared_ptr< Atom >& types( void ) const;
         const Token::Ptr& commaLeft( void ) const;
-        const Logic::Ptr& definitions( void ) const;
+        const std::shared_ptr< Atom >& definitions( void ) const;
         const Token::Ptr& commaRight( void ) const;
         const Logic::Ptr& term( void ) const;
         const Token::Ptr& rightParen( void ) const;
@@ -179,9 +182,9 @@ namespace libtptp
         const Token::Ptr m_dollar;
         const Token::Ptr m_let;
         const Token::Ptr m_leftParen;
-        const std::shared_ptr< Type > m_types;
+        const std::shared_ptr< Atom > m_types;
         const Token::Ptr m_commaLeft;
-        const Logic::Ptr m_definitions;
+        const std::shared_ptr< Atom > m_definitions;
         const Token::Ptr m_commaRight;
         const Logic::Ptr m_term;
         const Token::Ptr m_rightParen;

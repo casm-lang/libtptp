@@ -166,6 +166,9 @@ namespace libtptp
         const u1 m_associative;
     };
 
+    class VariableTerm;
+    using ListVariableElements = ListElements< VariableTerm >;
+
     class QuantifiedLogic final : public Logic
     {
       public:
@@ -186,17 +189,21 @@ namespace libtptp
 
         QuantifiedLogic(
             const std::pair< const Token::Ptr&, const Quantifier > quantifier,
-            const ListLiteral::Ptr& variables,
+            const Token::Ptr& leftParen,
+            const std::shared_ptr< ListVariableElements >& variables,
+            const Token::Ptr& rightParen,
             const Token::Ptr& colon,
             const Logic::Ptr& logic );
 
         QuantifiedLogic(
             const Quantifier quantifier,
-            const ListLiteral::Ptr& variables,
+            const std::shared_ptr< ListVariableElements >& variables,
             const Logic::Ptr& logic );
 
         const Token::Ptr& quantifierToken( void ) const;
-        const ListLiteral::Ptr& variables( void ) const;
+        const Token::Ptr& leftParen( void ) const;
+        const std::shared_ptr< ListVariableElements >& variables( void ) const;
+        const Token::Ptr& rightParen( void ) const;
         const Token::Ptr& colon( void ) const;
         const Logic::Ptr& logic( void ) const;
         const Quantifier quantifier( void ) const;
@@ -207,7 +214,9 @@ namespace libtptp
 
       private:
         const Token::Ptr m_quantifierToken;
-        const ListLiteral::Ptr m_variables;
+        const Token::Ptr m_leftParen;
+        const std::shared_ptr< ListVariableElements > m_variables;
+        const Token::Ptr m_rightParen;
         const Token::Ptr m_colon;
         const Logic::Ptr m_logic;
         const Quantifier m_quantifier;

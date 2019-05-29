@@ -48,18 +48,77 @@ Type::Type( const ID id )
 {
 }
 
-AtomType::AtomType( const Node::Ptr& atom )
-: Type( Node::ID::ATOM_TYPE )
+ApplyType::ApplyType( const Node::Ptr& atom )
+: Type( Node::ID::APPLY_TYPE )
 , m_atom( atom )
 {
 }
 
-const Node::Ptr& AtomType::atom( void ) const
+const Node::Ptr& ApplyType::atom( void ) const
 {
     return m_atom;
 }
 
-void AtomType::accept( Visitor& visitor )
+void ApplyType::accept( Visitor& visitor )
+{
+    visitor.visit( *this );
+}
+
+NamedType::NamedType( const Identifier::Ptr& name )
+: Type( ID::NAMED_TYPE )
+, m_name( name )
+{
+}
+
+const Identifier::Ptr& NamedType::name( void ) const
+{
+    return m_name;
+}
+
+void NamedType::accept( Visitor& visitor )
+{
+    visitor.visit( *this );
+}
+
+FunctorType::FunctorType(
+    const Identifier::Ptr& name,
+    const Token::Ptr& leftParen,
+    const ListTypeElements::Ptr& arguments,
+    const Token::Ptr& rightParen )
+: Type( ID::FUNCTOR_TYPE )
+, m_name( name )
+, m_leftParen( leftParen )
+, m_arguments( arguments )
+, m_rightParen( rightParen )
+{
+}
+
+FunctorType::FunctorType( const Identifier::Ptr& name, const ListTypeElements::Ptr& arguments )
+: FunctorType( name, TokenBuilder::LPAREN(), arguments, TokenBuilder::RPAREN() )
+{
+}
+
+const Identifier::Ptr& FunctorType::name( void ) const
+{
+    return m_name;
+}
+
+const Token::Ptr& FunctorType::leftParen( void ) const
+{
+    return m_leftParen;
+}
+
+const ListTypeElements::Ptr& FunctorType::arguments( void ) const
+{
+    return m_arguments;
+}
+
+const Token::Ptr& FunctorType::rightParen( void ) const
+{
+    return m_rightParen;
+}
+
+void FunctorType::accept( Visitor& visitor )
 {
     visitor.visit( *this );
 }
@@ -121,10 +180,6 @@ const Token::Ptr connectiveTokenFromKind( BinaryType::Kind kind )
         {
             return TokenBuilder::GREATER();
         }
-        case BinaryType::Kind::XPROD:
-        {
-            return TokenBuilder::STAR();
-        }
         case BinaryType::Kind::UNION:
         {
             return TokenBuilder::PLUS();
@@ -132,39 +187,18 @@ const Token::Ptr connectiveTokenFromKind( BinaryType::Kind kind )
     }
 }
 
-//
-// TypedAtom
-//
-
-TypedAtom::TypedAtom( const Identifier::Ptr& atom, const Token::Ptr& colon, const Type::Ptr& type )
-: Type( Node::ID::TYPED_ATOM )
-, m_atom( atom )
-, m_colon( colon )
-, m_type( type )
+RelationType::RelationType( const ListTypeElements::Ptr& elements )
+: Type( ID::RELATION_TYPE )
+, m_elements( elements )
 {
 }
 
-TypedAtom::TypedAtom( const Identifier::Ptr& atom, const Type::Ptr& type )
-: TypedAtom( atom, TokenBuilder::COLON(), type )
+const ListTypeElements::Ptr& RelationType::elements( void ) const
 {
+    return m_elements;
 }
 
-const Type::Ptr& TypedAtom::type( void ) const
-{
-    return m_type;
-}
-
-const Token::Ptr& TypedAtom::colon( void ) const
-{
-    return m_colon;
-}
-
-const Identifier::Ptr& TypedAtom::atom( void ) const
-{
-    return m_atom;
-}
-
-void TypedAtom::accept( Visitor& visitor )
+void RelationType::accept( Visitor& visitor )
 {
     visitor.visit( *this );
 }
@@ -216,7 +250,7 @@ void TupleType::accept( Visitor& visitor )
 QuantifiedType::QuantifiedType(
     const Token::Ptr& quantifierToken,
     const Token::Ptr& leftParen,
-    const ListNodeElements::Ptr& variables,
+    const ListVariableElements::Ptr& variables,
     const Token::Ptr& rightParen,
     const Token::Ptr& colon,
     const Type::Ptr& type )
@@ -230,7 +264,7 @@ QuantifiedType::QuantifiedType(
 {
 }
 
-QuantifiedType::QuantifiedType( const ListNodeElements::Ptr& variables, const Type::Ptr& type )
+QuantifiedType::QuantifiedType( const ListVariableElements::Ptr& variables, const Type::Ptr& type )
 : QuantifiedType(
       TokenBuilder::EXCLAMATIONGREATER(),
       TokenBuilder::LSQPAREN(),
@@ -251,7 +285,7 @@ const Token::Ptr& QuantifiedType::leftParen( void ) const
     return m_leftParen;
 }
 
-const ListNodeElements::Ptr& QuantifiedType::variables( void ) const
+const ListVariableElements::Ptr& QuantifiedType::variables( void ) const
 {
     return m_variables;
 }
@@ -314,6 +348,22 @@ const Token::Ptr& SubType::subTypeSign( void ) const
 const Identifier::Ptr& SubType::rightAtom( void ) const
 {
     return m_rightAtom;
+}
+
+VariableType::VariableType( const VariableTerm::Ptr& variable )
+: Type( ID::VARIABLE_TYPE )
+, m_variable( variable )
+{
+}
+
+const VariableTerm::Ptr& VariableType::variable( void ) const
+{
+    return m_variable;
+}
+
+void VariableType::accept( Visitor& visitor )
+{
+    visitor.visit( *this );
 }
 
 //

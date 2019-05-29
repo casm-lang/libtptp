@@ -194,9 +194,9 @@ DefinitionTerm::DefinitionTerm(
     const Token::Ptr& dollar,
     const Token::Ptr& let,
     const Token::Ptr& leftParen,
-    const std::shared_ptr< Type >& types,
+    const Atom::Ptr& types,
     const Token::Ptr& commaLeft,
-    const Logic::Ptr& definitions,
+    const Atom::Ptr& definitions,
     const Token::Ptr& commaRight,
     const Logic::Ptr& term,
     const Token::Ptr& rightParen )
@@ -214,7 +214,7 @@ DefinitionTerm::DefinitionTerm(
 }
 
 DefinitionTerm::DefinitionTerm(
-    const Type::Ptr& types, const Logic::Ptr& definitions, const Logic::Ptr& term )
+    const Atom::Ptr& types, const Atom::Ptr& definitions, const Logic::Ptr& term )
 : DefinitionTerm(
       TokenBuilder::DOLLAR(),
       TokenBuilder::LET(),
@@ -243,7 +243,7 @@ const Token::Ptr& DefinitionTerm::leftParen( void ) const
     return m_leftParen;
 }
 
-const std::shared_ptr< Type >& DefinitionTerm::types( void ) const
+const Atom::Ptr& DefinitionTerm::types( void ) const
 {
     return m_types;
 }
@@ -253,7 +253,7 @@ const Token::Ptr& DefinitionTerm::commaLeft( void ) const
     return m_commaLeft;
 }
 
-const Logic::Ptr& DefinitionTerm::definitions( void ) const
+const Atom::Ptr& DefinitionTerm::definitions( void ) const
 {
     return m_definitions;
 }

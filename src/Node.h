@@ -97,6 +97,8 @@ namespace libtptp
             CONSTANT_ATOM,
             DEFINED_ATOM,
             DEFINITION_ATOM,
+            TYPE_ATOM,
+            TUPLE_ATOM,
 
             // other
             TOKEN,
@@ -120,12 +122,15 @@ namespace libtptp
             ANNOTATION,
 
             // types
-            ATOM_TYPE,
+            APPLY_TYPE,
+            NAMED_TYPE,
+            FUNCTOR_TYPE,
             SUB_TYPE,
             QUANTIFIED_TYPE,
             TUPLE_TYPE,
-            TYPED_ATOM,
             BINARY_TYPE,
+            RELATION_TYPE,
+            VARIABLE_TYPE,
         };
 
       public:

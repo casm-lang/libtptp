@@ -41,6 +41,7 @@
 //
 
 #include "Atom.h"
+#include <libtptp/Type>
 
 using namespace libtptp;
 
@@ -194,6 +195,81 @@ void ConnectiveAtom::accept( Visitor& visitor )
 const Token::Ptr& ConnectiveAtom::connective( void )
 {
     return m_connective;
+}
+
+//
+// TypeAtom
+//
+
+TypeAtom::TypeAtom( const Identifier::Ptr& atom, const Token::Ptr& colon, const Type::Ptr& type )
+: Atom( Node::ID::TYPE_ATOM )
+, m_atom( atom )
+, m_colon( colon )
+, m_type( type )
+{
+}
+
+TypeAtom::TypeAtom( const Identifier::Ptr& atom, const Type::Ptr& type )
+: TypeAtom( atom, TokenBuilder::COLON(), type )
+{
+}
+
+const Type::Ptr& TypeAtom::type( void ) const
+{
+    return m_type;
+}
+
+const Token::Ptr& TypeAtom::colon( void ) const
+{
+    return m_colon;
+}
+
+const Identifier::Ptr& TypeAtom::atom( void ) const
+{
+    return m_atom;
+}
+
+void TypeAtom::accept( Visitor& visitor )
+{
+    visitor.visit( *this );
+}
+
+//
+// TupleAtom
+//
+
+TupleAtom::TupleAtom(
+    const Token::Ptr& leftParen, const ListAtomElements::Ptr& atoms, const Token::Ptr& rightParen )
+: Atom( Node::ID::TUPLE_ATOM )
+, m_leftParen( leftParen )
+, m_atoms( atoms )
+, m_rightParen( rightParen )
+{
+}
+
+TupleAtom::TupleAtom( const ListAtomElements::Ptr& atoms )
+: TupleAtom( TokenBuilder::LSQPAREN(), atoms, TokenBuilder::RSQPAREN() )
+{
+}
+
+const Token::Ptr& TupleAtom::leftParen( void ) const
+{
+    return m_leftParen;
+}
+
+const ListAtomElements::Ptr& TupleAtom::atoms( void ) const
+{
+    return m_atoms;
+}
+
+const Token::Ptr& TupleAtom::rightParen( void ) const
+{
+    return m_rightParen;
+}
+
+void TupleAtom::accept( Visitor& visitor )
+{
+    visitor.visit( *this );
 }
 
 //

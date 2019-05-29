@@ -132,9 +132,9 @@ class AstDumpDotVisitor : public RecursiveVisitor
     void visit( DefinitionAtom& node ) override;
     void visit( ConnectiveAtom& node ) override;
 
-    void visit( AtomType& node ) override;
+    void visit( ApplyType& node ) override;
     void visit( BinaryType& node ) override;
-    void visit( TypedAtom& node ) override;
+    void visit( TypeAtom& node ) override;
     void visit( TupleType& node ) override;
     void visit( QuantifiedType& node ) override;
     void visit( SubType& node ) override;
@@ -312,7 +312,7 @@ void AstDumpDotVisitor::visit( ConnectiveAtom& node )
     handle( node );
 }
 
-void AstDumpDotVisitor::visit( AtomType& node )
+void AstDumpDotVisitor::visit( ApplyType& node )
 {
     handle( node );
 }
@@ -322,7 +322,7 @@ void AstDumpDotVisitor::visit( BinaryType& node )
     handle( node );
 }
 
-void AstDumpDotVisitor::visit( TypedAtom& node )
+void AstDumpDotVisitor::visit( TypeAtom& node )
 {
     handle( node );
 }

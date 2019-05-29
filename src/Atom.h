@@ -199,6 +199,60 @@ namespace libtptp
 
     using ConnectiveAtoms = NodeList< ConnectiveAtom >;
 
+    class Type;
+
+    class TypeAtom final : public Atom
+    {
+      public:
+        using Ptr = std::shared_ptr< TypeAtom >;
+
+        explicit TypeAtom(
+            const Identifier::Ptr& atom,
+            const Token::Ptr& colon,
+            const std::shared_ptr< Type >& type );
+        explicit TypeAtom( const Identifier::Ptr& atom, const std::shared_ptr< Type >& type );
+
+        const std::shared_ptr< Type >& type( void ) const;
+        const Token::Ptr& colon( void ) const;
+        const Identifier::Ptr& atom( void ) const;
+
+        void accept( Visitor& visitor ) override final;
+
+      private:
+        const Identifier::Ptr m_atom;
+        const Token::Ptr m_colon;
+        const std::shared_ptr< Type >& m_type;
+    };
+
+    using TypedAtoms = NodeList< TypeAtom >;
+
+    using ListAtomElements = ListElements< Atom >;
+
+    class TupleAtom final : public Atom
+    {
+      public:
+        using Ptr = std::shared_ptr< TupleAtom >;
+
+        explicit TupleAtom(
+            const Token::Ptr& leftParen,
+            const ListAtomElements::Ptr& atoms,
+            const Token::Ptr& rightParen );
+        explicit TupleAtom( const ListAtomElements::Ptr& atoms );
+
+        const Token::Ptr& leftParen( void ) const;
+        const ListAtomElements::Ptr& atoms( void ) const;
+        const Token::Ptr& rightParen( void ) const;
+
+        void accept( Visitor& visitor ) override final;
+
+      private:
+        const Token::Ptr m_leftParen;
+        const ListAtomElements::Ptr m_atoms;
+        const Token::Ptr m_rightParen;
+    };
+
+    using TupleAtoms = NodeList< TupleAtom >;
+
 }
 
 #endif  // _LIBTPTP_ATOM_H_

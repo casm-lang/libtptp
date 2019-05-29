@@ -190,12 +190,15 @@ class AstToZ3Visitor : public RecursiveVisitor
     void visit( DefinitionAtom& node ) override;
     void visit( ConnectiveAtom& node ) override;
 
-    void visit( AtomType& node ) override;
+    void visit( ApplyType& node ) override;
+    void visit( NamedType& node ) override;
+    void visit( FunctorType& node ) override;
     void visit( BinaryType& node ) override;
-    void visit( TypedAtom& node ) override;
     void visit( TupleType& node ) override;
     void visit( QuantifiedType& node ) override;
     void visit( SubType& node ) override;
+    void visit( RelationType& node ) override;
+    void visit( VariableType& node ) override;
 
     void visit( Identifier& node ) override;
 
@@ -936,15 +939,19 @@ void AstToZ3Visitor::visit( ConnectiveAtom& node )
     throw std::logic_error( "ConnectiveAtom not implemented" );
 }
 
-void AstToZ3Visitor::visit( AtomType& node )
+void AstToZ3Visitor::visit( ApplyType& node )
+{
+}
+
+void AstToZ3Visitor::visit( NamedType& node )
+{
+}
+
+void AstToZ3Visitor::visit( FunctorType& node )
 {
 }
 
 void AstToZ3Visitor::visit( BinaryType& node )
-{
-}
-
-void AstToZ3Visitor::visit( TypedAtom& node )
 {
 }
 
@@ -957,6 +964,14 @@ void AstToZ3Visitor::visit( QuantifiedType& node )
 }
 
 void AstToZ3Visitor::visit( SubType& node )
+{
+}
+
+void AstToZ3Visitor::visit( RelationType& node )
+{
+}
+
+void AstToZ3Visitor::visit( VariableType& node )
 {
 }
 
