@@ -2102,7 +2102,7 @@ FofQuantifier
   }
 | QUESTIONMARK
   {
-	$$ = std::make_pair($1, QuantifiedLogic::Quantifier::UNIVERSAL);
+	$$ = std::make_pair($1, QuantifiedLogic::Quantifier::EXISTENTIAL);
   }
 ;
 

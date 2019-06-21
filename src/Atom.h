@@ -224,7 +224,7 @@ namespace libtptp
         const std::shared_ptr< Type >& m_type;
     };
 
-    using TypedAtoms = NodeList< TypeAtom >;
+    using TypeAtoms = NodeList< TypeAtom >;
 
     using ListAtomElements = ListElements< Atom >;
 

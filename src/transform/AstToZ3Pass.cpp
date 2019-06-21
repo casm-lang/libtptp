@@ -69,6 +69,7 @@ class VariableManager
     std::map< std::string, z3::expr > m_unbound_vars;
 
     std::map< std::string, z3::sort > m_sorts;
+    std::map< std::string, z3::func_decl > m_sort_constructors;
     z3::sort m_universal;
     libstdhl::Stack< z3::sort > m_const_sort;
 
@@ -78,7 +79,6 @@ class VariableManager
     void pushScope( void );
     void popScope( void );
 
-    // const z3::expr& would be better, but c++ doesn't allow it
     const libstdhl::Optional< const z3::expr > get( const std::string& name );
     std::pair< typename decltype( m_unbound_vars )::iterator, bool > pushUnbound(
         const std::string& name, const z3::expr& var );
@@ -91,6 +91,12 @@ class VariableManager
 
     libstdhl::Stack< z3::sort >& constSort( void );
     const z3::sort& universalSort( void );
+
+    const libstdhl::Optional< const z3::func_decl > getSortConstructor( const std::string& name );
+    std::pair< typename decltype( m_sort_constructors )::iterator, bool > pushSortConstructor(
+        const std::string& name, const z3::func_decl& function );
+
+    std::string getTupleName( const z3::sort_vector& sorts );
 };
 
 class AstToZ3Visitor : public RecursiveVisitor
@@ -103,6 +109,8 @@ class AstToZ3Visitor : public RecursiveVisitor
             EXPR,
             EXPR_VECTOR,
             SORT,
+            SORT_VECTOR,
+            TTYPE,
         } tag;
 
       private:
@@ -111,17 +119,25 @@ class AstToZ3Visitor : public RecursiveVisitor
             z3::expr* expr;
             z3::expr_vector* expr_vec;
             z3::sort* sort;
+            z3::sort_vector* sort_vec;
+            void* none;
         };
 
       public:
         // explicit conversions for template access using static cast
-        explicit Z3_expr( z3::expr&& expr );
-        explicit Z3_expr( z3::expr_vector&& expr );
-        explicit Z3_expr( z3::sort&& expr );
+        explicit Z3_expr( const z3::expr&& expr );
+        explicit Z3_expr( const z3::expr_vector&& expr );
+        explicit Z3_expr( const z3::sort&& expr );
+        explicit Z3_expr( const z3::sort_vector&& expr );
+        explicit Z3_expr( Tag tag );
 
-        explicit operator z3::expr() const;
-        explicit operator z3::expr_vector() const;
-        explicit operator z3::sort() const;
+        explicit operator z3::expr( void ) const;
+        explicit operator z3::expr_vector( void ) const;
+        explicit operator z3::sort( void ) const;
+        explicit operator z3::sort_vector( void ) const;
+
+        void check_none( void ) const;
+        std::string description( void ) const;
     };
 
     class Z3Stack : public Stack< Z3_expr >
@@ -139,6 +155,13 @@ class AstToZ3Visitor : public RecursiveVisitor
             return static_cast< const T >( value );
         }
 
+        template <>
+        void pop< void >( void )
+        {
+            const auto value = Stack::pop();
+            value.check_none();
+        }
+
         template < typename T >
         void push( T&& t )
         {
@@ -148,6 +171,11 @@ class AstToZ3Visitor : public RecursiveVisitor
         Z3_expr::Tag topType( void )
         {
             return top().tag;
+        }
+
+        std::string topDescription( void )
+        {
+            return top().description();
         }
     };
 
@@ -189,6 +217,8 @@ class AstToZ3Visitor : public RecursiveVisitor
     void visit( DefinedAtom& node ) override;
     void visit( DefinitionAtom& node ) override;
     void visit( ConnectiveAtom& node ) override;
+    void visit( TypeAtom& node ) override;
+    void visit( TupleAtom& node ) override;
 
     void visit( ApplyType& node ) override;
     void visit( NamedType& node ) override;
@@ -207,8 +237,6 @@ class AstToZ3Visitor : public RecursiveVisitor
     void visit( RealLiteral& node ) override;
     void visit( DistinctObjectLiteral& node ) override;
     void visit( ListLiteral& node ) override;
-
-    void visit( Token& node ) override;
 
     void visit( IncludeDefinition& node ) override;
     void visit( FormulaDefinition& node ) override;
@@ -333,22 +361,100 @@ const z3::sort& VariableManager::universalSort( void )
     return m_universal;
 }
 
-AstToZ3Visitor::Z3_expr::Z3_expr( z3::expr&& expr )
+const libstdhl::Optional< const z3::func_decl > VariableManager::getSortConstructor(
+    const std::string& name )
+{
+    if( m_sort_constructors.find( name ) != m_sort_constructors.end() )
+    {
+        return m_sort_constructors.at( name );
+    }
+
+    return libstdhl::Optional< const z3::func_decl >();
+}
+
+std::pair< typename decltype( VariableManager::m_sort_constructors )::iterator, bool >
+VariableManager::pushSortConstructor( const std::string& name, const z3::func_decl& function )
+{
+    return m_sort_constructors.emplace( name, function );
+}
+
+std::string VariableManager::getTupleName( const z3::sort_vector& sorts )
+{
+    std::stringstream name;
+    name << "__tuple";
+    for( auto s : sorts )
+    {
+        name << "/" << s.name().str();
+    }
+    return name.str();
+}
+
+AstToZ3Visitor::Z3_expr::Z3_expr( const z3::expr&& expr )
 : tag( Tag::EXPR )
 , expr( new z3::expr( expr ) )
 {
 }
 
-AstToZ3Visitor::Z3_expr::Z3_expr( z3::expr_vector&& expr )
+AstToZ3Visitor::Z3_expr::Z3_expr( const z3::expr_vector&& expr )
 : tag( Tag::EXPR_VECTOR )
 , expr_vec( new z3::expr_vector( expr ) )
 {
 }
 
-AstToZ3Visitor::Z3_expr::Z3_expr( z3::sort&& expr )
+AstToZ3Visitor::Z3_expr::Z3_expr( const z3::sort&& expr )
 : tag( Tag::SORT )
 , sort( new z3::sort( expr ) )
 {
+}
+
+AstToZ3Visitor::Z3_expr::Z3_expr( const z3::sort_vector&& expr )
+: tag( Tag::SORT_VECTOR )
+, sort_vec( new z3::sort_vector( expr ) )
+{
+}
+
+AstToZ3Visitor::Z3_expr::Z3_expr( Z3_expr::Tag tag )
+: tag( tag )
+, none( nullptr )
+{
+    if( tag != Tag::TTYPE )
+    {
+        throw std::domain_error( "constructor is only for ttype tags" );
+    }
+}
+void AstToZ3Visitor::Z3_expr::check_none( void ) const
+{
+    if( tag != Tag::TTYPE )
+    {
+        throw std::domain_error( "union is not of none type" );
+    }
+}
+
+std::string AstToZ3Visitor::Z3_expr::description( void ) const
+{
+    switch( tag )
+    {
+        case Tag::EXPR:
+        {
+            return "expression";
+        }
+        case Tag::EXPR_VECTOR:
+        {
+            return "expression vector";
+        }
+        case Tag::SORT:
+        {
+            return "sort";
+        }
+        case Tag::SORT_VECTOR:
+        {
+            return "sort vector";
+        }
+        case Tag::TTYPE:
+        {
+            return "ttype";
+        }
+    }
 }
 
 AstToZ3Visitor::Z3_expr::operator z3::expr() const
@@ -381,6 +487,17 @@ AstToZ3Visitor::Z3_expr::operator z3::sort() const
     }
     auto r = *sort;
     delete sort;
+    return r;
+}
+
+AstToZ3Visitor::Z3_expr::operator z3::sort_vector() const
+{
+    if( tag != Tag::SORT_VECTOR )
+    {
+        throw std::domain_error( "union is not of stackType sort_vector" );
+    }
+    auto r = *sort_vec;
+    delete sort_vec;
     return r;
 }
 
@@ -573,26 +690,39 @@ void AstToZ3Visitor::visit( BinaryLogic& node )
 
 void AstToZ3Visitor::visit( QuantifiedLogic& node )
 {
-    // throw std::logic_error( "QuantifiedLogic not implemented" );
-
     m_variables.pushScope();
     m_astContext->flags() |= Context::FormulaFlag::CREATE_BOUND;
 
-    // TODO: @moosbruggerj refactor
-    // z3::expr_vector bound( m_context );
-    node.variables()->accept( *this );
-    z3::expr_vector bound = m_stack.pop< z3::expr_vector >();
-    /*
-    for( auto var : *( node.variables()->elements() ) )
+    z3::expr_vector bound( m_context );
+    for( auto& v : *node.variables() )
     {
-        var->accept( *this );
+        v->element()->accept( *this );
         bound.push_back( m_stack.pop< z3::expr >() );
     }
-    */
 
     m_astContext->flags().unset( Context::FormulaFlag::CREATE_BOUND );
+
     node.logic()->accept( *this );
+    z3::expr logic = m_stack.pop< z3::expr >();
+    z3::expr result( m_context );
+    switch( node.quantifier() )
+    {
+        case QuantifiedLogic::Quantifier::UNIVERSAL:
+        {
+            result = z3::forall( bound, logic );
+            break;
+        }
+        case QuantifiedLogic::Quantifier::EXISTENTIAL:
+        {
+            result = z3::exists( bound, logic );
+            break;
+        }
+        default:
+            // TODO: @moosbruggerj fix me
+            break;
+    }
     m_variables.popScope();
+    m_stack.push( result );
 }
 
 void AstToZ3Visitor::visit( InfixLogic& node )
@@ -653,7 +783,7 @@ void AstToZ3Visitor::visit( VariableTerm& node )
 {
     z3::expr var( m_context );
     z3::sort sort( m_context );
-    std::string name = node.name()->innerName();
+    std::string name = node.name()->normalizedName();
     if( m_astContext->flags() & libtptp::Context::FormulaFlag::CREATE_BOUND )
     {
         if( node.type() )
@@ -740,15 +870,15 @@ void AstToZ3Visitor::visit( FunctorAtom& node )
         }
         case Atom::Kind::DEFINED:
         {
-            std::string name = node.name()->innerName();
-            if( name == "uminus" )
+            std::string name = node.name()->normalizedName();
+            if( name == "$uminus" )
             {
                 if( checkArgNum( node.sourceLocation(), "$uminus", 1, args.size() ) )
                 {
                     var = -args[ 0 ];
                 }
             }
-            else if( name == "sum" )
+            else if( name == "$sum" )
             {
                 if( checkArgNum( node.sourceLocation(), "$sum", 2, args.size() ) )
                 {
@@ -756,112 +886,112 @@ void AstToZ3Visitor::visit( FunctorAtom& node )
                     var = args[ 0 ] + args[ 1 ];
                 }
             }
-            else if( name == "difference" )
+            else if( name == "$difference" )
             {
                 if( checkArgNum( node.sourceLocation(), "$difference", 2, args.size() ) )
                 {
                     var = args[ 0 ] - args[ 1 ];
                 }
             }
-            else if( name == "product" )
+            else if( name == "$product" )
             {
                 if( checkArgNum( node.sourceLocation(), "$product", 2, args.size() ) )
                 {
                     var = args[ 0 ] * args[ 1 ];
                 }
             }
-            else if( name == "quotient" )
+            else if( name == "$quotient" )
             {
                 if( checkArgNum( node.sourceLocation(), "$quotient", 2, args.size() ) )
                 {
                     var = args[ 0 ] / args[ 1 ];
                 }
             }
-            else if( name == "quotient_e" )
+            else if( name == "$quotient_e" )
             {
                 if( checkArgNum( node.sourceLocation(), "$quotient_e", 2, args.size() ) )
                 {
                     var = args[ 0 ] / args[ 1 ];
                 }
             }
-            else if( name == "quotient_t" )
+            else if( name == "$quotient_t" )
             {
                 if( checkArgNum( node.sourceLocation(), "$quotient_t", 2, args.size() ) )
                 {
                     throw std::logic_error( "not implemented" );
                 }
             }
-            else if( name == "quotient_f" )
+            else if( name == "$quotient_f" )
             {
                 if( checkArgNum( node.sourceLocation(), "$quotient_f", 2, args.size() ) )
                 {
                     throw std::logic_error( "not implemented" );
                 }
             }
-            else if( name == "remainder_e" )
+            else if( name == "$remainder_e" )
             {
                 if( checkArgNum( node.sourceLocation(), "$remainder_e", 2, args.size() ) )
                 {
                     throw std::logic_error( "not implemented" );
                 }
             }
-            else if( name == "remainder_t" )
+            else if( name == "$remainder_t" )
             {
                 if( checkArgNum( node.sourceLocation(), "$remainder_t", 2, args.size() ) )
                 {
                     throw std::logic_error( "not implemented" );
                 }
             }
-            else if( name == "remainder_f" )
+            else if( name == "$remainder_f" )
             {
                 if( checkArgNum( node.sourceLocation(), "$remainder_f", 2, args.size() ) )
                 {
                     throw std::logic_error( "not implemented" );
                 }
             }
-            else if( name == "floor" )
+            else if( name == "$floor" )
             {
                 if( checkArgNum( node.sourceLocation(), "$floor", 1, args.size() ) )
                 {
                     var = toReal( toInt( args[ 0 ] ) );
                 }
             }
-            else if( name == "ceiling" )
+            else if( name == "$ceiling" )
             {
                 if( checkArgNum( node.sourceLocation(), "$ceiling", 1, args.size() ) )
                 {
                     var = ceil( args[ 0 ] );
                 }
             }
-            else if( name == "truncate" )
+            else if( name == "$truncate" )
             {
                 if( checkArgNum( node.sourceLocation(), "$truncate", 1, args.size() ) )
                 {
                     var = truncate( args[ 0 ] );
                 }
             }
-            else if( name == "round" )
+            else if( name == "$round" )
             {
                 if( checkArgNum( node.sourceLocation(), "$round", 1, args.size() ) )
                 {
                     throw std::logic_error( "not implemented" );
                 }
             }
-            else if( name == "to_int" )
+            else if( name == "$to_int" )
             {
                 if( checkArgNum( node.sourceLocation(), "$to_int", 1, args.size() ) )
                 {
                     var = toInt( args[ 0 ] );
                 }
             }
-            else if( name == "to_rat" )
+            else if( name == "$to_rat" )
             {
                 if( checkArgNum( node.sourceLocation(), "$to_rat", 1, args.size() ) )
                 {
                     var = toReal( args[ 0 ] );
                 }
             }
-            else if( name == "to_real" )
+            else if( name == "$to_real" )
             {
                 if( checkArgNum( node.sourceLocation(), "$to_real", 1, args.size() ) )
                 {
@@ -897,7 +1027,7 @@ void AstToZ3Visitor::visit( ConstantAtom& node )
     {
         case Atom::Kind::PLAIN:
         {
-            std::string name = node.constant()->innerName();
+            std::string name = node.constant()->normalizedName();
             constant = m_context.constant( name.c_str(), m_variables.constSort().top() );
             break;
         }
@@ -939,40 +1069,161 @@ void AstToZ3Visitor::visit( ConnectiveAtom& node )
     throw std::logic_error( "ConnectiveAtom not implemented" );
 }
 
+void AstToZ3Visitor::visit( TypeAtom& node )
+{
+    node.type()->accept( *this );
+    std::string name = node.atom()->normalizedName();
+    switch( m_stack.topType() )
+    {
+        case Z3_expr::Tag::TTYPE:
+        {
+            m_stack.pop< void >();
+            z3::sort sort = m_context.uninterpreted_sort( name.c_str() );
+            m_variables.pushSort( name, sort );
+            m_stack.push( sort );
+            break;
+        }
+        case Z3_expr::Tag::SORT:
+        {
+            const auto sort = m_stack.pop< z3::sort >();
+            z3::expr expr = m_context.constant( name.c_str(), sort );
+            m_variables.pushUnbound( name, expr );
+            m_stack.push( expr );
+            break;
+        }
+        default:
+        {
+            // TODO: @moosbruggerj fix for thf
+            // missing expr, expr_vector, sort_vector
+            std::stringstream err;
+            err << m_stack.topDescription() << " not supported as type in tuple";
+            m_log.error( { node.sourceLocation() }, err.str() );
+            break;
+        }
+    }
+}
+
+void AstToZ3Visitor::visit( TupleAtom& node )
+{
+    throw std::logic_error( "TupleAtom not implemented" );
+}
+
 void AstToZ3Visitor::visit( ApplyType& node )
 {
+    throw std::logic_error( "ApplyType not implemented" );
 }
 
 void AstToZ3Visitor::visit( NamedType& node )
 {
+    std::string name = node.name()->normalizedName();
+    if( name == "$tType" )
+    {
+        m_stack.push( Z3_expr::Tag::TTYPE );
+    }
+    else
+    {
+        auto sort = m_variables.getSort( name );
+        if( sort )
+        {
+            m_stack.push( *sort );
+        }
+        else
+        {
+            std::stringstream err;
+            err << "type '" << name << "' not found.";
+            m_log.error( { node.sourceLocation() }, err.str() );
+        }
+    }
 }
 
 void AstToZ3Visitor::visit( FunctorType& node )
 {
+    throw std::logic_error( "FunctorType not implemented" );
 }
 
 void AstToZ3Visitor::visit( BinaryType& node )
 {
+    throw std::logic_error( "BinaryType not implemented" );
 }
 
 void AstToZ3Visitor::visit( TupleType& node )
 {
+    auto stackSize = m_stack.size();
+    z3::sort_vector ret( m_context );
+    for( auto& t : *node.tuples() )
+    {
+        t->element()->accept( *this );
+        if( m_stack.size() != stackSize )
+        {
+            switch( m_stack.topType() )
+            {
+                case Z3_expr::Tag::SORT:
+                {
+                    ret.push_back( m_stack.pop< z3::sort >() );
+                    break;
+                }
+                case Z3_expr::Tag::SORT_VECTOR:
+                {
+                    const auto vec = m_stack.pop< z3::sort_vector >();
+                    for( auto e : vec )
+                    {
+                        ret.push_back( e );
+                    }
+                    break;
+                }
+                default:
+                {
+                    // TODO: @moosbruggerj fix for thf
+                    // missing expr, expr_vector, ttype
+                    std::stringstream err;
+                    err << m_stack.topDescription() << " not supported as type in tuple";
+                    m_log.error( { node.sourceLocation() }, err.str() );
+                    break;
+                }
+            }
+        }
+    }
+    std::vector< const char* > names;
+    std::vector< z3::sort > sorts;
+    const auto name = m_variables.getTupleName( ret );
+    z3::func_decl tuple( m_context );
+    const auto tupleWrap = m_variables.getSortConstructor( name );
+    if( tupleWrap )
+    {
+        tuple = *tupleWrap;
+    }
+    else
+    {
+        for( auto s : ret )
+        {
+            sorts.push_back( s );
+            names.push_back( s.name().str().c_str() );
+        }
+        z3::func_decl_vector funcs( m_context );
+        tuple = m_context.tuple_sort( name.c_str(), ret.size(), names.data(), sorts.data(), funcs );
+        m_variables.pushSortConstructor( name, tuple );
+    }
+    m_stack.push( tuple.range() );
 }
 
 void AstToZ3Visitor::visit( QuantifiedType& node )
 {
+    throw std::logic_error( "QuantifiedType not implemented" );
 }
 
 void AstToZ3Visitor::visit( SubType& node )
 {
+    throw std::logic_error( "SubType not implemented" );
 }
 
 void AstToZ3Visitor::visit( RelationType& node )
 {
+    throw std::logic_error( "RelationType not implemented" );
 }
 
 void AstToZ3Visitor::visit( VariableType& node )
 {
+    throw std::logic_error( "VariableType not implemented" );
 }
 
 void AstToZ3Visitor::visit( Identifier& node )
@@ -1020,10 +1271,6 @@ void AstToZ3Visitor::visit( ListLiteral& node )
     }
 
     m_stack.push( vec );
-}
-
-void AstToZ3Visitor::visit( Token& node )
-{
 }
 
 void AstToZ3Visitor::visit( IncludeDefinition& node )

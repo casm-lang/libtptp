@@ -71,7 +71,7 @@ namespace libtptp
         const std::string& name( void ) const;
         const Kind kind( void ) const;
 
-        const std::string innerName( void ) const;
+        const std::string normalizedName( void ) const;
 
         void accept( Visitor& visitor ) override final;
 
