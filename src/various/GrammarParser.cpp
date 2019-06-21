@@ -8506,7 +8506,7 @@ namespace libtptp {
   case 310:
 #line 2204 "../../obj/src/GrammarParser.yy"
     {
-	yylhs.value.as < QuantifiedQuantifier_t > () = std::make_pair(yystack_[0].value.as < Token::Ptr > (), QuantifiedLogic::Quantifier::UNIVERSAL);
+	yylhs.value.as < QuantifiedQuantifier_t > () = std::make_pair(yystack_[0].value.as < Token::Ptr > (), QuantifiedLogic::Quantifier::EXISTENTIAL);
   }
 #line 4860 "GrammarParser.cpp"
     break;
