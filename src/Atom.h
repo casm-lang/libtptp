@@ -64,7 +64,6 @@ namespace libtptp
             PLAIN,
             DEFINED,
             SYSTEM,
-            TYPE,
         };
 
         using Ptr = std::shared_ptr< Atom >;
@@ -221,7 +220,7 @@ namespace libtptp
       private:
         const Identifier::Ptr m_atom;
         const Token::Ptr m_colon;
-        const std::shared_ptr< Type >& m_type;
+        const std::shared_ptr< Type > m_type;
     };
 
     using TypeAtoms = NodeList< TypeAtom >;

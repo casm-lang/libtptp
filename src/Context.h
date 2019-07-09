@@ -59,6 +59,8 @@ namespace libtptp
             CNF,
             TCF,
             CREATE_BOUND,
+            NEEDS_NEGATION,
+            DISCARD_TUPLE,
         };
 
         using FormulaFlags = libstdhl::Enum::Flags< FormulaFlag >;

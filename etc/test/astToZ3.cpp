@@ -58,11 +58,18 @@ fof(constant, theorem, x).
 )***";
 
 static const std::string source_fof_de_morgan = R"***(
-fof(demorgan, conjecture, ~((~x | ~y) <=> ~(x & y))).
+fof(demorgan, negated_conjecture, ~((~x | ~y) <=> ~(x & y))).
 )***";
 
 static const std::string source_tff_quantified = R"***(
 tff(quantified, conjecture, ?[X: $int, Y: $int]: $sum(X, 1) = Y).
+)***";
+
+static const std::string source_tff_basic_function = R"***(
+tff(func, type, f: $int > $o).
+tff(int_var, type, i: $int).
+tff(func_use, axiom, f(1)).
+tff(inverse_func, theorem, ~f(2)).
 )***";
 
 SOURCE_TEST( z3, AstToZ3Pass, source_fof_constant, true, _fof_constant, );
@@ -70,6 +77,8 @@ SOURCE_TEST( z3, AstToZ3Pass, source_fof_constant, true, _fof_constant, );
 SOURCE_TEST( z3, AstToZ3Pass, source_fof_de_morgan, true, _fof_de_morgan, );
 
 SOURCE_TEST( z3, AstToZ3Pass, source_tff_quantified, true, _tff_quantified, );
+
+SOURCE_TEST( z3, AstToZ3Pass, source_tff_basic_function, true, _tff_basic_function, );
 
 //
 //  Local variables:
