@@ -84,6 +84,65 @@ TEST( libtptp, z3_demorgan )
     }
 }
 
+TEST( libtptp, z3_tuples_behaviour )
+{
+    z3::context c;
+
+    const char* names[] = { "i1", "i2" };
+    z3::sort sorts[ 2 ] = { c.int_sort(), c.int_sort() };
+    z3::func_decl_vector funcs( c );
+
+    z3::expr in1 = c.int_const( "in1" );
+    z3::expr in2 = c.int_const( "in2" );
+
+    const auto tuple_fun = c.tuple_sort( "tuple", 2, names, sorts, funcs );
+
+    const auto const3 = tuple_fun( in1, in2 );
+
+    z3::func_decl f = c.function( "some_fun", tuple_fun.range(), c.bool_sort() );
+    z3::expr const1 = c.constant( "const1", tuple_fun.range() );
+
+    const auto tuple_fun2 = c.tuple_sort( "tuple2", 2, names, sorts, funcs );
+    z3::expr const2 = c.constant( "const2", tuple_fun2.range() );
+    z3::solver s( c );
+
+    const auto tuple_fun_2 = c.tuple_sort( "tuple", 2, names, sorts, funcs );
+    const auto const4 = tuple_fun_2( in1, in2 );
+
+    const char* names2[] = { "i1", "i2", "i3" };
+    z3::sort sorts2[ 3 ] = { c.int_sort(), c.int_sort(), c.int_sort() };
+
+    const auto tuple_fun3 = c.tuple_sort( "tuple", 3, names2, sorts2, funcs );
+    const auto const5 = tuple_fun3( in1, in2, in1 );
+
+    s.add( f( const1 ) );
+    EXPECT_THROW( s.add( f( const2 ) ), z3::exception );
+    s.add( f( const3 ) );
+    s.add( f( const4 ) );
+    // exits with assertion validation
+    // s.add( f( const5 ) );
+
+    switch( s.check() )
+    {
+        case z3::unsat:
+        {
+            std::cout << "unsat";
+            break;
+        }
+        case z3::sat:
+        {
+            std::cout << "sat";
+            break;
+        }
+        case z3::unknown:
+        {
+            std::cout << "unknown\n";
+            break;
+        }
+    }
+    std::cout << s.get_model() << std::endl;
+}
+
 //
 //  Local variables:
 //  mode: c++
