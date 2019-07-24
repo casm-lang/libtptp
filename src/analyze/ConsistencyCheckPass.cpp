@@ -40,69 +40,71 @@
 //  statement from your version.
 //
 
-#include <libstdhl/Test>
+#include "ConsistencyCheckPass.h"
 
-#include <libpass/libpass>
+#include <libtptp/Atom>
+#include <libtptp/Formula>
+#include <libtptp/Logic>
+#include <libtptp/Node>
+#include <libtptp/Specification>
+#include <libtptp/Term>
 
-#include "macros.cpp"
-#include "resources/tff_formula.cpp"
+#include <libpass/PassLogger>
+#include <libpass/PassRegistry>
 
-#include "main.h"
+#include <iostream>
 
 using namespace libtptp;
-using namespace libpass;
 
-static const std::string source_fof_constant = R"***(
-fof(constant, theorem, x).
-)***";
+char ConsistencyCheckPass::id = 0;
 
-static const std::string source_fof_de_morgan = R"***(
-fof(demorgan, negated_conjecture, ~((~x | ~y) <=> ~(x & y))).
-)***";
+static libpass::PassRegistration< ConsistencyCheckPass > PASS(
+    "ConsistencyCheckPass", "TBA", "tptp-cc", 0 );
 
-static const std::string source_tff_quantified = R"***(
-tff(quantified, conjecture, ?[X: $int, Y: $int]: $sum(X, 1) = Y).
-)***";
+//
+//
+// ConsistencyCheckVisitor
+//
 
-static const std::string source_tff_basic_function = R"***(
-tff(func, type, f: $int > $o).
-tff(int_var, type, i: $int).
-tff(func_use, axiom, f(1)).
-tff(inverse_func, theorem, ~f(2)).
-)***";
+class ConsistencyCheckVisitor final : public RecursiveVisitor
+{
+  public:
+    ConsistencyCheckVisitor( void );
+};
 
-static const std::string source_tff_polymorphic_types = R"***(
-tff(pol_type, type, pol: $tType > $tType).
-tff(instance_var, type, ii: pol($int)).
-tff(func_pol, type, fi: pol($int) > $o).
-tff(use, type, fi(ii)).
-)***";
+ConsistencyCheckVisitor::ConsistencyCheckVisitor( void )
+{
+}
 
-static const std::string source_tff_multiple_polymorphic_types = R"***(
-tff(pol_type, type, pol: ($tType * $tType * $tType) > $tType).
-tff(instance_var, type, ii: pol($int, $i, $o)).
-tff(func_pol, type, fi: pol($int, $i, $o) > $o).
-tff(use, type, fi(ii)).
-)***";
+//
+//
+// ConsistencyCheckPass
+//
 
-SOURCE_TEST( z3, AstToZ3Pass, source_fof_constant, true, _fof_constant, );
+void ConsistencyCheckPass::usage( libpass::PassUsage& pu )
+{
+    pu.require< SourceToAstPass >();
+}
 
-SOURCE_TEST( z3, AstToZ3Pass, source_fof_de_morgan, true, _fof_de_morgan, );
+u1 ConsistencyCheckPass::run( libpass::PassResult& pr )
+{
+    libpass::PassLogger log( &id, stream() );
 
-SOURCE_TEST( z3, AstToZ3Pass, source_tff_quantified, true, _tff_quantified, );
+    const auto data = pr.output< SourceToAstPass >();
+    const auto specification = data->specification();
 
-SOURCE_TEST( z3, AstToZ3Pass, source_tff_basic_function, true, _tff_basic_function, );
+    ConsistencyCheckVisitor visitor{};
+    specification->accept( visitor );
 
-SOURCE_TEST( z3, AstToZ3Pass, tff_small_example, true, _tff_small, );
+    if( log.errors() > 0 )
+    {
+        return false;
+    }
 
-SOURCE_TEST( z3, AstToZ3Pass, tff_test_basic, true, _tff_basic, );
+    pr.setOutput< ConsistencyCheckPass >( specification );
 
-SOURCE_TEST( z3, AstToZ3Pass, source_tff_polymorphic_types, true, _tff_polymorph, );
-
-SOURCE_TEST(
-    z3, AstToZ3Pass, source_tff_multiple_polymorphic_types, true, _tff_multiple_polymorph, );
-
-// SOURCE_TEST( z3, AstToZ3Pass, tff_test_tf1, true, _tff_tf1, );
+    return true;
+}
 
 //
 //  Local variables:

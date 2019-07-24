@@ -40,69 +40,39 @@
 //  statement from your version.
 //
 
-#include <libstdhl/Test>
+#ifndef _LIBTPTP_CONSISTENCY_CHECK_PASS_H_
+#define _LIBTPTP_CONSISTENCY_CHECK_PASS_H_
 
-#include <libpass/libpass>
+#include <libpass/Pass>
+#include <libpass/PassResult>
+#include <libpass/PassUsage>
 
-#include "macros.cpp"
-#include "resources/tff_formula.cpp"
+#include <libtptp/Visitor>
+#include <libtptp/transform/SourceToAstPass>
 
-#include "main.h"
+/**
+   @brief    TODO
 
-using namespace libtptp;
-using namespace libpass;
+   TODO
+*/
 
-static const std::string source_fof_constant = R"***(
-fof(constant, theorem, x).
-)***";
+namespace libtptp
+{
+    class ConsistencyCheckPass final : public libpass::Pass
+    {
+      public:
+        static char id;
 
-static const std::string source_fof_de_morgan = R"***(
-fof(demorgan, negated_conjecture, ~((~x | ~y) <=> ~(x & y))).
-)***";
+        void usage( libpass::PassUsage& pu ) override;
 
-static const std::string source_tff_quantified = R"***(
-tff(quantified, conjecture, ?[X: $int, Y: $int]: $sum(X, 1) = Y).
-)***";
+        u1 run( libpass::PassResult& pr ) override;
 
-static const std::string source_tff_basic_function = R"***(
-tff(func, type, f: $int > $o).
-tff(int_var, type, i: $int).
-tff(func_use, axiom, f(1)).
-tff(inverse_func, theorem, ~f(2)).
-)***";
+      public:
+        using Output = SourceToAstPass::Output;
+    };
+}
 
-static const std::string source_tff_polymorphic_types = R"***(
-tff(pol_type, type, pol: $tType > $tType).
-tff(instance_var, type, ii: pol($int)).
-tff(func_pol, type, fi: pol($int) > $o).
-tff(use, type, fi(ii)).
-)***";
-
-static const std::string source_tff_multiple_polymorphic_types = R"***(
-tff(pol_type, type, pol: ($tType * $tType * $tType) > $tType).
-tff(instance_var, type, ii: pol($int, $i, $o)).
-tff(func_pol, type, fi: pol($int, $i, $o) > $o).
-tff(use, type, fi(ii)).
-)***";
-
-SOURCE_TEST( z3, AstToZ3Pass, source_fof_constant, true, _fof_constant, );
-
-SOURCE_TEST( z3, AstToZ3Pass, source_fof_de_morgan, true, _fof_de_morgan, );
-
-SOURCE_TEST( z3, AstToZ3Pass, source_tff_quantified, true, _tff_quantified, );
-
-SOURCE_TEST( z3, AstToZ3Pass, source_tff_basic_function, true, _tff_basic_function, );
-
-SOURCE_TEST( z3, AstToZ3Pass, tff_small_example, true, _tff_small, );
-
-SOURCE_TEST( z3, AstToZ3Pass, tff_test_basic, true, _tff_basic, );
-
-SOURCE_TEST( z3, AstToZ3Pass, source_tff_polymorphic_types, true, _tff_polymorph, );
-
-SOURCE_TEST(
-    z3, AstToZ3Pass, source_tff_multiple_polymorphic_types, true, _tff_multiple_polymorph, );
-
-// SOURCE_TEST( z3, AstToZ3Pass, tff_test_tf1, true, _tff_tf1, );
+#endif  // _LIBTPTP_CONSISTENCY_CHECK_PASS_H_
 
 //
 //  Local variables:

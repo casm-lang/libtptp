@@ -42,7 +42,7 @@
 
 #include "AstToZ3Pass.h"
 
-#include <libtptp/transform/SourceToAstPass>
+#include <libtptp/analyze/ConsistencyCheckPass>
 
 #include <libtptp/Logger>
 
@@ -1896,14 +1896,14 @@ bool AstToZ3Visitor::checkArgNum(
 
 void AstToZ3Pass::usage( libpass::PassUsage& pu )
 {
-    pu.require< SourceToAstPass >();
+    pu.require< ConsistencyCheckPass >();
 }
 
 u1 AstToZ3Pass::run( libpass::PassResult& pr )
 {
     libtptp::Logger log( &id, stream() );
 
-    const auto& data = pr.output< SourceToAstPass >();
+    const auto& data = pr.output< ConsistencyCheckPass >();
     const auto& specification = data->specification();
 
     AstToZ3Visitor visitor( log );

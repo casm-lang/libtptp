@@ -66,6 +66,7 @@ add_library( ${PROJECT}-cpp OBJECT
   Type.cpp
   Visitor.cpp
 
+  analyze/ConsistencyCheckPass.cpp
   analyze/DumpDebugPass.cpp
 
   transform/AstDumpDotPass.cpp
@@ -156,6 +157,7 @@ ecm_generate_headers( ${PROJECT}_ANALYZE_HEADERS_CPP
   ORIGINAL
     CAMELCASE
   HEADER_NAMES
+    ConsistencyCheckPass
     DumpDebugPass
   PREFIX
     ${PROJECT}/analyze
