@@ -65,16 +65,18 @@ static libpass::PassRegistration< AstToZ3Pass > PASS(
 class VariableManager
 {
   private:
-    std::vector< std::map< std::string, z3::expr > > m_bound_vars;
-    std::map< std::string, z3::expr > m_unbound_vars;
+    z3::context& m_context;  // is only valid while AstToZ3Visitor instance is valid
+    std::vector< std::map< std::string, z3::expr > > m_boundVars;
+    std::map< std::string, z3::expr > m_unboundVars;
 
     std::map< std::string, z3::sort > m_sorts;
-    std::map< std::string, z3::func_decl > m_sort_constructors;
+    std::map< std::string, unsigned int > m_polymorphicSorts;
+    std::map< std::string, z3::func_decl > m_sortConstructors;
     // TODO: @moosbruggerj fix type for higer order formulae, partial variable binding enable
     std::map< std::string, z3::func_decl > m_functions;
     z3::sort m_universal;
-    libstdhl::Stack< z3::sort > m_const_sort;
-    libstdhl::Stack< std::string > m_symbol_names;
+    libstdhl::Stack< z3::sort > m_constSort;
+    libstdhl::Stack< std::string > m_symbolNames;
 
   public:
     VariableManager( z3::context& context );
@@ -83,20 +85,25 @@ class VariableManager
     void popScope( void );
 
     const libstdhl::Optional< const z3::expr > get( const std::string& name );
-    std::pair< typename decltype( m_unbound_vars )::iterator, bool > pushUnbound(
+    std::pair< typename decltype( m_unboundVars )::iterator, bool > pushUnbound(
         const std::string& name, const z3::expr& var );
-    std::pair< typename decltype( m_bound_vars )::value_type::iterator, bool > pushBound(
+    std::pair< typename decltype( m_boundVars )::value_type::iterator, bool > pushBound(
         const std::string& name, const z3::expr& var );
 
     const libstdhl::Optional< const z3::sort > getSort( const std::string& name );
     std::pair< typename decltype( m_sorts )::iterator, bool > pushSort(
         const std::string& name, const z3::sort& sort );
 
+    const libstdhl::Optional< const z3::sort > getSort(
+        const std::string& name, z3::sort_vector args );
+    std::pair< typename decltype( m_polymorphicSorts )::iterator, bool > pushSort(
+        const std::string& name, const unsigned int arity );
+
     libstdhl::Stack< z3::sort >& constSort( void );
     const z3::sort& universalSort( void );
 
     const libstdhl::Optional< const z3::func_decl > getSortConstructor( const std::string& name );
-    std::pair< typename decltype( m_sort_constructors )::iterator, bool > pushSortConstructor(
+    std::pair< typename decltype( m_sortConstructors )::iterator, bool > pushSortConstructor(
         const std::string& name, const z3::func_decl& function );
 
     const libstdhl::Optional< const z3::func_decl > getFunction( const std::string& name );
@@ -107,6 +114,9 @@ class VariableManager
 
     libstdhl::Stack< std::string >& symbolNames( void );
     std::string getFunctionName( const z3::sort_vector& domain, const z3::sort& range );
+
+  private:
+    std::string getParametricSortName( const std::string name, const z3::sort_vector args );
 };
 
 class AstToZ3Visitor : public RecursiveVisitor
@@ -122,6 +132,7 @@ class AstToZ3Visitor : public RecursiveVisitor
             SORT_VECTOR,
             FUNC_DECL,
             TTYPE,
+            TTYPE_VECTOR,
         } tag;
 
       private:
@@ -132,6 +143,7 @@ class AstToZ3Visitor : public RecursiveVisitor
             z3::sort* sort;
             z3::sort_vector* sort_vec;
             z3::func_decl* func_decl;
+            int vector_size;
             void* none;
         };
 
@@ -143,6 +155,7 @@ class AstToZ3Visitor : public RecursiveVisitor
         explicit Z3_expr( const z3::sort_vector&& expr );
         explicit Z3_expr( const z3::func_decl&& expr );
         explicit Z3_expr( Tag tag );
+        explicit Z3_expr( int size );  // constructs TTYPE_VECTOR
 
         void free() const;
 
@@ -151,9 +164,11 @@ class AstToZ3Visitor : public RecursiveVisitor
         explicit operator z3::sort( void ) const;
         explicit operator z3::sort_vector( void ) const;
         explicit operator z3::func_decl( void ) const;
+        explicit operator int( void ) const;
 
         void check_none( void ) const;
         std::string description( void ) const;
+        static std::string description( Tag tag );
     };
 
     class Z3Stack : public Stack< Z3_expr >
@@ -167,15 +182,8 @@ class AstToZ3Visitor : public RecursiveVisitor
         template < typename T >
         T pop( void )
         {
-            auto value = std::move( Stack::pop() );
+            auto value = Stack::pop();
             return static_cast< T >( value );
-        }
-
-        template <>
-        void pop< void >( void )
-        {
-            const auto value = Stack::pop();
-            value.check_none();
         }
 
         template < typename T >
@@ -302,7 +310,8 @@ z3::expr truncate( z3::expr e )
 }
 
 VariableManager::VariableManager( z3::context& context )
-: m_universal( context.uninterpreted_sort( "$i" ) )
+: m_context( context )
+, m_universal( context.uninterpreted_sort( "$i" ) )
 {
     m_sorts.emplace( "$i", m_universal );
     m_sorts.emplace( "$iType", m_universal );
@@ -315,23 +324,23 @@ VariableManager::VariableManager( z3::context& context )
     m_sorts.emplace( "$int", context.int_sort() );
 
     // set up const sort stack
-    m_const_sort.push( s_bool );
+    m_constSort.push( s_bool );
 }
 
 void VariableManager::pushScope( void )
 {
-    m_bound_vars.emplace_back();
+    m_boundVars.emplace_back();
 }
 
 void VariableManager::popScope( void )
 {
-    m_bound_vars.pop_back();
+    m_boundVars.pop_back();
 }
 
 // const z3::expr& would be better, but c++ doesn't allow it
 const libstdhl::Optional< const z3::expr > VariableManager::get( const std::string& name )
 {
-    for( auto it = m_bound_vars.rbegin(); it != m_bound_vars.rend(); ++it )
+    for( auto it = m_boundVars.rbegin(); it != m_boundVars.rend(); ++it )
     {
         if( it->find( name ) != it->end() )
         {
@@ -339,24 +348,24 @@ const libstdhl::Optional< const z3::expr > VariableManager::get( const std::stri
         }
     }
 
-    if( m_unbound_vars.find( name ) != m_unbound_vars.end() )
+    if( m_unboundVars.find( name ) != m_unboundVars.end() )
     {
-        return m_unbound_vars.at( name );
+        return m_unboundVars.at( name );
     }
 
     return libstdhl::Optional< const z3::expr >();
 }
 
-std::pair< typename decltype( VariableManager::m_unbound_vars )::iterator, bool >
+std::pair< typename decltype( VariableManager::m_unboundVars )::iterator, bool >
 VariableManager::pushUnbound( const std::string& name, const z3::expr& var )
 {
-    return m_unbound_vars.emplace( name, var );
+    return m_unboundVars.emplace( name, var );
 }
 
-std::pair< typename decltype( VariableManager::m_bound_vars )::value_type::iterator, bool >
+std::pair< typename decltype( VariableManager::m_boundVars )::value_type::iterator, bool >
 VariableManager::pushBound( const std::string& name, const z3::expr& var )
 {
-    return m_bound_vars.rbegin()->emplace( name, var );
+    return m_boundVars.rbegin()->emplace( name, var );
 }
 
 const libstdhl::Optional< const z3::sort > VariableManager::getSort( const std::string& name )
@@ -375,9 +384,34 @@ VariableManager::pushSort( const std::string& name, const z3::sort& sort )
     return m_sorts.emplace( name, sort );
 }
 
+const libstdhl::Optional< const z3::sort > VariableManager::getSort(
+    const std::string& name, z3::sort_vector args )
+{
+    if( m_polymorphicSorts.find( name ) == m_polymorphicSorts.end() ||
+        m_polymorphicSorts.at( name ) != args.size() )
+    {
+        return libstdhl::Optional< const z3::sort >();
+    }
+    std::string sortName = getParametricSortName( name, args );
+
+    if( m_sorts.find( sortName ) != m_sorts.end() )
+    {
+        return m_sorts.at( sortName );
+    }
+    z3::sort sort = m_context.uninterpreted_sort( sortName.c_str() );
+    m_sorts.emplace( sortName, sort );
+    return sort;
+}
+
+std::pair< typename decltype( VariableManager::m_polymorphicSorts )::iterator, bool >
+VariableManager::pushSort( const std::string& name, const unsigned int arity )
+{
+    return m_polymorphicSorts.emplace( name, arity );
+}
+
 libstdhl::Stack< z3::sort >& VariableManager::constSort( void )
 {
-    return m_const_sort;
+    return m_constSort;
 }
 
 const z3::sort& VariableManager::universalSort( void )
@@ -388,18 +422,18 @@ const z3::sort& VariableManager::universalSort( void )
 const libstdhl::Optional< const z3::func_decl > VariableManager::getSortConstructor(
     const std::string& name )
 {
-    if( m_sort_constructors.find( name ) != m_sort_constructors.end() )
+    if( m_sortConstructors.find( name ) != m_sortConstructors.end() )
     {
-        return m_sort_constructors.at( name );
+        return m_sortConstructors.at( name );
     }
 
     return libstdhl::Optional< const z3::func_decl >();
 }
 
-std::pair< typename decltype( VariableManager::m_sort_constructors )::iterator, bool >
+std::pair< typename decltype( VariableManager::m_sortConstructors )::iterator, bool >
 VariableManager::pushSortConstructor( const std::string& name, const z3::func_decl& function )
 {
-    return m_sort_constructors.emplace( name, function );
+    return m_sortConstructors.emplace( name, function );
 }
 
 const libstdhl::Optional< const z3::func_decl > VariableManager::getFunction(
@@ -433,7 +467,7 @@ std::string VariableManager::getTupleName( const z3::sort_vector& sorts )
 
 libstdhl::Stack< std::string >& VariableManager::symbolNames( void )
 {
-    return m_symbol_names;
+    return m_symbolNames;
 }
 
 std::string VariableManager::getFunctionName( const z3::sort_vector& domain, const z3::sort& range )
@@ -456,6 +490,19 @@ std::string VariableManager::getFunctionName( const z3::sort_vector& domain, con
         name = basename.str() + ss.str();
     }
     return name;
+}
+
+std::string VariableManager::getParametricSortName(
+    const std::string name, const z3::sort_vector args )
+{
+    std::stringstream basename;
+    basename << "__par/" << name << "(";
+    for( auto s : args )
+    {
+        basename << "/" << s.name().str();
+    }
+    basename << ")";
+    return basename.str();
 }
 
 AstToZ3Visitor::Z3_expr::Z3_expr( const z3::expr&& expr )
@@ -498,6 +545,12 @@ AstToZ3Visitor::Z3_expr::Z3_expr( Z3_expr::Tag tag )
     }
 }
 
+AstToZ3Visitor::Z3_expr::Z3_expr( int size )
+: tag( Tag::TTYPE_VECTOR )
+, vector_size( size )
+{
+}
+
 void AstToZ3Visitor::Z3_expr::free() const
 {
     switch( tag )
@@ -528,6 +581,8 @@ void AstToZ3Visitor::Z3_expr::free() const
             break;
         }
         case Tag::TTYPE:
+            [[fallthrough]];
+        case Tag::TTYPE_VECTOR:
         {
             break;
         }
@@ -543,6 +598,11 @@ void AstToZ3Visitor::Z3_expr::check_none( void ) const
 }
 
 std::string AstToZ3Visitor::Z3_expr::description( void ) const
+{
+    return Z3_expr::description( tag );
+}
+
+std::string AstToZ3Visitor::Z3_expr::description( Tag tag )
 {
     switch( tag )
     {
@@ -569,6 +629,10 @@ std::string AstToZ3Visitor::Z3_expr::description( void ) const
         case Tag::TTYPE:
         {
             return "ttype";
+        }
+        case Tag::TTYPE_VECTOR:
+        {
+            return "ttype vector";
         }
     }
 }
@@ -626,6 +690,22 @@ AstToZ3Visitor::Z3_expr::operator z3::func_decl() const
     auto r = *func_decl;
     delete func_decl;
     return r;
+}
+
+AstToZ3Visitor::Z3_expr::operator int() const
+{
+    if( tag != Tag::TTYPE_VECTOR )
+    {
+        throw std::domain_error( "union is not of stackType ttype_vector" );
+    }
+    return vector_size;
+}
+
+template <>
+void AstToZ3Visitor::Z3Stack::pop< void >( void )
+{
+    const auto value = Stack::pop();
+    value.check_none();
 }
 
 AstToZ3Visitor::AstToZ3Visitor( libtptp::Logger log )
@@ -703,6 +783,7 @@ void AstToZ3Visitor::visit( TypedFirstOrderFormula& node )
         std::stringstream ss;
         ss << "stack not empty after formula traversal, at TFF." << std::endl;
         ss << m_stack.topDescription();
+        m_log.error( { node.sourceLocation() }, ss.str() );
         throw std::logic_error( ss.str() );
     }
 }
@@ -1321,6 +1402,11 @@ void AstToZ3Visitor::visit( TypeAtom& node )
             // everyting handled by BinaryType, because name is known there
             break;
         }
+        case Z3_expr::Tag::TTYPE_VECTOR:
+        {
+            // everyting handled by BinaryType, because name is known there
+            break;
+        }
         default:
         {
             // TODO: @moosbruggerj fix for thf
@@ -1410,7 +1496,27 @@ void AstToZ3Visitor::visit( NamedType& node )
 
 void AstToZ3Visitor::visit( FunctorType& node )
 {
-    throw std::logic_error( "FunctorType not implemented" );
+    std::string name = node.name()->normalizedName();
+    z3::sort_vector args( m_context );
+    for( auto arg : *node.arguments() )
+    {
+        arg->element()->accept( *this );
+        args.push_back( m_stack.pop< z3::sort >() );
+    }
+    auto sort = m_variables.getSort( name, args );
+    if( !sort )
+    {
+        std::stringstream err;
+        err << "parametric sort '" << node.name()->name() << "' not found.";
+        m_log.error( { node.sourceLocation() }, err.str() );
+        std::stringstream genName;
+        genName << "__not_found(" << name << ")";
+        m_stack.push( m_context.uninterpreted_sort( genName.str().c_str() ) );
+    }
+    else
+    {
+        m_stack.push( *sort );
+    }
 }
 
 void AstToZ3Visitor::visit( BinaryType& node )
@@ -1431,45 +1537,105 @@ void AstToZ3Visitor::visit( BinaryType& node )
             z3::func_decl result( m_context );
             // TODO: @moosbruggerj fix ttype for parameterized types
             node.right()->accept( *this );
-            auto right = m_stack.pop< z3::sort >();
-
-            node.left()->accept( *this );
             switch( m_stack.topType() )
             {
                 case Z3_expr::Tag::SORT:
                 {
-                    // TODO: @moosbruggerj fix name
-                    auto sort = m_stack.pop< z3::sort >();
-                    if( !definedName )
+                    auto right = m_stack.pop< z3::sort >();
+
+                    node.left()->accept( *this );
+                    switch( m_stack.topType() )
                     {
-                        z3::sort_vector domain( m_context );
-                        domain.push_back( sort );
-                        name = m_variables.getFunctionName( domain, right );
+                        case Z3_expr::Tag::SORT:
+                        {
+                            // TODO: @moosbruggerj fix name
+                            auto sort = m_stack.pop< z3::sort >();
+                            if( !definedName )
+                            {
+                                z3::sort_vector domain( m_context );
+                                domain.push_back( sort );
+                                name = m_variables.getFunctionName( domain, right );
+                            }
+                            result = z3::function( name.c_str(), sort, right );
+                            m_variables.pushFunction( name, result );
+                            break;
+                        }
+                        case Z3_expr::Tag::SORT_VECTOR:
+                        {
+                            auto domain = m_stack.pop< z3::sort_vector >();
+                            if( !definedName )
+                            {
+                                name = m_variables.getFunctionName( domain, right );
+                            }
+                            result = z3::function( name, domain, right );
+                            m_variables.pushFunction( name, result );
+                            break;
+                        }
+                        default:  // default arguments
+                        {
+                            std::stringstream err;
+                            err << m_stack.topDescription() << " not supported as parameter type";
+                            m_log.error( { node.sourceLocation() }, err.str() );
+                            break;
+                        }
                     }
-                    result = z3::function( name.c_str(), sort, right );
-                    m_variables.pushFunction( name, result );
+                    m_stack.push( result );
                     break;
                 }
-                case Z3_expr::Tag::SORT_VECTOR:
+                case Z3_expr::Tag::TTYPE:
                 {
-                    auto domain = m_stack.pop< z3::sort_vector >();
-                    if( !definedName )
+                    m_stack.discardTop();
+
+                    node.left()->accept( *this );
+                    switch( m_stack.topType() )
                     {
-                        name = m_variables.getFunctionName( domain, right );
+                        case Z3_expr::Tag::TTYPE:
+                        {
+                            // TODO: @moosbruggerj fix name
+                            m_stack.discardTop();
+                            if( !definedName )
+                            {
+                                m_log.error(
+                                    { node.sourceLocation() },
+                                    "polymorphic sort has no name. Higher order polymorphic types "
+                                    "not supported." );
+                            }
+                            m_variables.pushSort( name, 1 );
+                            break;
+                        }
+                        case Z3_expr::Tag::TTYPE_VECTOR:
+                        {
+                            auto args = m_stack.pop< int >();
+                            if( !definedName )
+                            {
+                                m_log.error(
+                                    { node.sourceLocation() },
+                                    "polymorphic sort has no name. Higher order polymorphic types "
+                                    "not supported." );
+                            }
+                            m_variables.pushSort( name, args );
+                            break;
+                        }
+                        default:  // default arguments
+                        {
+                            std::stringstream err;
+                            err << m_stack.topDescription() << " not supported as parameter type";
+                            m_log.error( { node.sourceLocation() }, err.str() );
+                            break;
+                        }
                     }
-                    result = z3::function( name, domain, right );
-                    m_variables.pushFunction( name, result );
+                    m_stack.push( 0 );
                     break;
                 }
-                default:
+                default:  // default right argument
                 {
                     std::stringstream err;
-                    err << m_stack.topDescription() << " not supported as parameter type";
+                    err << m_stack.topDescription()
+                        << " not supported as result type in mapping BinaryType.";
                     m_log.error( { node.sourceLocation() }, err.str() );
                     break;
                 }
             }
-            m_stack.push( result );
             break;
         }
         case BinaryType::Kind::UNION:
@@ -1552,14 +1718,70 @@ void AstToZ3Visitor::visit( SubType& node )
 
 void AstToZ3Visitor::visit( RelationType& node )
 {
-    z3::sort_vector result( m_context );
+    z3::sort_vector sorts( m_context );
+    unsigned int args = 0;
+    bool first = true;
+    Z3_expr::Tag type = Z3_expr::Tag::TTYPE_VECTOR;
     for( auto& v : *node.elements() )
     {
         v->element()->accept( *this );
-        // TODO: @moosbruggerj fix ttype, func_decl, expr for thf
-        result.push_back( m_stack.pop< z3::sort >() );
+        if( first )
+        {
+            first = false;
+            type = m_stack.topType();
+        }
+        if( type != m_stack.topType() )
+        {
+            std::stringstream errstr;
+            errstr << "RelationType must have same individual types. Type mismatch."
+                   << m_stack.topDescription() << " is not " << Z3_expr::description( type ) << ".";
+            m_log.error( { node.sourceLocation() }, errstr.str() );
+            break;
+        }
+        switch( m_stack.topType() )
+        {
+            case Z3_expr::Tag::TTYPE:
+            {
+                m_stack.discardTop();
+                ++args;
+                break;
+            }
+            case Z3_expr::Tag::SORT:
+            {
+                sorts.push_back( m_stack.pop< z3::sort >() );
+                break;
+            }
+            // TODO: @moosbruggerj fix ttype, func_decl, expr for thf
+            default:
+            {
+                std::stringstream errstr;
+                errstr << m_stack.topDescription() << " is not supported as type in RelationType.";
+                m_log.error( { node.sourceLocation() }, errstr.str() );
+                break;
+            }
+        }
     }
-    m_stack.push( result );
+    switch( type )
+    {
+        case Z3_expr::Tag::TTYPE:
+        {
+            m_stack.push( args );
+            break;
+        }
+        case Z3_expr::Tag::SORT:
+        {
+            m_stack.push( sorts );
+            break;
+        }
+        // TODO: @moosbruggerj fix ttype, func_decl, expr for thf
+        default:
+        {
+            std::stringstream errstr;
+            errstr << m_stack.topDescription() << " is not supported as type in RelationType.";
+            m_log.error( { node.sourceLocation() }, errstr.str() );
+            break;
+        }
+    }
 }
 
 void AstToZ3Visitor::visit( VariableType& node )

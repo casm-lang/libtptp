@@ -47,6 +47,7 @@
 #include <libtptp/transform/AstToZ3Pass>
 
 #include "macros.cpp"
+#include "resources/tff_formula.cpp"
 
 #include "main.h"
 
@@ -72,6 +73,20 @@ tff(func_use, axiom, f(1)).
 tff(inverse_func, theorem, ~f(2)).
 )***";
 
+static const std::string source_tff_polymorphic_types = R"***(
+tff(pol_type, type, pol: $tType > $tType).
+tff(instance_var, type, ii: pol($int)).
+tff(func_pol, type, fi: pol($int) > $o).
+tff(use, type, fi(ii)).
+)***";
+
+static const std::string source_tff_multiple_polymorphic_types = R"***(
+tff(pol_type, type, pol: ($tType * $tType * $tType) > $tType).
+tff(instance_var, type, ii: pol($int, $i, $o)).
+tff(func_pol, type, fi: pol($int, $i, $o) > $o).
+tff(use, type, fi(ii)).
+)***";
+
 SOURCE_TEST( z3, AstToZ3Pass, source_fof_constant, true, _fof_constant, );
 
 SOURCE_TEST( z3, AstToZ3Pass, source_fof_de_morgan, true, _fof_de_morgan, );
@@ -79,6 +94,17 @@ SOURCE_TEST( z3, AstToZ3Pass, source_fof_de_morgan, true, _fof_de_morgan, );
 SOURCE_TEST( z3, AstToZ3Pass, source_tff_quantified, true, _tff_quantified, );
 
 SOURCE_TEST( z3, AstToZ3Pass, source_tff_basic_function, true, _tff_basic_function, );
+
+SOURCE_TEST( z3, AstToZ3Pass, tff_small_example, true, _tff_small, );
+
+SOURCE_TEST( z3, AstToZ3Pass, tff_test_basic, true, _tff_basic, );
+
+SOURCE_TEST( z3, AstToZ3Pass, source_tff_polymorphic_types, true, _tff_polymorph, );
+
+SOURCE_TEST(
+    z3, AstToZ3Pass, source_tff_multiple_polymorphic_types, true, _tff_multiple_polymorph, );
+
+// SOURCE_TEST( z3, AstToZ3Pass, tff_test_tf1, true, _tff_tf1, );
 
 //
 //  Local variables:
