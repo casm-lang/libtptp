@@ -179,22 +179,28 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Setup
+      shell: cmd
       run: |
         choco install z3
     - name: Fetching
+      shell: cmd
       env:
         ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
       run:  |
         make C=gcc debug-fetch
     - name: Dependencies
+      shell: cmd
       run:  |
         make C=gcc debug-deps
     - name: Building
+      shell: cmd
       run:  |
         make C=gcc debug-build
     - name: Tests
+      shell: cmd
       run:  |
         make C=gcc debug-test
     - name: Benchmark
+      shell: cmd
       run:  |
         make C=gcc debug-benchmark
