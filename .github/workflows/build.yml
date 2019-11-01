@@ -181,8 +181,10 @@ jobs:
     - name: Setup
       run: |
         Invoke-WebRequest https://github.com/Z3Prover/z3/releases/download/z3-4.8.6/z3-4.8.6-x64-win.zip -O C:\\z3.zip
-        Expand-Archive c:\\z3.zip -DestinationPath C:\\z3
-        dir C:\\z3
+        Expand-Archive c:\\z3.zip -DestinationPath C:\\
+        Move-Item C:\\z3-4.8.6-x64-win\\bin\\*     C:\\ProgramData\\chocolatey\\bin\\
+        Move-Item C:\\z3-4.8.6-x64-win\\include\\* C:\\ProgramData\\chocolatey\\include\\
+        z3 --version
     - name: Fetching
       env:
         ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
