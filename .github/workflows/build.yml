@@ -170,42 +170,6 @@ jobs:
 #    - name: Benchmark
 #      run:  |
 #        make C=gcc debug-benchmark
-#
-#  windows-gcc-debug:
-#    strategy:
-#      matrix:
-#        os: [ windows-2019 ]
-#    runs-on: ${{ matrix.os }}
-#    steps:
-#    - uses: actions/checkout@v1
-#    - name: Setup
-#      run: |
-#        Invoke-WebRequest https://github.com/Z3Prover/z3/releases/download/z3-4.8.6/z3-4.8.6-x64-win.zip -O C:\z3-4.8.6-x64-win.zip
-#        Expand-Archive  C:\z3-4.8.6-x64-win.zip       -DestinationPath C:\
-#        Copy-Item -Path C:\z3-4.8.6-x64-win\bin\*     -Destination     C:\ProgramData\chocolatey -Recurse -Force
-#        Copy-Item -Path C:\z3-4.8.6-x64-win\include\* -Destination     C:\ProgramData\chocolatey -Recurse -Force
-#    - name: Fetching
-#      env:
-#        ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-#      shell: cmd
-#      run:  |
-#        make C=gcc debug-fetch
-#    - name: Dependencies
-#      shell: cmd
-#      run:  |
-#        make C=gcc debug-deps
-#    - name: Building
-#      shell: cmd
-#      run:  |
-#        make C=gcc debug-build
-#    - name: Tests
-#      shell: cmd
-#      run:  |
-#        make C=gcc debug-test
-#    - name: Benchmark
-#      shell: cmd
-#      run:  |
-#        make C=gcc debug-benchmark
 
   windows-gcc-debug:
     strategy:
@@ -214,11 +178,32 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
     - uses: actions/checkout@v1
-    - name: Info
+    - name: Setup
+      run: |
+        Invoke-WebRequest https://github.com/Z3Prover/z3/releases/download/z3-4.8.6/z3-4.8.6-x64-win.zip -O C:\z3-4.8.6-x64-win.zip
+        Expand-Archive  C:\z3-4.8.6-x64-win.zip       -DestinationPath C:\
+        Copy-Item -Path C:\z3-4.8.6-x64-win\bin\*     -Destination     C:\ProgramData\chocolatey -Recurse -Force
+        Copy-Item -Path C:\z3-4.8.6-x64-win\include\* -Destination     C:\ProgramData\chocolatey -Recurse -Force
+        Copy-Item -Path C:\MinGW\bin\mingw32-make.exe -Destination     C:\MinGW\bin\make.exe
+    - name: Fetching
       env:
         ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
       shell: cmd
       run:  |
-        echo %PATH%
-        whereis make
-        whereis cmake
+        make C=gcc debug-fetch
+    - name: Dependencies
+      shell: cmd
+      run:  |
+        make C=gcc debug-deps
+    - name: Building
+      shell: cmd
+      run:  |
+        make C=gcc debug-build
+    - name: Tests
+      shell: cmd
+      run:  |
+        make C=gcc debug-test
+    - name: Benchmark
+      shell: cmd
+      run:  |
+        make C=gcc debug-benchmark
