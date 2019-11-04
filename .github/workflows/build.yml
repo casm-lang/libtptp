@@ -220,5 +220,5 @@ jobs:
       shell: cmd
       run:  |
         echo %PATH%
-        mingw32-make info
-        mingw64-make info
+        whereis make
+        whereis cmake
