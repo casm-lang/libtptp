@@ -182,6 +182,7 @@ jobs:
       run: |
         choco feature enable -n=allowGlobalConfirmation
         choco install make
+        choco install cmake --installargs 'ADD_CMAKE_TO_PATH=System'
         Invoke-WebRequest https://github.com/Z3Prover/z3/releases/download/z3-4.8.6/z3-4.8.6-x64-win.zip -O C:\z3-4.8.6-x64-win.zip
         Expand-Archive  C:\z3-4.8.6-x64-win.zip       -DestinationPath C:\
         Copy-Item -Path C:\z3-4.8.6-x64-win\bin\*     -Destination     C:\ProgramData\chocolatey -Recurse -Force
@@ -189,22 +190,17 @@ jobs:
     - name: Fetching
       env:
         ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-      shell: cmd
       run:  |
         make C=gcc debug-fetch
     - name: Dependencies
-      shell: cmd
       run:  |
         make C=gcc debug-deps
     - name: Building
-      shell: cmd
       run:  |
         make C=gcc debug-build
     - name: Tests
-      shell: cmd
       run:  |
         make C=gcc debug-test
     - name: Benchmark
-      shell: cmd
       run:  |
         make C=gcc debug-benchmark
