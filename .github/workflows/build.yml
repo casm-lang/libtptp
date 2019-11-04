@@ -187,17 +187,22 @@ jobs:
     - name: Fetching
       env:
         ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+      shell: cmd
       run:  |
         make C=gcc debug-fetch
     - name: Dependencies
+      shell: cmd
       run:  |
         make C=gcc debug-deps
     - name: Building
+      shell: cmd
       run:  |
         make C=gcc debug-build
     - name: Tests
+      shell: cmd
       run:  |
         make C=gcc debug-test
     - name: Benchmark
+      shell: cmd
       run:  |
         make C=gcc debug-benchmark
