@@ -197,7 +197,7 @@ jobs:
         make C=gcc debug-build
     - name: Tests
       run:  |
-        make C=gcc debug-test
+        make -d VERBOSE=1 C=gcc debug-test
     - name: Benchmark
       run:  |
         make C=gcc debug-benchmark
