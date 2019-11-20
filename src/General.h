@@ -132,6 +132,8 @@ namespace libtptp
         explicit GeneralFunction(
             const Identifier::Ptr& name, const ListNodeElements::Ptr& arguments );
 
+        explicit GeneralFunction( const std::string& name, const ListNodeElements::Ptr& arguments );
+
         const Identifier::Ptr& name( void ) const;
         const Token::Ptr& leftParen( void ) const;
         const ListNodeElements::Ptr& arguments( void ) const;

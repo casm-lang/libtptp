@@ -79,6 +79,12 @@ FunctorAtom::FunctorAtom(
 {
 }
 
+FunctorAtom::FunctorAtom(
+    const std::string& name, const ListLogicElements::Ptr& arguments, const Kind kind )
+: FunctorAtom( std::make_shared< Identifier >( name ), arguments, kind )
+{
+}
+
 const Identifier::Ptr& FunctorAtom::name( void ) const
 {
     return m_name;
@@ -113,6 +119,11 @@ ConstantAtom::ConstantAtom( const Identifier::Ptr& constant, const Kind kind )
 : Atom( Node::ID::CONSTANT_ATOM )
 , m_constant( constant )
 , m_kind( kind )
+{
+}
+
+ConstantAtom::ConstantAtom( const std::string& constant, const Kind kind )
+: ConstantAtom( std::make_shared< Identifier >( constant ), kind )
 {
 }
 
@@ -206,6 +217,11 @@ TypeAtom::TypeAtom( const Identifier::Ptr& atom, const Token::Ptr& colon, const 
 , m_atom( atom )
 , m_colon( colon )
 , m_type( type )
+{
+}
+
+TypeAtom::TypeAtom( const std::string& atom, const std::shared_ptr< Type >& type )
+: TypeAtom( std::make_shared< Identifier >( atom ), type )
 {
 }
 

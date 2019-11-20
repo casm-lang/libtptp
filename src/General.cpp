@@ -133,6 +133,11 @@ GeneralFunction::GeneralFunction(
 {
 }
 
+GeneralFunction::GeneralFunction( const std::string& name, const ListNodeElements::Ptr& arguments )
+: GeneralFunction( std::make_shared< Identifier >( name ), arguments )
+{
+}
+
 const Identifier::Ptr& GeneralFunction::name( void ) const
 {
     return m_name;

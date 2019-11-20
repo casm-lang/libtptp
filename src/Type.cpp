@@ -70,6 +70,11 @@ NamedType::NamedType( const Identifier::Ptr& name )
 {
 }
 
+NamedType::NamedType( const std::string& name )
+: NamedType( std::make_shared< Identifier >( name ) )
+{
+}
+
 const Identifier::Ptr& NamedType::name( void ) const
 {
     return m_name;
@@ -95,6 +100,11 @@ FunctorType::FunctorType(
 
 FunctorType::FunctorType( const Identifier::Ptr& name, const ListTypeElements::Ptr& arguments )
 : FunctorType( name, TokenBuilder::LPAREN(), arguments, TokenBuilder::RPAREN() )
+{
+}
+
+FunctorType::FunctorType( const std::string& name, const ListTypeElements::Ptr& arguments )
+: FunctorType( std::make_shared< Identifier >( name ), arguments )
 {
 }
 
@@ -327,6 +337,11 @@ SubType::SubType(
 
 SubType::SubType( const Identifier::Ptr& leftAtom, const Identifier::Ptr& rightAtom )
 : SubType( leftAtom, TokenBuilder::SUBTYPESIGN(), rightAtom )
+{
+}
+
+SubType::SubType( const std::string& leftAtom, const std::string& rightAtom )
+: SubType( std::make_shared< Identifier >( leftAtom ), std::make_shared< Identifier >( rightAtom ) )
 {
 }
 

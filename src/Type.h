@@ -80,6 +80,7 @@ namespace libtptp
         using Ptr = std::shared_ptr< NamedType >;
 
         explicit NamedType( const Identifier::Ptr& name );
+        explicit NamedType( const std::string& name );
 
         const Identifier::Ptr& name( void ) const;
 
@@ -102,6 +103,7 @@ namespace libtptp
             const ListTypeElements::Ptr& arguments,
             const Token::Ptr& rightParen );
         explicit FunctorType( const Identifier::Ptr& name, const ListTypeElements::Ptr& arguments );
+        explicit FunctorType( const std::string& name, const ListTypeElements::Ptr& arguments );
 
         const Identifier::Ptr& name( void ) const;
         const Token::Ptr& leftParen( void ) const;
@@ -261,6 +263,7 @@ namespace libtptp
             const Identifier::Ptr& rightAtom );
 
         explicit SubType( const Identifier::Ptr& leftAtom, const Identifier::Ptr& rightAtom );
+        explicit SubType( const std::string& leftAtom, const std::string& rightAtom );
 
         const Identifier::Ptr& leftAtom( void ) const;
         const Token::Ptr& subTypeSign( void ) const;

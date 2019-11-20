@@ -68,6 +68,11 @@ VariableTerm::VariableTerm( const Identifier::Ptr& name )
 {
 }
 
+VariableTerm::VariableTerm( const std::string& name )
+: VariableTerm( std::make_shared< Identifier >( name ) )
+{
+}
+
 const Identifier::Ptr& VariableTerm::name( void ) const
 {
     return m_name;

@@ -103,6 +103,8 @@ namespace libtptp
 
         FunctorAtom(
             const Identifier::Ptr& name, const ListLogicElements::Ptr& arguments, const Kind kind );
+        FunctorAtom(
+            const std::string& name, const ListLogicElements::Ptr& arguments, const Kind kind );
 
         const Identifier::Ptr& name( void ) const;
         const Token::Ptr& leftParen( void ) const;
@@ -127,6 +129,7 @@ namespace libtptp
         using Ptr = std::shared_ptr< ConstantAtom >;
 
         explicit ConstantAtom( const Identifier::Ptr& constant, const Kind kind );
+        explicit ConstantAtom( const std::string& constant, const Kind kind );
 
         const Identifier::Ptr& constant( void ) const;
         const Kind kind( void ) const;
@@ -210,6 +213,7 @@ namespace libtptp
             const Token::Ptr& colon,
             const std::shared_ptr< Type >& type );
         explicit TypeAtom( const Identifier::Ptr& atom, const std::shared_ptr< Type >& type );
+        explicit TypeAtom( const std::string& atom, const std::shared_ptr< Type >& type );
 
         const std::shared_ptr< Type >& type( void ) const;
         const Token::Ptr& colon( void ) const;
