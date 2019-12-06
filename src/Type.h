@@ -104,6 +104,8 @@ namespace libtptp
             const Token::Ptr& rightParen );
         explicit FunctorType( const Identifier::Ptr& name, const ListTypeElements::Ptr& arguments );
         explicit FunctorType( const std::string& name, const ListTypeElements::Ptr& arguments );
+        explicit FunctorType(
+            const std::string& name, const std::initializer_list< Type::Ptr >& arguments );
 
         const Identifier::Ptr& name( void ) const;
         const Token::Ptr& leftParen( void ) const;
@@ -162,6 +164,7 @@ namespace libtptp
         using Ptr = std::shared_ptr< RelationType >;
 
         explicit RelationType( const ListTypeElements::Ptr& elements );
+        explicit RelationType( const std::initializer_list< Type::Ptr >& elements );
 
         const ListTypeElements::Ptr& elements( void ) const;
 
@@ -184,6 +187,7 @@ namespace libtptp
             const Token::Ptr& rightBraceToken );
 
         explicit TupleType( const ListTypeElements::Ptr& tuples );
+        explicit TupleType( const std::initializer_list< Type::Ptr >& tuples );
 
         const Token::Ptr& leftBraceToken( void ) const;
         const ListTypeElements::Ptr& tuples( void ) const;
@@ -214,6 +218,8 @@ namespace libtptp
 
         explicit QuantifiedType(
             const ListVariableElements::Ptr& variables, const Type::Ptr& type );
+        explicit QuantifiedType(
+            const std::initializer_list< VariableTerm::Ptr >& variables, const Type::Ptr& type );
 
         const Token::Ptr& quantifierToken( void ) const;
         const Token::Ptr& leftParen( void ) const;

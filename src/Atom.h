@@ -106,6 +106,11 @@ namespace libtptp
         FunctorAtom(
             const std::string& name, const ListLogicElements::Ptr& arguments, const Kind kind );
 
+        FunctorAtom(
+            const std::string& name,
+            const std::initializer_list< Logic::Ptr >& arguments,
+            const Kind kind );
+
         const Identifier::Ptr& name( void ) const;
         const Token::Ptr& leftParen( void ) const;
         const ListLogicElements::Ptr& arguments( void ) const;
@@ -241,6 +246,7 @@ namespace libtptp
             const ListAtomElements::Ptr& atoms,
             const Token::Ptr& rightParen );
         explicit TupleAtom( const ListAtomElements::Ptr& atoms );
+        explicit TupleAtom( const std::initializer_list< Atom::Ptr >& atoms );
 
         const Token::Ptr& leftParen( void ) const;
         const ListAtomElements::Ptr& atoms( void ) const;

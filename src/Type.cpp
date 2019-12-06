@@ -108,6 +108,12 @@ FunctorType::FunctorType( const std::string& name, const ListTypeElements::Ptr& 
 {
 }
 
+FunctorType::FunctorType(
+    const std::string& name, const std::initializer_list< Type::Ptr >& arguments )
+: FunctorType( name, std::make_shared< ListTypeElements >( arguments ) )
+{
+}
+
 const Identifier::Ptr& FunctorType::name( void ) const
 {
     return m_name;
@@ -203,6 +209,11 @@ RelationType::RelationType( const ListTypeElements::Ptr& elements )
 {
 }
 
+RelationType::RelationType( const std::initializer_list< Type::Ptr >& elements )
+: RelationType( std::make_shared< ListTypeElements >( elements ) )
+{
+}
+
 const ListTypeElements::Ptr& RelationType::elements( void ) const
 {
     return m_elements;
@@ -230,6 +241,11 @@ TupleType::TupleType(
 
 TupleType::TupleType( const ListTypeElements::Ptr& tuples )
 : TupleType( TokenBuilder::LSQPAREN(), tuples, TokenBuilder::RSQPAREN() )
+{
+}
+
+TupleType::TupleType( const std::initializer_list< Type::Ptr >& tuples )
+: TupleType( std::make_shared< ListTypeElements >( tuples ) )
 {
 }
 
@@ -282,6 +298,12 @@ QuantifiedType::QuantifiedType( const ListVariableElements::Ptr& variables, cons
       TokenBuilder::RSQPAREN(),
       TokenBuilder::COLON(),
       type )
+{
+}
+
+QuantifiedType::QuantifiedType(
+    const std::initializer_list< VariableTerm::Ptr >& variables, const Type::Ptr& type )
+: QuantifiedType( std::make_shared< ListVariableElements >( variables ), type )
 {
 }
 

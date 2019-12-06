@@ -77,6 +77,8 @@ namespace libtptp
 
         VariableTerm( const Identifier::Ptr& name );
         VariableTerm( const std::string& name );
+        VariableTerm( const Identifier::Ptr& name, const std::shared_ptr< Type >& type );
+        VariableTerm( const std::string& name, const std::shared_ptr< Type >& type );
 
         const Identifier::Ptr& name( void ) const;
 

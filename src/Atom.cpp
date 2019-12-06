@@ -85,6 +85,12 @@ FunctorAtom::FunctorAtom(
 {
 }
 
+FunctorAtom::FunctorAtom(
+    const std::string& name, const std::initializer_list< Logic::Ptr >& arguments, const Kind kind )
+: FunctorAtom( name, std::make_shared< ListLogicElements >( arguments ), kind )
+{
+}
+
 const Identifier::Ptr& FunctorAtom::name( void ) const
 {
     return m_name;
@@ -265,6 +271,11 @@ TupleAtom::TupleAtom(
 
 TupleAtom::TupleAtom( const ListAtomElements::Ptr& atoms )
 : TupleAtom( TokenBuilder::LSQPAREN(), atoms, TokenBuilder::RSQPAREN() )
+{
+}
+
+TupleAtom::TupleAtom( const std::initializer_list< Atom::Ptr >& atoms )
+: TupleAtom( std::make_shared< ListAtomElements >( atoms ) )
 {
 }
 

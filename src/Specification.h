@@ -72,6 +72,10 @@ namespace libtptp
             m_definitions->add( std::make_shared< T >( std::forward< Args >( args )... ) );
         }
 
+        void add( const Definition::Ptr& definition );
+
+        void add( const Definitions::Ptr& definitions );
+
         void setDefinitions( const Definitions::Ptr& defintions );
 
         const Definitions::Ptr& definitions( void ) const;

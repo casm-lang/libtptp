@@ -93,6 +93,24 @@ namespace libtptp
         {
         }
 
+        ListElements( const std::initializer_list< typename T::Ptr > list )
+        : NodeList< ListElement< T > >()
+        {
+            for( auto& el : list )
+            {
+                add( el );
+            }
+        }
+
+        explicit ListElements( const std::initializer_list< typename ListElement< T >::Ptr > list )
+        : NodeList< ListElement< T > >()
+        {
+            for( auto& el : list )
+            {
+                NodeList< ListElement< T > >::add( el );
+            }
+        }
+
         void add( const Token::Ptr& delimiter, const typename T::Ptr& element )
         {
             NodeList< ListElement< T > >::add(
@@ -117,12 +135,12 @@ namespace libtptp
 
 }
 #endif  // _LIBTPTP_HELPER_H_
-//
-//  Local variables:
-//  mode: c++
-//  indent-tabs-mode: nil
-//  c-basic-offset: 4
-//  tab-width: 4
-//  End:
-//  vim:noexpandtab:sw=4:ts=4:
-//
+        //
+        //  Local variables:
+        //  mode: c++
+        //  indent-tabs-mode: nil
+        //  c-basic-offset: 4
+        //  tab-width: 4
+        //  End:
+        //  vim:noexpandtab:sw=4:ts=4:
+        //

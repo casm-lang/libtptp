@@ -73,6 +73,19 @@ VariableTerm::VariableTerm( const std::string& name )
 {
 }
 
+VariableTerm::VariableTerm( const Identifier::Ptr& name, const std::shared_ptr< Type >& type )
+: Term( Node::ID::VARIABLE_TERM )
+, m_name( name )
+, m_colon( TokenBuilder::COLON() )
+, m_type( type )
+{
+}
+
+VariableTerm::VariableTerm( const std::string& name, const std::shared_ptr< Type >& type )
+: VariableTerm( std::make_shared< Identifier >( name ), type )
+{
+}
+
 const Identifier::Ptr& VariableTerm::name( void ) const
 {
     return m_name;

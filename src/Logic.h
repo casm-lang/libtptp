@@ -200,6 +200,11 @@ namespace libtptp
             const std::shared_ptr< ListVariableElements >& variables,
             const Logic::Ptr& logic );
 
+        QuantifiedLogic(
+            const Quantifier quantifier,
+            const std::initializer_list< std::shared_ptr< VariableTerm > >& variables,
+            const Logic::Ptr& logic );
+
         const Token::Ptr& quantifierToken( void ) const;
         const Token::Ptr& leftParen( void ) const;
         const std::shared_ptr< ListVariableElements >& variables( void ) const;
@@ -267,6 +272,8 @@ namespace libtptp
             const Token::Ptr& rightBraceToken );
         explicit LogicTuple( const Token::Ptr& leftBraceToken, const Token::Ptr& rightBraceToken );
         explicit LogicTuple( const Context& context, const ListLogicElements::Ptr& tuples );
+        explicit LogicTuple(
+            const Context& context, const std::initializer_list< Logic::Ptr >& tuples );
         explicit LogicTuple( const Context& context );
 
         const Token::Ptr& leftBraceToken( void ) const;

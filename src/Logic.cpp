@@ -357,6 +357,14 @@ QuantifiedLogic::QuantifiedLogic(
 {
 }
 
+QuantifiedLogic::QuantifiedLogic(
+    const Quantifier quantifier,
+    const std::initializer_list< VariableTerm::Ptr >& variables,
+    const Logic::Ptr& logic )
+: QuantifiedLogic( quantifier, std::make_shared< ListVariableElements >( variables ), logic )
+{
+}
+
 const Token::Ptr& QuantifiedLogic::quantifierToken( void ) const
 {
     return m_quantifierToken;
@@ -545,6 +553,11 @@ LogicTuple::LogicTuple( const Token::Ptr& leftBraceToken, const Token::Ptr& righ
 
 LogicTuple::LogicTuple( const Context& context, const ListLogicElements::Ptr& tuples )
 : LogicTuple( bracesFromContext( context ).first, tuples, bracesFromContext( context ).second )
+{
+}
+
+LogicTuple::LogicTuple( const Context& context, const std::initializer_list< Logic::Ptr >& tuples )
+: LogicTuple( context, std::make_shared< ListLogicElements >( tuples ) )
 {
 }
 
