@@ -65,6 +65,11 @@ IntegerLiteral::IntegerLiteral( const std::string& integer )
 {
 }
 
+IntegerLiteral::IntegerLiteral( int integer )
+: ValueLiteral( Node::ID::INTEGER_LITERAL, libstdhl::Type::createInteger( (i64)integer ) )
+{
+}
+
 void IntegerLiteral::accept( Visitor& visitor )
 {
     visitor.visit( *this );

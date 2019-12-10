@@ -154,6 +154,8 @@ namespace libtptp
         using Ptr = std::shared_ptr< DefinedAtom >;
 
         explicit DefinedAtom( const Literal::Ptr& literal );
+        explicit DefinedAtom( const std::string& literal );
+        explicit DefinedAtom( int literal );
 
         const Literal::Ptr& literal( void ) const;
 

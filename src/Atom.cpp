@@ -41,6 +41,7 @@
 //
 
 #include "Atom.h"
+#include <libtptp/Literal>
 #include <libtptp/Type>
 
 using namespace libtptp;
@@ -151,6 +152,16 @@ void ConstantAtom::accept( Visitor& visitor )
 DefinedAtom::DefinedAtom( const Literal::Ptr& literal )
 : Atom( Node::ID::DEFINED_ATOM )
 , m_literal( literal )
+{
+}
+
+DefinedAtom::DefinedAtom( const std::string& literal )
+: DefinedAtom( std::make_shared< DistinctObjectLiteral >( literal ) )
+{
+}
+
+DefinedAtom::DefinedAtom( int literal )
+: DefinedAtom( std::make_shared< IntegerLiteral >( literal ) )
 {
 }
 
