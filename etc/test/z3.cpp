@@ -84,7 +84,7 @@ TEST( libtptp, z3_demorgan )
     }
 }
 
-TEST( libtptp, z3_tuples_behaviour )
+TEST( libtptp, DISABLED_z3_tuples_behaviour )
 {
     z3::context c;
 
