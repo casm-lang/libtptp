@@ -42,8 +42,7 @@
 
 #include "Logger.h"
 
-#include "SourceLocation.h"
-
+#include <libstdhl/Memory>
 #include <libstdhl/String>
 
 #include <unordered_set>
@@ -52,7 +51,8 @@ using namespace libtptp;
 
 static const auto fileNameNull = std::string();
 
-static libstdhl::Log::Items to_location_items( const std::vector< SourceLocation >& locations )
+static libstdhl::Log::Items to_location_items(
+    const std::vector< libstdhl::SourceLocation >& locations )
 {
     libstdhl::Log::Items items;
     for( const auto& location : locations )
@@ -75,7 +75,7 @@ static libstdhl::Log::Items to_location_items( const std::vector< SourceLocation
 }
 
 void libtptp::Logger::error(
-    const std::vector< SourceLocation >& locations, const std::string& message )
+    const std::vector< libstdhl::SourceLocation >& locations, const std::string& message )
 {
     auto items = to_location_items( locations );
     items.add( libstdhl::Memory::make< libstdhl::Log::TextItem >( message ) );
@@ -83,7 +83,7 @@ void libtptp::Logger::error(
 }
 
 void libtptp::Logger::warning(
-    const std::vector< SourceLocation >& locations, const std::string& message )
+    const std::vector< libstdhl::SourceLocation >& locations, const std::string& message )
 {
     auto items = to_location_items( locations );
     items.add( libstdhl::Memory::make< libstdhl::Log::TextItem >( message ) );
@@ -91,7 +91,7 @@ void libtptp::Logger::warning(
 }
 
 void libtptp::Logger::info(
-    const std::vector< SourceLocation >& locations, const std::string& message )
+    const std::vector< libstdhl::SourceLocation >& locations, const std::string& message )
 {
     auto items = to_location_items( locations );
     items.add( libstdhl::Memory::make< libstdhl::Log::TextItem >( message ) );
@@ -99,7 +99,7 @@ void libtptp::Logger::info(
 }
 
 void libtptp::Logger::hint(
-    const std::vector< SourceLocation >& locations, const std::string& message )
+    const std::vector< libstdhl::SourceLocation >& locations, const std::string& message )
 {
     auto items = to_location_items( locations );
     items.add( libstdhl::Memory::make< libstdhl::Log::TextItem >( message ) );
@@ -107,7 +107,7 @@ void libtptp::Logger::hint(
 }
 
 void libtptp::Logger::debug(
-    const std::vector< SourceLocation >& locations, const std::string& message )
+    const std::vector< libstdhl::SourceLocation >& locations, const std::string& message )
 {
     auto items = to_location_items( locations );
     items.add( libstdhl::Memory::make< libstdhl::Log::TextItem >( message ) );

@@ -40,46 +40,27 @@
 //  statement from your version.
 //
 
-#ifndef _LIBTPTP_LOGGER_H_
-#define _LIBTPTP_LOGGER_H_
+#include "Lexer.h"
 
-#include <libpass/PassLogger>
+#include "various/GrammarLexer.cpp"
 
-#include <libstdhl/SourceLocation>
-
-#include <string>
-#include <vector>
-
-namespace libtptp
+libtptp::Lexer::Lexer( Logger& log, std::istream& in, std::ostream& out )
+: libtptp_FlexLexer( in, out )
+, m_log( log )
+, m_loc()
+, m_strbuf()
 {
-    class Logger : public libpass::PassLogger
-    {
-      public:
-        using libpass::PassLogger::PassLogger;
-
-        using libpass::PassLogger::error;
-        void error(
-            const std::vector< libstdhl::SourceLocation >& locations, const std::string& message );
-
-        using libpass::PassLogger::warning;
-        void warning(
-            const std::vector< libstdhl::SourceLocation >& locations, const std::string& message );
-
-        using libpass::PassLogger::info;
-        void info(
-            const std::vector< libstdhl::SourceLocation >& locations, const std::string& message );
-
-        using libpass::PassLogger::hint;
-        void hint(
-            const std::vector< libstdhl::SourceLocation >& locations, const std::string& message );
-
-        using libpass::PassLogger::debug;
-        void debug(
-            const std::vector< libstdhl::SourceLocation >& locations, const std::string& message );
-    };
 }
 
-#endif  // _LIBTPTP_LOGGER_H_
+void libtptp::Lexer::setFileName( const std::string& fileName )
+{
+    m_loc.begin.fileName = m_loc.end.fileName = std::make_shared< std::string >( fileName );
+}
+
+void libtptp::Lexer::LexerError( const char* msg )
+{
+    m_log.error( { m_loc }, msg );
+}
 
 //
 //  Local variables:

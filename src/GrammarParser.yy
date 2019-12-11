@@ -45,11 +45,10 @@
 
 %defines
 %define api.namespace {libtptp}
-%define parser_class_name {Parser}
-
+%define api.parser.class {Parser}
 %define api.token.constructor
 %define api.value.type variant
-%define api.location.type {SourceLocation}
+%define api.location.type {libstdhl::SourceLocation}
 
 %define parse.assert
 %define parse.trace
@@ -63,16 +62,11 @@
     {
         class Lexer;
         class Logger;
-        class SourceLocation;
     }
 
-
+    #include <libtptp/Logger>
     #include <libtptp/Specification>
     #include <libtptp/Token>
-
-	#include <libtptp/Logger>
-
-    #include "../../src/SourceLocation.h"
 
     using namespace libtptp;
 
@@ -94,9 +88,6 @@
 
 %code
 {
-    // #include <libtptp/ ... >
-
-    //#include "../../src/SourceLocation.h"
     #include "../../src/Lexer.h"
 
     #include <libstdhl/Type>

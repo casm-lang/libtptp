@@ -55,6 +55,7 @@ add_library( ${PROJECT}-cpp OBJECT
   Formula.cpp
   General.cpp
   Identifier.cpp
+  Lexer.cpp
   Literal.cpp
   Logic.cpp
   Logger.cpp
@@ -72,7 +73,6 @@ add_library( ${PROJECT}-cpp OBJECT
   transform/SourceToAstPass.cpp
 
   various/GrammarParser.cpp
-  various/GrammarLexer.cpp
   various/Token.cpp
   )
 
@@ -111,7 +111,6 @@ ecm_generate_headers( ${PROJECT}_HEADERS_CPP
     Node
     Role
     Specification
-    SourceLocation
     TPTP
     Term
     Type

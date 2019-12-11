@@ -43,32 +43,35 @@
 #ifndef _LIBTPTP_LEXER_H_
 #define _LIBTPTP_LEXER_H_
 
+#include <libstdhl/SourceLocation>
+
+#define yyFlexLexer libtptp_FlexLexer
+#include <libstdhl/vendor/flex/FlexLexer>
+#undef yyFlexLexer
+
 #include <string>
 
-#include "SourceLocation.h"
-#include "various/FlexLexer.h"
 #include "various/GrammarParser.tab.h"
 
 namespace libtptp
 {
     class Logger;
-    class SourceLocation;
 
-    class Lexer : public yyFlexLexer
+    class Lexer final : public libtptp_FlexLexer
     {
       public:
         Lexer( Logger& log, std::istream& in, std::ostream& out );
 
         void setFileName( const std::string& fileName );
 
-        Parser::symbol_type nextToken();
+        Parser::symbol_type nextToken( void );
 
       protected:
         void LexerError( const char* msg ) override;
 
       private:
         Logger& m_log;
-        SourceLocation m_loc;
+        libstdhl::SourceLocation m_loc;
         std::string m_strbuf;
     };
 }

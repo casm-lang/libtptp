@@ -39,11 +39,8 @@
 //  statement from your version.
 //
 
-#include "../../src/Lexer.h"
-
 #include <libtptp/Logger>
-#include <libtptp/Token.h>
-#include "../../src/SourceLocation.h"
+#include <libtptp/Token>
 
 using namespace libtptp;
 
@@ -61,14 +58,15 @@ using namespace libtptp;
 
 %}
 
-/* %option debug */
+%option c++
+%option yyclass="Lexer"
+%option prefix="libtptp_"
 %option noyywrap
 %option nodefault
 %option nounput
-%option batch
 %option noinput
-%option yyclass="Lexer"
-%option c++
+%option batch
+/* %option debug */
 
 %x LCOMMENT
 %x COMMENT
@@ -238,24 +236,6 @@ using namespace libtptp;
 }
 
 %%
-
-Lexer::Lexer( Logger& log, std::istream& in, std::ostream& out )
-: yyFlexLexer( in, out )
-, m_log( log )
-, m_loc()
-, m_strbuf()
-{
-}
-
-void Lexer::setFileName( const std::string& fileName )
-{
-    m_loc.begin.fileName = m_loc.end.fileName = std::make_shared< std::string >( fileName );
-}
-
-void Lexer::LexerError( const char* msg )
-{
-    m_log.error( { m_loc }, msg );
-}
 
 //  
 //  Local variables:

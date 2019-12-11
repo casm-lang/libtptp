@@ -43,9 +43,10 @@
 #ifndef _LIBTPTP_NODE_H_
 #define _LIBTPTP_NODE_H_
 
-#include <libstdhl/List>
-#include <libtptp/SourceLocation>
 #include <libtptp/Visitor>
+
+#include <libstdhl/List>
+#include <libstdhl/SourceLocation>
 
 namespace libtptp
 {
@@ -144,8 +145,8 @@ namespace libtptp
 
         // Comments comments( void ) const;
 
-        void setSourceLocation( const SourceLocation& sourceLocation );
-        const SourceLocation& sourceLocation( void ) const;
+        void setSourceLocation( const libstdhl::SourceLocation& sourceLocation );
+        const libstdhl::SourceLocation& sourceLocation( void ) const;
 
         /**
            @return A short description about the node type.
@@ -162,7 +163,7 @@ namespace libtptp
 
       private:
         const ID m_id;
-        SourceLocation m_sourceLocation;
+        libstdhl::SourceLocation m_sourceLocation;
     };
 
     template < typename T >
@@ -190,7 +191,7 @@ namespace libtptp
     using Nodes = NodeList< Node >;
 
     template < typename T, typename... Args >
-    typename T::Ptr make( const SourceLocation& sourceLocation, Args&&... args )
+    typename T::Ptr make( const libstdhl::SourceLocation& sourceLocation, Args&&... args )
     {
         auto node = std::make_shared< T >( std::forward< Args >( args )... );
         node->setSourceLocation( sourceLocation );
