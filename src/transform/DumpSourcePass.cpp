@@ -67,25 +67,29 @@ static libpass::PassRegistration< DumpSourcePass > PASS(
     "tptp-dump",
     0 );
 
-class DumpSourceVisitor final : public RecursiveVisitor
+namespace libtptp
 {
-  public:
-    DumpSourceVisitor( std::ostream& stream );
+    class DumpSourceVisitor final : public RecursiveVisitor
+    {
+      public:
+        DumpSourceVisitor( std::ostream& stream );
 
-    void visit( Specification& node ) override;
+        void visit( Specification& node ) override;
+        void visit( FormulaDefinition& node ) override;  // TODO: @moosbruggerj remove me
 
-    void visit( Identifier& node ) override;
+        void visit( Identifier& node ) override;
 
-    void visit( IntegerLiteral& node ) override;
-    void visit( RationalLiteral& node ) override;
-    void visit( RealLiteral& node ) override;
-    void visit( DistinctObjectLiteral& node ) override;
+        void visit( IntegerLiteral& node ) override;
+        void visit( RationalLiteral& node ) override;
+        void visit( RealLiteral& node ) override;
+        void visit( DistinctObjectLiteral& node ) override;
 
-    void visit( Token& node ) override;
+        void visit( Token& node ) override;
 
-  private:
-    std::ostream& m_stream;
-};
+      private:
+        std::ostream& m_stream;
+    };
+}
 
 //
 // DumpSourceVisitor
@@ -101,6 +105,12 @@ void DumpSourceVisitor::visit( Specification& node )
     m_stream << "% " << node.description() << ": " << node.name() << "\n";
 
     node.definitions()->accept( *this );
+}
+
+void DumpSourceVisitor::visit( FormulaDefinition& node )
+{
+    RecursiveVisitor::visit( node );
+    m_stream << '\n';
 }
 
 void DumpSourceVisitor::visit( Identifier& node )

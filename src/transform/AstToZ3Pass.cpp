@@ -62,229 +62,233 @@ char AstToZ3Pass::id = 0;
 static libpass::PassRegistration< AstToZ3Pass > PASS(
     "AstToZ3Pass", "transforms the specification into a z3 model", "ast-to-z3", 0 );
 
-class VariableManager
+namespace libtptp
 {
-  private:
-    z3::context& m_context;  // is only valid while AstToZ3Visitor instance is valid
-    std::vector< std::map< std::string, z3::expr > > m_boundVars;
-    std::map< std::string, z3::expr > m_unboundVars;
-
-    std::map< std::string, z3::sort > m_sorts;
-    std::map< std::string, unsigned int > m_polymorphicSorts;
-    std::map< std::string, z3::func_decl > m_sortConstructors;
-    // TODO: @moosbruggerj fix type for higer order formulae, partial variable binding enable
-    std::map< std::string, z3::func_decl > m_functions;
-    z3::sort m_universal;
-    libstdhl::Stack< z3::sort > m_constSort;
-    libstdhl::Stack< std::string > m_symbolNames;
-
-  public:
-    VariableManager( z3::context& context );
-
-    void pushScope( void );
-    void popScope( void );
-
-    const libstdhl::Optional< const z3::expr > get( const std::string& name );
-    std::pair< typename decltype( m_unboundVars )::iterator, bool > pushUnbound(
-        const std::string& name, const z3::expr& var );
-    std::pair< typename decltype( m_boundVars )::value_type::iterator, bool > pushBound(
-        const std::string& name, const z3::expr& var );
-
-    const libstdhl::Optional< const z3::sort > getSort( const std::string& name );
-    std::pair< typename decltype( m_sorts )::iterator, bool > pushSort(
-        const std::string& name, const z3::sort& sort );
-
-    const libstdhl::Optional< const z3::sort > getSort(
-        const std::string& name, z3::sort_vector args );
-    std::pair< typename decltype( m_polymorphicSorts )::iterator, bool > pushSort(
-        const std::string& name, const unsigned int arity );
-
-    libstdhl::Stack< z3::sort >& constSort( void );
-    const z3::sort& universalSort( void );
-
-    const libstdhl::Optional< const z3::func_decl > getSortConstructor( const std::string& name );
-    std::pair< typename decltype( m_sortConstructors )::iterator, bool > pushSortConstructor(
-        const std::string& name, const z3::func_decl& function );
-
-    const libstdhl::Optional< const z3::func_decl > getFunction( const std::string& name );
-    std::pair< typename decltype( m_functions )::iterator, bool > pushFunction(
-        const std::string& name, const z3::func_decl& function );
-
-    std::string getTupleName( const z3::sort_vector& sorts );
-
-    libstdhl::Stack< std::string >& symbolNames( void );
-    std::string getFunctionName( const z3::sort_vector& domain, const z3::sort& range );
-
-  private:
-    std::string getParametricSortName( const std::string name, const z3::sort_vector args );
-};
-
-class AstToZ3Visitor : public RecursiveVisitor
-{
-  private:
-    struct Z3_expr
+    class VariableManager
     {
-        enum class Tag
-        {
-            EXPR,
-            EXPR_VECTOR,
-            SORT,
-            SORT_VECTOR,
-            FUNC_DECL,
-            TTYPE,
-            TTYPE_VECTOR,
-        } tag;
+      private:
+        z3::context& m_context;  // is only valid while AstToZ3Visitor instance is valid
+        std::vector< std::map< std::string, z3::expr > > m_boundVars;
+        std::map< std::string, z3::expr > m_unboundVars;
+
+        std::map< std::string, z3::sort > m_sorts;
+        std::map< std::string, unsigned int > m_polymorphicSorts;
+        std::map< std::string, z3::func_decl > m_sortConstructors;
+        // TODO: @moosbruggerj fix type for higer order formulae, partial variable binding enable
+        std::map< std::string, z3::func_decl > m_functions;
+        z3::sort m_universal;
+        libstdhl::Stack< z3::sort > m_constSort;
+        libstdhl::Stack< std::string > m_symbolNames;
+
+      public:
+        VariableManager( z3::context& context );
+
+        void pushScope( void );
+        void popScope( void );
+
+        const libstdhl::Optional< const z3::expr > get( const std::string& name );
+        std::pair< typename decltype( m_unboundVars )::iterator, bool > pushUnbound(
+            const std::string& name, const z3::expr& var );
+        std::pair< typename decltype( m_boundVars )::value_type::iterator, bool > pushBound(
+            const std::string& name, const z3::expr& var );
+
+        const libstdhl::Optional< const z3::sort > getSort( const std::string& name );
+        std::pair< typename decltype( m_sorts )::iterator, bool > pushSort(
+            const std::string& name, const z3::sort& sort );
+
+        const libstdhl::Optional< const z3::sort > getSort(
+            const std::string& name, z3::sort_vector args );
+        std::pair< typename decltype( m_polymorphicSorts )::iterator, bool > pushSort(
+            const std::string& name, const unsigned int arity );
+
+        libstdhl::Stack< z3::sort >& constSort( void );
+        const z3::sort& universalSort( void );
+
+        const libstdhl::Optional< const z3::func_decl > getSortConstructor(
+            const std::string& name );
+        std::pair< typename decltype( m_sortConstructors )::iterator, bool > pushSortConstructor(
+            const std::string& name, const z3::func_decl& function );
+
+        const libstdhl::Optional< const z3::func_decl > getFunction( const std::string& name );
+        std::pair< typename decltype( m_functions )::iterator, bool > pushFunction(
+            const std::string& name, const z3::func_decl& function );
+
+        std::string getTupleName( const z3::sort_vector& sorts );
+
+        libstdhl::Stack< std::string >& symbolNames( void );
+        std::string getFunctionName( const z3::sort_vector& domain, const z3::sort& range );
 
       private:
-        union
+        std::string getParametricSortName( const std::string name, const z3::sort_vector args );
+    };
+
+    class AstToZ3Visitor : public RecursiveVisitor
+    {
+      private:
+        struct Z3_expr
         {
-            z3::expr* expr;
-            z3::expr_vector* expr_vec;
-            z3::sort* sort;
-            z3::sort_vector* sort_vec;
-            z3::func_decl* func_decl;
-            int vector_size;
-            void* none;
+            enum class Tag
+            {
+                EXPR,
+                EXPR_VECTOR,
+                SORT,
+                SORT_VECTOR,
+                FUNC_DECL,
+                TTYPE,
+                TTYPE_VECTOR,
+            } tag;
+
+          private:
+            union
+            {
+                z3::expr* expr;
+                z3::expr_vector* expr_vec;
+                z3::sort* sort;
+                z3::sort_vector* sort_vec;
+                z3::func_decl* func_decl;
+                int vector_size;
+                void* none;
+            };
+
+          public:
+            // explicit conversions for template access using static cast
+            explicit Z3_expr( const z3::expr&& expr );
+            explicit Z3_expr( const z3::expr_vector&& expr );
+            explicit Z3_expr( const z3::sort&& expr );
+            explicit Z3_expr( const z3::sort_vector&& expr );
+            explicit Z3_expr( const z3::func_decl&& expr );
+            explicit Z3_expr( Tag tag );
+            explicit Z3_expr( int size );  // constructs TTYPE_VECTOR
+
+            void free() const;
+
+            explicit operator z3::expr( void ) const;
+            explicit operator z3::expr_vector( void ) const;
+            explicit operator z3::sort( void ) const;
+            explicit operator z3::sort_vector( void ) const;
+            explicit operator z3::func_decl( void ) const;
+            explicit operator int( void ) const;
+
+            void check_none( void ) const;
+            std::string description( void ) const;
+            static std::string description( Tag tag );
         };
 
+        class Z3Stack : public Stack< Z3_expr >
+        {
+          public:
+            using Stack::Stack;
+
+            using Stack::pop;
+            using Stack::push;
+
+            template < typename T >
+            T pop( void )
+            {
+                auto value = Stack::pop();
+                return static_cast< T >( value );
+            }
+
+            template < typename T >
+            void push( T&& t )
+            {
+                Stack::push( Z3_expr( std::move( t ) ) );
+            }
+
+            Z3_expr::Tag topType( void )
+            {
+                return top().tag;
+            }
+
+            std::string topDescription( void )
+            {
+                return top().description();
+            }
+
+            void discardTop( void )
+            {
+                const auto value = Stack::pop();
+                value.free();
+            }
+        };
+
+        std::shared_ptr< Context > m_astContext;
+        z3::context m_context;
+        z3::solver m_solver;
+        Z3Stack m_stack;
+        libtptp::Logger m_log;
+        VariableManager m_variables;
+        bool m_hasConjecture = false;
+
       public:
-        // explicit conversions for template access using static cast
-        explicit Z3_expr( const z3::expr&& expr );
-        explicit Z3_expr( const z3::expr_vector&& expr );
-        explicit Z3_expr( const z3::sort&& expr );
-        explicit Z3_expr( const z3::sort_vector&& expr );
-        explicit Z3_expr( const z3::func_decl&& expr );
-        explicit Z3_expr( Tag tag );
-        explicit Z3_expr( int size );  // constructs TTYPE_VECTOR
+        AstToZ3Visitor( libtptp::Logger log );
 
-        void free() const;
-
-        explicit operator z3::expr( void ) const;
-        explicit operator z3::expr_vector( void ) const;
-        explicit operator z3::sort( void ) const;
-        explicit operator z3::sort_vector( void ) const;
-        explicit operator z3::func_decl( void ) const;
-        explicit operator int( void ) const;
-
-        void check_none( void ) const;
-        std::string description( void ) const;
-        static std::string description( Tag tag );
-    };
-
-    class Z3Stack : public Stack< Z3_expr >
-    {
       public:
-        using Stack::Stack;
+        void visit( Specification& node ) override;
 
-        using Stack::pop;
-        using Stack::push;
+        void visit( FirstOrderFormula& node ) override;
+        void visit( TypedFirstOrderFormula& node ) override;
+        void visit( TypedHigherOrderFormula& node ) override;
+        void visit( TPTPProcessInstructionFormula& node ) override;
+        void visit( ClauseNormalFormFormula& node ) override;
+        void visit( TheoryComputableFunctionalsFormula& node ) override;
+        void visit( FormulaData& node ) override;
+        void visit( Role& node ) override;
 
-        template < typename T >
-        T pop( void )
-        {
-            auto value = Stack::pop();
-            return static_cast< T >( value );
-        }
+        void visit( UnaryLogic& node ) override;
+        void visit( BinaryLogic& node ) override;
+        void visit( QuantifiedLogic& node ) override;
+        void visit( InfixLogic& node ) override;
+        void visit( LogicTuple& node ) override;
+        void visit( SequentLogic& node ) override;
 
-        template < typename T >
-        void push( T&& t )
-        {
-            Stack::push( Z3_expr( std::move( t ) ) );
-        }
+        void visit( VariableTerm& node ) override;
+        void visit( ConditionalTerm& node ) override;
+        void visit( DefinitionTerm& node ) override;
 
-        Z3_expr::Tag topType( void )
-        {
-            return top().tag;
-        }
+        void visit( FunctorAtom& node ) override;
+        void visit( ConstantAtom& node ) override;
+        void visit( DefinedAtom& node ) override;
+        void visit( DefinitionAtom& node ) override;
+        void visit( ConnectiveAtom& node ) override;
+        void visit( TypeAtom& node ) override;
+        void visit( TupleAtom& node ) override;
 
-        std::string topDescription( void )
-        {
-            return top().description();
-        }
+        void visit( ApplyType& node ) override;
+        void visit( NamedType& node ) override;
+        void visit( FunctorType& node ) override;
+        void visit( BinaryType& node ) override;
+        void visit( TupleType& node ) override;
+        void visit( QuantifiedType& node ) override;
+        void visit( SubType& node ) override;
+        void visit( RelationType& node ) override;
+        void visit( VariableType& node ) override;
 
-        void discardTop( void )
-        {
-            const auto value = Stack::pop();
-            value.free();
-        }
+        void visit( Identifier& node ) override;
+
+        void visit( IntegerLiteral& node ) override;
+        void visit( RationalLiteral& node ) override;
+        void visit( RealLiteral& node ) override;
+        void visit( DistinctObjectLiteral& node ) override;
+        void visit( ListLiteral& node ) override;
+
+        void visit( IncludeDefinition& node ) override;
+        void visit( FormulaDefinition& node ) override;
+
+        void visit( GeneralData& node ) override;
+        void visit( GeneralList& node ) override;
+        void visit( GeneralAggregator& node ) override;
+        void visit( GeneralFunction& node ) override;
+        void visit( Annotation& node ) override;
+
+        z3::solver& solver( void );
+        bool hasConjecture( void );
+
+      private:
+        bool checkArgNum(
+            const SourceLocation& loc, const std::string& name, size_t expected, size_t actual );
     };
-
-    std::shared_ptr< Context > m_astContext;
-    z3::context m_context;
-    z3::solver m_solver;
-    Z3Stack m_stack;
-    libtptp::Logger m_log;
-    VariableManager m_variables;
-    bool m_hasConjecture = false;
-
-  public:
-    AstToZ3Visitor( libtptp::Logger log );
-
-  public:
-    void visit( Specification& node ) override;
-
-    void visit( FirstOrderFormula& node ) override;
-    void visit( TypedFirstOrderFormula& node ) override;
-    void visit( TypedHigherOrderFormula& node ) override;
-    void visit( TPTPProcessInstructionFormula& node ) override;
-    void visit( ClauseNormalFormFormula& node ) override;
-    void visit( TheoryComputableFunctionalsFormula& node ) override;
-    void visit( FormulaData& node ) override;
-    void visit( Role& node ) override;
-
-    void visit( UnaryLogic& node ) override;
-    void visit( BinaryLogic& node ) override;
-    void visit( QuantifiedLogic& node ) override;
-    void visit( InfixLogic& node ) override;
-    void visit( LogicTuple& node ) override;
-    void visit( SequentLogic& node ) override;
-
-    void visit( VariableTerm& node ) override;
-    void visit( ConditionalTerm& node ) override;
-    void visit( DefinitionTerm& node ) override;
-
-    void visit( FunctorAtom& node ) override;
-    void visit( ConstantAtom& node ) override;
-    void visit( DefinedAtom& node ) override;
-    void visit( DefinitionAtom& node ) override;
-    void visit( ConnectiveAtom& node ) override;
-    void visit( TypeAtom& node ) override;
-    void visit( TupleAtom& node ) override;
-
-    void visit( ApplyType& node ) override;
-    void visit( NamedType& node ) override;
-    void visit( FunctorType& node ) override;
-    void visit( BinaryType& node ) override;
-    void visit( TupleType& node ) override;
-    void visit( QuantifiedType& node ) override;
-    void visit( SubType& node ) override;
-    void visit( RelationType& node ) override;
-    void visit( VariableType& node ) override;
-
-    void visit( Identifier& node ) override;
-
-    void visit( IntegerLiteral& node ) override;
-    void visit( RationalLiteral& node ) override;
-    void visit( RealLiteral& node ) override;
-    void visit( DistinctObjectLiteral& node ) override;
-    void visit( ListLiteral& node ) override;
-
-    void visit( IncludeDefinition& node ) override;
-    void visit( FormulaDefinition& node ) override;
-
-    void visit( GeneralData& node ) override;
-    void visit( GeneralList& node ) override;
-    void visit( GeneralAggregator& node ) override;
-    void visit( GeneralFunction& node ) override;
-    void visit( Annotation& node ) override;
-
-    z3::solver& solver( void );
-    bool hasConjecture( void );
-
-  private:
-    bool checkArgNum(
-        const SourceLocation& loc, const std::string& name, size_t expected, size_t actual );
-};
+}
 
 //////////////////////////////////
 ///// Helpers
