@@ -43,6 +43,7 @@
 #ifndef _LIBTPTP_HELPER_H_
 #define _LIBTPTP_HELPER_H_
 
+#include <functional>
 #include <libtptp/Node>
 #include <libtptp/Token>
 
@@ -82,11 +83,12 @@ namespace libtptp
         const typename T::Ptr m_element;
     };
 
-    template < class T >
+    using builderFunction = const Token::Ptr&( void );
+    template < class T, builderFunction delimiterConstructor = TokenBuilder::COMMA >
     class ListElements final : public NodeList< ListElement< T > >
     {
       public:
-        using Ptr = std::shared_ptr< ListElements< T > >;
+        using Ptr = std::shared_ptr< ListElements< T, delimiterConstructor > >;
 
         explicit ListElements( void )
         : NodeList< ListElement< T > >()
@@ -111,6 +113,12 @@ namespace libtptp
             }
         }
 
+        template < builderFunction U >
+        ListElements( const ListElements< T, U >& other )
+        : NodeList< ListElement< T > >( other )
+        {
+        }
+
         void add( const Token::Ptr& delimiter, const typename T::Ptr& element )
         {
             NodeList< ListElement< T > >::add(
@@ -126,8 +134,20 @@ namespace libtptp
             else
             {
                 NodeList< ListElement< T > >::add(
-                    std::make_shared< ListElement< T > >( TokenBuilder::COMMA(), element ) );
+                    std::make_shared< ListElement< T > >( delimiterConstructor(), element ) );
             }
+        }
+
+        template < builderFunction U >
+        operator ListElements< T, U >( void ) const
+        {
+            return static_cast< ListElements< T, U > >( *this );
+        }
+
+        template < builderFunction U >
+        operator const ListElements< T, U >( void ) const
+        {
+            return static_cast< const ListElements< T, U > >( *this );
         }
     };
 
@@ -135,12 +155,12 @@ namespace libtptp
 
 }
 #endif  // _LIBTPTP_HELPER_H_
-        //
-        //  Local variables:
-        //  mode: c++
-        //  indent-tabs-mode: nil
-        //  c-basic-offset: 4
-        //  tab-width: 4
-        //  End:
-        //  vim:noexpandtab:sw=4:ts=4:
-        //
+
+//  Local variables:
+//  mode: c++
+//  indent-tabs-mode: nil
+//  c-basic-offset: 4
+//  tab-width: 4
+//  End:
+//  vim:noexpandtab:sw=4:ts=4:
+//

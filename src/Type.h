@@ -55,7 +55,9 @@ namespace libtptp
     };
 
     using Types = NodeList< Type >;
-    using ListTypeElements = ListElements< Type >;
+
+	template <builderFunction func = TokenBuilder::COMMA>
+    using ListTypeElements = ListElements< Type, func >;
 
     class ApplyType final : public Type
     {
@@ -100,16 +102,16 @@ namespace libtptp
         explicit FunctorType(
             const Identifier::Ptr& name,
             const Token::Ptr& leftParen,
-            const ListTypeElements::Ptr& arguments,
+            const ListTypeElements<>::Ptr& arguments,
             const Token::Ptr& rightParen );
-        explicit FunctorType( const Identifier::Ptr& name, const ListTypeElements::Ptr& arguments );
-        explicit FunctorType( const std::string& name, const ListTypeElements::Ptr& arguments );
+        explicit FunctorType( const Identifier::Ptr& name, const ListTypeElements<>::Ptr& arguments );
+        explicit FunctorType( const std::string& name, const ListTypeElements<>::Ptr& arguments );
         explicit FunctorType(
             const std::string& name, const std::initializer_list< Type::Ptr >& arguments );
 
         const Identifier::Ptr& name( void ) const;
         const Token::Ptr& leftParen( void ) const;
-        const ListTypeElements::Ptr& arguments( void ) const;
+        const ListTypeElements<>::Ptr& arguments( void ) const;
         const Token::Ptr& rightParen( void ) const;
 
         void accept( Visitor& visitor ) override final;
@@ -117,7 +119,7 @@ namespace libtptp
       private:
         const Identifier::Ptr m_name;
         const Token::Ptr m_leftParen;
-        const ListTypeElements::Ptr m_arguments;
+        const ListTypeElements<>::Ptr m_arguments;
         const Token::Ptr m_rightParen;
     };
 
@@ -163,15 +165,15 @@ namespace libtptp
       public:
         using Ptr = std::shared_ptr< RelationType >;
 
-        explicit RelationType( const ListTypeElements::Ptr& elements );
+        explicit RelationType( const ListTypeElements<TokenBuilder::STAR>::Ptr& elements );
         explicit RelationType( const std::initializer_list< Type::Ptr >& elements );
 
-        const ListTypeElements::Ptr& elements( void ) const;
+        const ListTypeElements<TokenBuilder::STAR>::Ptr& elements( void ) const;
 
         void accept( Visitor& visitor ) override final;
 
       private:
-        const ListTypeElements::Ptr m_elements;
+        const ListTypeElements<TokenBuilder::STAR>::Ptr m_elements;
     };
 
     using RelationTypes = NodeList< RelationType >;
@@ -183,21 +185,21 @@ namespace libtptp
 
         explicit TupleType(
             const Token::Ptr& leftBraceToken,
-            const ListTypeElements::Ptr& tuples,
+            const ListTypeElements<>::Ptr& tuples,
             const Token::Ptr& rightBraceToken );
 
-        explicit TupleType( const ListTypeElements::Ptr& tuples );
+        explicit TupleType( const ListTypeElements<>::Ptr& tuples );
         explicit TupleType( const std::initializer_list< Type::Ptr >& tuples );
 
         const Token::Ptr& leftBraceToken( void ) const;
-        const ListTypeElements::Ptr& tuples( void ) const;
+        const ListTypeElements<>::Ptr& tuples( void ) const;
         const Token::Ptr& rightBraceToken( void ) const;
 
         void accept( Visitor& visitor ) override final;
 
       private:
         const Token::Ptr m_leftBraceToken;
-        const ListTypeElements::Ptr m_tuples;
+        const ListTypeElements<>::Ptr m_tuples;
         const Token::Ptr m_rightBraceToken;
     };
 

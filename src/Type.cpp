@@ -88,7 +88,7 @@ void NamedType::accept( Visitor& visitor )
 FunctorType::FunctorType(
     const Identifier::Ptr& name,
     const Token::Ptr& leftParen,
-    const ListTypeElements::Ptr& arguments,
+    const ListTypeElements<>::Ptr& arguments,
     const Token::Ptr& rightParen )
 : Type( ID::FUNCTOR_TYPE )
 , m_name( name )
@@ -98,19 +98,19 @@ FunctorType::FunctorType(
 {
 }
 
-FunctorType::FunctorType( const Identifier::Ptr& name, const ListTypeElements::Ptr& arguments )
+FunctorType::FunctorType( const Identifier::Ptr& name, const ListTypeElements<>::Ptr& arguments )
 : FunctorType( name, TokenBuilder::LPAREN(), arguments, TokenBuilder::RPAREN() )
 {
 }
 
-FunctorType::FunctorType( const std::string& name, const ListTypeElements::Ptr& arguments )
+FunctorType::FunctorType( const std::string& name, const ListTypeElements<>::Ptr& arguments )
 : FunctorType( std::make_shared< Identifier >( name ), arguments )
 {
 }
 
 FunctorType::FunctorType(
     const std::string& name, const std::initializer_list< Type::Ptr >& arguments )
-: FunctorType( name, std::make_shared< ListTypeElements >( arguments ) )
+: FunctorType( name, std::make_shared< ListTypeElements<> >( arguments ) )
 {
 }
 
@@ -124,7 +124,7 @@ const Token::Ptr& FunctorType::leftParen( void ) const
     return m_leftParen;
 }
 
-const ListTypeElements::Ptr& FunctorType::arguments( void ) const
+const ListTypeElements<>::Ptr& FunctorType::arguments( void ) const
 {
     return m_arguments;
 }
@@ -203,18 +203,20 @@ const Token::Ptr connectiveTokenFromKind( BinaryType::Kind kind )
     }
 }
 
-RelationType::RelationType( const ListTypeElements::Ptr& elements )
+RelationType::RelationType( const ListTypeElements< TokenBuilder::STAR >::Ptr& elements )
 : Type( ID::RELATION_TYPE )
 , m_elements( elements )
 {
+    this->setLeftDelimiter( TokenBuilder::LPAREN() );
+    this->setRightDelimiter( TokenBuilder::RPAREN() );
 }
 
 RelationType::RelationType( const std::initializer_list< Type::Ptr >& elements )
-: RelationType( std::make_shared< ListTypeElements >( elements ) )
+: RelationType( std::make_shared< ListTypeElements< TokenBuilder::STAR > >( elements ) )
 {
 }
 
-const ListTypeElements::Ptr& RelationType::elements( void ) const
+const ListTypeElements< TokenBuilder::STAR >::Ptr& RelationType::elements( void ) const
 {
     return m_elements;
 }
@@ -230,7 +232,7 @@ void RelationType::accept( Visitor& visitor )
 
 TupleType::TupleType(
     const Token::Ptr& leftBraceToken,
-    const ListTypeElements::Ptr& tuples,
+    const ListTypeElements<>::Ptr& tuples,
     const Token::Ptr& rightBraceToken )
 : Type( Node::ID::TUPLE_TYPE )
 , m_leftBraceToken( leftBraceToken )
@@ -239,13 +241,13 @@ TupleType::TupleType(
 {
 }
 
-TupleType::TupleType( const ListTypeElements::Ptr& tuples )
+TupleType::TupleType( const ListTypeElements<>::Ptr& tuples )
 : TupleType( TokenBuilder::LSQPAREN(), tuples, TokenBuilder::RSQPAREN() )
 {
 }
 
 TupleType::TupleType( const std::initializer_list< Type::Ptr >& tuples )
-: TupleType( std::make_shared< ListTypeElements >( tuples ) )
+: TupleType( std::make_shared< ListTypeElements<> >( tuples ) )
 {
 }
 
@@ -254,7 +256,7 @@ const Token::Ptr& TupleType::leftBraceToken( void ) const
     return m_leftBraceToken;
 }
 
-const ListTypeElements::Ptr& TupleType::tuples( void ) const
+const ListTypeElements<>::Ptr& TupleType::tuples( void ) const
 {
     return m_tuples;
 }

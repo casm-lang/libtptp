@@ -194,7 +194,7 @@ END       0 "end of file"
 %type <RelationType::Ptr> TffXprodType
 %type <TupleType::Ptr> TfxTupleType
 %type <SubType::Ptr> TffSubtype
-%type <ListTypeElements::Ptr> TffTypeList TffTypeArguments
+%type <ListTypeElements<>::Ptr> TffTypeList TffTypeArguments
 
 %type <ListVariableElements::Ptr> TffVariableList
 
@@ -950,7 +950,7 @@ ThfMappingType
 ThfXprodType
 : ThfUnitaryType STAR ThfUnitaryType
   {
-	auto list = libtptp::make< ListTypeElements >(@$);
+	auto list = libtptp::make< ListTypeElements<TokenBuilder::STAR> >(@$);
 	list->add($1);
 	list->add($2, $3);
 	$$ = libtptp::make< RelationType >(@$, list);
@@ -1532,7 +1532,7 @@ TffAtomicType
 TffTypeArguments
 : TffAtomicType
   {
-	auto list = libtptp::make< ListTypeElements >(@$);
+	auto list = libtptp::make< ListTypeElements<> >(@$);
 	list->add($1);
 	$$ = list;
   }
@@ -1554,7 +1554,7 @@ TffMappingType
 TffXprodType
 : TffUnitaryType STAR TffAtomicType
   {
-	auto list = libtptp::make< ListTypeElements >(@$);
+	auto list = libtptp::make< ListTypeElements<TokenBuilder::STAR> >(@$);
 	list->add($1);
 	list->add($2, $3);
 	$$ = libtptp::make< RelationType >(@$, list);
@@ -1577,7 +1577,7 @@ TfxTupleType
 TffTypeList
 : TffTopLevelType
   {
-	auto list = libtptp::make< ListTypeElements >(@$);
+	auto list = libtptp::make< ListTypeElements<> >(@$);
 	list->add($1);
 	$$ = list;
   }
