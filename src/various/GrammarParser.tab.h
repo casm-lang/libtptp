@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 // A Bison parser, made by GNU Bison 3.7.2.
+=======
+// A Bison parser, made by GNU Bison 3.5.
+>>>>>>> f10593b (Grammar: updated built files)
 
 // Skeleton interface for Bison LALR(1) parsers in C++
 
@@ -45,7 +49,11 @@
 #ifndef YY_YY_GRAMMARPARSER_TAB_H_INCLUDED
 # define YY_YY_GRAMMARPARSER_TAB_H_INCLUDED
 // "%code requires" blocks.
+<<<<<<< HEAD
 #line 61 "../../obj/src/GrammarParser.yy"
+=======
+#line 60 "../../obj/src/GrammarParser.yy"
+>>>>>>> f10593b (Grammar: updated built files)
 
     namespace libtptp
     {
@@ -205,7 +213,11 @@
 
 #line 48 "../../obj/src/GrammarParser.yy"
 namespace libtptp {
+<<<<<<< HEAD
 #line 209 "GrammarParser.tab.h"
+=======
+#line 208 "GrammarParser.tab.h"
+>>>>>>> f10593b (Grammar: updated built files)
 
 
 
@@ -586,7 +598,7 @@ namespace libtptp {
 
       // TffTypeArguments
       // TffTypeList
-      char dummy32[sizeof (ListTypeElements::Ptr)];
+      char dummy32[sizeof (ListTypeElements<>::Ptr)];
 
       // ThfVariableList
       // TffVariableList
@@ -1166,8 +1178,13 @@ namespace libtptp {
     /// (Internal) symbol kind.
     typedef symbol_kind::symbol_kind_type symbol_kind_type;
 
+<<<<<<< HEAD
     /// The number of tokens.
     static const symbol_kind_type YYNTOKENS = symbol_kind::YYNTOKENS;
+=======
+    /// Internal symbol number for tokens (subsumed by symbol_number_type).
+    typedef signed char token_number_type;
+>>>>>>> f10593b (Grammar: updated built files)
 
     /// A complete symbol.
     ///
@@ -2028,13 +2045,13 @@ namespace libtptp {
       {}
 #endif
 #if 201103L <= YY_CPLUSPLUS
-      basic_symbol (typename Base::kind_type t, ListTypeElements::Ptr&& v, location_type&& l)
+      basic_symbol (typename Base::kind_type t, ListTypeElements<>::Ptr&& v, location_type&& l)
         : Base (t)
         , value (std::move (v))
         , location (std::move (l))
       {}
 #else
-      basic_symbol (typename Base::kind_type t, const ListTypeElements::Ptr& v, const location_type& l)
+      basic_symbol (typename Base::kind_type t, const ListTypeElements<>::Ptr& v, const location_type& l)
         : Base (t)
         , value (v)
         , location (l)
@@ -2656,7 +2673,7 @@ switch (yykind)
 
       case 162: // TffTypeArguments
       case 166: // TffTypeList
-        value.template destroy< ListTypeElements::Ptr > ();
+        value.template destroy< ListTypeElements<>::Ptr > ();
         break;
 
       case 87: // ThfVariableList
@@ -2958,12 +2975,19 @@ switch (yykind)
       /// \a empty when empty.
       symbol_kind_type kind () const YY_NOEXCEPT;
 
+<<<<<<< HEAD
       /// Backward compatibility (Bison 3.6).
       symbol_kind_type type_get () const YY_NOEXCEPT;
 
       /// The symbol kind.
       /// \a S_YYEMPTY when empty.
       symbol_kind_type kind_;
+=======
+      /// The symbol type.
+      /// \a empty_symbol when empty.
+      /// An int, not token_number_type, to be able to store empty_symbol.
+      int type;
+>>>>>>> f10593b (Grammar: updated built files)
     };
 
     /// Backward compatibility for a private implementation detail (Bison 3.6).
@@ -2983,13 +3007,21 @@ switch (yykind)
       symbol_type (int tok, location_type l)
         : super_type(token_type (tok), std::move (l))
       {
+<<<<<<< HEAD
         YY_ASSERT (tok == token::END || tok == token::YYerror || tok == token::YYUNDEF);
+=======
+        YY_ASSERT (tok == token::END);
+>>>>>>> f10593b (Grammar: updated built files)
       }
 #else
       symbol_type (int tok, const location_type& l)
         : super_type(token_type (tok), l)
       {
+<<<<<<< HEAD
         YY_ASSERT (tok == token::END || tok == token::YYerror || tok == token::YYUNDEF);
+=======
+        YY_ASSERT (tok == token::END);
+>>>>>>> f10593b (Grammar: updated built files)
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
@@ -4024,6 +4056,11 @@ switch (yykind)
     Parser& operator= (const Parser&);
 #endif
 
+<<<<<<< HEAD
+=======
+    /// Stored state numbers (used for stacks).
+    typedef short state_type;
+>>>>>>> f10593b (Grammar: updated built files)
 
     /// Stored state numbers (used for stacks).
     typedef short state_type;
@@ -4051,6 +4088,7 @@ switch (yykind)
     static const short yypact_ninf_;
     static const short yytable_ninf_;
 
+<<<<<<< HEAD
     /// Convert a scanner token kind \a t to a symbol kind.
     /// In theory \a t should be a token_kind_type, but character literals
     /// are valid, yet not members of the token_type enum.
@@ -4089,6 +4127,45 @@ switch (yykind)
     // YYSTOS[STATE-NUM] -- The (internal number of the) accessing
     // symbol of state STATE-NUM.
     static const unsigned char yystos_[];
+=======
+    /// Convert a scanner token number \a t to a symbol number.
+    /// In theory \a t should be a token_type, but character literals
+    /// are valid, yet not members of the token_type enum.
+    static token_number_type yytranslate_ (int t);
+
+    // Tables.
+    // YYPACT[STATE-NUM] -- Index in YYTABLE of the portion describing
+    // STATE-NUM.
+    static const short yypact_[];
+
+    // YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
+    // Performed when YYTABLE does not specify something else to do.  Zero
+    // means the default is an error.
+    static const short yydefact_[];
+
+    // YYPGOTO[NTERM-NUM].
+    static const short yypgoto_[];
+
+    // YYDEFGOTO[NTERM-NUM].
+    static const short yydefgoto_[];
+
+    // YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
+    // positive, shift that token.  If negative, reduce the rule whose
+    // number is the opposite.  If YYTABLE_NINF, syntax error.
+    static const short yytable_[];
+
+    static const short yycheck_[];
+
+    // YYSTOS[STATE-NUM] -- The (internal number of the) accessing
+    // symbol of state STATE-NUM.
+    static const unsigned char yystos_[];
+
+    // YYR1[YYN] -- Symbol number of symbol that rule YYN derives.
+    static const unsigned char yyr1_[];
+
+    // YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.
+    static const signed char yyr2_[];
+>>>>>>> f10593b (Grammar: updated built files)
 
     // YYR1[YYN] -- Symbol number of symbol that rule YYN derives.
     static const unsigned char yyr1_[];
@@ -4196,6 +4273,7 @@ switch (yykind)
         : seq_ (n)
       {}
 
+<<<<<<< HEAD
 #if 201103L <= YY_CPLUSPLUS
       /// Non copyable.
       stack (const stack&) = delete;
@@ -4203,6 +4281,8 @@ switch (yykind)
       stack& operator= (const stack&) = delete;
 #endif
 
+=======
+>>>>>>> f10593b (Grammar: updated built files)
       /// Random access.
       ///
       /// Index 0 returns the topmost element.
@@ -4251,6 +4331,15 @@ switch (yykind)
       size () const YY_NOEXCEPT
       {
         return index_type (seq_.size ());
+<<<<<<< HEAD
+=======
+      }
+
+      std::ptrdiff_t
+      ssize () const YY_NOEXCEPT
+      {
+        return std::ptrdiff_t (size ());
+>>>>>>> f10593b (Grammar: updated built files)
       }
 
       /// Iterator on top of the stack (going downwards).
@@ -4323,12 +4412,21 @@ switch (yykind)
     /// Pop \a n symbols from the stack.
     void yypop_ (int n = 1);
 
+    /// Some specific tokens.
+    static const token_number_type yy_error_token_ = 1;
+    static const token_number_type yy_undef_token_ = 2;
+
     /// Constants.
     enum
     {
       yylast_ = 2748,     ///< Last index in yytable_.
       yynnts_ = 192,  ///< Number of nonterminal symbols.
+<<<<<<< HEAD
       yyfinal_ = 26 ///< Termination state number.
+=======
+      yyfinal_ = 26, ///< Termination state number.
+      yyntokens_ = 62  ///< Number of tokens.
+>>>>>>> f10593b (Grammar: updated built files)
     };
 
 
@@ -4340,7 +4438,11 @@ switch (yykind)
   };
 
   inline
+<<<<<<< HEAD
   Parser::symbol_kind_type
+=======
+  Parser::token_number_type
+>>>>>>> f10593b (Grammar: updated built files)
   Parser::yytranslate_ (int t)
   {
     // YYTRANSLATE[TOKEN-NUM] -- Symbol number corresponding to
@@ -4382,6 +4484,7 @@ switch (yykind)
       45,    46,    47,    48,    49,    50,    51,    52,    53,    54,
       55,    56,    57,    58,    59,    60,    61
     };
+<<<<<<< HEAD
     // Last valid token kind.
     const int code_max = 316;
 
@@ -4391,6 +4494,16 @@ switch (yykind)
       return YY_CAST (symbol_kind_type, translate_table[t]);
     else
       return symbol_kind::S_YYUNDEF;
+=======
+    const int user_token_number_max_ = 316;
+
+    if (t <= 0)
+      return yyeof_;
+    else if (t <= user_token_number_max_)
+      return translate_table[t];
+    else
+      return yy_undef_token_;
+>>>>>>> f10593b (Grammar: updated built files)
   }
 
   // basic_symbol.
@@ -4603,7 +4716,7 @@ switch (yykind)
 
       case 162: // TffTypeArguments
       case 166: // TffTypeList
-        value.move< ListTypeElements::Ptr > (std::move (that.value));
+        value.move< ListTypeElements<>::Ptr > (std::move (that.value));
         break;
 
       case 87: // ThfVariableList
@@ -5130,7 +5243,7 @@ switch (yykind)
 
       case 162: // TffTypeArguments
       case 166: // TffTypeList
-        value.copy< ListTypeElements::Ptr > (YY_MOVE (that.value));
+        value.copy< ListTypeElements<>::Ptr > (YY_MOVE (that.value));
         break;
 
       case 87: // ThfVariableList
@@ -5690,7 +5803,7 @@ switch (yykind)
 
       case 162: // TffTypeArguments
       case 166: // TffTypeList
-        value.move< ListTypeElements::Ptr > (YY_MOVE (s.value));
+        value.move< ListTypeElements<>::Ptr > (YY_MOVE (s.value));
         break;
 
       case 87: // ThfVariableList
@@ -5981,6 +6094,7 @@ switch (yykind)
     return kind_;
   }
 
+<<<<<<< HEAD
   inline
   Parser::symbol_kind_type
   Parser::by_kind::type_get () const YY_NOEXCEPT
@@ -5994,6 +6108,11 @@ switch (yykind)
 #line 5140 "GrammarParser.tab.h"
 =======
 #line 4860 "GrammarParser.tab.h"
+=======
+#line 47 "../../obj/src/GrammarParser.yy"
+} // libtptp
+#line 4852 "GrammarParser.tab.h"
+>>>>>>> f10593b (Grammar: updated built files)
 
 >>>>>>> 508276a (GrammarParser: commmit built files)
 

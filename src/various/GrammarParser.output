@@ -945,7 +945,7 @@ Nonterminals, with rules where they appear
     TffAtomicType <Type::Ptr> (161)
         on left: 209 210 211 212 213
         on right: 155 200 205 207 214 215 216 217 218
-    TffTypeArguments <ListTypeElements::Ptr> (162)
+    TffTypeArguments <ListTypeElements<>::Ptr> (162)
         on left: 214 215
         on right: 211 215
     TffMappingType <BinaryType::Ptr> (163)
@@ -957,7 +957,7 @@ Nonterminals, with rules where they appear
     TfxTupleType <TupleType::Ptr> (165)
         on left: 219
         on right: 213
-    TffTypeList <ListTypeElements::Ptr> (166)
+    TffTypeList <ListTypeElements<>::Ptr> (166)
         on left: 220 221
         on right: 219 221
     TffSubtype <SubType::Ptr> (167)

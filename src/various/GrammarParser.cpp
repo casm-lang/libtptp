@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 // A Bison parser, made by GNU Bison 3.7.2.
+=======
+// A Bison parser, made by GNU Bison 3.5.
+>>>>>>> f10593b (Grammar: updated built files)
 
 // Skeleton implementation for Bison LALR(1) parsers in C++
 
@@ -511,7 +515,7 @@ namespace libtptp {
 
       case 162: // TffTypeArguments
       case 166: // TffTypeList
-        value.YY_MOVE_OR_COPY< ListTypeElements::Ptr > (YY_MOVE (that.value));
+        value.YY_MOVE_OR_COPY< ListTypeElements<>::Ptr > (YY_MOVE (that.value));
         break;
 
       case 87: // ThfVariableList
@@ -1057,7 +1061,7 @@ namespace libtptp {
 
       case 162: // TffTypeArguments
       case 166: // TffTypeList
-        value.move< ListTypeElements::Ptr > (YY_MOVE (that.value));
+        value.move< ListTypeElements<>::Ptr > (YY_MOVE (that.value));
         break;
 
       case 87: // ThfVariableList
@@ -1305,6 +1309,7 @@ namespace libtptp {
 #if YY_CPLUSPLUS < 201103L
   Parser::stack_symbol_type&
   Parser::stack_symbol_type::operator= (const stack_symbol_type& that)
+<<<<<<< HEAD
   {
     state = that.state;
     switch (that.kind ())
@@ -1725,12 +1730,19 @@ namespace libtptp {
 
   Parser::stack_symbol_type&
   Parser::stack_symbol_type::operator= (stack_symbol_type& that)
+=======
+>>>>>>> f10593b (Grammar: updated built files)
   {
     state = that.state;
     switch (that.kind ())
     {
+<<<<<<< HEAD
       case symbol_kind::S_Annotations: // Annotations
         value.move< Annotation::Ptr > (that.value);
+=======
+      case 73: // Annotations
+        value.copy< Annotation::Ptr > (that.value);
+>>>>>>> f10593b (Grammar: updated built files)
         break;
 
 <<<<<<< HEAD
@@ -1756,7 +1768,7 @@ namespace libtptp {
 =======
       case 112: // ThfUnitaryType
       case 113: // ThfApplyType
-        value.move< ApplyType::Ptr > (that.value);
+        value.copy< ApplyType::Ptr > (that.value);
         break;
 
       case 100: // ThfLetTypes
@@ -1771,11 +1783,12 @@ namespace libtptp {
       case 194: // FofDefinedPlainTerm
       case 195: // FofSystemTerm
       case 198: // FofFunctionTerm
-        value.move< Atom::Ptr > (that.value);
+        value.copy< Atom::Ptr > (that.value);
         break;
 
       case 211: // NonassocConnective
       case 212: // AssocConnective
+<<<<<<< HEAD
 >>>>>>> 508276a (GrammarParser: commmit built files)
         value.move< BinaryConnective_t > (that.value);
         break;
@@ -1796,6 +1809,27 @@ namespace libtptp {
       case symbol_kind::S_FofOrFormula: // FofOrFormula
       case symbol_kind::S_FofAndFormula: // FofAndFormula
         value.move< BinaryLogic::Ptr > (that.value);
+=======
+        value.copy< BinaryConnective_t > (that.value);
+        break;
+
+      case 78: // ThfBinaryNonassoc
+      case 79: // ThfBinaryAssoc
+      case 80: // ThfOrFormula
+      case 81: // ThfAndFormula
+      case 82: // ThfApplyFormula
+      case 122: // TffBinaryFormula
+      case 123: // TffBinaryNonassoc
+      case 124: // TffBinaryAssoc
+      case 125: // TffOrFormula
+      case 126: // TffAndFormula
+      case 174: // FofBinaryFormula
+      case 175: // FofBinaryNonassoc
+      case 176: // FofBinaryAssoc
+      case 177: // FofOrFormula
+      case 178: // FofAndFormula
+        value.copy< BinaryLogic::Ptr > (that.value);
+>>>>>>> f10593b (Grammar: updated built files)
         break;
 
 <<<<<<< HEAD
@@ -1809,6 +1843,7 @@ namespace libtptp {
       case 115: // ThfMappingType
       case 117: // ThfUnionType
       case 163: // TffMappingType
+<<<<<<< HEAD
 >>>>>>> 508276a (GrammarParser: commmit built files)
         value.move< BinaryType::Ptr > (that.value);
         break;
@@ -1930,6 +1965,128 @@ namespace libtptp {
 
       case symbol_kind::S_IntegerLiteral: // IntegerLiteral
         value.move< IntegerLiteral::Ptr > (that.value);
+=======
+        value.copy< BinaryType::Ptr > (that.value);
+        break;
+
+      case 98: // ThfConditional
+      case 144: // TfxConditional
+        value.copy< ConditionalTerm::Ptr > (that.value);
+        break;
+
+      case 108: // ThfConnTerm
+        value.copy< ConnectiveAtom::Ptr > (that.value);
+        break;
+
+      case 96: // ThfSystemAtomic
+        value.copy< ConstantAtom::Ptr > (that.value);
+        break;
+
+      case 228: // DefinedTerm
+        value.copy< DefinedAtom::Ptr > (that.value);
+        break;
+
+      case 65: // Definition
+        value.copy< Definition::Ptr > (that.value);
+        break;
+
+      case 103: // ThfLetDefn
+      case 149: // TfxLetDefn
+        value.copy< DefinitionAtom::Ptr > (that.value);
+        break;
+
+      case 99: // ThfLet
+      case 145: // TfxLet
+        value.copy< DefinitionTerm::Ptr > (that.value);
+        break;
+
+      case 64: // Definitions
+        value.copy< Definitions::Ptr > (that.value);
+        break;
+
+      case 249: // DistinctObjectLiteral
+        value.copy< DistinctObjectLiteral::Ptr > (that.value);
+        break;
+
+      case 236: // FormulaData
+        value.copy< FormulaData::Ptr > (that.value);
+        break;
+
+      case 66: // AnnotatedFormula
+      case 67: // ThfAnnotated
+      case 68: // TffAnnotated
+      case 69: // TcfAnnotated
+      case 70: // FofAnnotated
+      case 71: // CnfAnnotated
+      case 72: // TpiAnnotated
+        value.copy< FormulaDefinition::Ptr > (that.value);
+        break;
+
+      case 97: // ThfFofFunction
+        value.copy< FunctorAtom::Ptr > (that.value);
+        break;
+
+      case 233: // GeneralData
+        value.copy< GeneralData::Ptr > (that.value);
+        break;
+
+      case 234: // GeneralFunction
+        value.copy< GeneralFunction::Ptr > (that.value);
+        break;
+
+      case 237: // GeneralList
+        value.copy< GeneralList::Ptr > (that.value);
+        break;
+
+      case 232: // GeneralTerm
+        value.copy< GeneralTerm::Ptr > (that.value);
+        break;
+
+      case 214: // TypeConstant
+      case 215: // TypeFunctor
+      case 216: // DefinedType
+      case 217: // Atom
+      case 218: // UntypedAtom
+      case 222: // Constant
+      case 223: // Functor
+      case 224: // SystemConstant
+      case 225: // SystemFunctor
+      case 226: // DefinedConstant
+      case 227: // DefinedFunctor
+      case 230: // Name
+      case 240: // AtomicWord
+      case 241: // AtomicDefinedWord
+      case 242: // AtomicSystemWord
+      case 244: // FileName
+      case 250: // LowerWordLiteral
+      case 251: // SingleQuotedLiteral
+      case 252: // DollarWordLiteral
+      case 253: // DollarDollarWordLiteral
+        value.copy< Identifier::Ptr > (that.value);
+        break;
+
+      case 238: // IncludeDefinition
+        value.copy< IncludeDefinition::Ptr > (that.value);
+        break;
+
+      case 219: // DefinedInfixPred
+      case 220: // InfixEquality
+      case 221: // InfixInequality
+        value.copy< InfixConnective_t > (that.value);
+        break;
+
+      case 91: // ThfInfixUnary
+      case 95: // ThfDefinedInfix
+      case 137: // TffInfixUnary
+      case 142: // TffDefinedInfix
+      case 180: // FofInfixUnary
+      case 189: // FofDefinedInfixFormula
+        value.copy< InfixLogic::Ptr > (that.value);
+        break;
+
+      case 245: // IntegerLiteral
+        value.copy< IntegerLiteral::Ptr > (that.value);
+>>>>>>> f10593b (Grammar: updated built files)
         break;
 
 <<<<<<< HEAD
@@ -2001,11 +2158,11 @@ namespace libtptp {
       case 104: // ThfLetDefnList
       case 147: // TffAtomTypingList
       case 151: // TfxLetDefnList
-        value.move< ListAtomElements::Ptr > (that.value);
+        value.copy< ListAtomElements::Ptr > (that.value);
         break;
 
       case 239: // FormulaSelection
-        value.move< ListLiteral::Ptr > (that.value);
+        value.copy< ListLiteral::Ptr > (that.value);
         break;
 
       case 107: // ThfFormulaList
@@ -2013,23 +2170,23 @@ namespace libtptp {
       case 155: // TffArguments
       case 196: // FofArguments
       case 201: // FofFormulaTupleList
-        value.move< ListLogicElements::Ptr > (that.value);
+        value.copy< ListLogicElements::Ptr > (that.value);
         break;
 
       case 229: // NameList
       case 235: // GeneralTerms
-        value.move< ListNodeElements::Ptr > (that.value);
+        value.copy< ListNodeElements::Ptr > (that.value);
         break;
 
       case 162: // TffTypeArguments
       case 166: // TffTypeList
-        value.move< ListTypeElements::Ptr > (that.value);
+        value.copy< ListTypeElements<>::Ptr > (that.value);
         break;
 
       case 87: // ThfVariableList
       case 132: // TffVariableList
       case 184: // FofVariableList
-        value.move< ListVariableElements::Ptr > (that.value);
+        value.copy< ListVariableElements::Ptr > (that.value);
         break;
 
       case 74: // TpiFormula
@@ -2064,6 +2221,7 @@ namespace libtptp {
       case 202: // CnfFormula
       case 203: // Disjunction
       case 204: // Literal
+<<<<<<< HEAD
 >>>>>>> 508276a (GrammarParser: commmit built files)
         value.move< Logic::Ptr > (that.value);
         break;
@@ -2098,6 +2256,41 @@ namespace libtptp {
 
       case symbol_kind::S_RealLiteral: // RealLiteral
         value.move< RealLiteral::Ptr > (that.value);
+=======
+        value.copy< Logic::Ptr > (that.value);
+        break;
+
+      case 106: // ThfTuple
+      case 154: // TfxTuple
+      case 200: // FofFormulaTuple
+        value.copy< LogicTuple::Ptr > (that.value);
+        break;
+
+      case 86: // ThfQuantifiedFormula
+      case 131: // TffQuantifiedFormula
+      case 171: // TcfQuantifiedFormula
+      case 183: // FofQuantifiedFormula
+        value.copy< QuantifiedLogic::Ptr > (that.value);
+        break;
+
+      case 205: // ThfQuantifier
+      case 206: // Th1Quantifier
+      case 207: // Th0Quantifier
+      case 210: // FofQuantifier
+        value.copy< QuantifiedQuantifier_t > (that.value);
+        break;
+
+      case 158: // Tf1QuantifiedType
+        value.copy< QuantifiedType::Ptr > (that.value);
+        break;
+
+      case 247: // RationalLiteral
+        value.copy< RationalLiteral::Ptr > (that.value);
+        break;
+
+      case 246: // RealLiteral
+        value.copy< RealLiteral::Ptr > (that.value);
+>>>>>>> f10593b (Grammar: updated built files)
         break;
 
 <<<<<<< HEAD
@@ -2105,10 +2298,11 @@ namespace libtptp {
 =======
       case 116: // ThfXprodType
       case 164: // TffXprodType
-        value.move< RelationType::Ptr > (that.value);
+        value.copy< RelationType::Ptr > (that.value);
         break;
 
       case 231: // FormulaRole
+<<<<<<< HEAD
 >>>>>>> 508276a (GrammarParser: commmit built files)
         value.move< Role::Ptr > (that.value);
         break;
@@ -2195,6 +2389,93 @@ namespace libtptp {
 
       case symbol_kind::S_TfxTupleType: // TfxTupleType
         value.move< TupleType::Ptr > (that.value);
+=======
+        value.copy< Role::Ptr > (that.value);
+        break;
+
+      case 119: // ThfSequent
+      case 168: // TfxSequent
+      case 199: // FofSequent
+        value.copy< SequentLogic::Ptr > (that.value);
+        break;
+
+      case 63: // Specification
+        value.copy< Specification::Ptr > (that.value);
+        break;
+
+      case 118: // ThfSubtype
+      case 167: // TffSubtype
+        value.copy< SubType::Ptr > (that.value);
+        break;
+
+      case 94: // ThfDefinedAtomic
+      case 138: // TffAtomicFormula
+      case 140: // TffDefinedAtomic
+      case 141: // TffDefinedPlain
+      case 186: // FofPlainAtomicFormula
+      case 188: // FofDefinedPlainFormula
+      case 190: // FofSystemAtomicFormula
+      case 197: // FofTerm
+        value.copy< Term::Ptr > (that.value);
+        break;
+
+      case 3: // "tpi"
+      case 4: // "thf"
+      case 5: // "tff"
+      case 6: // "tcf"
+      case 7: // "fof"
+      case 8: // "cnf"
+      case 9: // "fot"
+      case 10: // "ite"
+      case 11: // "let"
+      case 12: // "@"
+      case 13: // "&"
+      case 14: // "$"
+      case 15: // "$$"
+      case 16: // ":"
+      case 17: // ","
+      case 18: // "."
+      case 19: // "+"
+      case 20: // "="
+      case 21: // "!="
+      case 22: // "("
+      case 23: // ")"
+      case 24: // "["
+      case 25: // "]"
+      case 26: // "{"
+      case 27: // "}"
+      case 28: // "|"
+      case 29: // "*"
+      case 30: // ">"
+      case 31: // "!"
+      case 32: // "~"
+      case 33: // "?"
+      case 34: // "@-"
+      case 35: // "@+"
+      case 36: // "^"
+      case 37: // "!!"
+      case 38: // "??"
+      case 39: // "@@+"
+      case 40: // "@@-"
+      case 41: // "@="
+      case 42: // "!>"
+      case 43: // "?*"
+      case 44: // "<=>"
+      case 45: // "=>"
+      case 46: // "<="
+      case 47: // "<~>"
+      case 48: // "~|"
+      case 49: // "~&"
+      case 50: // ":="
+      case 51: // "-->"
+      case 52: // "<<"
+      case 53: // "include"
+        value.copy< Token::Ptr > (that.value);
+        break;
+
+      case 165: // TfxTupleType
+        value.copy< TupleType::Ptr > (that.value);
+>>>>>>> f10593b (Grammar: updated built files)
         break;
 
 <<<<<<< HEAD
@@ -2217,11 +2498,12 @@ namespace libtptp {
       case 159: // TffMonotype
       case 160: // TffUnitaryType
       case 161: // TffAtomicType
-        value.move< Type::Ptr > (that.value);
+        value.copy< Type::Ptr > (that.value);
         break;
 
       case 110: // ThfAtomTyping
       case 156: // TffAtomTyping
+<<<<<<< HEAD
         value.move< TypeAtom::Ptr > (that.value);
 >>>>>>> 508276a (GrammarParser: commmit built files)
         break;
@@ -2258,6 +2540,516 @@ namespace libtptp {
       case symbol_kind::S_IDENTIFIER: // "identifier"
       case symbol_kind::S_SINGLE_QUOTED: // "single_quoted"
         value.move< std::string > (that.value);
+=======
+        value.copy< TypeAtom::Ptr > (that.value);
+        break;
+
+      case 208: // ThfUnaryConnective
+      case 209: // Th1UnaryConnective
+      case 213: // UnaryConnective
+        value.copy< UnaryConnective_t > (that.value);
+        break;
+
+      case 90: // ThfPrefixUnary
+      case 136: // TffPrefixUnary
+        value.copy< UnaryLogic::Ptr > (that.value);
+        break;
+
+      case 243: // Number
+        value.copy< ValueLiteral::Ptr > (that.value);
+        break;
+
+      case 88: // ThfTypedVariable
+      case 130: // TfxUnitaryFormula
+      case 133: // TffVariable
+      case 134: // TffTypedVariable
+      case 248: // Variable
+        value.copy< VariableTerm::Ptr > (that.value);
+        break;
+
+      case 54: // "integer"
+      case 55: // "real"
+      case 56: // "rational"
+      case 57: // "double_quoted"
+      case 58: // "lower_word"
+      case 59: // "upper_word"
+      case 60: // "identifier"
+      case 61: // "single_quoted"
+        value.copy< std::string > (that.value);
+>>>>>>> f10593b (Grammar: updated built files)
+        break;
+
+      default:
+        break;
+    }
+
+    location = that.location;
+    return *this;
+  }
+
+<<<<<<< HEAD
+#if YYDEBUG
+  template <typename Base>
+  void
+  Parser::yy_print_ (std::ostream& yyo, const basic_symbol<Base>& yysym) const
+  {
+    std::ostream& yyoutput = yyo;
+    YYUSE (yyoutput);
+    if (yysym.empty ())
+      yyo << "empty symbol";
+    else
+      {
+        symbol_kind_type yykind = yysym.kind ();
+        yyo << (yykind < YYNTOKENS ? "token" : "nterm")
+            << ' ' << yysym.name () << " ("
+            << yysym.location << ": ";
+        YYUSE (yykind);
+        yyo << ')';
+      }
+  }
+#endif
+=======
+  Parser::stack_symbol_type&
+  Parser::stack_symbol_type::operator= (stack_symbol_type& that)
+  {
+    state = that.state;
+    switch (that.type_get ())
+    {
+      case 73: // Annotations
+        value.move< Annotation::Ptr > (that.value);
+        break;
+>>>>>>> f10593b (Grammar: updated built files)
+
+      case 112: // ThfUnitaryType
+      case 113: // ThfApplyType
+        value.move< ApplyType::Ptr > (that.value);
+        break;
+
+      case 100: // ThfLetTypes
+      case 102: // ThfLetDefns
+      case 139: // TffPlainAtomic
+      case 143: // TffSystemAtomic
+      case 146: // TfxLetTypes
+      case 148: // TfxLetDefns
+      case 191: // FofPlainTerm
+      case 192: // FofDefinedTerm
+      case 193: // FofDefinedAtomicTerm
+      case 194: // FofDefinedPlainTerm
+      case 195: // FofSystemTerm
+      case 198: // FofFunctionTerm
+        value.move< Atom::Ptr > (that.value);
+        break;
+
+      case 211: // NonassocConnective
+      case 212: // AssocConnective
+        value.move< BinaryConnective_t > (that.value);
+        break;
+
+      case 78: // ThfBinaryNonassoc
+      case 79: // ThfBinaryAssoc
+      case 80: // ThfOrFormula
+      case 81: // ThfAndFormula
+      case 82: // ThfApplyFormula
+      case 122: // TffBinaryFormula
+      case 123: // TffBinaryNonassoc
+      case 124: // TffBinaryAssoc
+      case 125: // TffOrFormula
+      case 126: // TffAndFormula
+      case 174: // FofBinaryFormula
+      case 175: // FofBinaryNonassoc
+      case 176: // FofBinaryAssoc
+      case 177: // FofOrFormula
+      case 178: // FofAndFormula
+        value.move< BinaryLogic::Ptr > (that.value);
+        break;
+
+      case 115: // ThfMappingType
+      case 117: // ThfUnionType
+      case 163: // TffMappingType
+        value.move< BinaryType::Ptr > (that.value);
+        break;
+
+      case 98: // ThfConditional
+      case 144: // TfxConditional
+        value.move< ConditionalTerm::Ptr > (that.value);
+        break;
+
+      case 108: // ThfConnTerm
+        value.move< ConnectiveAtom::Ptr > (that.value);
+        break;
+
+      case 96: // ThfSystemAtomic
+        value.move< ConstantAtom::Ptr > (that.value);
+        break;
+
+<<<<<<< HEAD
+  Parser::state_type
+  Parser::yy_lr_goto_state_ (state_type yystate, int yysym)
+  {
+    int yyr = yypgoto_[yysym - YYNTOKENS] + yystate;
+    if (0 <= yyr && yyr <= yylast_ && yycheck_[yyr] == yystate)
+      return yytable_[yyr];
+    else
+      return yydefgoto_[yysym - YYNTOKENS];
+  }
+=======
+      case 228: // DefinedTerm
+        value.move< DefinedAtom::Ptr > (that.value);
+        break;
+>>>>>>> f10593b (Grammar: updated built files)
+
+      case 65: // Definition
+        value.move< Definition::Ptr > (that.value);
+        break;
+
+      case 103: // ThfLetDefn
+      case 149: // TfxLetDefn
+        value.move< DefinitionAtom::Ptr > (that.value);
+        break;
+
+      case 99: // ThfLet
+      case 145: // TfxLet
+        value.move< DefinitionTerm::Ptr > (that.value);
+        break;
+
+<<<<<<< HEAD
+  int
+  Parser::parse ()
+  {
+    int yyn;
+    /// Length of the RHS of the rule being reduced.
+    int yylen = 0;
+=======
+      case 64: // Definitions
+        value.move< Definitions::Ptr > (that.value);
+        break;
+>>>>>>> f10593b (Grammar: updated built files)
+
+      case 249: // DistinctObjectLiteral
+        value.move< DistinctObjectLiteral::Ptr > (that.value);
+        break;
+
+      case 236: // FormulaData
+        value.move< FormulaData::Ptr > (that.value);
+        break;
+
+      case 66: // AnnotatedFormula
+      case 67: // ThfAnnotated
+      case 68: // TffAnnotated
+      case 69: // TcfAnnotated
+      case 70: // FofAnnotated
+      case 71: // CnfAnnotated
+      case 72: // TpiAnnotated
+        value.move< FormulaDefinition::Ptr > (that.value);
+        break;
+
+      case 97: // ThfFofFunction
+        value.move< FunctorAtom::Ptr > (that.value);
+        break;
+
+      case 233: // GeneralData
+        value.move< GeneralData::Ptr > (that.value);
+        break;
+
+      case 234: // GeneralFunction
+        value.move< GeneralFunction::Ptr > (that.value);
+        break;
+
+      case 237: // GeneralList
+        value.move< GeneralList::Ptr > (that.value);
+        break;
+
+      case 232: // GeneralTerm
+        value.move< GeneralTerm::Ptr > (that.value);
+        break;
+
+      case 214: // TypeConstant
+      case 215: // TypeFunctor
+      case 216: // DefinedType
+      case 217: // Atom
+      case 218: // UntypedAtom
+      case 222: // Constant
+      case 223: // Functor
+      case 224: // SystemConstant
+      case 225: // SystemFunctor
+      case 226: // DefinedConstant
+      case 227: // DefinedFunctor
+      case 230: // Name
+      case 240: // AtomicWord
+      case 241: // AtomicDefinedWord
+      case 242: // AtomicSystemWord
+      case 244: // FileName
+      case 250: // LowerWordLiteral
+      case 251: // SingleQuotedLiteral
+      case 252: // DollarWordLiteral
+      case 253: // DollarDollarWordLiteral
+        value.move< Identifier::Ptr > (that.value);
+        break;
+
+      case 238: // IncludeDefinition
+        value.move< IncludeDefinition::Ptr > (that.value);
+        break;
+
+      case 219: // DefinedInfixPred
+      case 220: // InfixEquality
+      case 221: // InfixInequality
+        value.move< InfixConnective_t > (that.value);
+        break;
+
+      case 91: // ThfInfixUnary
+      case 95: // ThfDefinedInfix
+      case 137: // TffInfixUnary
+      case 142: // TffDefinedInfix
+      case 180: // FofInfixUnary
+      case 189: // FofDefinedInfixFormula
+        value.move< InfixLogic::Ptr > (that.value);
+        break;
+
+      case 245: // IntegerLiteral
+        value.move< IntegerLiteral::Ptr > (that.value);
+        break;
+
+      case 101: // ThfAtomTypingList
+      case 104: // ThfLetDefnList
+      case 147: // TffAtomTypingList
+      case 151: // TfxLetDefnList
+        value.move< ListAtomElements::Ptr > (that.value);
+        break;
+
+      case 239: // FormulaSelection
+        value.move< ListLiteral::Ptr > (that.value);
+        break;
+
+      case 107: // ThfFormulaList
+      case 109: // ThfArguments
+      case 155: // TffArguments
+      case 196: // FofArguments
+      case 201: // FofFormulaTupleList
+        value.move< ListLogicElements::Ptr > (that.value);
+        break;
+
+      case 229: // NameList
+      case 235: // GeneralTerms
+        value.move< ListNodeElements::Ptr > (that.value);
+        break;
+
+      case 162: // TffTypeArguments
+      case 166: // TffTypeList
+        value.move< ListTypeElements<>::Ptr > (that.value);
+        break;
+
+      case 87: // ThfVariableList
+      case 132: // TffVariableList
+      case 184: // FofVariableList
+        value.move< ListVariableElements::Ptr > (that.value);
+        break;
+
+      case 74: // TpiFormula
+      case 75: // ThfFormula
+      case 76: // ThfLogicFormula
+      case 77: // ThfBinaryFormula
+      case 83: // ThfUnitFormula
+      case 84: // ThfPreunitFormula
+      case 85: // ThfUnitaryFormula
+      case 89: // ThfUnaryFormula
+      case 92: // ThfAtomicFormula
+      case 93: // ThfPlainAtomic
+      case 105: // ThfUnitaryTerm
+      case 120: // TffFormula
+      case 121: // TffLogicFormula
+      case 127: // TffUnitFormula
+      case 128: // TffPreunitFormula
+      case 129: // TffUnitaryFormula
+      case 135: // TffUnaryFormula
+      case 150: // TfxLetLhs
+      case 152: // TffTerm
+      case 153: // TffUnitaryTerm
+      case 169: // TcfFormula
+      case 170: // TcfLogicFormula
+      case 172: // FofFormula
+      case 173: // FofLogicFormula
+      case 179: // FofUnaryFormula
+      case 181: // FofUnitFormula
+      case 182: // FofUnitaryFormula
+      case 185: // FofAtomicFormula
+      case 187: // FofDefinedAtomicFormula
+      case 202: // CnfFormula
+      case 203: // Disjunction
+      case 204: // Literal
+        value.move< Logic::Ptr > (that.value);
+        break;
+
+      case 106: // ThfTuple
+      case 154: // TfxTuple
+      case 200: // FofFormulaTuple
+        value.move< LogicTuple::Ptr > (that.value);
+        break;
+
+      case 86: // ThfQuantifiedFormula
+      case 131: // TffQuantifiedFormula
+      case 171: // TcfQuantifiedFormula
+      case 183: // FofQuantifiedFormula
+        value.move< QuantifiedLogic::Ptr > (that.value);
+        break;
+
+      case 205: // ThfQuantifier
+      case 206: // Th1Quantifier
+      case 207: // Th0Quantifier
+      case 210: // FofQuantifier
+        value.move< QuantifiedQuantifier_t > (that.value);
+        break;
+
+      case 158: // Tf1QuantifiedType
+        value.move< QuantifiedType::Ptr > (that.value);
+        break;
+
+      case 247: // RationalLiteral
+        value.move< RationalLiteral::Ptr > (that.value);
+        break;
+
+      case 246: // RealLiteral
+        value.move< RealLiteral::Ptr > (that.value);
+        break;
+
+      case 116: // ThfXprodType
+      case 164: // TffXprodType
+        value.move< RelationType::Ptr > (that.value);
+        break;
+
+      case 231: // FormulaRole
+        value.move< Role::Ptr > (that.value);
+        break;
+
+      case 119: // ThfSequent
+      case 168: // TfxSequent
+      case 199: // FofSequent
+        value.move< SequentLogic::Ptr > (that.value);
+        break;
+
+      case 63: // Specification
+        value.move< Specification::Ptr > (that.value);
+        break;
+
+      case 118: // ThfSubtype
+      case 167: // TffSubtype
+        value.move< SubType::Ptr > (that.value);
+        break;
+
+      case 94: // ThfDefinedAtomic
+      case 138: // TffAtomicFormula
+      case 140: // TffDefinedAtomic
+      case 141: // TffDefinedPlain
+      case 186: // FofPlainAtomicFormula
+      case 188: // FofDefinedPlainFormula
+      case 190: // FofSystemAtomicFormula
+      case 197: // FofTerm
+        value.move< Term::Ptr > (that.value);
+        break;
+
+      case 3: // "tpi"
+      case 4: // "thf"
+      case 5: // "tff"
+      case 6: // "tcf"
+      case 7: // "fof"
+      case 8: // "cnf"
+      case 9: // "fot"
+      case 10: // "ite"
+      case 11: // "let"
+      case 12: // "@"
+      case 13: // "&"
+      case 14: // "$"
+      case 15: // "$$"
+      case 16: // ":"
+      case 17: // ","
+      case 18: // "."
+      case 19: // "+"
+      case 20: // "="
+      case 21: // "!="
+      case 22: // "("
+      case 23: // ")"
+      case 24: // "["
+      case 25: // "]"
+      case 26: // "{"
+      case 27: // "}"
+      case 28: // "|"
+      case 29: // "*"
+      case 30: // ">"
+      case 31: // "!"
+      case 32: // "~"
+      case 33: // "?"
+      case 34: // "@-"
+      case 35: // "@+"
+      case 36: // "^"
+      case 37: // "!!"
+      case 38: // "??"
+      case 39: // "@@+"
+      case 40: // "@@-"
+      case 41: // "@="
+      case 42: // "!>"
+      case 43: // "?*"
+      case 44: // "<=>"
+      case 45: // "=>"
+      case 46: // "<="
+      case 47: // "<~>"
+      case 48: // "~|"
+      case 49: // "~&"
+      case 50: // ":="
+      case 51: // "-->"
+      case 52: // "<<"
+      case 53: // "include"
+        value.move< Token::Ptr > (that.value);
+        break;
+
+      case 165: // TfxTupleType
+        value.move< TupleType::Ptr > (that.value);
+        break;
+
+      case 111: // ThfTopLevelType
+      case 114: // ThfBinaryType
+      case 157: // TffTopLevelType
+      case 159: // TffMonotype
+      case 160: // TffUnitaryType
+      case 161: // TffAtomicType
+        value.move< Type::Ptr > (that.value);
+        break;
+
+      case 110: // ThfAtomTyping
+      case 156: // TffAtomTyping
+        value.move< TypeAtom::Ptr > (that.value);
+        break;
+
+      case 208: // ThfUnaryConnective
+      case 209: // Th1UnaryConnective
+      case 213: // UnaryConnective
+        value.move< UnaryConnective_t > (that.value);
+        break;
+
+      case 90: // ThfPrefixUnary
+      case 136: // TffPrefixUnary
+        value.move< UnaryLogic::Ptr > (that.value);
+        break;
+
+      case 243: // Number
+        value.move< ValueLiteral::Ptr > (that.value);
+        break;
+
+      case 88: // ThfTypedVariable
+      case 130: // TfxUnitaryFormula
+      case 133: // TffVariable
+      case 134: // TffTypedVariable
+      case 248: // Variable
+        value.move< VariableTerm::Ptr > (that.value);
+        break;
+
+      case 54: // "integer"
+      case 55: // "real"
+      case 56: // "rational"
+      case 57: // "double_quoted"
+      case 58: // "lower_word"
+      case 59: // "upper_word"
+      case 60: // "identifier"
+      case 61: // "single_quoted"
+        value.move< std::string > (that.value);
         break;
 
       default:
@@ -2282,21 +3074,23 @@ namespace libtptp {
 #if YYDEBUG
   template <typename Base>
   void
-  Parser::yy_print_ (std::ostream& yyo, const basic_symbol<Base>& yysym) const
+  Parser::yy_print_ (std::ostream& yyo,
+                                     const basic_symbol<Base>& yysym) const
   {
     std::ostream& yyoutput = yyo;
     YYUSE (yyoutput);
+    symbol_number_type yytype = yysym.type_get ();
+#if defined __GNUC__ && ! defined __clang__ && ! defined __ICC && __GNUC__ * 100 + __GNUC_MINOR__ <= 408
+    // Avoid a (spurious) G++ 4.8 warning about "array subscript is
+    // below array bounds".
     if (yysym.empty ())
-      yyo << "empty symbol";
-    else
-      {
-        symbol_kind_type yykind = yysym.kind ();
-        yyo << (yykind < YYNTOKENS ? "token" : "nterm")
-            << ' ' << yysym.name () << " ("
-            << yysym.location << ": ";
-        YYUSE (yykind);
-        yyo << ')';
-      }
+      std::abort ();
+#endif
+    yyo << (yytype < yyntokens_ ? "token" : "nterm")
+        << ' ' << yytname_[yytype] << " ("
+        << yysym.location << ": ";
+    YYUSE (yytype);
+    yyo << ')';
   }
 #endif
 
@@ -2355,11 +3149,11 @@ namespace libtptp {
   Parser::state_type
   Parser::yy_lr_goto_state_ (state_type yystate, int yysym)
   {
-    int yyr = yypgoto_[yysym - YYNTOKENS] + yystate;
+    int yyr = yypgoto_[yysym - yyntokens_] + yystate;
     if (0 <= yyr && yyr <= yylast_ && yycheck_[yyr] == yystate)
       return yytable_[yyr];
     else
-      return yydefgoto_[yysym - YYNTOKENS];
+      return yydefgoto_[yysym - yyntokens_];
   }
 
   bool
@@ -2419,7 +3213,10 @@ namespace libtptp {
   `-----------------------------------------------*/
   yynewstate:
     YYCDEBUG << "Entering state " << int (yystack_[0].state) << '\n';
+<<<<<<< HEAD
     YY_STACK_PRINT ();
+=======
+>>>>>>> f10593b (Grammar: updated built files)
 
     // Accept?
     if (yystack_[0].state == yyfinal_)
@@ -2471,8 +3268,13 @@ namespace libtptp {
 
     /* If the proper action on seeing token YYLA.TYPE is to reduce or
        to detect an error, take that action.  */
+<<<<<<< HEAD
     yyn += yyla.kind ();
     if (yyn < 0 || yylast_ < yyn || yycheck_[yyn] != yyla.kind ())
+=======
+    yyn += yyla.type_get ();
+    if (yyn < 0 || yylast_ < yyn || yycheck_[yyn] != yyla.type_get ())
+>>>>>>> f10593b (Grammar: updated built files)
       {
         goto yydefault;
       }
@@ -2492,7 +3294,11 @@ namespace libtptp {
       --yyerrstatus_;
 
     // Shift the lookahead token.
+<<<<<<< HEAD
     yypush_ ("Shifting", state_type (yyn), YY_MOVE (yyla));
+=======
+    yypush_ ("Shifting", static_cast<state_type> (yyn), YY_MOVE (yyla));
+>>>>>>> f10593b (Grammar: updated built files)
     goto yynewstate;
 
 
@@ -2813,7 +3619,7 @@ namespace libtptp {
 
       case 162: // TffTypeArguments
       case 166: // TffTypeList
-        yylhs.value.emplace< ListTypeElements::Ptr > ();
+        yylhs.value.emplace< ListTypeElements<>::Ptr > ();
         break;
 
       case 87: // ThfVariableList
@@ -3085,20 +3891,25 @@ namespace libtptp {
 =======
   case 2:
 #line 349 "../../obj/src/GrammarParser.yy"
-    {
+  {
       m_specification.setDefinitions( yystack_[0].value.as < Definitions::Ptr > () );
   }
-#line 2224 "GrammarParser.cpp"
+#line 2655 "GrammarParser.cpp"
     break;
 
   case 3:
 #line 356 "../../obj/src/GrammarParser.yy"
+<<<<<<< HEAD
     {
 >>>>>>> 508276a (GrammarParser: commmit built files)
+=======
+  {
+>>>>>>> f10593b (Grammar: updated built files)
     const auto definitions = yystack_[1].value.as < Definitions::Ptr > ();
     definitions->add(yystack_[0].value.as < Definition::Ptr > ());
     yylhs.value.as < Definitions::Ptr > () = definitions;
   }
+<<<<<<< HEAD
 <<<<<<< HEAD
 #line 2589 "GrammarParser.cpp"
     break;
@@ -3108,16 +3919,24 @@ namespace libtptp {
   {
 =======
 #line 2234 "GrammarParser.cpp"
+=======
+#line 2665 "GrammarParser.cpp"
+>>>>>>> f10593b (Grammar: updated built files)
     break;
 
   case 4:
 #line 362 "../../obj/src/GrammarParser.yy"
+<<<<<<< HEAD
     {
 >>>>>>> 508276a (GrammarParser: commmit built files)
+=======
+  {
+>>>>>>> f10593b (Grammar: updated built files)
     const auto definitions = make< Definitions >( yylhs.location );
     definitions->add( yystack_[0].value.as < Definition::Ptr > () );
     yylhs.value.as < Definitions::Ptr > () = definitions;
   }
+<<<<<<< HEAD
 <<<<<<< HEAD
 #line 2599 "GrammarParser.cpp"
     break;
@@ -3253,38 +4072,99 @@ namespace libtptp {
   case 11:
 #line 399 "../../obj/src/GrammarParser.yy"
     {
+=======
+#line 2675 "GrammarParser.cpp"
+    break;
+
+  case 5:
+#line 372 "../../obj/src/GrammarParser.yy"
+  {
+      yylhs.value.as < Definition::Ptr > () = yystack_[0].value.as < FormulaDefinition::Ptr > ();
+  }
+#line 2683 "GrammarParser.cpp"
+    break;
+
+  case 6:
+#line 376 "../../obj/src/GrammarParser.yy"
+  {
+      yylhs.value.as < Definition::Ptr > () = yystack_[0].value.as < IncludeDefinition::Ptr > ();
+  }
+#line 2691 "GrammarParser.cpp"
+    break;
+
+  case 7:
+#line 383 "../../obj/src/GrammarParser.yy"
+  {
     yylhs.value.as < FormulaDefinition::Ptr > () = yystack_[0].value.as < FormulaDefinition::Ptr > ();
   }
-#line 2300 "GrammarParser.cpp"
+#line 2699 "GrammarParser.cpp"
+    break;
+
+  case 8:
+#line 387 "../../obj/src/GrammarParser.yy"
+  {
+    yylhs.value.as < FormulaDefinition::Ptr > () = yystack_[0].value.as < FormulaDefinition::Ptr > ();
+  }
+#line 2707 "GrammarParser.cpp"
+    break;
+
+  case 9:
+#line 391 "../../obj/src/GrammarParser.yy"
+  {
+    yylhs.value.as < FormulaDefinition::Ptr > () = yystack_[0].value.as < FormulaDefinition::Ptr > ();
+  }
+#line 2715 "GrammarParser.cpp"
+    break;
+
+  case 10:
+#line 395 "../../obj/src/GrammarParser.yy"
+  {
+    yylhs.value.as < FormulaDefinition::Ptr > () = yystack_[0].value.as < FormulaDefinition::Ptr > ();
+  }
+#line 2723 "GrammarParser.cpp"
+    break;
+
+  case 11:
+#line 399 "../../obj/src/GrammarParser.yy"
+  {
+>>>>>>> f10593b (Grammar: updated built files)
+    yylhs.value.as < FormulaDefinition::Ptr > () = yystack_[0].value.as < FormulaDefinition::Ptr > ();
+  }
+#line 2731 "GrammarParser.cpp"
     break;
 
   case 12:
 #line 403 "../../obj/src/GrammarParser.yy"
-    {
+  {
     yylhs.value.as < FormulaDefinition::Ptr > () = yystack_[0].value.as < FormulaDefinition::Ptr > ();
   }
-#line 2308 "GrammarParser.cpp"
+#line 2739 "GrammarParser.cpp"
     break;
 
   case 13:
 #line 410 "../../obj/src/GrammarParser.yy"
-    {
+  {
 	auto formula = libtptp::make< TypedHigherOrderFormula >(yystack_[2].location, yystack_[2].value.as < Logic::Ptr > ());
 	yylhs.value.as < FormulaDefinition::Ptr > () = libtptp::make< FormulaDefinition >(yylhs.location, yystack_[8].value.as < Token::Ptr > (), yystack_[7].value.as < Token::Ptr > (), yystack_[6].value.as < Identifier::Ptr > (), yystack_[5].value.as < Token::Ptr > (), yystack_[4].value.as < Role::Ptr > (), yystack_[3].value.as < Token::Ptr > (), formula, yystack_[1].value.as < Token::Ptr > (), yystack_[0].value.as < Token::Ptr > ());
   }
-#line 2317 "GrammarParser.cpp"
+#line 2748 "GrammarParser.cpp"
     break;
 
   case 14:
 #line 415 "../../obj/src/GrammarParser.yy"
+<<<<<<< HEAD
     {
 >>>>>>> 508276a (GrammarParser: commmit built files)
+=======
+  {
+>>>>>>> f10593b (Grammar: updated built files)
 	auto formula = libtptp::make< TypedHigherOrderFormula >(yystack_[4].location, yystack_[4].value.as < Logic::Ptr > ());
 	auto annotation = yystack_[2].value.as < Annotation::Ptr > ();
 	annotation->setDelimiter(yystack_[3].value.as < Token::Ptr > ());
 	formula->setAnnotations(annotation);
 	yylhs.value.as < FormulaDefinition::Ptr > () = libtptp::make< FormulaDefinition >(yylhs.location, yystack_[10].value.as < Token::Ptr > (), yystack_[9].value.as < Token::Ptr > (), yystack_[8].value.as < Identifier::Ptr > (), yystack_[7].value.as < Token::Ptr > (), yystack_[6].value.as < Role::Ptr > (), yystack_[5].value.as < Token::Ptr > (), formula, yystack_[1].value.as < Token::Ptr > (), yystack_[0].value.as < Token::Ptr > ());
   }
+<<<<<<< HEAD
 <<<<<<< HEAD
 #line 2684 "GrammarParser.cpp"
     break;
@@ -3303,27 +4183,35 @@ namespace libtptp {
   {
 =======
 #line 2329 "GrammarParser.cpp"
+=======
+#line 2760 "GrammarParser.cpp"
+>>>>>>> f10593b (Grammar: updated built files)
     break;
 
   case 15:
 #line 426 "../../obj/src/GrammarParser.yy"
-    {
+  {
 	auto formula = libtptp::make< TypedFirstOrderFormula >(yystack_[2].location, yystack_[2].value.as < Logic::Ptr > ());
 	yylhs.value.as < FormulaDefinition::Ptr > () = libtptp::make< FormulaDefinition >(yylhs.location, yystack_[8].value.as < Token::Ptr > (), yystack_[7].value.as < Token::Ptr > (), yystack_[6].value.as < Identifier::Ptr > (), yystack_[5].value.as < Token::Ptr > (), yystack_[4].value.as < Role::Ptr > (), yystack_[3].value.as < Token::Ptr > (), formula, yystack_[1].value.as < Token::Ptr > (), yystack_[0].value.as < Token::Ptr > ());
   }
-#line 2338 "GrammarParser.cpp"
+#line 2769 "GrammarParser.cpp"
     break;
 
   case 16:
 #line 431 "../../obj/src/GrammarParser.yy"
+<<<<<<< HEAD
     {
 >>>>>>> 508276a (GrammarParser: commmit built files)
+=======
+  {
+>>>>>>> f10593b (Grammar: updated built files)
 	auto formula = libtptp::make< TypedFirstOrderFormula >(yystack_[4].location, yystack_[4].value.as < Logic::Ptr > ());
 	auto annotation = yystack_[2].value.as < Annotation::Ptr > ();
 	annotation->setDelimiter(yystack_[3].value.as < Token::Ptr > ());
 	formula->setAnnotations(annotation);
 	yylhs.value.as < FormulaDefinition::Ptr > () = libtptp::make< FormulaDefinition >(yylhs.location, yystack_[10].value.as < Token::Ptr > (), yystack_[9].value.as < Token::Ptr > (), yystack_[8].value.as < Identifier::Ptr > (), yystack_[7].value.as < Token::Ptr > (), yystack_[6].value.as < Role::Ptr > (), yystack_[5].value.as < Token::Ptr > (), formula, yystack_[1].value.as < Token::Ptr > (), yystack_[0].value.as < Token::Ptr > ());
   }
+<<<<<<< HEAD
 <<<<<<< HEAD
 #line 2705 "GrammarParser.cpp"
     break;
@@ -3342,27 +4230,35 @@ namespace libtptp {
   {
 =======
 #line 2350 "GrammarParser.cpp"
+=======
+#line 2781 "GrammarParser.cpp"
+>>>>>>> f10593b (Grammar: updated built files)
     break;
 
   case 17:
 #line 442 "../../obj/src/GrammarParser.yy"
-    {
+  {
 	auto formula = libtptp::make< TheoryComputableFunctionalsFormula >(yystack_[2].location, yystack_[2].value.as < Logic::Ptr > ());
 	yylhs.value.as < FormulaDefinition::Ptr > () = libtptp::make< FormulaDefinition >(yylhs.location, yystack_[8].value.as < Token::Ptr > (), yystack_[7].value.as < Token::Ptr > (), yystack_[6].value.as < Identifier::Ptr > (), yystack_[5].value.as < Token::Ptr > (), yystack_[4].value.as < Role::Ptr > (), yystack_[3].value.as < Token::Ptr > (), formula, yystack_[1].value.as < Token::Ptr > (), yystack_[0].value.as < Token::Ptr > ());
   }
-#line 2359 "GrammarParser.cpp"
+#line 2790 "GrammarParser.cpp"
     break;
 
   case 18:
 #line 447 "../../obj/src/GrammarParser.yy"
+<<<<<<< HEAD
     {
 >>>>>>> 508276a (GrammarParser: commmit built files)
+=======
+  {
+>>>>>>> f10593b (Grammar: updated built files)
 	auto formula = libtptp::make< TheoryComputableFunctionalsFormula >(yystack_[4].location, yystack_[4].value.as < Logic::Ptr > ());
 	auto annotation = yystack_[2].value.as < Annotation::Ptr > ();
 	annotation->setDelimiter(yystack_[3].value.as < Token::Ptr > ());
 	formula->setAnnotations(annotation);
 	yylhs.value.as < FormulaDefinition::Ptr > () = libtptp::make< FormulaDefinition >(yylhs.location, yystack_[10].value.as < Token::Ptr > (), yystack_[9].value.as < Token::Ptr > (), yystack_[8].value.as < Identifier::Ptr > (), yystack_[7].value.as < Token::Ptr > (), yystack_[6].value.as < Role::Ptr > (), yystack_[5].value.as < Token::Ptr > (), formula, yystack_[1].value.as < Token::Ptr > (), yystack_[0].value.as < Token::Ptr > ());
   }
+<<<<<<< HEAD
 <<<<<<< HEAD
 #line 2726 "GrammarParser.cpp"
     break;
@@ -3381,27 +4277,35 @@ namespace libtptp {
   {
 =======
 #line 2371 "GrammarParser.cpp"
+=======
+#line 2802 "GrammarParser.cpp"
+>>>>>>> f10593b (Grammar: updated built files)
     break;
 
   case 19:
 #line 458 "../../obj/src/GrammarParser.yy"
-    {
+  {
 	auto formula = libtptp::make< FirstOrderFormula >(yystack_[2].location, yystack_[2].value.as < Logic::Ptr > ());
 	yylhs.value.as < FormulaDefinition::Ptr > () = libtptp::make< FormulaDefinition >(yylhs.location, yystack_[8].value.as < Token::Ptr > (), yystack_[7].value.as < Token::Ptr > (), yystack_[6].value.as < Identifier::Ptr > (), yystack_[5].value.as < Token::Ptr > (), yystack_[4].value.as < Role::Ptr > (), yystack_[3].value.as < Token::Ptr > (), formula, yystack_[1].value.as < Token::Ptr > (), yystack_[0].value.as < Token::Ptr > ());
   }
-#line 2380 "GrammarParser.cpp"
+#line 2811 "GrammarParser.cpp"
     break;
 
   case 20:
 #line 463 "../../obj/src/GrammarParser.yy"
+<<<<<<< HEAD
     {
 >>>>>>> 508276a (GrammarParser: commmit built files)
+=======
+  {
+>>>>>>> f10593b (Grammar: updated built files)
 	auto formula = libtptp::make< FirstOrderFormula >(yystack_[4].location, yystack_[4].value.as < Logic::Ptr > ());
 	auto annotation = yystack_[2].value.as < Annotation::Ptr > ();
 	annotation->setDelimiter(yystack_[3].value.as < Token::Ptr > ());
 	formula->setAnnotations(annotation);
 	yylhs.value.as < FormulaDefinition::Ptr > () = libtptp::make< FormulaDefinition >(yylhs.location, yystack_[10].value.as < Token::Ptr > (), yystack_[9].value.as < Token::Ptr > (), yystack_[8].value.as < Identifier::Ptr > (), yystack_[7].value.as < Token::Ptr > (), yystack_[6].value.as < Role::Ptr > (), yystack_[5].value.as < Token::Ptr > (), formula, yystack_[1].value.as < Token::Ptr > (), yystack_[0].value.as < Token::Ptr > ());
   }
+<<<<<<< HEAD
 <<<<<<< HEAD
 #line 2747 "GrammarParser.cpp"
     break;
@@ -3420,27 +4324,35 @@ namespace libtptp {
   {
 =======
 #line 2392 "GrammarParser.cpp"
+=======
+#line 2823 "GrammarParser.cpp"
+>>>>>>> f10593b (Grammar: updated built files)
     break;
 
   case 21:
 #line 474 "../../obj/src/GrammarParser.yy"
-    {
+  {
 	auto formula = libtptp::make< ClauseNormalFormFormula >(yystack_[2].location, yystack_[2].value.as < Logic::Ptr > ());
 	yylhs.value.as < FormulaDefinition::Ptr > () = libtptp::make< FormulaDefinition >(yylhs.location, yystack_[8].value.as < Token::Ptr > (), yystack_[7].value.as < Token::Ptr > (), yystack_[6].value.as < Identifier::Ptr > (), yystack_[5].value.as < Token::Ptr > (), yystack_[4].value.as < Role::Ptr > (), yystack_[3].value.as < Token::Ptr > (), formula, yystack_[1].value.as < Token::Ptr > (), yystack_[0].value.as < Token::Ptr > ());
   }
-#line 2401 "GrammarParser.cpp"
+#line 2832 "GrammarParser.cpp"
     break;
 
   case 22:
 #line 479 "../../obj/src/GrammarParser.yy"
+<<<<<<< HEAD
     {
 >>>>>>> 508276a (GrammarParser: commmit built files)
+=======
+  {
+>>>>>>> f10593b (Grammar: updated built files)
 	auto formula = libtptp::make< ClauseNormalFormFormula >(yystack_[4].location, yystack_[4].value.as < Logic::Ptr > ());
 	auto annotation = yystack_[2].value.as < Annotation::Ptr > ();
 	annotation->setDelimiter(yystack_[3].value.as < Token::Ptr > ());
 	formula->setAnnotations(annotation);
 	yylhs.value.as < FormulaDefinition::Ptr > () = libtptp::make< FormulaDefinition >(yylhs.location, yystack_[10].value.as < Token::Ptr > (), yystack_[9].value.as < Token::Ptr > (), yystack_[8].value.as < Identifier::Ptr > (), yystack_[7].value.as < Token::Ptr > (), yystack_[6].value.as < Role::Ptr > (), yystack_[5].value.as < Token::Ptr > (), formula, yystack_[1].value.as < Token::Ptr > (), yystack_[0].value.as < Token::Ptr > ());
   }
+<<<<<<< HEAD
 <<<<<<< HEAD
 #line 2768 "GrammarParser.cpp"
     break;
@@ -3459,21 +4371,28 @@ namespace libtptp {
   {
 =======
 #line 2413 "GrammarParser.cpp"
+=======
+#line 2844 "GrammarParser.cpp"
+>>>>>>> f10593b (Grammar: updated built files)
     break;
 
   case 23:
 #line 490 "../../obj/src/GrammarParser.yy"
-    {
+  {
 	auto formula = libtptp::make< TPTPProcessInstructionFormula >(yystack_[2].location, yystack_[2].value.as < Logic::Ptr > ());
 	yylhs.value.as < FormulaDefinition::Ptr > () = libtptp::make< FormulaDefinition >(yylhs.location, yystack_[8].value.as < Token::Ptr > (), yystack_[7].value.as < Token::Ptr > (), yystack_[6].value.as < Identifier::Ptr > (), yystack_[5].value.as < Token::Ptr > (), yystack_[4].value.as < Role::Ptr > (), yystack_[3].value.as < Token::Ptr > (), formula, yystack_[1].value.as < Token::Ptr > (), yystack_[0].value.as < Token::Ptr > ());
   }
-#line 2422 "GrammarParser.cpp"
+#line 2853 "GrammarParser.cpp"
     break;
 
   case 24:
 #line 495 "../../obj/src/GrammarParser.yy"
+<<<<<<< HEAD
     {
 >>>>>>> 508276a (GrammarParser: commmit built files)
+=======
+  {
+>>>>>>> f10593b (Grammar: updated built files)
 	auto formula = libtptp::make< TPTPProcessInstructionFormula >(yystack_[4].location, yystack_[4].value.as < Logic::Ptr > ());
 	auto annotation = yystack_[2].value.as < Annotation::Ptr > ();
 	annotation->setDelimiter(yystack_[3].value.as < Token::Ptr > ());
@@ -3481,24 +4400,41 @@ namespace libtptp {
 	yylhs.value.as < FormulaDefinition::Ptr > () = libtptp::make< FormulaDefinition >(yylhs.location, yystack_[10].value.as < Token::Ptr > (), yystack_[9].value.as < Token::Ptr > (), yystack_[8].value.as < Identifier::Ptr > (), yystack_[7].value.as < Token::Ptr > (), yystack_[6].value.as < Role::Ptr > (), yystack_[5].value.as < Token::Ptr > (), formula, yystack_[1].value.as < Token::Ptr > (), yystack_[0].value.as < Token::Ptr > ());
   }
 <<<<<<< HEAD
+<<<<<<< HEAD
 #line 2789 "GrammarParser.cpp"
     break;
 
   case 25: // Annotations: GeneralTerm
 #line 503 "../../obj/src/GrammarParser.yy"
+=======
+#line 2865 "GrammarParser.cpp"
+    break;
+
+  case 25:
+#line 506 "../../obj/src/GrammarParser.yy"
+>>>>>>> f10593b (Grammar: updated built files)
   {
 	yylhs.value.as < Annotation::Ptr > () = libtptp::make< Annotation >(yylhs.location, yystack_[0].value.as < GeneralTerm::Ptr > ());
     //source
   }
+<<<<<<< HEAD
 #line 2798 "GrammarParser.cpp"
     break;
 
   case 26: // Annotations: GeneralTerm "," GeneralList
 #line 508 "../../obj/src/GrammarParser.yy"
+=======
+#line 2874 "GrammarParser.cpp"
+    break;
+
+  case 26:
+#line 511 "../../obj/src/GrammarParser.yy"
+>>>>>>> f10593b (Grammar: updated built files)
   {
     //source, optionalInfo
 	yylhs.value.as < Annotation::Ptr > () = libtptp::make< Annotation >(yylhs.location, yystack_[2].value.as < GeneralTerm::Ptr > (), yystack_[1].value.as < Token::Ptr > (), yystack_[0].value.as < GeneralList::Ptr > ());
   }
+<<<<<<< HEAD
 #line 2807 "GrammarParser.cpp"
     break;
 
@@ -3632,55 +4568,231 @@ namespace libtptp {
 
   case 43: // ThfOrFormula: ThfUnitFormula "|" ThfUnitFormula
 #line 598 "../../obj/src/GrammarParser.yy"
+=======
+#line 2883 "GrammarParser.cpp"
+    break;
+
+  case 27:
+#line 519 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Logic::Ptr > () = yystack_[0].value.as < Logic::Ptr > ();
+  }
+#line 2891 "GrammarParser.cpp"
+    break;
+
+  case 28:
+#line 526 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Logic::Ptr > () = yystack_[0].value.as < Logic::Ptr > ();
+  }
+#line 2899 "GrammarParser.cpp"
+    break;
+
+  case 29:
+#line 530 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Logic::Ptr > () = yystack_[0].value.as < TypeAtom::Ptr > ();
+  }
+#line 2907 "GrammarParser.cpp"
+    break;
+
+  case 30:
+#line 534 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Logic::Ptr > () = yystack_[0].value.as < SubType::Ptr > ();
+  }
+#line 2915 "GrammarParser.cpp"
+    break;
+
+  case 31:
+#line 538 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Logic::Ptr > () = yystack_[0].value.as < SequentLogic::Ptr > ();
+  }
+#line 2923 "GrammarParser.cpp"
+    break;
+
+  case 32:
+#line 545 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Logic::Ptr > () = yystack_[0].value.as < Logic::Ptr > ();
+  }
+#line 2931 "GrammarParser.cpp"
+    break;
+
+  case 33:
+#line 549 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Logic::Ptr > () = yystack_[0].value.as < Logic::Ptr > ();
+  }
+#line 2939 "GrammarParser.cpp"
+    break;
+
+  case 34:
+#line 553 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Logic::Ptr > () = yystack_[0].value.as < Logic::Ptr > ();
+  }
+#line 2947 "GrammarParser.cpp"
+    break;
+
+  case 35:
+#line 557 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Logic::Ptr > () = yystack_[0].value.as < InfixLogic::Ptr > ();
+  }
+#line 2955 "GrammarParser.cpp"
+    break;
+
+  case 36:
+#line 564 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Logic::Ptr > () = yystack_[0].value.as < BinaryLogic::Ptr > ();
+  }
+#line 2963 "GrammarParser.cpp"
+    break;
+
+  case 37:
+#line 568 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Logic::Ptr > () = yystack_[0].value.as < BinaryLogic::Ptr > ();
+  }
+#line 2971 "GrammarParser.cpp"
+    break;
+
+  case 38:
+#line 572 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Logic::Ptr > () = yystack_[0].value.as < Type::Ptr > ();
+  }
+#line 2979 "GrammarParser.cpp"
+    break;
+
+  case 39:
+#line 579 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < BinaryLogic::Ptr > () = libtptp::make< BinaryLogic >(yylhs.location, yystack_[2].value.as < Logic::Ptr > (), yystack_[1].value.as < BinaryConnective_t > (), yystack_[0].value.as < Logic::Ptr > ());
+  }
+#line 2987 "GrammarParser.cpp"
+    break;
+
+  case 40:
+#line 586 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < BinaryLogic::Ptr > () = yystack_[0].value.as < BinaryLogic::Ptr > ();
+  }
+#line 2995 "GrammarParser.cpp"
+    break;
+
+  case 41:
+#line 590 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < BinaryLogic::Ptr > () = yystack_[0].value.as < BinaryLogic::Ptr > ();
+  }
+#line 3003 "GrammarParser.cpp"
+    break;
+
+  case 42:
+#line 594 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < BinaryLogic::Ptr > () = yystack_[0].value.as < BinaryLogic::Ptr > ();
+  }
+#line 3011 "GrammarParser.cpp"
+    break;
+
+  case 43:
+#line 601 "../../obj/src/GrammarParser.yy"
+>>>>>>> f10593b (Grammar: updated built files)
   {
 	auto op = std::make_pair(yystack_[1].value.as < Token::Ptr > (), BinaryLogic::Connective::DISJUNCTION);
 	yylhs.value.as < BinaryLogic::Ptr > () = libtptp::make< BinaryLogic >(yylhs.location, yystack_[2].value.as < Logic::Ptr > (), op, yystack_[0].value.as < Logic::Ptr > ());
   }
+<<<<<<< HEAD
 #line 2944 "GrammarParser.cpp"
     break;
 
   case 44: // ThfOrFormula: ThfOrFormula "|" ThfUnitFormula
 #line 603 "../../obj/src/GrammarParser.yy"
+=======
+#line 3020 "GrammarParser.cpp"
+    break;
+
+  case 44:
+#line 606 "../../obj/src/GrammarParser.yy"
+>>>>>>> f10593b (Grammar: updated built files)
   {
 	auto op = std::make_pair(yystack_[1].value.as < Token::Ptr > (), BinaryLogic::Connective::DISJUNCTION);
 	yylhs.value.as < BinaryLogic::Ptr > () = libtptp::make< BinaryLogic >(yylhs.location, yystack_[2].value.as < BinaryLogic::Ptr > (), op, yystack_[0].value.as < Logic::Ptr > ());
   }
+<<<<<<< HEAD
 #line 2953 "GrammarParser.cpp"
     break;
 
   case 45: // ThfAndFormula: ThfUnitFormula "&" ThfUnitFormula
 #line 611 "../../obj/src/GrammarParser.yy"
+=======
+#line 3029 "GrammarParser.cpp"
+    break;
+
+  case 45:
+#line 614 "../../obj/src/GrammarParser.yy"
+>>>>>>> f10593b (Grammar: updated built files)
   {
 	auto op = std::make_pair(yystack_[1].value.as < Token::Ptr > (), BinaryLogic::Connective::CONJUNCTION);
 	yylhs.value.as < BinaryLogic::Ptr > () = libtptp::make< BinaryLogic >(yylhs.location, yystack_[2].value.as < Logic::Ptr > (), op, yystack_[0].value.as < Logic::Ptr > ());
   }
+<<<<<<< HEAD
 #line 2962 "GrammarParser.cpp"
     break;
 
   case 46: // ThfAndFormula: ThfAndFormula "&" ThfUnitFormula
 #line 616 "../../obj/src/GrammarParser.yy"
+=======
+#line 3038 "GrammarParser.cpp"
+    break;
+
+  case 46:
+#line 619 "../../obj/src/GrammarParser.yy"
+>>>>>>> f10593b (Grammar: updated built files)
   {
 	auto op = std::make_pair(yystack_[1].value.as < Token::Ptr > (), BinaryLogic::Connective::CONJUNCTION);
 	yylhs.value.as < BinaryLogic::Ptr > () = libtptp::make< BinaryLogic >(yylhs.location, yystack_[2].value.as < BinaryLogic::Ptr > (), op, yystack_[0].value.as < Logic::Ptr > ());
   }
+<<<<<<< HEAD
 #line 2971 "GrammarParser.cpp"
     break;
 
   case 47: // ThfApplyFormula: ThfUnitFormula "@" ThfUnitFormula
 #line 624 "../../obj/src/GrammarParser.yy"
+=======
+#line 3047 "GrammarParser.cpp"
+    break;
+
+  case 47:
+#line 627 "../../obj/src/GrammarParser.yy"
+>>>>>>> f10593b (Grammar: updated built files)
   {
 	auto op = std::make_pair(yystack_[1].value.as < Token::Ptr > (), BinaryLogic::Connective::APPLY);
 	yylhs.value.as < BinaryLogic::Ptr > () = libtptp::make< BinaryLogic >(yylhs.location, yystack_[2].value.as < Logic::Ptr > (), op, yystack_[0].value.as < Logic::Ptr > ());
   }
+<<<<<<< HEAD
 #line 2980 "GrammarParser.cpp"
     break;
 
   case 48: // ThfApplyFormula: ThfApplyFormula "@" ThfUnitFormula
 #line 629 "../../obj/src/GrammarParser.yy"
+=======
+#line 3056 "GrammarParser.cpp"
+    break;
+
+  case 48:
+#line 632 "../../obj/src/GrammarParser.yy"
+>>>>>>> f10593b (Grammar: updated built files)
   {
 	auto op = std::make_pair(yystack_[1].value.as < Token::Ptr > (), BinaryLogic::Connective::APPLY);
 	yylhs.value.as < BinaryLogic::Ptr > () = libtptp::make< BinaryLogic >(yylhs.location, yystack_[2].value.as < BinaryLogic::Ptr > (), op, yystack_[0].value.as < Logic::Ptr > ());
   }
+<<<<<<< HEAD
 #line 2989 "GrammarParser.cpp"
     break;
 
@@ -7942,10 +9054,1658 @@ namespace libtptp {
 
   case 290: // Disjunction: Disjunction "|" Literal
 #line 2092 "../../obj/src/GrammarParser.yy"
+=======
+#line 3065 "GrammarParser.cpp"
+    break;
+
+  case 49:
+#line 640 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Logic::Ptr > () = yystack_[0].value.as < Logic::Ptr > ();
+  }
+#line 3073 "GrammarParser.cpp"
+    break;
+
+  case 50:
+#line 644 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Logic::Ptr > () = yystack_[0].value.as < Logic::Ptr > ();
+  }
+#line 3081 "GrammarParser.cpp"
+    break;
+
+  case 51:
+#line 648 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Logic::Ptr > () = yystack_[0].value.as < InfixLogic::Ptr > ();
+  }
+#line 3089 "GrammarParser.cpp"
+    break;
+
+  case 52:
+#line 655 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Logic::Ptr > () = yystack_[0].value.as < Logic::Ptr > ();
+  }
+#line 3097 "GrammarParser.cpp"
+    break;
+
+  case 53:
+#line 659 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Logic::Ptr > () = yystack_[0].value.as < UnaryLogic::Ptr > ();
+  }
+#line 3105 "GrammarParser.cpp"
+    break;
+
+  case 54:
+#line 666 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Logic::Ptr > () = yystack_[0].value.as < QuantifiedLogic::Ptr > ();
+  }
+#line 3113 "GrammarParser.cpp"
+    break;
+
+  case 55:
+#line 670 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Logic::Ptr > () = yystack_[0].value.as < Logic::Ptr > ();
+  }
+#line 3121 "GrammarParser.cpp"
+    break;
+
+  case 56:
+#line 674 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Logic::Ptr > () = yystack_[0].value.as < VariableTerm::Ptr > ();
+  }
+#line 3129 "GrammarParser.cpp"
+    break;
+
+  case 57:
+#line 678 "../../obj/src/GrammarParser.yy"
+  {
+	auto logic = yystack_[1].value.as < Logic::Ptr > ();
+	logic->setLeftDelimiter(yystack_[2].value.as < Token::Ptr > ());
+	logic->setRightDelimiter(yystack_[0].value.as < Token::Ptr > ());
+	yylhs.value.as < Logic::Ptr > () = logic;
+  }
+#line 3140 "GrammarParser.cpp"
+    break;
+
+  case 58:
+#line 688 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < QuantifiedLogic::Ptr > () = libtptp::make< QuantifiedLogic >(yylhs.location, yystack_[5].value.as < QuantifiedQuantifier_t > (), yystack_[4].value.as < Token::Ptr > (), yystack_[3].value.as < ListVariableElements::Ptr > (), yystack_[2].value.as < Token::Ptr > (), yystack_[1].value.as < Token::Ptr > (), yystack_[0].value.as < Logic::Ptr > ());
+  }
+#line 3148 "GrammarParser.cpp"
+    break;
+
+  case 59:
+#line 695 "../../obj/src/GrammarParser.yy"
+  {
+	auto list = libtptp::make< ListVariableElements >(yylhs.location);
+	list->add(yystack_[0].value.as < VariableTerm::Ptr > ());
+	yylhs.value.as < ListVariableElements::Ptr > () = list;
+  }
+#line 3158 "GrammarParser.cpp"
+    break;
+
+  case 60:
+#line 701 "../../obj/src/GrammarParser.yy"
+  {
+	auto list = yystack_[2].value.as < ListVariableElements::Ptr > ();
+	list->add(yystack_[1].value.as < Token::Ptr > (), yystack_[0].value.as < VariableTerm::Ptr > ());
+	yylhs.value.as < ListVariableElements::Ptr > () = list;
+  }
+#line 3168 "GrammarParser.cpp"
+    break;
+
+  case 61:
+#line 710 "../../obj/src/GrammarParser.yy"
+  {
+	auto var = yystack_[2].value.as < VariableTerm::Ptr > ();
+	var->setColon(yystack_[1].value.as < Token::Ptr > ());
+	Type::Ptr type = yystack_[0].value.as < Type::Ptr > ();
+	var->setType(type);
+  }
+#line 3179 "GrammarParser.cpp"
+    break;
+
+  case 62:
+#line 720 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Logic::Ptr > () = yystack_[0].value.as < UnaryLogic::Ptr > ();
+  }
+#line 3187 "GrammarParser.cpp"
+    break;
+
+  case 63:
+#line 724 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Logic::Ptr > () = yystack_[0].value.as < InfixLogic::Ptr > ();
+  }
+#line 3195 "GrammarParser.cpp"
+    break;
+
+  case 64:
+#line 731 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < UnaryLogic::Ptr > () = libtptp::make< UnaryLogic >(yylhs.location, yystack_[1].value.as < UnaryConnective_t > (), yystack_[0].value.as < Logic::Ptr > ());
+  }
+#line 3203 "GrammarParser.cpp"
+    break;
+
+  case 65:
+#line 738 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < InfixLogic::Ptr > () = libtptp::make< InfixLogic >(yylhs.location, yystack_[2].value.as < Logic::Ptr > (), yystack_[1].value.as < InfixConnective_t > (), yystack_[0].value.as < Logic::Ptr > ());
+  }
+#line 3211 "GrammarParser.cpp"
+    break;
+
+  case 66:
+#line 745 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Logic::Ptr > () = yystack_[0].value.as < Logic::Ptr > ();
+  }
+#line 3219 "GrammarParser.cpp"
+    break;
+
+  case 67:
+#line 749 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Logic::Ptr > () = yystack_[0].value.as < Term::Ptr > ();
+  }
+#line 3227 "GrammarParser.cpp"
+    break;
+
+  case 68:
+#line 753 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Logic::Ptr > () = yystack_[0].value.as < ConstantAtom::Ptr > ();
+  }
+#line 3235 "GrammarParser.cpp"
+    break;
+
+  case 69:
+#line 757 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Logic::Ptr > () = yystack_[0].value.as < FunctorAtom::Ptr > ();
+  }
+#line 3243 "GrammarParser.cpp"
+    break;
+
+  case 70:
+#line 764 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Logic::Ptr > () = libtptp::make< ConstantAtom >(yylhs.location, yystack_[0].value.as < Identifier::Ptr > (), Atom::Kind::PLAIN);
+  }
+#line 3251 "GrammarParser.cpp"
+    break;
+
+  case 71:
+#line 768 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Logic::Ptr > () = yystack_[0].value.as < LogicTuple::Ptr > ();
+  }
+#line 3259 "GrammarParser.cpp"
+    break;
+
+  case 72:
+#line 775 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Term::Ptr > () = libtptp::make< ConstantAtom >(yylhs.location, yystack_[0].value.as < Identifier::Ptr > (), Atom::Kind::DEFINED);
+  }
+#line 3267 "GrammarParser.cpp"
+    break;
+
+  case 73:
+#line 779 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Term::Ptr > () = yystack_[0].value.as < ConditionalTerm::Ptr > ();
+  }
+#line 3275 "GrammarParser.cpp"
+    break;
+
+  case 74:
+#line 783 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Term::Ptr > () = yystack_[0].value.as < DefinitionTerm::Ptr > ();
+  }
+#line 3283 "GrammarParser.cpp"
+    break;
+
+  case 75:
+#line 787 "../../obj/src/GrammarParser.yy"
+  {
+	auto logic = yystack_[1].value.as < ConnectiveAtom::Ptr > ();
+	logic->setLeftDelimiter(yystack_[2].value.as < Token::Ptr > ());
+	logic->setRightDelimiter(yystack_[0].value.as < Token::Ptr > ());
+	yylhs.value.as < Term::Ptr > () = logic;
+  }
+#line 3294 "GrammarParser.cpp"
+    break;
+
+  case 76:
+#line 794 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Term::Ptr > () = yystack_[0].value.as < DefinedAtom::Ptr > ();
+  }
+#line 3302 "GrammarParser.cpp"
+    break;
+
+  case 77:
+#line 801 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < InfixLogic::Ptr > () = libtptp::make< InfixLogic >(yylhs.location, yystack_[2].value.as < Logic::Ptr > (), yystack_[1].value.as < InfixConnective_t > (), yystack_[0].value.as < Logic::Ptr > ());
+  }
+#line 3310 "GrammarParser.cpp"
+    break;
+
+  case 78:
+#line 808 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < ConstantAtom::Ptr > () = libtptp::make< ConstantAtom >(yylhs.location, yystack_[0].value.as < Identifier::Ptr > (), Atom::Kind::SYSTEM);
+  }
+#line 3318 "GrammarParser.cpp"
+    break;
+
+  case 79:
+#line 815 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < FunctorAtom::Ptr > () = libtptp::make< FunctorAtom >(yylhs.location, yystack_[3].value.as < Identifier::Ptr > (), yystack_[2].value.as < Token::Ptr > (), yystack_[1].value.as < ListLogicElements::Ptr > (), yystack_[0].value.as < Token::Ptr > (), Atom::Kind::PLAIN);
+  }
+#line 3326 "GrammarParser.cpp"
+    break;
+
+  case 80:
+#line 819 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < FunctorAtom::Ptr > () = libtptp::make< FunctorAtom >(yylhs.location, yystack_[3].value.as < Identifier::Ptr > (), yystack_[2].value.as < Token::Ptr > (), yystack_[1].value.as < ListLogicElements::Ptr > (), yystack_[0].value.as < Token::Ptr > (), Atom::Kind::DEFINED);
+  }
+#line 3334 "GrammarParser.cpp"
+    break;
+
+  case 81:
+#line 823 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < FunctorAtom::Ptr > () = libtptp::make< FunctorAtom >(yylhs.location, yystack_[3].value.as < Identifier::Ptr > (), yystack_[2].value.as < Token::Ptr > (), yystack_[1].value.as < ListLogicElements::Ptr > (), yystack_[0].value.as < Token::Ptr > (), Atom::Kind::SYSTEM);
+  }
+#line 3342 "GrammarParser.cpp"
+    break;
+
+  case 82:
+#line 830 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < ConditionalTerm::Ptr > () = libtptp::make< ConditionalTerm >(yylhs.location, yystack_[8].value.as < Token::Ptr > (), yystack_[7].value.as < Token::Ptr > (), yystack_[6].value.as < Token::Ptr > (), yystack_[5].value.as < Logic::Ptr > (), yystack_[4].value.as < Token::Ptr > (), yystack_[3].value.as < Logic::Ptr > (), yystack_[2].value.as < Token::Ptr > (), yystack_[1].value.as < Logic::Ptr > (), yystack_[0].value.as < Token::Ptr > ());
+  }
+#line 3350 "GrammarParser.cpp"
+    break;
+
+  case 83:
+#line 837 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < DefinitionTerm::Ptr > () = libtptp::make< DefinitionTerm >(yylhs.location, yystack_[8].value.as < Token::Ptr > (), yystack_[7].value.as < Token::Ptr > (), yystack_[6].value.as < Token::Ptr > (), yystack_[5].value.as < Atom::Ptr > (), yystack_[4].value.as < Token::Ptr > (), yystack_[3].value.as < Atom::Ptr > (), yystack_[2].value.as < Token::Ptr > (), yystack_[1].value.as < Logic::Ptr > (), yystack_[0].value.as < Token::Ptr > ());
+  }
+#line 3358 "GrammarParser.cpp"
+    break;
+
+  case 84:
+#line 844 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Atom::Ptr > () = yystack_[0].value.as < TypeAtom::Ptr > ();
+  }
+#line 3366 "GrammarParser.cpp"
+    break;
+
+  case 85:
+#line 848 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Atom::Ptr > () = libtptp::make< TupleAtom >(yylhs.location, yystack_[2].value.as < Token::Ptr > (), yystack_[1].value.as < ListAtomElements::Ptr > (), yystack_[0].value.as < Token::Ptr > ());
+  }
+#line 3374 "GrammarParser.cpp"
+    break;
+
+  case 86:
+#line 855 "../../obj/src/GrammarParser.yy"
+  {
+	auto list = libtptp::make< ListAtomElements >(yylhs.location);
+	list->add(yystack_[0].value.as < TypeAtom::Ptr > ());
+	yylhs.value.as < ListAtomElements::Ptr > () = list;
+  }
+#line 3384 "GrammarParser.cpp"
+    break;
+
+  case 87:
+#line 861 "../../obj/src/GrammarParser.yy"
+  {
+	auto list = yystack_[2].value.as < ListAtomElements::Ptr > ();
+	list->add(yystack_[1].value.as < Token::Ptr > (), yystack_[0].value.as < TypeAtom::Ptr > ());
+	yylhs.value.as < ListAtomElements::Ptr > () = list;
+  }
+#line 3394 "GrammarParser.cpp"
+    break;
+
+  case 88:
+#line 870 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Atom::Ptr > () = yystack_[0].value.as < DefinitionAtom::Ptr > ();
+  }
+#line 3402 "GrammarParser.cpp"
+    break;
+
+  case 89:
+#line 874 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Atom::Ptr > () = libtptp::make< TupleAtom >(yylhs.location, yystack_[2].value.as < Token::Ptr > (), yystack_[1].value.as < ListAtomElements::Ptr > (), yystack_[0].value.as < Token::Ptr > ());
+  }
+#line 3410 "GrammarParser.cpp"
+    break;
+
+  case 90:
+#line 881 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < DefinitionAtom::Ptr > () = libtptp::make< DefinitionAtom >(yylhs.location, yystack_[2].value.as < Logic::Ptr > (), yystack_[1].value.as < Token::Ptr > (), yystack_[0].value.as < Logic::Ptr > ());
+  }
+#line 3418 "GrammarParser.cpp"
+    break;
+
+  case 91:
+#line 888 "../../obj/src/GrammarParser.yy"
+  {
+	//could be of type DefinitionAtoms, but Logics is expected
+	auto list = libtptp::make< ListAtomElements >(yylhs.location);
+	list->add(yystack_[0].value.as < DefinitionAtom::Ptr > ());
+	yylhs.value.as < ListAtomElements::Ptr > () = list;
+  }
+#line 3429 "GrammarParser.cpp"
+    break;
+
+  case 92:
+#line 895 "../../obj/src/GrammarParser.yy"
+  {
+	auto list = yystack_[2].value.as < ListAtomElements::Ptr > ();
+	list->add(yystack_[1].value.as < Token::Ptr > (), yystack_[0].value.as < DefinitionAtom::Ptr > ());
+	yylhs.value.as < ListAtomElements::Ptr > () = list;
+  }
+#line 3439 "GrammarParser.cpp"
+    break;
+
+  case 93:
+#line 904 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Logic::Ptr > () = yystack_[0].value.as < Logic::Ptr > ();
+  }
+#line 3447 "GrammarParser.cpp"
+    break;
+
+  case 94:
+#line 908 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Logic::Ptr > () = yystack_[0].value.as < VariableTerm::Ptr > ();
+  }
+#line 3455 "GrammarParser.cpp"
+    break;
+
+  case 95:
+#line 912 "../../obj/src/GrammarParser.yy"
+  {
+	auto logic = yystack_[1].value.as < Logic::Ptr > ();
+	logic->setLeftDelimiter(yystack_[2].value.as < Token::Ptr > ());
+	logic->setRightDelimiter(yystack_[0].value.as < Token::Ptr > ());
+	yylhs.value.as < Logic::Ptr > () = logic;
+  }
+#line 3466 "GrammarParser.cpp"
+    break;
+
+  case 96:
+#line 922 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < LogicTuple::Ptr > () = libtptp::make< LogicTuple >(yylhs.location, yystack_[1].value.as < Token::Ptr > (), yystack_[0].value.as < Token::Ptr > ());
+  }
+#line 3474 "GrammarParser.cpp"
+    break;
+
+  case 97:
+#line 926 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < LogicTuple::Ptr > () = libtptp::make< LogicTuple >(yylhs.location, yystack_[2].value.as < Token::Ptr > (), yystack_[1].value.as < ListLogicElements::Ptr > (), yystack_[0].value.as < Token::Ptr > ());
+  }
+#line 3482 "GrammarParser.cpp"
+    break;
+
+  case 98:
+#line 933 "../../obj/src/GrammarParser.yy"
+  {
+	auto list = libtptp::make< ListLogicElements >(yylhs.location);
+	list->add(yystack_[0].value.as < Logic::Ptr > ());
+	yylhs.value.as < ListLogicElements::Ptr > () = list;
+  }
+#line 3492 "GrammarParser.cpp"
+    break;
+
+  case 99:
+#line 939 "../../obj/src/GrammarParser.yy"
+  {
+	auto list = yystack_[2].value.as < ListLogicElements::Ptr > ();
+	list->add(yystack_[1].value.as < Token::Ptr > (), yystack_[0].value.as < Logic::Ptr > ());
+	yylhs.value.as < ListLogicElements::Ptr > () = list;
+  }
+#line 3502 "GrammarParser.cpp"
+    break;
+
+  case 100:
+#line 948 "../../obj/src/GrammarParser.yy"
+  {
+	auto pair = yystack_[0].value.as < BinaryConnective_t > ();
+	yylhs.value.as < ConnectiveAtom::Ptr > () = libtptp::make< ConnectiveAtom >(yylhs.location, pair.first);
+  }
+#line 3511 "GrammarParser.cpp"
+    break;
+
+  case 101:
+#line 953 "../../obj/src/GrammarParser.yy"
+  {
+	auto pair = yystack_[0].value.as < BinaryConnective_t > ();
+	yylhs.value.as < ConnectiveAtom::Ptr > () = libtptp::make< ConnectiveAtom >(yylhs.location, pair.first);
+  }
+#line 3520 "GrammarParser.cpp"
+    break;
+
+  case 102:
+#line 958 "../../obj/src/GrammarParser.yy"
+  {
+	auto pair = yystack_[0].value.as < InfixConnective_t > ();
+	yylhs.value.as < ConnectiveAtom::Ptr > () = libtptp::make< ConnectiveAtom >(yylhs.location, pair.first);
+  }
+#line 3529 "GrammarParser.cpp"
+    break;
+
+  case 103:
+#line 963 "../../obj/src/GrammarParser.yy"
+  {
+	auto pair = yystack_[0].value.as < UnaryConnective_t > ();
+	yylhs.value.as < ConnectiveAtom::Ptr > () = libtptp::make< ConnectiveAtom >(yylhs.location, pair.first);
+  }
+#line 3538 "GrammarParser.cpp"
+    break;
+
+  case 104:
+#line 971 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < ListLogicElements::Ptr > () = yystack_[0].value.as < ListLogicElements::Ptr > ();
+  }
+#line 3546 "GrammarParser.cpp"
+    break;
+
+  case 105:
+#line 978 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < TypeAtom::Ptr > () = libtptp::make< TypeAtom >(yylhs.location, yystack_[2].value.as < Identifier::Ptr > (), yystack_[1].value.as < Token::Ptr > (), yystack_[0].value.as < Type::Ptr > ());
+  }
+#line 3554 "GrammarParser.cpp"
+    break;
+
+  case 106:
+#line 982 "../../obj/src/GrammarParser.yy"
+  {
+	auto type = yystack_[1].value.as < TypeAtom::Ptr > ();
+	type->setLeftDelimiter(yystack_[2].value.as < Token::Ptr > ());
+	type->setRightDelimiter(yystack_[0].value.as < Token::Ptr > ());
+	yylhs.value.as < TypeAtom::Ptr > () = type;
+  }
+#line 3565 "GrammarParser.cpp"
+    break;
+
+  case 107:
+#line 992 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Type::Ptr > () = yystack_[0].value.as < ApplyType::Ptr > ();
+  }
+#line 3573 "GrammarParser.cpp"
+    break;
+
+  case 108:
+#line 996 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Type::Ptr > () = yystack_[0].value.as < BinaryType::Ptr > ();
+  }
+#line 3581 "GrammarParser.cpp"
+    break;
+
+  case 109:
+#line 1000 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Type::Ptr > () = yystack_[0].value.as < ApplyType::Ptr > ();
+  }
+#line 3589 "GrammarParser.cpp"
+    break;
+
+  case 110:
+#line 1008 "../../obj/src/GrammarParser.yy"
+  {
+	//TODO: @moosbruggerj implement
+	//$$ = libtptp::make< AtomType >(@$, $1);
+  }
+#line 3598 "GrammarParser.cpp"
+    break;
+
+  case 111:
+#line 1017 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < ApplyType::Ptr > () = libtptp::make< ApplyType >(yylhs.location, yystack_[0].value.as < BinaryLogic::Ptr > ());
+  }
+#line 3606 "GrammarParser.cpp"
+    break;
+
+  case 112:
+#line 1024 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Type::Ptr > () = yystack_[0].value.as < BinaryType::Ptr > ();
+  }
+#line 3614 "GrammarParser.cpp"
+    break;
+
+  case 113:
+#line 1028 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Type::Ptr > () = yystack_[0].value.as < RelationType::Ptr > ();
+  }
+#line 3622 "GrammarParser.cpp"
+    break;
+
+  case 114:
+#line 1032 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Type::Ptr > () = yystack_[0].value.as < BinaryType::Ptr > ();
+  }
+#line 3630 "GrammarParser.cpp"
+    break;
+
+  case 115:
+#line 1040 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < BinaryType::Ptr > () = libtptp::make< BinaryType >(yylhs.location, yystack_[2].value.as < ApplyType::Ptr > (), yystack_[1].value.as < Token::Ptr > (), yystack_[0].value.as < ApplyType::Ptr > (), BinaryType::Kind::MAPPING);
+  }
+#line 3638 "GrammarParser.cpp"
+    break;
+
+  case 116:
+#line 1044 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < BinaryType::Ptr > () = libtptp::make< BinaryType >(yylhs.location, yystack_[2].value.as < ApplyType::Ptr > (), yystack_[1].value.as < Token::Ptr > (), yystack_[0].value.as < BinaryType::Ptr > (), BinaryType::Kind::MAPPING);
+  }
+#line 3646 "GrammarParser.cpp"
+    break;
+
+  case 117:
+#line 1052 "../../obj/src/GrammarParser.yy"
+  {
+	auto list = libtptp::make< ListTypeElements<TokenBuilder::STAR> >(yylhs.location);
+	list->add(yystack_[2].value.as < ApplyType::Ptr > ());
+	list->add(yystack_[1].value.as < Token::Ptr > (), yystack_[0].value.as < ApplyType::Ptr > ());
+	yylhs.value.as < RelationType::Ptr > () = libtptp::make< RelationType >(yylhs.location, list);
+  }
+#line 3657 "GrammarParser.cpp"
+    break;
+
+  case 118:
+#line 1059 "../../obj/src/GrammarParser.yy"
+  {
+	auto type = yystack_[2].value.as < RelationType::Ptr > ();
+	type->elements()->add(yystack_[1].value.as < Token::Ptr > (), yystack_[0].value.as < ApplyType::Ptr > ());
+	yylhs.value.as < RelationType::Ptr > () = type;
+  }
+#line 3667 "GrammarParser.cpp"
+    break;
+
+  case 119:
+#line 1069 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < BinaryType::Ptr > () = libtptp::make< BinaryType >(yylhs.location, yystack_[2].value.as < ApplyType::Ptr > (), yystack_[1].value.as < Token::Ptr > (), yystack_[0].value.as < ApplyType::Ptr > (), BinaryType::Kind::UNION);
+  }
+#line 3675 "GrammarParser.cpp"
+    break;
+
+  case 120:
+#line 1073 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < BinaryType::Ptr > () = libtptp::make< BinaryType >(yylhs.location, yystack_[2].value.as < BinaryType::Ptr > (), yystack_[1].value.as < Token::Ptr > (), yystack_[0].value.as < ApplyType::Ptr > (), BinaryType::Kind::UNION);
+  }
+#line 3683 "GrammarParser.cpp"
+    break;
+
+  case 121:
+#line 1080 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < SubType::Ptr > () = libtptp::make< SubType >(yylhs.location, yystack_[2].value.as < Identifier::Ptr > (), yystack_[1].value.as < Token::Ptr > (), yystack_[0].value.as < Identifier::Ptr > ());
+  }
+#line 3691 "GrammarParser.cpp"
+    break;
+
+  case 122:
+#line 1087 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < SequentLogic::Ptr > () = libtptp::make< SequentLogic >(yylhs.location, yystack_[2].value.as < LogicTuple::Ptr > (), yystack_[1].value.as < Token::Ptr > (), yystack_[0].value.as < LogicTuple::Ptr > ());
+  }
+#line 3699 "GrammarParser.cpp"
+    break;
+
+  case 123:
+#line 1091 "../../obj/src/GrammarParser.yy"
+  {
+	auto logic = yystack_[1].value.as < SequentLogic::Ptr > ();
+	logic->setLeftDelimiter(yystack_[2].value.as < Token::Ptr > ());
+	logic->setRightDelimiter(yystack_[0].value.as < Token::Ptr > ());
+	yylhs.value.as < SequentLogic::Ptr > () = logic;
+  }
+#line 3710 "GrammarParser.cpp"
+    break;
+
+  case 124:
+#line 1102 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Logic::Ptr > () = yystack_[0].value.as < Logic::Ptr > ();
+  }
+#line 3718 "GrammarParser.cpp"
+    break;
+
+  case 125:
+#line 1106 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Logic::Ptr > () = yystack_[0].value.as < TypeAtom::Ptr > ();
+  }
+#line 3726 "GrammarParser.cpp"
+    break;
+
+  case 126:
+#line 1110 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Logic::Ptr > () = yystack_[0].value.as < SubType::Ptr > ();
+  }
+#line 3734 "GrammarParser.cpp"
+    break;
+
+  case 127:
+#line 1114 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Logic::Ptr > () = yystack_[0].value.as < SequentLogic::Ptr > ();
+  }
+#line 3742 "GrammarParser.cpp"
+    break;
+
+  case 128:
+#line 1121 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Logic::Ptr > () = yystack_[0].value.as < Logic::Ptr > ();
+  }
+#line 3750 "GrammarParser.cpp"
+    break;
+
+  case 129:
+#line 1125 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Logic::Ptr > () = yystack_[0].value.as < Logic::Ptr > ();
+  }
+#line 3758 "GrammarParser.cpp"
+    break;
+
+  case 130:
+#line 1129 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Logic::Ptr > () = yystack_[0].value.as < BinaryLogic::Ptr > ();
+  }
+#line 3766 "GrammarParser.cpp"
+    break;
+
+  case 131:
+#line 1133 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Logic::Ptr > () = yystack_[0].value.as < InfixLogic::Ptr > ();
+  }
+#line 3774 "GrammarParser.cpp"
+    break;
+
+  case 132:
+#line 1140 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < BinaryLogic::Ptr > () = yystack_[0].value.as < BinaryLogic::Ptr > ();
+  }
+#line 3782 "GrammarParser.cpp"
+    break;
+
+  case 133:
+#line 1144 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < BinaryLogic::Ptr > () = yystack_[0].value.as < BinaryLogic::Ptr > ();
+  }
+#line 3790 "GrammarParser.cpp"
+    break;
+
+  case 134:
+#line 1151 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < BinaryLogic::Ptr > () = libtptp::make< BinaryLogic >(yylhs.location, yystack_[2].value.as < Logic::Ptr > (), yystack_[1].value.as < BinaryConnective_t > (), yystack_[0].value.as < Logic::Ptr > ());
+  }
+#line 3798 "GrammarParser.cpp"
+    break;
+
+  case 135:
+#line 1158 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < BinaryLogic::Ptr > () = yystack_[0].value.as < BinaryLogic::Ptr > ();
+  }
+#line 3806 "GrammarParser.cpp"
+    break;
+
+  case 136:
+#line 1162 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < BinaryLogic::Ptr > () = yystack_[0].value.as < BinaryLogic::Ptr > ();
+  }
+#line 3814 "GrammarParser.cpp"
+    break;
+
+  case 137:
+#line 1169 "../../obj/src/GrammarParser.yy"
+  {
+	auto op = std::make_pair(yystack_[1].value.as < Token::Ptr > (), BinaryLogic::Connective::DISJUNCTION);
+	yylhs.value.as < BinaryLogic::Ptr > () = libtptp::make< BinaryLogic >(yylhs.location, yystack_[2].value.as < Logic::Ptr > (), op, yystack_[0].value.as < Logic::Ptr > ());
+  }
+#line 3823 "GrammarParser.cpp"
+    break;
+
+  case 138:
+#line 1174 "../../obj/src/GrammarParser.yy"
+  {
+	auto op = std::make_pair(yystack_[1].value.as < Token::Ptr > (), BinaryLogic::Connective::DISJUNCTION);
+	yylhs.value.as < BinaryLogic::Ptr > () = libtptp::make< BinaryLogic >(yylhs.location, yystack_[2].value.as < BinaryLogic::Ptr > (), op, yystack_[0].value.as < Logic::Ptr > ());
+  }
+#line 3832 "GrammarParser.cpp"
+    break;
+
+  case 139:
+#line 1182 "../../obj/src/GrammarParser.yy"
+  {
+	auto op = std::make_pair(yystack_[1].value.as < Token::Ptr > (), BinaryLogic::Connective::CONJUNCTION);
+	yylhs.value.as < BinaryLogic::Ptr > () = libtptp::make< BinaryLogic >(yylhs.location, yystack_[2].value.as < Logic::Ptr > (), op, yystack_[0].value.as < Logic::Ptr > ());
+  }
+#line 3841 "GrammarParser.cpp"
+    break;
+
+  case 140:
+#line 1187 "../../obj/src/GrammarParser.yy"
+  {
+	auto op = std::make_pair(yystack_[1].value.as < Token::Ptr > (), BinaryLogic::Connective::CONJUNCTION);
+	yylhs.value.as < BinaryLogic::Ptr > () = libtptp::make< BinaryLogic >(yylhs.location, yystack_[2].value.as < BinaryLogic::Ptr > (), op, yystack_[0].value.as < Logic::Ptr > ());
+  }
+#line 3850 "GrammarParser.cpp"
+    break;
+
+  case 141:
+#line 1195 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Logic::Ptr > () = yystack_[0].value.as < Logic::Ptr > ();
+  }
+#line 3858 "GrammarParser.cpp"
+    break;
+
+  case 142:
+#line 1199 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Logic::Ptr > () = yystack_[0].value.as < Logic::Ptr > ();
+  }
+#line 3866 "GrammarParser.cpp"
+    break;
+
+  case 143:
+#line 1203 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Logic::Ptr > () = yystack_[0].value.as < InfixLogic::Ptr > ();
+  }
+#line 3874 "GrammarParser.cpp"
+    break;
+
+  case 144:
+#line 1210 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Logic::Ptr > () = yystack_[0].value.as < Logic::Ptr > ();
+  }
+#line 3882 "GrammarParser.cpp"
+    break;
+
+  case 145:
+#line 1214 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Logic::Ptr > () = yystack_[0].value.as < UnaryLogic::Ptr > ();
+  }
+#line 3890 "GrammarParser.cpp"
+    break;
+
+  case 146:
+#line 1221 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Logic::Ptr > () = yystack_[0].value.as < QuantifiedLogic::Ptr > ();
+  }
+#line 3898 "GrammarParser.cpp"
+    break;
+
+  case 147:
+#line 1225 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Logic::Ptr > () = yystack_[0].value.as < Term::Ptr > ();
+  }
+#line 3906 "GrammarParser.cpp"
+    break;
+
+  case 148:
+#line 1229 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Logic::Ptr > () = yystack_[0].value.as < VariableTerm::Ptr > ();
+  }
+#line 3914 "GrammarParser.cpp"
+    break;
+
+  case 149:
+#line 1233 "../../obj/src/GrammarParser.yy"
+  {
+	auto logic = yystack_[1].value.as < Logic::Ptr > ();
+	logic->setLeftDelimiter(yystack_[2].value.as < Token::Ptr > ());
+	logic->setRightDelimiter(yystack_[0].value.as < Token::Ptr > ());
+	yylhs.value.as < Logic::Ptr > () = logic;
+  }
+#line 3925 "GrammarParser.cpp"
+    break;
+
+  case 150:
+#line 1243 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < VariableTerm::Ptr > () = yystack_[0].value.as < VariableTerm::Ptr > ();
+  }
+#line 3933 "GrammarParser.cpp"
+    break;
+
+  case 151:
+#line 1250 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < QuantifiedLogic::Ptr > () = libtptp::make< QuantifiedLogic >(yylhs.location, yystack_[5].value.as < QuantifiedQuantifier_t > (), yystack_[4].value.as < Token::Ptr > (), yystack_[3].value.as < ListVariableElements::Ptr > (), yystack_[2].value.as < Token::Ptr > (), yystack_[1].value.as < Token::Ptr > (), yystack_[0].value.as < Logic::Ptr > ());
+  }
+#line 3941 "GrammarParser.cpp"
+    break;
+
+  case 152:
+#line 1257 "../../obj/src/GrammarParser.yy"
+  {
+	auto list = libtptp::make< ListVariableElements >(yylhs.location);
+	list->add(yystack_[0].value.as < VariableTerm::Ptr > ());
+	yylhs.value.as < ListVariableElements::Ptr > () = list;
+  }
+#line 3951 "GrammarParser.cpp"
+    break;
+
+  case 153:
+#line 1263 "../../obj/src/GrammarParser.yy"
+  {
+	auto list = yystack_[2].value.as < ListVariableElements::Ptr > ();
+	list->add(yystack_[1].value.as < Token::Ptr > (), yystack_[0].value.as < VariableTerm::Ptr > ());
+	yylhs.value.as < ListVariableElements::Ptr > () = list;
+  }
+#line 3961 "GrammarParser.cpp"
+    break;
+
+  case 154:
+#line 1272 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < VariableTerm::Ptr > () = yystack_[0].value.as < VariableTerm::Ptr > ();
+  }
+#line 3969 "GrammarParser.cpp"
+    break;
+
+  case 155:
+#line 1276 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < VariableTerm::Ptr > () = yystack_[0].value.as < VariableTerm::Ptr > ();
+  }
+#line 3977 "GrammarParser.cpp"
+    break;
+
+  case 156:
+#line 1283 "../../obj/src/GrammarParser.yy"
+  {
+	auto variable = yystack_[2].value.as < VariableTerm::Ptr > ();
+	variable->setColon(yystack_[1].value.as < Token::Ptr > ());
+	Type::Ptr type = yystack_[0].value.as < Type::Ptr > (); //cast before set type is called, which would make a temporary Type::Ptr object, which cannot be passed to std::experimental::optional
+	variable->setType(type);
+	yylhs.value.as < VariableTerm::Ptr > () = variable;
+  }
+#line 3989 "GrammarParser.cpp"
+    break;
+
+  case 157:
+#line 1294 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Logic::Ptr > () = yystack_[0].value.as < UnaryLogic::Ptr > ();
+  }
+#line 3997 "GrammarParser.cpp"
+    break;
+
+  case 158:
+#line 1298 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Logic::Ptr > () = yystack_[0].value.as < InfixLogic::Ptr > ();
+  }
+#line 4005 "GrammarParser.cpp"
+    break;
+
+  case 159:
+#line 1305 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < UnaryLogic::Ptr > () = libtptp::make< UnaryLogic >(yylhs.location, yystack_[1].value.as < UnaryConnective_t > (), yystack_[0].value.as < Logic::Ptr > ());
+  }
+#line 4013 "GrammarParser.cpp"
+    break;
+
+  case 160:
+#line 1312 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < InfixLogic::Ptr > () = libtptp::make< InfixLogic >(yylhs.location, yystack_[2].value.as < Logic::Ptr > (), yystack_[1].value.as < InfixConnective_t > (), yystack_[0].value.as < Logic::Ptr > ());
+  }
+#line 4021 "GrammarParser.cpp"
+    break;
+
+  case 161:
+#line 1319 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Term::Ptr > () = yystack_[0].value.as < Atom::Ptr > ();
+  }
+#line 4029 "GrammarParser.cpp"
+    break;
+
+  case 162:
+#line 1323 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Term::Ptr > () = yystack_[0].value.as < Term::Ptr > ();
+  }
+#line 4037 "GrammarParser.cpp"
+    break;
+
+  case 163:
+#line 1327 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Term::Ptr > () = yystack_[0].value.as < Atom::Ptr > ();
+  }
+#line 4045 "GrammarParser.cpp"
+    break;
+
+  case 164:
+#line 1334 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Atom::Ptr > () = libtptp::make< ConstantAtom >(yylhs.location, yystack_[0].value.as < Identifier::Ptr > (), Atom::Kind::PLAIN);
+  }
+#line 4053 "GrammarParser.cpp"
+    break;
+
+  case 165:
+#line 1338 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Atom::Ptr > () = libtptp::make< FunctorAtom >(yylhs.location, yystack_[3].value.as < Identifier::Ptr > (), yystack_[2].value.as < Token::Ptr > (), yystack_[1].value.as < ListLogicElements::Ptr > (), yystack_[0].value.as < Token::Ptr > (), Atom::Kind::PLAIN);
+  }
+#line 4061 "GrammarParser.cpp"
+    break;
+
+  case 166:
+#line 1345 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Term::Ptr > () = yystack_[0].value.as < Term::Ptr > ();
+  }
+#line 4069 "GrammarParser.cpp"
+    break;
+
+  case 167:
+#line 1352 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Term::Ptr > () = libtptp::make< ConstantAtom >(yylhs.location, yystack_[0].value.as < Identifier::Ptr > (), Atom::Kind::DEFINED);
+  }
+#line 4077 "GrammarParser.cpp"
+    break;
+
+  case 168:
+#line 1356 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Term::Ptr > () = libtptp::make< FunctorAtom >(yylhs.location, yystack_[3].value.as < Identifier::Ptr > (), yystack_[2].value.as < Token::Ptr > (), yystack_[1].value.as < ListLogicElements::Ptr > (), yystack_[0].value.as < Token::Ptr > (), Atom::Kind::DEFINED);
+  }
+#line 4085 "GrammarParser.cpp"
+    break;
+
+  case 169:
+#line 1360 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Term::Ptr > () = yystack_[0].value.as < ConditionalTerm::Ptr > ();
+  }
+#line 4093 "GrammarParser.cpp"
+    break;
+
+  case 170:
+#line 1364 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Term::Ptr > () = yystack_[0].value.as < DefinitionTerm::Ptr > ();
+  }
+#line 4101 "GrammarParser.cpp"
+    break;
+
+  case 171:
+#line 1371 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < InfixLogic::Ptr > () = libtptp::make< InfixLogic >(yylhs.location, yystack_[2].value.as < Logic::Ptr > (), yystack_[1].value.as < InfixConnective_t > (), yystack_[0].value.as < Logic::Ptr > ());
+  }
+#line 4109 "GrammarParser.cpp"
+    break;
+
+  case 172:
+#line 1378 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Atom::Ptr > () = libtptp::make< ConstantAtom >(yylhs.location, yystack_[0].value.as < Identifier::Ptr > (), Atom::Kind::SYSTEM);
+  }
+#line 4117 "GrammarParser.cpp"
+    break;
+
+  case 173:
+#line 1382 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Atom::Ptr > () = libtptp::make< FunctorAtom >(yylhs.location, yystack_[3].value.as < Identifier::Ptr > (), yystack_[2].value.as < Token::Ptr > (), yystack_[1].value.as < ListLogicElements::Ptr > (), yystack_[0].value.as < Token::Ptr > (), Atom::Kind::SYSTEM);
+  }
+#line 4125 "GrammarParser.cpp"
+    break;
+
+  case 174:
+#line 1389 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < ConditionalTerm::Ptr > () = libtptp::make< ConditionalTerm >(yylhs.location, yystack_[8].value.as < Token::Ptr > (), yystack_[7].value.as < Token::Ptr > (), yystack_[6].value.as < Token::Ptr > (), yystack_[5].value.as < Logic::Ptr > (), yystack_[4].value.as < Token::Ptr > (), yystack_[3].value.as < Logic::Ptr > (), yystack_[2].value.as < Token::Ptr > (), yystack_[1].value.as < Logic::Ptr > (), yystack_[0].value.as < Token::Ptr > ());
+  }
+#line 4133 "GrammarParser.cpp"
+    break;
+
+  case 175:
+#line 1396 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < DefinitionTerm::Ptr > () = libtptp::make< DefinitionTerm >(yylhs.location, yystack_[8].value.as < Token::Ptr > (), yystack_[7].value.as < Token::Ptr > (), yystack_[6].value.as < Token::Ptr > (), yystack_[5].value.as < Atom::Ptr > (), yystack_[4].value.as < Token::Ptr > (), yystack_[3].value.as < Atom::Ptr > (), yystack_[2].value.as < Token::Ptr > (), yystack_[1].value.as < Logic::Ptr > (), yystack_[0].value.as < Token::Ptr > ());
+  }
+#line 4141 "GrammarParser.cpp"
+    break;
+
+  case 176:
+#line 1403 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Atom::Ptr > () = yystack_[0].value.as < TypeAtom::Ptr > ();
+  }
+#line 4149 "GrammarParser.cpp"
+    break;
+
+  case 177:
+#line 1407 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Atom::Ptr > () = libtptp::make< TupleAtom >(yylhs.location, yystack_[2].value.as < Token::Ptr > (), yystack_[1].value.as < ListAtomElements::Ptr > (), yystack_[0].value.as < Token::Ptr > ());
+  }
+#line 4157 "GrammarParser.cpp"
+    break;
+
+  case 178:
+#line 1414 "../../obj/src/GrammarParser.yy"
+  {
+	auto list = libtptp::make< ListAtomElements >(yylhs.location);
+	list->add(yystack_[0].value.as < TypeAtom::Ptr > ());
+	yylhs.value.as < ListAtomElements::Ptr > () = list;
+  }
+#line 4167 "GrammarParser.cpp"
+    break;
+
+  case 179:
+#line 1420 "../../obj/src/GrammarParser.yy"
+  {
+	auto list = yystack_[2].value.as < ListAtomElements::Ptr > ();
+	list->add(yystack_[1].value.as < Token::Ptr > (), yystack_[0].value.as < TypeAtom::Ptr > ());
+	yylhs.value.as < ListAtomElements::Ptr > () = list;
+  }
+#line 4177 "GrammarParser.cpp"
+    break;
+
+  case 180:
+#line 1429 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Atom::Ptr > () = yystack_[0].value.as < DefinitionAtom::Ptr > ();
+  }
+#line 4185 "GrammarParser.cpp"
+    break;
+
+  case 181:
+#line 1433 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Atom::Ptr > () = libtptp::make< TupleAtom >(yylhs.location, yystack_[2].value.as < Token::Ptr > (), yystack_[1].value.as < ListAtomElements::Ptr > (), yystack_[0].value.as < Token::Ptr > ());
+  }
+#line 4193 "GrammarParser.cpp"
+    break;
+
+  case 182:
+#line 1440 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < DefinitionAtom::Ptr > () = libtptp::make< DefinitionAtom >(yylhs.location, yystack_[2].value.as < Logic::Ptr > (), yystack_[1].value.as < Token::Ptr > (), yystack_[0].value.as < Logic::Ptr > ());
+  }
+#line 4201 "GrammarParser.cpp"
+    break;
+
+  case 183:
+#line 1447 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Logic::Ptr > () = yystack_[0].value.as < Atom::Ptr > ();
+  }
+#line 4209 "GrammarParser.cpp"
+    break;
+
+  case 184:
+#line 1451 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Logic::Ptr > () = yystack_[0].value.as < LogicTuple::Ptr > ();
+  }
+#line 4217 "GrammarParser.cpp"
+    break;
+
+  case 185:
+#line 1458 "../../obj/src/GrammarParser.yy"
+  {
+	auto list = libtptp::make< ListAtomElements >(yylhs.location);
+	list->add(yystack_[0].value.as < DefinitionAtom::Ptr > ());
+	yylhs.value.as < ListAtomElements::Ptr > () = list;
+  }
+#line 4227 "GrammarParser.cpp"
+    break;
+
+  case 186:
+#line 1464 "../../obj/src/GrammarParser.yy"
+  {
+	auto list = yystack_[2].value.as < ListAtomElements::Ptr > ();
+	list->add(yystack_[1].value.as < Token::Ptr > (), yystack_[0].value.as < DefinitionAtom::Ptr > ());
+	yylhs.value.as < ListAtomElements::Ptr > () = list;
+  }
+#line 4237 "GrammarParser.cpp"
+    break;
+
+  case 187:
+#line 1473 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Logic::Ptr > () = yystack_[0].value.as < Logic::Ptr > ();
+  }
+#line 4245 "GrammarParser.cpp"
+    break;
+
+  case 188:
+#line 1477 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Logic::Ptr > () = yystack_[0].value.as < DefinedAtom::Ptr > ();
+  }
+#line 4253 "GrammarParser.cpp"
+    break;
+
+  case 189:
+#line 1481 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Logic::Ptr > () = yystack_[0].value.as < LogicTuple::Ptr > ();
+  }
+#line 4261 "GrammarParser.cpp"
+    break;
+
+  case 190:
+#line 1488 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Logic::Ptr > () = yystack_[0].value.as < Term::Ptr > ();
+  }
+#line 4269 "GrammarParser.cpp"
+    break;
+
+  case 191:
+#line 1492 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Logic::Ptr > () = yystack_[0].value.as < DefinedAtom::Ptr > ();
+  }
+#line 4277 "GrammarParser.cpp"
+    break;
+
+  case 192:
+#line 1496 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Logic::Ptr > () = yystack_[0].value.as < LogicTuple::Ptr > ();
+  }
+#line 4285 "GrammarParser.cpp"
+    break;
+
+  case 193:
+#line 1500 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Logic::Ptr > () = yystack_[0].value.as < VariableTerm::Ptr > ();
+  }
+#line 4293 "GrammarParser.cpp"
+    break;
+
+  case 194:
+#line 1504 "../../obj/src/GrammarParser.yy"
+  {
+	auto logic = yystack_[1].value.as < Logic::Ptr > ();
+	logic->setLeftDelimiter(yystack_[2].value.as < Token::Ptr > ());
+	logic->setRightDelimiter(yystack_[0].value.as < Token::Ptr > ());
+	yylhs.value.as < Logic::Ptr > () = logic;
+  }
+#line 4304 "GrammarParser.cpp"
+    break;
+
+  case 195:
+#line 1514 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < LogicTuple::Ptr > () = libtptp::make< LogicTuple >(yylhs.location, yystack_[1].value.as < Token::Ptr > (), yystack_[0].value.as < Token::Ptr > ());
+  }
+#line 4312 "GrammarParser.cpp"
+    break;
+
+  case 196:
+#line 1518 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < LogicTuple::Ptr > () = libtptp::make< LogicTuple >(yylhs.location, yystack_[2].value.as < Token::Ptr > (), yystack_[1].value.as < ListLogicElements::Ptr > (), yystack_[0].value.as < Token::Ptr > ());
+  }
+#line 4320 "GrammarParser.cpp"
+    break;
+
+  case 197:
+#line 1525 "../../obj/src/GrammarParser.yy"
+  {
+	auto list = libtptp::make< ListLogicElements >(yylhs.location);
+	list->add(yystack_[0].value.as < Logic::Ptr > ());
+	yylhs.value.as < ListLogicElements::Ptr > () = list;
+  }
+#line 4330 "GrammarParser.cpp"
+    break;
+
+  case 198:
+#line 1531 "../../obj/src/GrammarParser.yy"
+  {
+	auto list = yystack_[2].value.as < ListLogicElements::Ptr > ();
+	list->add(yystack_[1].value.as < Token::Ptr > (), yystack_[0].value.as < Logic::Ptr > ());
+	yylhs.value.as < ListLogicElements::Ptr > () = list;
+  }
+#line 4340 "GrammarParser.cpp"
+    break;
+
+  case 199:
+#line 1540 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < TypeAtom::Ptr > () = libtptp::make< TypeAtom >(yylhs.location, yystack_[2].value.as < Identifier::Ptr > (), yystack_[1].value.as < Token::Ptr > (), yystack_[0].value.as < Type::Ptr > ());
+  }
+#line 4348 "GrammarParser.cpp"
+    break;
+
+  case 200:
+#line 1544 "../../obj/src/GrammarParser.yy"
+  {
+	auto type = yystack_[1].value.as < TypeAtom::Ptr > ();
+	type->setLeftDelimiter(yystack_[2].value.as < Token::Ptr > ());
+	type->setRightDelimiter(yystack_[0].value.as < Token::Ptr > ());
+	yylhs.value.as < TypeAtom::Ptr > () = type;
+  }
+#line 4359 "GrammarParser.cpp"
+    break;
+
+  case 201:
+#line 1554 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Type::Ptr > () = yystack_[0].value.as < Type::Ptr > ();
+  }
+#line 4367 "GrammarParser.cpp"
+    break;
+
+  case 202:
+#line 1558 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Type::Ptr > () = yystack_[0].value.as < BinaryType::Ptr > ();
+  }
+#line 4375 "GrammarParser.cpp"
+    break;
+
+  case 203:
+#line 1562 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Type::Ptr > () = yystack_[0].value.as < QuantifiedType::Ptr > ();
+  }
+#line 4383 "GrammarParser.cpp"
+    break;
+
+  case 204:
+#line 1566 "../../obj/src/GrammarParser.yy"
+  {
+	auto type = yystack_[1].value.as < Type::Ptr > ();
+	type->setLeftDelimiter(yystack_[2].value.as < Token::Ptr > ());
+	type->setRightDelimiter(yystack_[0].value.as < Token::Ptr > ());
+	yylhs.value.as < Type::Ptr > () = type;
+  }
+#line 4394 "GrammarParser.cpp"
+    break;
+
+  case 205:
+#line 1576 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < QuantifiedType::Ptr > () = libtptp::make< QuantifiedType >(yylhs.location, yystack_[5].value.as < Token::Ptr > (), yystack_[4].value.as < Token::Ptr > (), yystack_[3].value.as < ListVariableElements::Ptr > (), yystack_[2].value.as < Token::Ptr > (), yystack_[1].value.as < Token::Ptr > (), yystack_[0].value.as < Type::Ptr > ());
+  }
+#line 4402 "GrammarParser.cpp"
+    break;
+
+  case 206:
+#line 1583 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Type::Ptr > () = yystack_[0].value.as < Type::Ptr > ();
+  }
+#line 4410 "GrammarParser.cpp"
+    break;
+
+  case 207:
+#line 1587 "../../obj/src/GrammarParser.yy"
+  {
+	auto type = yystack_[1].value.as < BinaryType::Ptr > ();
+	type->setLeftDelimiter(yystack_[2].value.as < Token::Ptr > ());
+	type->setRightDelimiter(yystack_[0].value.as < Token::Ptr > ());
+	yylhs.value.as < Type::Ptr > () = type;
+  }
+#line 4421 "GrammarParser.cpp"
+    break;
+
+  case 208:
+#line 1597 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Type::Ptr > () = yystack_[0].value.as < Type::Ptr > ();
+  }
+#line 4429 "GrammarParser.cpp"
+    break;
+
+  case 209:
+#line 1601 "../../obj/src/GrammarParser.yy"
+  {
+	auto type = yystack_[1].value.as < RelationType::Ptr > ();
+	type->setLeftDelimiter(yystack_[2].value.as < Token::Ptr > ());
+	type->setRightDelimiter(yystack_[0].value.as < Token::Ptr > ());
+	yylhs.value.as < Type::Ptr > () = type;
+  }
+#line 4440 "GrammarParser.cpp"
+    break;
+
+  case 210:
+#line 1611 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Type::Ptr > () = libtptp::make< NamedType >(yylhs.location, yystack_[0].value.as < Identifier::Ptr > ());
+  }
+#line 4448 "GrammarParser.cpp"
+    break;
+
+  case 211:
+#line 1615 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Type::Ptr > () = libtptp::make< NamedType >(yylhs.location, yystack_[0].value.as < Identifier::Ptr > ());
+  }
+#line 4456 "GrammarParser.cpp"
+    break;
+
+  case 212:
+#line 1619 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Type::Ptr > () = libtptp::make< FunctorType >(yylhs.location, yystack_[3].value.as < Identifier::Ptr > (), yystack_[2].value.as < Token::Ptr > (), yystack_[1].value.as < ListTypeElements<>::Ptr > (), yystack_[0].value.as < Token::Ptr > ());
+  }
+#line 4464 "GrammarParser.cpp"
+    break;
+
+  case 213:
+#line 1623 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Type::Ptr > () = libtptp::make< VariableType >(yylhs.location, yystack_[0].value.as < VariableTerm::Ptr > ());
+  }
+#line 4472 "GrammarParser.cpp"
+    break;
+
+  case 214:
+#line 1627 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Type::Ptr > () = yystack_[0].value.as < TupleType::Ptr > ();
+  }
+#line 4480 "GrammarParser.cpp"
+    break;
+
+  case 215:
+#line 1634 "../../obj/src/GrammarParser.yy"
+  {
+	auto list = libtptp::make< ListTypeElements<> >(yylhs.location);
+	list->add(yystack_[0].value.as < Type::Ptr > ());
+	yylhs.value.as < ListTypeElements<>::Ptr > () = list;
+  }
+#line 4490 "GrammarParser.cpp"
+    break;
+
+  case 216:
+#line 1640 "../../obj/src/GrammarParser.yy"
+  {
+	auto list = yystack_[2].value.as < ListTypeElements<>::Ptr > ();
+	list->add(yystack_[1].value.as < Token::Ptr > (), yystack_[0].value.as < Type::Ptr > ());
+	yylhs.value.as < ListTypeElements<>::Ptr > () = list;
+  }
+#line 4500 "GrammarParser.cpp"
+    break;
+
+  case 217:
+#line 1649 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < BinaryType::Ptr > () = libtptp::make< BinaryType >(yylhs.location, yystack_[2].value.as < Type::Ptr > (), yystack_[1].value.as < Token::Ptr > (), yystack_[0].value.as < Type::Ptr > (), BinaryType::Kind::MAPPING);
+  }
+#line 4508 "GrammarParser.cpp"
+    break;
+
+  case 218:
+#line 1656 "../../obj/src/GrammarParser.yy"
+  {
+	auto list = libtptp::make< ListTypeElements<TokenBuilder::STAR> >(yylhs.location);
+	list->add(yystack_[2].value.as < Type::Ptr > ());
+	list->add(yystack_[1].value.as < Token::Ptr > (), yystack_[0].value.as < Type::Ptr > ());
+	yylhs.value.as < RelationType::Ptr > () = libtptp::make< RelationType >(yylhs.location, list);
+  }
+#line 4519 "GrammarParser.cpp"
+    break;
+
+  case 219:
+#line 1663 "../../obj/src/GrammarParser.yy"
+  {
+	auto type = yystack_[2].value.as < RelationType::Ptr > ();
+	type->elements()->add(yystack_[1].value.as < Token::Ptr > (), yystack_[0].value.as < Type::Ptr > ());
+	yylhs.value.as < RelationType::Ptr > () = type;
+  }
+#line 4529 "GrammarParser.cpp"
+    break;
+
+  case 220:
+#line 1672 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < TupleType::Ptr > () = libtptp::make< TupleType >(yylhs.location, yystack_[2].value.as < Token::Ptr > (), yystack_[1].value.as < ListTypeElements<>::Ptr > (), yystack_[0].value.as < Token::Ptr > ());
+  }
+#line 4537 "GrammarParser.cpp"
+    break;
+
+  case 221:
+#line 1679 "../../obj/src/GrammarParser.yy"
+  {
+	auto list = libtptp::make< ListTypeElements<> >(yylhs.location);
+	list->add(yystack_[0].value.as < Type::Ptr > ());
+	yylhs.value.as < ListTypeElements<>::Ptr > () = list;
+  }
+#line 4547 "GrammarParser.cpp"
+    break;
+
+  case 222:
+#line 1685 "../../obj/src/GrammarParser.yy"
+  {
+	auto list = yystack_[2].value.as < ListTypeElements<>::Ptr > ();
+	list->add(yystack_[1].value.as < Token::Ptr > (), yystack_[0].value.as < Type::Ptr > ());
+	yylhs.value.as < ListTypeElements<>::Ptr > () = list;
+  }
+#line 4557 "GrammarParser.cpp"
+    break;
+
+  case 223:
+#line 1694 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < SubType::Ptr > () = libtptp::make< SubType >(yylhs.location, yystack_[2].value.as < Identifier::Ptr > (), yystack_[1].value.as < Token::Ptr > (), yystack_[0].value.as < Identifier::Ptr > ());
+  }
+#line 4565 "GrammarParser.cpp"
+    break;
+
+  case 224:
+#line 1701 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < SequentLogic::Ptr > () = libtptp::make< SequentLogic >(yylhs.location, yystack_[2].value.as < LogicTuple::Ptr > (), yystack_[1].value.as < Token::Ptr > (), yystack_[0].value.as < LogicTuple::Ptr > ());
+  }
+#line 4573 "GrammarParser.cpp"
+    break;
+
+  case 225:
+#line 1705 "../../obj/src/GrammarParser.yy"
+  {
+	auto sequent = yystack_[1].value.as < SequentLogic::Ptr > ();
+	sequent->setLeftDelimiter(yystack_[2].value.as < Token::Ptr > ());
+	sequent->setRightDelimiter(yystack_[0].value.as < Token::Ptr > ());
+	yylhs.value.as < SequentLogic::Ptr > () = sequent;
+  }
+#line 4584 "GrammarParser.cpp"
+    break;
+
+  case 226:
+#line 1716 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Logic::Ptr > () = yystack_[0].value.as < Logic::Ptr > ();
+  }
+#line 4592 "GrammarParser.cpp"
+    break;
+
+  case 227:
+#line 1720 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Logic::Ptr > () = yystack_[0].value.as < TypeAtom::Ptr > ();
+  }
+#line 4600 "GrammarParser.cpp"
+    break;
+
+  case 228:
+#line 1727 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Logic::Ptr > () = yystack_[0].value.as < QuantifiedLogic::Ptr > ();
+  }
+#line 4608 "GrammarParser.cpp"
+    break;
+
+  case 229:
+#line 1731 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Logic::Ptr > () = yystack_[0].value.as < Logic::Ptr > ();
+  }
+#line 4616 "GrammarParser.cpp"
+    break;
+
+  case 230:
+#line 1738 "../../obj/src/GrammarParser.yy"
+  {
+	auto op = std::make_pair(yystack_[5].value.as < Token::Ptr > (), QuantifiedLogic::Quantifier::UNIVERSAL);
+	yylhs.value.as < QuantifiedLogic::Ptr > () = libtptp::make< QuantifiedLogic >(yylhs.location, op, yystack_[4].value.as < Token::Ptr > (), yystack_[3].value.as < ListVariableElements::Ptr > (), yystack_[2].value.as < Token::Ptr > (), yystack_[1].value.as < Token::Ptr > (), yystack_[0].value.as < Logic::Ptr > ());
+  }
+#line 4625 "GrammarParser.cpp"
+    break;
+
+  case 231:
+#line 1748 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Logic::Ptr > () = yystack_[0].value.as < Logic::Ptr > ();
+  }
+#line 4633 "GrammarParser.cpp"
+    break;
+
+  case 232:
+#line 1752 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Logic::Ptr > () = yystack_[0].value.as < SequentLogic::Ptr > ();
+  }
+#line 4641 "GrammarParser.cpp"
+    break;
+
+  case 233:
+#line 1759 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Logic::Ptr > () = yystack_[0].value.as < BinaryLogic::Ptr > ();
+  }
+#line 4649 "GrammarParser.cpp"
+    break;
+
+  case 234:
+#line 1763 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Logic::Ptr > () = yystack_[0].value.as < Logic::Ptr > ();
+  }
+#line 4657 "GrammarParser.cpp"
+    break;
+
+  case 235:
+#line 1767 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Logic::Ptr > () = yystack_[0].value.as < Logic::Ptr > ();
+  }
+#line 4665 "GrammarParser.cpp"
+    break;
+
+  case 236:
+#line 1774 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < BinaryLogic::Ptr > () = yystack_[0].value.as < BinaryLogic::Ptr > ();
+  }
+#line 4673 "GrammarParser.cpp"
+    break;
+
+  case 237:
+#line 1778 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < BinaryLogic::Ptr > () = yystack_[0].value.as < BinaryLogic::Ptr > ();
+  }
+#line 4681 "GrammarParser.cpp"
+    break;
+
+  case 238:
+#line 1785 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < BinaryLogic::Ptr > () = libtptp::make< BinaryLogic >(yylhs.location, yystack_[2].value.as < Logic::Ptr > (), yystack_[1].value.as < BinaryConnective_t > (), yystack_[0].value.as < Logic::Ptr > ());
+  }
+#line 4689 "GrammarParser.cpp"
+    break;
+
+  case 239:
+#line 1792 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < BinaryLogic::Ptr > () = yystack_[0].value.as < BinaryLogic::Ptr > ();
+  }
+#line 4697 "GrammarParser.cpp"
+    break;
+
+  case 240:
+#line 1796 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < BinaryLogic::Ptr > () = yystack_[0].value.as < BinaryLogic::Ptr > ();
+  }
+#line 4705 "GrammarParser.cpp"
+    break;
+
+  case 241:
+#line 1803 "../../obj/src/GrammarParser.yy"
+>>>>>>> f10593b (Grammar: updated built files)
   {
 	auto op = std::make_pair(yystack_[1].value.as < Token::Ptr > (), BinaryLogic::Connective::DISJUNCTION);
 	yylhs.value.as < Logic::Ptr > () = libtptp::make< BinaryLogic >(yylhs.location, yystack_[2].value.as < Logic::Ptr > (), op, yystack_[0].value.as < Logic::Ptr > ());
   }
+<<<<<<< HEAD
 #line 5050 "GrammarParser.cpp"
     break;
 
@@ -8331,412 +11091,819 @@ namespace libtptp {
   {
 =======
 #line 4682 "GrammarParser.cpp"
+=======
+#line 4714 "GrammarParser.cpp"
     break;
 
-  case 289:
-#line 2097 "../../obj/src/GrammarParser.yy"
-    {
-	yylhs.value.as < Logic::Ptr > () = yystack_[0].value.as < Logic::Ptr > ();
-  }
-#line 4690 "GrammarParser.cpp"
-    break;
-
-  case 290:
-#line 2101 "../../obj/src/GrammarParser.yy"
-    {
+  case 242:
+#line 1808 "../../obj/src/GrammarParser.yy"
+  {
 	auto op = std::make_pair(yystack_[1].value.as < Token::Ptr > (), BinaryLogic::Connective::DISJUNCTION);
-	yylhs.value.as < Logic::Ptr > () = libtptp::make< BinaryLogic >(yylhs.location, yystack_[2].value.as < Logic::Ptr > (), op, yystack_[0].value.as < Logic::Ptr > ());
+	yylhs.value.as < BinaryLogic::Ptr > () = libtptp::make< BinaryLogic >(yylhs.location, yystack_[2].value.as < BinaryLogic::Ptr > (), op, yystack_[0].value.as < Logic::Ptr > ());
   }
-#line 4699 "GrammarParser.cpp"
+#line 4723 "GrammarParser.cpp"
     break;
 
-  case 291:
-#line 2109 "../../obj/src/GrammarParser.yy"
-    {
-	yylhs.value.as < Logic::Ptr > () = yystack_[0].value.as < Logic::Ptr > ();
-  }
-#line 4707 "GrammarParser.cpp"
-    break;
-
-  case 292:
-#line 2113 "../../obj/src/GrammarParser.yy"
-    {
-	auto op = std::make_pair(yystack_[1].value.as < Token::Ptr > (), UnaryLogic::Connective::NEGATION);
-	yylhs.value.as < Logic::Ptr > () = libtptp::make< UnaryLogic >(yylhs.location, op, yystack_[0].value.as < Logic::Ptr > ());
-  }
-#line 4716 "GrammarParser.cpp"
-    break;
-
-  case 293:
-#line 2118 "../../obj/src/GrammarParser.yy"
-    {
-	yylhs.value.as < Logic::Ptr > () = yystack_[0].value.as < InfixLogic::Ptr > ();
-  }
-#line 4724 "GrammarParser.cpp"
-    break;
-
-  case 294:
-#line 2125 "../../obj/src/GrammarParser.yy"
-    {
-	yylhs.value.as < QuantifiedQuantifier_t > () = yystack_[0].value.as < QuantifiedQuantifier_t > ();
+  case 243:
+#line 1816 "../../obj/src/GrammarParser.yy"
+  {
+	auto op = std::make_pair(yystack_[1].value.as < Token::Ptr > (), BinaryLogic::Connective::CONJUNCTION);
+	yylhs.value.as < BinaryLogic::Ptr > () = libtptp::make< BinaryLogic >(yylhs.location, yystack_[2].value.as < Logic::Ptr > (), op, yystack_[0].value.as < Logic::Ptr > ());
   }
 #line 4732 "GrammarParser.cpp"
     break;
 
-  case 295:
-#line 2129 "../../obj/src/GrammarParser.yy"
-    {
-	yylhs.value.as < QuantifiedQuantifier_t > () = yystack_[0].value.as < QuantifiedQuantifier_t > ();
+  case 244:
+#line 1821 "../../obj/src/GrammarParser.yy"
+  {
+	auto op = std::make_pair(yystack_[1].value.as < Token::Ptr > (), BinaryLogic::Connective::CONJUNCTION);
+	yylhs.value.as < BinaryLogic::Ptr > () = libtptp::make< BinaryLogic >(yylhs.location, yystack_[2].value.as < BinaryLogic::Ptr > (), op, yystack_[0].value.as < Logic::Ptr > ());
   }
-#line 4740 "GrammarParser.cpp"
+#line 4741 "GrammarParser.cpp"
     break;
 
-  case 296:
-#line 2133 "../../obj/src/GrammarParser.yy"
-    {
-	yylhs.value.as < QuantifiedQuantifier_t > () = yystack_[0].value.as < QuantifiedQuantifier_t > ();
+  case 245:
+#line 1829 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Logic::Ptr > () = libtptp::make< UnaryLogic >(yylhs.location, yystack_[1].value.as < UnaryConnective_t > (), yystack_[0].value.as < Logic::Ptr > ());
   }
-#line 4748 "GrammarParser.cpp"
+#line 4749 "GrammarParser.cpp"
     break;
 
-  case 297:
-#line 2140 "../../obj/src/GrammarParser.yy"
-    {
-	yylhs.value.as < QuantifiedQuantifier_t > () = std::make_pair(yystack_[0].value.as < Token::Ptr > (), QuantifiedLogic::Quantifier::EXCLAMATIONGREATER);
+  case 246:
+#line 1833 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Logic::Ptr > () = yystack_[0].value.as < InfixLogic::Ptr > ();
   }
-#line 4756 "GrammarParser.cpp"
+#line 4757 "GrammarParser.cpp"
     break;
 
-  case 298:
-#line 2144 "../../obj/src/GrammarParser.yy"
-    {
-	yylhs.value.as < QuantifiedQuantifier_t > () = std::make_pair(yystack_[0].value.as < Token::Ptr > (), QuantifiedLogic::Quantifier::QUESTIONMARKSTAR);
+  case 247:
+#line 1840 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < InfixLogic::Ptr > () = libtptp::make< InfixLogic >(yylhs.location, yystack_[2].value.as < Term::Ptr > (), yystack_[1].value.as < InfixConnective_t > (), yystack_[0].value.as < Term::Ptr > ());
   }
-#line 4764 "GrammarParser.cpp"
+#line 4765 "GrammarParser.cpp"
     break;
 
-  case 299:
-#line 2151 "../../obj/src/GrammarParser.yy"
-    {
-	yylhs.value.as < QuantifiedQuantifier_t > () = std::make_pair(yystack_[0].value.as < Token::Ptr > (), QuantifiedLogic::Quantifier::CARET);
+  case 248:
+#line 1847 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Logic::Ptr > () = yystack_[0].value.as < Logic::Ptr > ();
   }
-#line 4772 "GrammarParser.cpp"
+#line 4773 "GrammarParser.cpp"
     break;
 
-  case 300:
-#line 2155 "../../obj/src/GrammarParser.yy"
-    {
-	yylhs.value.as < QuantifiedQuantifier_t > () = std::make_pair(yystack_[0].value.as < Token::Ptr > (), QuantifiedLogic::Quantifier::ATPLUS);
+  case 249:
+#line 1851 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Logic::Ptr > () = yystack_[0].value.as < Logic::Ptr > ();
   }
-#line 4780 "GrammarParser.cpp"
+#line 4781 "GrammarParser.cpp"
     break;
 
-  case 301:
-#line 2159 "../../obj/src/GrammarParser.yy"
-    {
-	yylhs.value.as < QuantifiedQuantifier_t > () = std::make_pair(yystack_[0].value.as < Token::Ptr > (), QuantifiedLogic::Quantifier::ATMINUS);
+  case 250:
+#line 1858 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Logic::Ptr > () = yystack_[0].value.as < QuantifiedLogic::Ptr > ();
   }
-#line 4788 "GrammarParser.cpp"
+#line 4789 "GrammarParser.cpp"
     break;
 
-  case 302:
-#line 2166 "../../obj/src/GrammarParser.yy"
-    {
-	yylhs.value.as < UnaryConnective_t > () = yystack_[0].value.as < UnaryConnective_t > ();
+  case 251:
+#line 1862 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Logic::Ptr > () = yystack_[0].value.as < Logic::Ptr > ();
   }
-#line 4796 "GrammarParser.cpp"
+#line 4797 "GrammarParser.cpp"
     break;
 
-  case 303:
-#line 2170 "../../obj/src/GrammarParser.yy"
-    {
-	yylhs.value.as < UnaryConnective_t > () = yystack_[0].value.as < UnaryConnective_t > ();
+  case 252:
+#line 1866 "../../obj/src/GrammarParser.yy"
+  {
+	auto logic = yystack_[1].value.as < Logic::Ptr > ();
+	logic->setLeftDelimiter(yystack_[2].value.as < Token::Ptr > ());
+	logic->setRightDelimiter(yystack_[0].value.as < Token::Ptr > ());
+	yylhs.value.as < Logic::Ptr > () = logic;
   }
-#line 4804 "GrammarParser.cpp"
+#line 4808 "GrammarParser.cpp"
     break;
 
-  case 304:
-#line 2177 "../../obj/src/GrammarParser.yy"
-    {
-	yylhs.value.as < UnaryConnective_t > () = std::make_pair(yystack_[0].value.as < Token::Ptr > (), UnaryLogic::Connective::UNIVERSAL_QUANTIFICATION);
+  case 253:
+#line 1876 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < QuantifiedLogic::Ptr > () = libtptp::make< QuantifiedLogic >(yylhs.location, yystack_[5].value.as < QuantifiedQuantifier_t > (), yystack_[4].value.as < Token::Ptr > (), yystack_[3].value.as < ListVariableElements::Ptr > (), yystack_[2].value.as < Token::Ptr > (), yystack_[1].value.as < Token::Ptr > (), yystack_[0].value.as < Logic::Ptr > ());
   }
-#line 4812 "GrammarParser.cpp"
+#line 4816 "GrammarParser.cpp"
     break;
 
-  case 305:
-#line 2181 "../../obj/src/GrammarParser.yy"
-    {
-	yylhs.value.as < UnaryConnective_t > () = std::make_pair(yystack_[0].value.as < Token::Ptr > (), UnaryLogic::Connective::EXISTENTIAL_QUANTIFICATION);
+  case 254:
+#line 1883 "../../obj/src/GrammarParser.yy"
+  {
+	auto variables = libtptp::make< ListVariableElements >(yylhs.location);
+	variables->add(yystack_[0].value.as < VariableTerm::Ptr > ());
+	yylhs.value.as < ListVariableElements::Ptr > () = variables;
   }
-#line 4820 "GrammarParser.cpp"
+#line 4826 "GrammarParser.cpp"
     break;
 
-  case 306:
-#line 2185 "../../obj/src/GrammarParser.yy"
-    {
-	yylhs.value.as < UnaryConnective_t > () = std::make_pair(yystack_[0].value.as < Token::Ptr > (), UnaryLogic::Connective::INDEFINITE_DESCRIPTION);
-  }
-#line 4828 "GrammarParser.cpp"
-    break;
-
-  case 307:
-#line 2189 "../../obj/src/GrammarParser.yy"
-    {
-	yylhs.value.as < UnaryConnective_t > () = std::make_pair(yystack_[0].value.as < Token::Ptr > (), UnaryLogic::Connective::DEFINITE_DESCRIPTION);
+  case 255:
+#line 1889 "../../obj/src/GrammarParser.yy"
+  {
+	auto variables = yystack_[2].value.as < ListVariableElements::Ptr > ();
+	variables->add(yystack_[1].value.as < Token::Ptr > (), yystack_[0].value.as < VariableTerm::Ptr > ());
+	yylhs.value.as < ListVariableElements::Ptr > () = variables;
   }
 #line 4836 "GrammarParser.cpp"
     break;
 
-  case 308:
-#line 2193 "../../obj/src/GrammarParser.yy"
-    {
-	yylhs.value.as < UnaryConnective_t > () = std::make_pair(yystack_[0].value.as < Token::Ptr > (), UnaryLogic::Connective::EQUALITY);
+  case 256:
+#line 1898 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Logic::Ptr > () = yystack_[0].value.as < Term::Ptr > ();
   }
 #line 4844 "GrammarParser.cpp"
     break;
 
-  case 309:
-#line 2200 "../../obj/src/GrammarParser.yy"
-    {
-	yylhs.value.as < QuantifiedQuantifier_t > () = std::make_pair(yystack_[0].value.as < Token::Ptr > (), QuantifiedLogic::Quantifier::UNIVERSAL);
+  case 257:
+#line 1902 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Logic::Ptr > () = yystack_[0].value.as < Logic::Ptr > ();
   }
 #line 4852 "GrammarParser.cpp"
     break;
 
-  case 310:
-#line 2204 "../../obj/src/GrammarParser.yy"
-    {
-	yylhs.value.as < QuantifiedQuantifier_t > () = std::make_pair(yystack_[0].value.as < Token::Ptr > (), QuantifiedLogic::Quantifier::EXISTENTIAL);
+  case 258:
+#line 1906 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Logic::Ptr > () = yystack_[0].value.as < Term::Ptr > ();
   }
 #line 4860 "GrammarParser.cpp"
     break;
 
-  case 311:
-#line 2213 "../../obj/src/GrammarParser.yy"
-    {
-	yylhs.value.as < BinaryConnective_t > () = std::make_pair(yystack_[0].value.as < Token::Ptr > (), BinaryLogic::Connective::EQUIVALENCE);
+  case 259:
+#line 1913 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Term::Ptr > () = yystack_[0].value.as < Atom::Ptr > ();
   }
 #line 4868 "GrammarParser.cpp"
     break;
 
-  case 312:
-#line 2217 "../../obj/src/GrammarParser.yy"
-    {
-	yylhs.value.as < BinaryConnective_t > () = std::make_pair(yystack_[0].value.as < Token::Ptr > (), BinaryLogic::Connective::IMPLICATION);
+  case 260:
+#line 1920 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Logic::Ptr > () = yystack_[0].value.as < Term::Ptr > ();
   }
 #line 4876 "GrammarParser.cpp"
     break;
 
-  case 313:
-#line 2221 "../../obj/src/GrammarParser.yy"
-    {
-	yylhs.value.as < BinaryConnective_t > () = std::make_pair(yystack_[0].value.as < Token::Ptr > (), BinaryLogic::Connective::REVERSE_IMPLICATION);
+  case 261:
+#line 1924 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Logic::Ptr > () = yystack_[0].value.as < InfixLogic::Ptr > ();
   }
 #line 4884 "GrammarParser.cpp"
     break;
 
-  case 314:
-#line 2225 "../../obj/src/GrammarParser.yy"
-    {
-	yylhs.value.as < BinaryConnective_t > () = std::make_pair(yystack_[0].value.as < Token::Ptr > (), BinaryLogic::Connective::NON_EQUIVALENCE);
+  case 262:
+#line 1931 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Term::Ptr > () = yystack_[0].value.as < Atom::Ptr > ();
   }
 #line 4892 "GrammarParser.cpp"
     break;
 
-  case 315:
-#line 2229 "../../obj/src/GrammarParser.yy"
-    {
-	yylhs.value.as < BinaryConnective_t > () = std::make_pair(yystack_[0].value.as < Token::Ptr > (), BinaryLogic::Connective::NEGATED_DISJUNCTION);
+  case 263:
+#line 1938 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < InfixLogic::Ptr > () = libtptp::make< InfixLogic >(yylhs.location, yystack_[2].value.as < Term::Ptr > (), yystack_[1].value.as < InfixConnective_t > (), yystack_[0].value.as < Term::Ptr > ());
   }
 #line 4900 "GrammarParser.cpp"
     break;
 
-  case 316:
-#line 2233 "../../obj/src/GrammarParser.yy"
-    {
-	yylhs.value.as < BinaryConnective_t > () = std::make_pair(yystack_[0].value.as < Token::Ptr > (), BinaryLogic::Connective::NEGATED_CONJUNCTION);
+  case 264:
+#line 1945 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Term::Ptr > () = yystack_[0].value.as < Atom::Ptr > ();
   }
 #line 4908 "GrammarParser.cpp"
     break;
 
-  case 317:
-#line 2240 "../../obj/src/GrammarParser.yy"
-    {
-	yylhs.value.as < BinaryConnective_t > () = std::make_pair(yystack_[0].value.as < Token::Ptr > (), BinaryLogic::Connective::DISJUNCTION);
+  case 265:
+#line 1952 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Atom::Ptr > () = libtptp::make< ConstantAtom >(yylhs.location, yystack_[0].value.as < Identifier::Ptr > (), Atom::Kind::PLAIN);
   }
 #line 4916 "GrammarParser.cpp"
     break;
 
-  case 318:
-#line 2244 "../../obj/src/GrammarParser.yy"
-    {
-	yylhs.value.as < BinaryConnective_t > () = std::make_pair(yystack_[0].value.as < Token::Ptr > (), BinaryLogic::Connective::CONJUNCTION);
+  case 266:
+#line 1956 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Atom::Ptr > () = libtptp::make< FunctorAtom >(yylhs.location, yystack_[3].value.as < Identifier::Ptr > (), yystack_[2].value.as < Token::Ptr > (), yystack_[1].value.as < ListLogicElements::Ptr > (), yystack_[0].value.as < Token::Ptr > (), Atom::Kind::PLAIN);
   }
 #line 4924 "GrammarParser.cpp"
     break;
 
-  case 319:
-#line 2251 "../../obj/src/GrammarParser.yy"
-    {
-	yylhs.value.as < UnaryConnective_t > () = std::make_pair(yystack_[0].value.as < Token::Ptr > (), UnaryLogic::Connective::NEGATION);
+  case 267:
+#line 1963 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Atom::Ptr > () = yystack_[0].value.as < DefinedAtom::Ptr > ();
   }
 #line 4932 "GrammarParser.cpp"
     break;
 
-  case 320:
-#line 2258 "../../obj/src/GrammarParser.yy"
-    {
-	yylhs.value.as < Identifier::Ptr > () = yystack_[0].value.as < Identifier::Ptr > ();
+  case 268:
+#line 1967 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Atom::Ptr > () = yystack_[0].value.as < Atom::Ptr > ();
   }
 #line 4940 "GrammarParser.cpp"
     break;
 
-  case 321:
-#line 2265 "../../obj/src/GrammarParser.yy"
-    {
-	yylhs.value.as < Identifier::Ptr > () = yystack_[0].value.as < Identifier::Ptr > ();
+  case 269:
+#line 1974 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Atom::Ptr > () = yystack_[0].value.as < Atom::Ptr > ();
   }
 #line 4948 "GrammarParser.cpp"
     break;
 
-  case 322:
-#line 2272 "../../obj/src/GrammarParser.yy"
-    {
-	yylhs.value.as < Identifier::Ptr > () = yystack_[0].value.as < Identifier::Ptr > ();
+  case 270:
+#line 1981 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Atom::Ptr > () = libtptp::make< ConstantAtom >(yylhs.location, yystack_[0].value.as < Identifier::Ptr > (), Atom::Kind::DEFINED);
   }
 #line 4956 "GrammarParser.cpp"
     break;
 
-  case 323:
-#line 2279 "../../obj/src/GrammarParser.yy"
-    {
-	yylhs.value.as < Identifier::Ptr > () = yystack_[0].value.as < Identifier::Ptr > ();
+  case 271:
+#line 1985 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Atom::Ptr > () = libtptp::make< FunctorAtom >(yylhs.location, yystack_[3].value.as < Identifier::Ptr > (), yystack_[2].value.as < Token::Ptr > (), yystack_[1].value.as < ListLogicElements::Ptr > (), yystack_[0].value.as < Token::Ptr > (), Atom::Kind::DEFINED);
   }
 #line 4964 "GrammarParser.cpp"
     break;
 
-  case 324:
-#line 2283 "../../obj/src/GrammarParser.yy"
-    {
-	yylhs.value.as < Identifier::Ptr > () = yystack_[0].value.as < Identifier::Ptr > ();
+  case 272:
+#line 1992 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Atom::Ptr > () = libtptp::make< ConstantAtom >(yylhs.location, yystack_[0].value.as < Identifier::Ptr > (), Atom::Kind::SYSTEM);
   }
 #line 4972 "GrammarParser.cpp"
     break;
 
-  case 325:
-#line 2290 "../../obj/src/GrammarParser.yy"
-    {
-	yylhs.value.as < Identifier::Ptr > () = yystack_[0].value.as < Identifier::Ptr > ();
+  case 273:
+#line 1996 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Atom::Ptr > () = libtptp::make< FunctorAtom >(yylhs.location, yystack_[3].value.as < Identifier::Ptr > (), yystack_[2].value.as < Token::Ptr > (), yystack_[1].value.as < ListLogicElements::Ptr > (), yystack_[0].value.as < Token::Ptr > (), Atom::Kind::SYSTEM);
   }
 #line 4980 "GrammarParser.cpp"
     break;
 
-  case 326:
-#line 2294 "../../obj/src/GrammarParser.yy"
-    {
+  case 274:
+#line 2003 "../../obj/src/GrammarParser.yy"
+  {
+	auto terms = libtptp::make< ListLogicElements >(yylhs.location);
+	terms->add(yystack_[0].value.as < Term::Ptr > ());
+	yylhs.value.as < ListLogicElements::Ptr > () = terms;
+  }
+#line 4990 "GrammarParser.cpp"
+    break;
+
+  case 275:
+#line 2009 "../../obj/src/GrammarParser.yy"
+  {
+	auto terms = yystack_[2].value.as < ListLogicElements::Ptr > ();
+	terms->add(yystack_[1].value.as < Token::Ptr > (), yystack_[0].value.as < Term::Ptr > ());
+	yylhs.value.as < ListLogicElements::Ptr > () = terms;
+  }
+#line 5000 "GrammarParser.cpp"
+    break;
+
+  case 276:
+#line 2018 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Term::Ptr > () = yystack_[0].value.as < Atom::Ptr > ();
+  }
+#line 5008 "GrammarParser.cpp"
+    break;
+
+  case 277:
+#line 2022 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Term::Ptr > () = yystack_[0].value.as < VariableTerm::Ptr > ();
+  }
+#line 5016 "GrammarParser.cpp"
+    break;
+
+  case 278:
+#line 2029 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Atom::Ptr > () = yystack_[0].value.as < Atom::Ptr > ();
+  }
+#line 5024 "GrammarParser.cpp"
+    break;
+
+  case 279:
+#line 2033 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Atom::Ptr > () = yystack_[0].value.as < Atom::Ptr > ();
+  }
+#line 5032 "GrammarParser.cpp"
+    break;
+
+  case 280:
+#line 2037 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Atom::Ptr > () = yystack_[0].value.as < Atom::Ptr > ();
+  }
+#line 5040 "GrammarParser.cpp"
+    break;
+
+  case 281:
+#line 2044 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < SequentLogic::Ptr > () = libtptp::make< SequentLogic >(yylhs.location, yystack_[2].value.as < LogicTuple::Ptr > (), yystack_[1].value.as < Token::Ptr > (), yystack_[0].value.as < LogicTuple::Ptr > ());
+  }
+#line 5048 "GrammarParser.cpp"
+    break;
+
+  case 282:
+#line 2048 "../../obj/src/GrammarParser.yy"
+  {
+	auto sequent = yystack_[1].value.as < SequentLogic::Ptr > ();
+	sequent->setLeftDelimiter(yystack_[2].value.as < Token::Ptr > ());
+	sequent->setRightDelimiter(yystack_[0].value.as < Token::Ptr > ());
+  }
+#line 5058 "GrammarParser.cpp"
+    break;
+
+  case 283:
+#line 2057 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < LogicTuple::Ptr > () = libtptp::make< LogicTuple >(yylhs.location, yystack_[1].value.as < Token::Ptr > (), yystack_[0].value.as < Token::Ptr > ());
+  }
+#line 5066 "GrammarParser.cpp"
+    break;
+
+  case 284:
+#line 2061 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < LogicTuple::Ptr > () = libtptp::make< LogicTuple >(yylhs.location, yystack_[2].value.as < Token::Ptr > (), yystack_[1].value.as < ListLogicElements::Ptr > (), yystack_[0].value.as < Token::Ptr > ());
+  }
+#line 5074 "GrammarParser.cpp"
+    break;
+
+  case 285:
+#line 2068 "../../obj/src/GrammarParser.yy"
+  {
+	auto list = libtptp::make< ListLogicElements >(yylhs.location);
+	list->add(yystack_[0].value.as < Logic::Ptr > ());
+	yylhs.value.as < ListLogicElements::Ptr > () = list;
+  }
+#line 5084 "GrammarParser.cpp"
+    break;
+
+  case 286:
+#line 2074 "../../obj/src/GrammarParser.yy"
+  {
+	auto list = yystack_[2].value.as < ListLogicElements::Ptr > ();
+	list->add(yystack_[1].value.as < Token::Ptr > (), yystack_[0].value.as < Logic::Ptr > ());
+	yylhs.value.as < ListLogicElements::Ptr > () = list;
+  }
+#line 5094 "GrammarParser.cpp"
+    break;
+
+  case 287:
+#line 2083 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Logic::Ptr > () = yystack_[0].value.as < Logic::Ptr > ();
+  }
+#line 5102 "GrammarParser.cpp"
+    break;
+
+  case 288:
+#line 2087 "../../obj/src/GrammarParser.yy"
+  {
+	auto logic = yystack_[1].value.as < Logic::Ptr > ();
+	logic->setLeftDelimiter(yystack_[2].value.as < Token::Ptr > ());
+	logic->setRightDelimiter(yystack_[0].value.as < Token::Ptr > ());
+	yylhs.value.as < Logic::Ptr > () = logic;
+  }
+#line 5113 "GrammarParser.cpp"
+>>>>>>> f10593b (Grammar: updated built files)
+    break;
+
+  case 289:
+#line 2097 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Logic::Ptr > () = yystack_[0].value.as < Logic::Ptr > ();
+  }
+#line 5121 "GrammarParser.cpp"
+    break;
+
+  case 290:
+#line 2101 "../../obj/src/GrammarParser.yy"
+  {
+	auto op = std::make_pair(yystack_[1].value.as < Token::Ptr > (), BinaryLogic::Connective::DISJUNCTION);
+	yylhs.value.as < Logic::Ptr > () = libtptp::make< BinaryLogic >(yylhs.location, yystack_[2].value.as < Logic::Ptr > (), op, yystack_[0].value.as < Logic::Ptr > ());
+  }
+#line 5130 "GrammarParser.cpp"
+    break;
+
+  case 291:
+#line 2109 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Logic::Ptr > () = yystack_[0].value.as < Logic::Ptr > ();
+  }
+#line 5138 "GrammarParser.cpp"
+    break;
+
+  case 292:
+#line 2113 "../../obj/src/GrammarParser.yy"
+  {
+	auto op = std::make_pair(yystack_[1].value.as < Token::Ptr > (), UnaryLogic::Connective::NEGATION);
+	yylhs.value.as < Logic::Ptr > () = libtptp::make< UnaryLogic >(yylhs.location, op, yystack_[0].value.as < Logic::Ptr > ());
+  }
+#line 5147 "GrammarParser.cpp"
+    break;
+
+  case 293:
+#line 2118 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Logic::Ptr > () = yystack_[0].value.as < InfixLogic::Ptr > ();
+  }
+#line 5155 "GrammarParser.cpp"
+    break;
+
+  case 294:
+#line 2125 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < QuantifiedQuantifier_t > () = yystack_[0].value.as < QuantifiedQuantifier_t > ();
+  }
+#line 5163 "GrammarParser.cpp"
+    break;
+
+  case 295:
+#line 2129 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < QuantifiedQuantifier_t > () = yystack_[0].value.as < QuantifiedQuantifier_t > ();
+  }
+#line 5171 "GrammarParser.cpp"
+    break;
+
+  case 296:
+#line 2133 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < QuantifiedQuantifier_t > () = yystack_[0].value.as < QuantifiedQuantifier_t > ();
+  }
+#line 5179 "GrammarParser.cpp"
+    break;
+
+  case 297:
+#line 2140 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < QuantifiedQuantifier_t > () = std::make_pair(yystack_[0].value.as < Token::Ptr > (), QuantifiedLogic::Quantifier::EXCLAMATIONGREATER);
+  }
+#line 5187 "GrammarParser.cpp"
+    break;
+
+  case 298:
+#line 2144 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < QuantifiedQuantifier_t > () = std::make_pair(yystack_[0].value.as < Token::Ptr > (), QuantifiedLogic::Quantifier::QUESTIONMARKSTAR);
+  }
+#line 5195 "GrammarParser.cpp"
+    break;
+
+  case 299:
+#line 2151 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < QuantifiedQuantifier_t > () = std::make_pair(yystack_[0].value.as < Token::Ptr > (), QuantifiedLogic::Quantifier::CARET);
+  }
+#line 5203 "GrammarParser.cpp"
+    break;
+
+  case 300:
+#line 2155 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < QuantifiedQuantifier_t > () = std::make_pair(yystack_[0].value.as < Token::Ptr > (), QuantifiedLogic::Quantifier::ATPLUS);
+  }
+#line 5211 "GrammarParser.cpp"
+    break;
+
+  case 301:
+#line 2159 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < QuantifiedQuantifier_t > () = std::make_pair(yystack_[0].value.as < Token::Ptr > (), QuantifiedLogic::Quantifier::ATMINUS);
+  }
+#line 5219 "GrammarParser.cpp"
+    break;
+
+  case 302:
+#line 2166 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < UnaryConnective_t > () = yystack_[0].value.as < UnaryConnective_t > ();
+  }
+#line 5227 "GrammarParser.cpp"
+    break;
+
+  case 303:
+#line 2170 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < UnaryConnective_t > () = yystack_[0].value.as < UnaryConnective_t > ();
+  }
+#line 5235 "GrammarParser.cpp"
+    break;
+
+  case 304:
+#line 2177 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < UnaryConnective_t > () = std::make_pair(yystack_[0].value.as < Token::Ptr > (), UnaryLogic::Connective::UNIVERSAL_QUANTIFICATION);
+  }
+#line 5243 "GrammarParser.cpp"
+    break;
+
+  case 305:
+#line 2181 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < UnaryConnective_t > () = std::make_pair(yystack_[0].value.as < Token::Ptr > (), UnaryLogic::Connective::EXISTENTIAL_QUANTIFICATION);
+  }
+#line 5251 "GrammarParser.cpp"
+    break;
+
+  case 306:
+#line 2185 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < UnaryConnective_t > () = std::make_pair(yystack_[0].value.as < Token::Ptr > (), UnaryLogic::Connective::INDEFINITE_DESCRIPTION);
+  }
+#line 5259 "GrammarParser.cpp"
+    break;
+
+  case 307:
+#line 2189 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < UnaryConnective_t > () = std::make_pair(yystack_[0].value.as < Token::Ptr > (), UnaryLogic::Connective::DEFINITE_DESCRIPTION);
+  }
+#line 5267 "GrammarParser.cpp"
+    break;
+
+  case 308:
+#line 2193 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < UnaryConnective_t > () = std::make_pair(yystack_[0].value.as < Token::Ptr > (), UnaryLogic::Connective::EQUALITY);
+  }
+#line 5275 "GrammarParser.cpp"
+    break;
+
+  case 309:
+#line 2200 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < QuantifiedQuantifier_t > () = std::make_pair(yystack_[0].value.as < Token::Ptr > (), QuantifiedLogic::Quantifier::UNIVERSAL);
+  }
+#line 5283 "GrammarParser.cpp"
+    break;
+
+  case 310:
+#line 2204 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < QuantifiedQuantifier_t > () = std::make_pair(yystack_[0].value.as < Token::Ptr > (), QuantifiedLogic::Quantifier::EXISTENTIAL);
+  }
+#line 5291 "GrammarParser.cpp"
+    break;
+
+  case 311:
+#line 2213 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < BinaryConnective_t > () = std::make_pair(yystack_[0].value.as < Token::Ptr > (), BinaryLogic::Connective::EQUIVALENCE);
+  }
+#line 5299 "GrammarParser.cpp"
+    break;
+
+  case 312:
+#line 2217 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < BinaryConnective_t > () = std::make_pair(yystack_[0].value.as < Token::Ptr > (), BinaryLogic::Connective::IMPLICATION);
+  }
+#line 5307 "GrammarParser.cpp"
+    break;
+
+  case 313:
+#line 2221 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < BinaryConnective_t > () = std::make_pair(yystack_[0].value.as < Token::Ptr > (), BinaryLogic::Connective::REVERSE_IMPLICATION);
+  }
+#line 5315 "GrammarParser.cpp"
+    break;
+
+  case 314:
+#line 2225 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < BinaryConnective_t > () = std::make_pair(yystack_[0].value.as < Token::Ptr > (), BinaryLogic::Connective::NON_EQUIVALENCE);
+  }
+#line 5323 "GrammarParser.cpp"
+    break;
+
+  case 315:
+#line 2229 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < BinaryConnective_t > () = std::make_pair(yystack_[0].value.as < Token::Ptr > (), BinaryLogic::Connective::NEGATED_DISJUNCTION);
+  }
+#line 5331 "GrammarParser.cpp"
+    break;
+
+  case 316:
+#line 2233 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < BinaryConnective_t > () = std::make_pair(yystack_[0].value.as < Token::Ptr > (), BinaryLogic::Connective::NEGATED_CONJUNCTION);
+  }
+#line 5339 "GrammarParser.cpp"
+    break;
+
+  case 317:
+#line 2240 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < BinaryConnective_t > () = std::make_pair(yystack_[0].value.as < Token::Ptr > (), BinaryLogic::Connective::DISJUNCTION);
+  }
+#line 5347 "GrammarParser.cpp"
+    break;
+
+  case 318:
+#line 2244 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < BinaryConnective_t > () = std::make_pair(yystack_[0].value.as < Token::Ptr > (), BinaryLogic::Connective::CONJUNCTION);
+  }
+#line 5355 "GrammarParser.cpp"
+    break;
+
+  case 319:
+#line 2251 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < UnaryConnective_t > () = std::make_pair(yystack_[0].value.as < Token::Ptr > (), UnaryLogic::Connective::NEGATION);
+  }
+#line 5363 "GrammarParser.cpp"
+    break;
+
+  case 320:
+#line 2258 "../../obj/src/GrammarParser.yy"
+  {
 	yylhs.value.as < Identifier::Ptr > () = yystack_[0].value.as < Identifier::Ptr > ();
   }
-#line 4988 "GrammarParser.cpp"
+#line 5371 "GrammarParser.cpp"
+    break;
+
+  case 321:
+#line 2265 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Identifier::Ptr > () = yystack_[0].value.as < Identifier::Ptr > ();
+  }
+#line 5379 "GrammarParser.cpp"
+    break;
+
+  case 322:
+#line 2272 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Identifier::Ptr > () = yystack_[0].value.as < Identifier::Ptr > ();
+  }
+#line 5387 "GrammarParser.cpp"
+    break;
+
+  case 323:
+#line 2279 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Identifier::Ptr > () = yystack_[0].value.as < Identifier::Ptr > ();
+  }
+#line 5395 "GrammarParser.cpp"
+    break;
+
+  case 324:
+#line 2283 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Identifier::Ptr > () = yystack_[0].value.as < Identifier::Ptr > ();
+  }
+#line 5403 "GrammarParser.cpp"
+    break;
+
+  case 325:
+#line 2290 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Identifier::Ptr > () = yystack_[0].value.as < Identifier::Ptr > ();
+  }
+#line 5411 "GrammarParser.cpp"
+    break;
+
+  case 326:
+#line 2294 "../../obj/src/GrammarParser.yy"
+  {
+	yylhs.value.as < Identifier::Ptr > () = yystack_[0].value.as < Identifier::Ptr > ();
+  }
+#line 5419 "GrammarParser.cpp"
     break;
 
   case 327:
 #line 2301 "../../obj/src/GrammarParser.yy"
-    {
+  {
 	yylhs.value.as < InfixConnective_t > () = yystack_[0].value.as < InfixConnective_t > ();
   }
-#line 4996 "GrammarParser.cpp"
+#line 5427 "GrammarParser.cpp"
     break;
 
   case 328:
 #line 2308 "../../obj/src/GrammarParser.yy"
-    {
+  {
 	yylhs.value.as < InfixConnective_t > () = std::make_pair(yystack_[0].value.as < Token::Ptr > (), InfixLogic::Connective::EQUALITY);
   }
-#line 5004 "GrammarParser.cpp"
+#line 5435 "GrammarParser.cpp"
     break;
 
   case 329:
 #line 2315 "../../obj/src/GrammarParser.yy"
-    {
+  {
 	yylhs.value.as < InfixConnective_t > () = std::make_pair(yystack_[0].value.as < Token::Ptr > (), InfixLogic::Connective::INEQUALITY);
   }
-#line 5012 "GrammarParser.cpp"
+#line 5443 "GrammarParser.cpp"
     break;
 
   case 330:
 #line 2322 "../../obj/src/GrammarParser.yy"
-    {
+  {
 	yylhs.value.as < Identifier::Ptr > () = yystack_[0].value.as < Identifier::Ptr > ();
   }
-#line 5020 "GrammarParser.cpp"
+#line 5451 "GrammarParser.cpp"
     break;
 
   case 331:
 #line 2329 "../../obj/src/GrammarParser.yy"
-    {
+  {
 	yylhs.value.as < Identifier::Ptr > () = yystack_[0].value.as < Identifier::Ptr > ();
   }
-#line 5028 "GrammarParser.cpp"
+#line 5459 "GrammarParser.cpp"
     break;
 
   case 332:
 #line 2336 "../../obj/src/GrammarParser.yy"
-    {
+  {
 	yylhs.value.as < Identifier::Ptr > () = yystack_[0].value.as < Identifier::Ptr > ();
   }
-#line 5036 "GrammarParser.cpp"
+#line 5467 "GrammarParser.cpp"
     break;
 
   case 333:
 #line 2343 "../../obj/src/GrammarParser.yy"
-    {
+  {
 	yylhs.value.as < Identifier::Ptr > () = yystack_[0].value.as < Identifier::Ptr > ();
   }
-#line 5044 "GrammarParser.cpp"
+#line 5475 "GrammarParser.cpp"
     break;
 
   case 334:
 #line 2350 "../../obj/src/GrammarParser.yy"
-    {
+  {
 	yylhs.value.as < Identifier::Ptr > () = yystack_[0].value.as < Identifier::Ptr > ();
   }
-#line 5052 "GrammarParser.cpp"
+#line 5483 "GrammarParser.cpp"
     break;
 
   case 335:
 #line 2357 "../../obj/src/GrammarParser.yy"
-    {
+  {
 	yylhs.value.as < Identifier::Ptr > () = yystack_[0].value.as < Identifier::Ptr > ();
   }
-#line 5060 "GrammarParser.cpp"
+#line 5491 "GrammarParser.cpp"
     break;
 
   case 336:
 #line 2364 "../../obj/src/GrammarParser.yy"
-    {
+  {
 	yylhs.value.as < DefinedAtom::Ptr > () = libtptp::make< DefinedAtom >(yylhs.location, yystack_[0].value.as < ValueLiteral::Ptr > ());
   }
-#line 5068 "GrammarParser.cpp"
+#line 5499 "GrammarParser.cpp"
     break;
 
   case 337:
 #line 2368 "../../obj/src/GrammarParser.yy"
-    {
+  {
 	yylhs.value.as < DefinedAtom::Ptr > () = libtptp::make< DefinedAtom >(yylhs.location, yystack_[0].value.as < DistinctObjectLiteral::Ptr > ());
   }
-#line 5076 "GrammarParser.cpp"
+#line 5507 "GrammarParser.cpp"
     break;
 
   case 338:
 #line 2375 "../../obj/src/GrammarParser.yy"
+<<<<<<< HEAD
     {
 >>>>>>> 508276a (GrammarParser: commmit built files)
+=======
+  {
+>>>>>>> f10593b (Grammar: updated built files)
 	//TODO: @moosbruggerj change to identifiers list
 	//const auto list = libtptp::make< Identifiers >(@$);
 	const auto list = libtptp::make< ListNodeElements >(yylhs.location);
 	list->add(yystack_[0].value.as < Identifier::Ptr > ());
 	yylhs.value.as < ListNodeElements::Ptr > () = list;
   }
+<<<<<<< HEAD
 <<<<<<< HEAD
 #line 5439 "GrammarParser.cpp"
     break;
@@ -8746,10 +11913,14 @@ namespace libtptp {
   {
 =======
 #line 5088 "GrammarParser.cpp"
+=======
+#line 5519 "GrammarParser.cpp"
+>>>>>>> f10593b (Grammar: updated built files)
     break;
 
   case 339:
 #line 2383 "../../obj/src/GrammarParser.yy"
+<<<<<<< HEAD
     {
 >>>>>>> 508276a (GrammarParser: commmit built files)
 	const auto list = yystack_[2].value.as < ListNodeElements::Ptr > ();
@@ -8869,120 +12040,133 @@ namespace libtptp {
   {
 =======
 #line 5098 "GrammarParser.cpp"
+=======
+  {
+	const auto list = yystack_[2].value.as < ListNodeElements::Ptr > ();
+	list->add(yystack_[1].value.as < Token::Ptr > (), yystack_[0].value.as < Identifier::Ptr > ());
+	yylhs.value.as < ListNodeElements::Ptr > () = list;
+  }
+#line 5529 "GrammarParser.cpp"
+>>>>>>> f10593b (Grammar: updated built files)
     break;
 
   case 340:
 #line 2392 "../../obj/src/GrammarParser.yy"
-    {
+  {
 	yylhs.value.as < Identifier::Ptr > () = yystack_[0].value.as < Identifier::Ptr > ();
   }
-#line 5106 "GrammarParser.cpp"
+#line 5537 "GrammarParser.cpp"
     break;
 
   case 341:
 #line 2396 "../../obj/src/GrammarParser.yy"
-    {
+  {
 	yylhs.value.as < Identifier::Ptr > () = libtptp::make< Identifier >(yylhs.location, yystack_[0].value.as < std::string > (), Identifier::Kind::NUMBER);
   }
-#line 5114 "GrammarParser.cpp"
+#line 5545 "GrammarParser.cpp"
     break;
 
   case 342:
 #line 2403 "../../obj/src/GrammarParser.yy"
-    {
+  {
     yylhs.value.as < Role::Ptr > () = libtptp::make< Role >( yylhs.location, yystack_[0].value.as < Identifier::Ptr > () );
   }
-#line 5122 "GrammarParser.cpp"
+#line 5553 "GrammarParser.cpp"
     break;
 
   case 343:
 #line 2410 "../../obj/src/GrammarParser.yy"
-    {
+  {
 	yylhs.value.as < GeneralTerm::Ptr > () = yystack_[0].value.as < GeneralData::Ptr > ();
   }
-#line 5130 "GrammarParser.cpp"
+#line 5561 "GrammarParser.cpp"
     break;
 
   case 344:
 #line 2414 "../../obj/src/GrammarParser.yy"
-    {
+  {
 	yylhs.value.as < GeneralTerm::Ptr > () = libtptp::make< GeneralAggregator >(yylhs.location, yystack_[2].value.as < GeneralData::Ptr > (), yystack_[1].value.as < Token::Ptr > (), yystack_[0].value.as < GeneralTerm::Ptr > ());
   }
-#line 5138 "GrammarParser.cpp"
+#line 5569 "GrammarParser.cpp"
     break;
 
   case 345:
 #line 2418 "../../obj/src/GrammarParser.yy"
-    {
+  {
 	yylhs.value.as < GeneralTerm::Ptr > () = yystack_[0].value.as < GeneralList::Ptr > ();
   }
-#line 5146 "GrammarParser.cpp"
+#line 5577 "GrammarParser.cpp"
     break;
 
   case 346:
 #line 2425 "../../obj/src/GrammarParser.yy"
-    {
+  {
 	yylhs.value.as < GeneralData::Ptr > () = libtptp::make< GeneralData >(yylhs.location, yystack_[0].value.as < Identifier::Ptr > ());
   }
-#line 5154 "GrammarParser.cpp"
+#line 5585 "GrammarParser.cpp"
     break;
 
   case 347:
 #line 2429 "../../obj/src/GrammarParser.yy"
-    {
+  {
 	yylhs.value.as < GeneralData::Ptr > () = libtptp::make< GeneralData >(yylhs.location, yystack_[0].value.as < GeneralFunction::Ptr > ());
   }
-#line 5162 "GrammarParser.cpp"
+#line 5593 "GrammarParser.cpp"
     break;
 
   case 348:
 #line 2433 "../../obj/src/GrammarParser.yy"
-    {
+  {
 	yylhs.value.as < GeneralData::Ptr > () = libtptp::make< GeneralData >(yylhs.location, yystack_[0].value.as < VariableTerm::Ptr > ());
   }
-#line 5170 "GrammarParser.cpp"
+#line 5601 "GrammarParser.cpp"
     break;
 
   case 349:
 #line 2437 "../../obj/src/GrammarParser.yy"
-    {
+  {
 	yylhs.value.as < GeneralData::Ptr > () = libtptp::make< GeneralData >(yylhs.location, yystack_[0].value.as < ValueLiteral::Ptr > ());
   }
-#line 5178 "GrammarParser.cpp"
+#line 5609 "GrammarParser.cpp"
     break;
 
   case 350:
 #line 2441 "../../obj/src/GrammarParser.yy"
-    {
+  {
 	yylhs.value.as < GeneralData::Ptr > () = libtptp::make< GeneralData >(yylhs.location, yystack_[0].value.as < DistinctObjectLiteral::Ptr > ());
   }
-#line 5186 "GrammarParser.cpp"
+#line 5617 "GrammarParser.cpp"
     break;
 
   case 351:
 #line 2445 "../../obj/src/GrammarParser.yy"
-    {
+  {
 	yylhs.value.as < GeneralData::Ptr > () = libtptp::make< GeneralData >(yylhs.location, yystack_[0].value.as < FormulaData::Ptr > ());
   }
-#line 5194 "GrammarParser.cpp"
+#line 5625 "GrammarParser.cpp"
     break;
 
   case 352:
 #line 2452 "../../obj/src/GrammarParser.yy"
-    {
+  {
 	yylhs.value.as < GeneralFunction::Ptr > () = libtptp::make< GeneralFunction >(yylhs.location, yystack_[3].value.as < Identifier::Ptr > (), yystack_[2].value.as < Token::Ptr > (), yystack_[1].value.as < ListNodeElements::Ptr > (), yystack_[0].value.as < Token::Ptr > ());
   }
-#line 5202 "GrammarParser.cpp"
+#line 5633 "GrammarParser.cpp"
     break;
 
   case 353:
 #line 2459 "../../obj/src/GrammarParser.yy"
+<<<<<<< HEAD
     {
 >>>>>>> 508276a (GrammarParser: commmit built files)
+=======
+  {
+>>>>>>> f10593b (Grammar: updated built files)
 	auto list = libtptp::make< ListNodeElements >(yylhs.location);
 	list->add(yystack_[0].value.as < GeneralTerm::Ptr > ());
 	yylhs.value.as < ListNodeElements::Ptr > () = list;
   }
+<<<<<<< HEAD
 <<<<<<< HEAD
 #line 5563 "GrammarParser.cpp"
     break;
@@ -8992,16 +12176,24 @@ namespace libtptp {
   {
 =======
 #line 5212 "GrammarParser.cpp"
+=======
+#line 5643 "GrammarParser.cpp"
+>>>>>>> f10593b (Grammar: updated built files)
     break;
 
   case 354:
 #line 2465 "../../obj/src/GrammarParser.yy"
+<<<<<<< HEAD
     {
 >>>>>>> 508276a (GrammarParser: commmit built files)
+=======
+  {
+>>>>>>> f10593b (Grammar: updated built files)
     auto terms = yystack_[2].value.as < ListNodeElements::Ptr > ();
     terms->add(yystack_[1].value.as < Token::Ptr > (), yystack_[0].value.as < GeneralTerm::Ptr > ());
     yylhs.value.as < ListNodeElements::Ptr > () = terms;
   }
+<<<<<<< HEAD
 <<<<<<< HEAD
 #line 5573 "GrammarParser.cpp"
     break;
@@ -9231,232 +12423,239 @@ namespace libtptp {
 #line 5798 "GrammarParser.cpp"
 =======
 #line 5222 "GrammarParser.cpp"
+=======
+#line 5653 "GrammarParser.cpp"
+>>>>>>> f10593b (Grammar: updated built files)
     break;
 
   case 355:
 #line 2474 "../../obj/src/GrammarParser.yy"
-    {
+  {
 	yylhs.value.as < FormulaData::Ptr > () = libtptp::make< FormulaData >(yylhs.location, yystack_[4].value.as < Token::Ptr > (), yystack_[3].value.as < Token::Ptr > (), yystack_[2].value.as < Token::Ptr > (), yystack_[1].value.as < Logic::Ptr > (), yystack_[0].value.as < Token::Ptr > ());
   }
-#line 5230 "GrammarParser.cpp"
+#line 5661 "GrammarParser.cpp"
     break;
 
   case 356:
 #line 2478 "../../obj/src/GrammarParser.yy"
-    {
+  {
 	yylhs.value.as < FormulaData::Ptr > () = libtptp::make< FormulaData >(yylhs.location, yystack_[4].value.as < Token::Ptr > (), yystack_[3].value.as < Token::Ptr > (), yystack_[2].value.as < Token::Ptr > (), yystack_[1].value.as < Logic::Ptr > (), yystack_[0].value.as < Token::Ptr > ());
   }
-#line 5238 "GrammarParser.cpp"
+#line 5669 "GrammarParser.cpp"
     break;
 
   case 357:
 #line 2482 "../../obj/src/GrammarParser.yy"
-    {
+  {
 	yylhs.value.as < FormulaData::Ptr > () = libtptp::make< FormulaData >(yylhs.location, yystack_[4].value.as < Token::Ptr > (), yystack_[3].value.as < Token::Ptr > (), yystack_[2].value.as < Token::Ptr > (), yystack_[1].value.as < Logic::Ptr > (), yystack_[0].value.as < Token::Ptr > ());
   }
-#line 5246 "GrammarParser.cpp"
+#line 5677 "GrammarParser.cpp"
     break;
 
   case 358:
 #line 2486 "../../obj/src/GrammarParser.yy"
-    {
+  {
 	yylhs.value.as < FormulaData::Ptr > () = libtptp::make< FormulaData >(yylhs.location, yystack_[4].value.as < Token::Ptr > (), yystack_[3].value.as < Token::Ptr > (), yystack_[2].value.as < Token::Ptr > (), yystack_[1].value.as < Logic::Ptr > (), yystack_[0].value.as < Token::Ptr > ());
   }
-#line 5254 "GrammarParser.cpp"
+#line 5685 "GrammarParser.cpp"
     break;
 
   case 359:
 #line 2490 "../../obj/src/GrammarParser.yy"
-    {
+  {
 	yylhs.value.as < FormulaData::Ptr > () = libtptp::make< FormulaData >(yylhs.location, yystack_[4].value.as < Token::Ptr > (), yystack_[3].value.as < Token::Ptr > (), yystack_[2].value.as < Token::Ptr > (), yystack_[1].value.as < Term::Ptr > (), yystack_[0].value.as < Token::Ptr > ());
   }
-#line 5262 "GrammarParser.cpp"
+#line 5693 "GrammarParser.cpp"
     break;
 
   case 360:
 #line 2497 "../../obj/src/GrammarParser.yy"
-    {
+  {
 	auto list = libtptp::make< ListLiteral >(yylhs.location, yystack_[1].value.as < Token::Ptr > (), yystack_[0].value.as < Token::Ptr > ());
 	yylhs.value.as < GeneralList::Ptr > () = libtptp::make< GeneralList >(yylhs.location, list);
   }
-#line 5271 "GrammarParser.cpp"
+#line 5702 "GrammarParser.cpp"
     break;
 
   case 361:
 #line 2502 "../../obj/src/GrammarParser.yy"
-    {
+  {
 	auto list = libtptp::make< ListLiteral >(yylhs.location, yystack_[2].value.as < Token::Ptr > (), yystack_[1].value.as < ListNodeElements::Ptr > (), yystack_[0].value.as < Token::Ptr > ());
 	yylhs.value.as < GeneralList::Ptr > () = libtptp::make< GeneralList >(yylhs.location, list);
   }
-#line 5280 "GrammarParser.cpp"
+#line 5711 "GrammarParser.cpp"
     break;
 
   case 362:
 #line 2511 "../../obj/src/GrammarParser.yy"
-    {
+  {
 	const auto formulaSelection = libtptp::make< ListLiteral >(yystack_[0].location, uToken, uToken);
 	yylhs.value.as < IncludeDefinition::Ptr > () = libtptp::make< IncludeDefinition >(yylhs.location, yystack_[4].value.as < Token::Ptr > (), yystack_[3].value.as < Token::Ptr > (), yystack_[2].value.as < Identifier::Ptr > (), uToken, formulaSelection, yystack_[1].value.as < Token::Ptr > (), yystack_[0].value.as < Token::Ptr > ());
   }
-#line 5289 "GrammarParser.cpp"
+#line 5720 "GrammarParser.cpp"
     break;
 
   case 363:
 #line 2516 "../../obj/src/GrammarParser.yy"
-    {
+  {
 	yylhs.value.as < IncludeDefinition::Ptr > () = libtptp::make< IncludeDefinition >(yylhs.location, yystack_[6].value.as < Token::Ptr > (), yystack_[5].value.as < Token::Ptr > (), yystack_[4].value.as < Identifier::Ptr > (), yystack_[3].value.as < Token::Ptr > (), yystack_[2].value.as < ListLiteral::Ptr > (), yystack_[1].value.as < Token::Ptr > (), yystack_[0].value.as < Token::Ptr > ());
   }
-#line 5297 "GrammarParser.cpp"
+#line 5728 "GrammarParser.cpp"
     break;
 
   case 364:
 #line 2523 "../../obj/src/GrammarParser.yy"
-    {
+  {
 	auto list = libtptp::make< ListLiteral >(yylhs.location, yystack_[2].value.as < Token::Ptr > (), yystack_[1].value.as < ListNodeElements::Ptr > (), yystack_[0].value.as < Token::Ptr > ());
 	yylhs.value.as < ListLiteral::Ptr > () = list;
   }
-#line 5306 "GrammarParser.cpp"
+#line 5737 "GrammarParser.cpp"
     break;
 
   case 365:
 #line 2531 "../../obj/src/GrammarParser.yy"
-    {
+  {
 	yylhs.value.as < Identifier::Ptr > () = yystack_[0].value.as < Identifier::Ptr > ();
   }
-#line 5314 "GrammarParser.cpp"
+#line 5745 "GrammarParser.cpp"
     break;
 
   case 366:
 #line 2535 "../../obj/src/GrammarParser.yy"
-    {
+  {
 	yylhs.value.as < Identifier::Ptr > () = yystack_[0].value.as < Identifier::Ptr > ();
   }
-#line 5322 "GrammarParser.cpp"
+#line 5753 "GrammarParser.cpp"
     break;
 
   case 367:
 #line 2542 "../../obj/src/GrammarParser.yy"
-    {
+  {
 	yylhs.value.as < Identifier::Ptr > () = yystack_[0].value.as < Identifier::Ptr > ();
   }
-#line 5330 "GrammarParser.cpp"
+#line 5761 "GrammarParser.cpp"
     break;
 
   case 368:
 #line 2549 "../../obj/src/GrammarParser.yy"
-    {
+  {
 	yylhs.value.as < Identifier::Ptr > () = yystack_[0].value.as < Identifier::Ptr > ();
   }
-#line 5338 "GrammarParser.cpp"
+#line 5769 "GrammarParser.cpp"
     break;
 
   case 369:
 #line 2556 "../../obj/src/GrammarParser.yy"
-    {
+  {
     yylhs.value.as < ValueLiteral::Ptr > () = yystack_[0].value.as < IntegerLiteral::Ptr > ();
   }
-#line 5346 "GrammarParser.cpp"
+#line 5777 "GrammarParser.cpp"
     break;
 
   case 370:
 #line 2560 "../../obj/src/GrammarParser.yy"
-    {
+  {
     yylhs.value.as < ValueLiteral::Ptr > () = yystack_[0].value.as < RealLiteral::Ptr > ();
   }
-#line 5354 "GrammarParser.cpp"
+#line 5785 "GrammarParser.cpp"
     break;
 
   case 371:
 #line 2564 "../../obj/src/GrammarParser.yy"
-    {
+  {
     yylhs.value.as < ValueLiteral::Ptr > () = yystack_[0].value.as < RationalLiteral::Ptr > ();
   }
-#line 5362 "GrammarParser.cpp"
+#line 5793 "GrammarParser.cpp"
     break;
 
   case 372:
 #line 2571 "../../obj/src/GrammarParser.yy"
-    {
+  {
 	yylhs.value.as < Identifier::Ptr > () = yystack_[0].value.as < Identifier::Ptr > ();
   }
-#line 5370 "GrammarParser.cpp"
+#line 5801 "GrammarParser.cpp"
     break;
 
   case 373:
 #line 2578 "../../obj/src/GrammarParser.yy"
-    {
+  {
 	yylhs.value.as < IntegerLiteral::Ptr > () = libtptp::make< IntegerLiteral >(yystack_[0].location, yystack_[0].value.as < std::string > ());
   }
-#line 5378 "GrammarParser.cpp"
+#line 5809 "GrammarParser.cpp"
     break;
 
   case 374:
 #line 2585 "../../obj/src/GrammarParser.yy"
-    {
+  {
 	yylhs.value.as < RealLiteral::Ptr > () = libtptp::make< RealLiteral >(yylhs.location, yystack_[0].value.as < std::string > ());
   }
-#line 5386 "GrammarParser.cpp"
+#line 5817 "GrammarParser.cpp"
     break;
 
   case 375:
 #line 2591 "../../obj/src/GrammarParser.yy"
-    {
+  {
 	yylhs.value.as < RationalLiteral::Ptr > () = libtptp::make< RationalLiteral >(yylhs.location, yystack_[0].value.as < std::string > ());
   }
-#line 5394 "GrammarParser.cpp"
+#line 5825 "GrammarParser.cpp"
     break;
 
   case 376:
 #line 2598 "../../obj/src/GrammarParser.yy"
-    {
+  {
 	auto identifier = libtptp::make< Identifier >(yylhs.location, yystack_[0].value.as < std::string > ());
 	yylhs.value.as < VariableTerm::Ptr > () = libtptp::make< VariableTerm >(yylhs.location, identifier);
   }
-#line 5403 "GrammarParser.cpp"
+#line 5834 "GrammarParser.cpp"
     break;
 
   case 377:
 #line 2606 "../../obj/src/GrammarParser.yy"
-    {
+  {
 	yylhs.value.as < DistinctObjectLiteral::Ptr > () = libtptp::make< DistinctObjectLiteral >(yylhs.location, yystack_[0].value.as < std::string > ());
   }
-#line 5411 "GrammarParser.cpp"
+#line 5842 "GrammarParser.cpp"
     break;
 
   case 378:
 #line 2613 "../../obj/src/GrammarParser.yy"
-    {
+  {
 	yylhs.value.as < Identifier::Ptr > () = libtptp::make< Identifier >(yylhs.location, yystack_[0].value.as < std::string > ());
   }
-#line 5419 "GrammarParser.cpp"
+#line 5850 "GrammarParser.cpp"
     break;
 
   case 379:
 #line 2620 "../../obj/src/GrammarParser.yy"
-    {
+  {
 	yylhs.value.as < Identifier::Ptr > () = libtptp::make< Identifier >(yylhs.location, yystack_[0].value.as < std::string > ());
   }
-#line 5427 "GrammarParser.cpp"
+#line 5858 "GrammarParser.cpp"
     break;
 
   case 380:
 #line 2627 "../../obj/src/GrammarParser.yy"
-    {
+  {
 	yylhs.value.as < Identifier::Ptr > () = libtptp::make< Identifier >(yylhs.location, yystack_[1].value.as < Token::Ptr > (), yystack_[0].value.as < std::string > ());
   }
-#line 5435 "GrammarParser.cpp"
+#line 5866 "GrammarParser.cpp"
     break;
 
   case 381:
 #line 2634 "../../obj/src/GrammarParser.yy"
-    {
+  {
 	yylhs.value.as < Identifier::Ptr > () = libtptp::make< Identifier >(yylhs.location, yystack_[1].value.as < Token::Ptr > (), yystack_[0].value.as < std::string > ());
   }
-#line 5443 "GrammarParser.cpp"
+#line 5874 "GrammarParser.cpp"
     break;
 
 
+<<<<<<< HEAD
 #line 5447 "GrammarParser.cpp"
 >>>>>>> 508276a (GrammarParser: commmit built files)
+=======
+#line 5878 "GrammarParser.cpp"
+>>>>>>> f10593b (Grammar: updated built files)
 
             default:
               break;
@@ -9536,6 +12735,7 @@ namespace libtptp {
   `-------------------------------------------------------------*/
   yyerrlab1:
     yyerrstatus_ = 3;   // Each real token shifted decrements this.
+<<<<<<< HEAD
     // Pop stack until we find a state that shifts the error token.
     for (;;)
       {
@@ -9551,6 +12751,23 @@ namespace libtptp {
                   break;
               }
           }
+=======
+    {
+      stack_symbol_type error_token;
+      for (;;)
+        {
+          yyn = yypact_[yystack_[0].state];
+          if (!yy_pact_value_is_default_ (yyn))
+            {
+              yyn += yy_error_token_;
+              if (0 <= yyn && yyn <= yylast_ && yycheck_[yyn] == yy_error_token_)
+                {
+                  yyn = yytable_[yyn];
+                  if (0 < yyn)
+                    break;
+                }
+            }
+>>>>>>> f10593b (Grammar: updated built files)
 
         // Pop the current state because it cannot handle the error token.
         if (yystack_.size () == 1)
@@ -9568,7 +12785,11 @@ namespace libtptp {
       YYLLOC_DEFAULT (error_token.location, yyerror_range, 2);
 
       // Shift the error token.
+<<<<<<< HEAD
       error_token.state = state_type (yyn);
+=======
+      error_token.state = static_cast<state_type> (yyn);
+>>>>>>> f10593b (Grammar: updated built files)
       yypush_ ("Shifting", YY_MOVE (error_token));
     }
     goto yynewstate;
@@ -9642,6 +12863,7 @@ namespace libtptp {
   std::string
   Parser::yytnamerr_ (const char *yystr)
   {
+<<<<<<< HEAD
     if (*yystr == '"')
       {
         std::string yyr;
@@ -9722,6 +12944,15 @@ namespace libtptp {
     return yycount;
   }
 
+=======
+    // Number of reported tokens (one for the "unexpected", one per
+    // "expected").
+    std::ptrdiff_t yycount = 0;
+    // Its maximum.
+    enum { YYERROR_VERBOSE_ARGS_MAXIMUM = 5 };
+    // Arguments of yyformat.
+    char const *yyarg[YYERROR_VERBOSE_ARGS_MAXIMUM];
+>>>>>>> f10593b (Grammar: updated built files)
 
 
   int
@@ -9755,10 +12986,39 @@ namespace libtptp {
 
     if (!yyctx.lookahead ().empty ())
       {
+<<<<<<< HEAD
         if (yyarg)
           yyarg[0] = yyctx.token ();
         int yyn = yyctx.expected_tokens (yyarg ? yyarg + 1 : yyarg, yyargn - 1);
         return yyn + 1;
+=======
+        symbol_number_type yytoken = yyla.type_get ();
+        yyarg[yycount++] = yytname_[yytoken];
+
+        int yyn = yypact_[yystate];
+        if (!yy_pact_value_is_default_ (yyn))
+          {
+            /* Start YYX at -YYN if negative to avoid negative indexes in
+               YYCHECK.  In other words, skip the first -YYN actions for
+               this state because they are default actions.  */
+            int yyxbegin = yyn < 0 ? -yyn : 0;
+            // Stay within bounds of both yycheck and yytname.
+            int yychecklim = yylast_ - yyn + 1;
+            int yyxend = yychecklim < yyntokens_ ? yychecklim : yyntokens_;
+            for (int yyx = yyxbegin; yyx < yyxend; ++yyx)
+              if (yycheck_[yyx + yyn] == yyx && yyx != yy_error_token_
+                  && !yy_table_value_is_error_ (yytable_[yyx + yyn]))
+                {
+                  if (yycount == YYERROR_VERBOSE_ARGS_MAXIMUM)
+                    {
+                      yycount = 1;
+                      break;
+                    }
+                  else
+                    yyarg[yycount++] = yytname_[yyx];
+                }
+          }
+>>>>>>> f10593b (Grammar: updated built files)
       }
     return 0;
   }
@@ -10930,11 +14190,15 @@ namespace libtptp {
 #line 48 "../../obj/src/GrammarParser.yy"
 } // libtptp
 <<<<<<< HEAD
+<<<<<<< HEAD
 #line 7229 "GrammarParser.cpp"
 
 #line 2630 "../../obj/src/GrammarParser.yy"
 =======
 #line 6800 "GrammarParser.cpp"
+=======
+#line 7231 "GrammarParser.cpp"
+>>>>>>> f10593b (Grammar: updated built files)
 
 #line 2639 "../../obj/src/GrammarParser.yy"
 >>>>>>> 508276a (GrammarParser: commmit built files)
