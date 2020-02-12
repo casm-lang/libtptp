@@ -47,8 +47,8 @@
 * libtptp: Thousands of Problems for Theorem Provers Library
 
 [[https://gitter.im/casm-lang/libtptp][https://img.shields.io/badge/gitter-chat-darkcyan.svg?logo=gitter]]
-[[https://github.com/casm-lang/libtptp/actions][https://github.com/casm-lang/libtptp/workflows/build/badge.svg]]
-[[https://ci.casm-lang.org/teams/main/pipelines/development/jobs/libtptp-master][ @@html:<img src="https://ci.casm-lang.org/api/v1/teams/main/pipelines/development/jobs/libtptp-master/badge">@@ ]]
+[[https://github.com/casm-lang/libtptp/actions?query=workflow%3Abuild][https://github.com/casm-lang/libtptp/workflows/build/badge.svg]]
+[[https://github.com/casm-lang/libtptp/actions?query=workflow%3Anightly][https://github.com/casm-lang/libtptp/workflows/nightly/badge.svg]]
 [[https://codecov.io/gh/casm-lang/libtptp][https://codecov.io/gh/casm-lang/libtptp/badge.svg]]
 [[https://github.com/casm-lang/libtptp/tags][https://img.shields.io/github/tag/casm-lang/libtptp.svg?logo=github&sort=semver]]
 [[https://github.com/casm-lang/libtptp/blob/master/LICENSE.txt][https://img.shields.io/badge/license-GPLv3%2BLE-blue.svg?logo=gnu]]
