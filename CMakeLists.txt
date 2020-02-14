@@ -145,14 +145,11 @@ set_property( TARGET ${PROJECT} PROPERTY OUTPUT_NAME ${PROJECT} )
 set_property( TARGET ${PROJECT} PROPERTY VERSION ${${PROJECT}_VERSION} )
 set_property( TARGET ${PROJECT} PROPERTY PREFIX  "" )
 
-if( ${LIBZ3_FOUND}
-AND ${LIBPASS_FOUND}
-AND ${LIBSTDHL_FOUND}
-)
+if( ${LIBPASS_FOUND} )
   target_link_libraries( ${PROJECT}
-    ${LIBZ3_LIBRARY}
     ${LIBPASS_LIBRARY}
     ${LIBSTDHL_LIBRARY}
+    ${LIBZ3_LIBRARY}
     )
 endif()
 
@@ -164,14 +161,11 @@ set_property( TARGET ${PROJECT}-ar PROPERTY OUTPUT_NAME ${PROJECT} )
 set_property( TARGET ${PROJECT}-ar PROPERTY VERSION ${${PROJECT}_VERSION} )
 set_property( TARGET ${PROJECT}-ar PROPERTY PREFIX  "" )
 
-if( ${LIBZ3_FOUND}
-AND ${LIBPASS_FOUND}
-AND ${LIBSTDHL_FOUND}
-)
+if( ${LIBPASS_FOUND} )
   target_link_libraries( ${PROJECT}-ar
-    ${LIBZ3_LIBRARY}
     ${LIBPASS_ARCHIVE}
     ${LIBSTDHL_ARCHIVE}
+    ${LIBZ3_ARCHIVE}
     )
 endif()
 
