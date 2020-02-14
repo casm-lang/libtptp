@@ -72,7 +72,7 @@ add_subdirectory( etc
   EXCLUDE_FROM_ALL
   )
 
-
+#
 #
 # grammar
 #
@@ -129,14 +129,21 @@ add_dependencies( ${PROJECT}-cpp
   ${PROJECT}-grammar
   )
 
-
+#
 #
 # library
 #
 
-add_library( ${PROJECT} STATIC
+set( ${PROJECT}_VERSION ${GIT_REVTAG} )
+set_property( TARGET ${PROJECT}-cpp PROPERTY POSITION_INDEPENDENT_CODE 1 )
+
+add_library( ${PROJECT} SHARED
   $<TARGET_OBJECTS:${PROJECT}-cpp>
   )
+
+set_property( TARGET ${PROJECT} PROPERTY OUTPUT_NAME ${PROJECT} )
+set_property( TARGET ${PROJECT} PROPERTY VERSION ${${PROJECT}_VERSION} )
+set_property( TARGET ${PROJECT} PROPERTY PREFIX  "" )
 
 if( ${LIBZ3_FOUND}
 AND ${LIBPASS_FOUND}
@@ -149,11 +156,30 @@ AND ${LIBSTDHL_FOUND}
     )
 endif()
 
-set( ${PROJECT}_VERSION ${GIT_REVTAG} )
-set_property( TARGET ${PROJECT} PROPERTY VERSION ${${PROJECT}_VERSION} )
-set_property( TARGET ${PROJECT} PROPERTY PREFIX  "" )
+add_library( ${PROJECT}-ar STATIC
+  $<TARGET_OBJECTS:${PROJECT}-cpp>
+  )
 
+set_property( TARGET ${PROJECT}-ar PROPERTY OUTPUT_NAME ${PROJECT} )
+set_property( TARGET ${PROJECT}-ar PROPERTY VERSION ${${PROJECT}_VERSION} )
+set_property( TARGET ${PROJECT}-ar PROPERTY PREFIX  "" )
 
+if( ${LIBZ3_FOUND}
+AND ${LIBPASS_FOUND}
+AND ${LIBSTDHL_FOUND}
+)
+  target_link_libraries( ${PROJECT}-ar
+    ${LIBZ3_LIBRARY}
+    ${LIBPASS_ARCHIVE}
+    ${LIBSTDHL_ARCHIVE}
+    )
+endif()
+
+add_dependencies( ${PROJECT}
+  ${PROJECT}-ar
+  )
+
+#
 #
 # test
 # 
@@ -165,14 +191,14 @@ add_executable( ${PROJECT}-check
 
 if( ${LIBGTEST_FOUND} )
   target_link_libraries( ${PROJECT}-check
-    ${PROJECT}
+    ${PROJECT}-ar
     ${LIBGTEST_LIBRARY}
     ${LIBGTEST_MAIN}
     Threads::Threads
     )
 endif()
 
-
+#
 #
 # benchmark
 #
@@ -184,18 +210,18 @@ add_executable( ${PROJECT}-run
 
 if( ${LIBHAYAI_FOUND} )
   target_link_libraries( ${PROJECT}-run
-    ${PROJECT}
+    ${PROJECT}-ar
     ${LIBHAYAI_LIBRARY}
     )
 endif()
 
-
+#
 #
 # install
 #
 
 install(
-  TARGETS  ${PROJECT}
+  TARGETS  ${PROJECT} ${PROJECT}-ar
   EXPORT   ${PROJECT}Targets
   LIBRARY  DESTINATION lib
   ARCHIVE  DESTINATION lib
@@ -219,7 +245,7 @@ export(
     ${PROJECT}Config.cmake
   )
 
-
+#
 #
 # cmake
 #
@@ -232,7 +258,7 @@ install(
     "share/cmake/Module/${PROJECT}"
   )
 
-
+#
 #
 # build features and checks
 #
