@@ -151,6 +151,12 @@ if( ${LIBPASS_FOUND} )
     ${LIBSTDHL_LIBRARY}
     ${LIBZ3_LIBRARY}
     )
+
+  if( WIN32 )
+    target_link_libraries( ${PROJECT} PUBLIC
+      gomp
+      )
+  endif()
 endif()
 
 add_library( ${PROJECT}-ar STATIC
@@ -167,6 +173,12 @@ if( ${LIBPASS_FOUND} )
     ${LIBSTDHL_ARCHIVE}
     ${LIBZ3_ARCHIVE}
     )
+
+  if( WIN32 )
+    target_link_libraries( ${PROJECT}-ar PUBLIC
+      gomp
+      )
+  endif()
 endif()
 
 add_dependencies( ${PROJECT}
