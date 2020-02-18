@@ -54,7 +54,7 @@ find_path( LIBZ3_INCLUDE_DIR
   )
 
 find_library( LIBZ3_LIBRARY
-  NAMES libz3.a libz3.so libz3.dylib libz3.dll
+  NAMES libz3.so libz3.dylib libz3.a libz3.dll
   PATHS ${LIBZ3_PKGCONF_LIBRARY_DIRS}
   )
 
