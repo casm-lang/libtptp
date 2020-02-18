@@ -153,7 +153,7 @@ if( ${LIBPASS_FOUND} )
     )
 
   if( WIN32 )
-    target_link_libraries( ${PROJECT} PUBLIC
+    target_link_libraries( ${PROJECT}
       gomp
       )
   endif()
@@ -175,7 +175,7 @@ if( ${LIBPASS_FOUND} )
     )
 
   if( WIN32 )
-    target_link_libraries( ${PROJECT}-ar PUBLIC
+    target_link_libraries( ${PROJECT}-ar
       gomp
       )
   endif()
