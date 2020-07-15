@@ -117,6 +117,12 @@ namespace libtptp
         const Token::Ptr& rightParen( void ) const;
         const Kind kind( void ) const;
 
+        static FunctorAtom::Ptr less( const Logic::Ptr& lhs, const Logic::Ptr& rhs );
+        static FunctorAtom::Ptr less_eq( const Logic::Ptr& lhs, const Logic::Ptr& rhs );
+        static FunctorAtom::Ptr greater( const Logic::Ptr& lhs, const Logic::Ptr& rhs );
+        static FunctorAtom::Ptr greater_eq( const Logic::Ptr& lhs, const Logic::Ptr& rhs );
+        // TODO: other predefined functors
+
       private:
         const Identifier::Ptr m_name;
         const Token::Ptr m_leftParen;

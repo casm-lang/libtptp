@@ -41,6 +41,7 @@
 //
 
 #include "Atom.h"
+#include <initializer_list>
 #include <libtptp/Literal>
 #include <libtptp/Type>
 
@@ -115,6 +116,30 @@ const Token::Ptr& FunctorAtom::rightParen( void ) const
 const FunctorAtom::Kind FunctorAtom::kind( void ) const
 {
     return m_kind;
+}
+
+FunctorAtom::Ptr FunctorAtom::less( const Logic::Ptr& lhs, const Logic::Ptr& rhs )
+{
+    return std::make_shared< FunctorAtom >(
+        "$less", std::initializer_list< Logic::Ptr >{ lhs, rhs }, Kind::DEFINED );
+}
+
+FunctorAtom::Ptr FunctorAtom::less_eq( const Logic::Ptr& lhs, const Logic::Ptr& rhs )
+{
+    return std::make_shared< FunctorAtom >(
+        "$lesseq", std::initializer_list< Logic::Ptr >{ lhs, rhs }, Kind::DEFINED );
+}
+
+FunctorAtom::Ptr FunctorAtom::greater( const Logic::Ptr& lhs, const Logic::Ptr& rhs )
+{
+    return std::make_shared< FunctorAtom >(
+        "$greater", std::initializer_list< Logic::Ptr >{ lhs, rhs }, Kind::DEFINED );
+}
+
+FunctorAtom::Ptr FunctorAtom::greater_eq( const Logic::Ptr& lhs, const Logic::Ptr& rhs )
+{
+    return std::make_shared< FunctorAtom >(
+        "$greatereq", std::initializer_list< Logic::Ptr >{ lhs, rhs }, Kind::DEFINED );
 }
 
 void FunctorAtom::accept( Visitor& visitor )
