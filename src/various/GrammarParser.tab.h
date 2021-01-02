@@ -1,8 +1,8 @@
-// A Bison parser, made by GNU Bison 3.4.2.
+// A Bison parser, made by GNU Bison 3.7.2.
 
 // Skeleton interface for Bison LALR(1) parsers in C++
 
-// Copyright (C) 2002-2015, 2018-2019 Free Software Foundation, Inc.
+// Copyright (C) 2002-2015, 2018-2020 Free Software Foundation, Inc.
 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -38,13 +38,14 @@
 
 // C++ LALR(1) parser skeleton written by Akim Demaille.
 
-// Undocumented macros, especially those whose name start with YY_,
-// are private implementation details.  Do not rely on them.
+// DO NOT RELY ON FEATURES THAT ARE NOT DOCUMENTED in the manual,
+// especially those whose name start with YY_ or yy_.  They are
+// private implementation details that can be changed or removed.
 
 #ifndef YY_YY_GRAMMARPARSER_TAB_H_INCLUDED
 # define YY_YY_GRAMMARPARSER_TAB_H_INCLUDED
-// //                    "%code requires" blocks.
-#line 60 "../../obj/src/GrammarParser.yy"
+// "%code requires" blocks.
+#line 61 "../../obj/src/GrammarParser.yy"
 
     namespace libtptp
     {
@@ -69,7 +70,7 @@
 
     #define YY_NULLPTR nullptr
 
-#line 73 "GrammarParser.tab.h"
+#line 74 "GrammarParser.tab.h"
 
 # include <cassert>
 # include <cstdlib> // std::abort
@@ -116,28 +117,26 @@
 #endif
 
 #include <typeinfo>
-#ifndef YYASSERT
+#ifndef YY_ASSERT
 # include <cassert>
-# define YYASSERT assert
+# define YY_ASSERT assert
 #endif
 
 
-#ifndef YY_ATTRIBUTE
-# if (defined __GNUC__                                               \
-      && (2 < __GNUC__ || (__GNUC__ == 2 && 96 <= __GNUC_MINOR__)))  \
-     || defined __SUNPRO_C && 0x5110 <= __SUNPRO_C
-#  define YY_ATTRIBUTE(Spec) __attribute__(Spec)
+#ifndef YY_ATTRIBUTE_PURE
+# if defined __GNUC__ && 2 < __GNUC__ + (96 <= __GNUC_MINOR__)
+#  define YY_ATTRIBUTE_PURE __attribute__ ((__pure__))
 # else
-#  define YY_ATTRIBUTE(Spec) /* empty */
+#  define YY_ATTRIBUTE_PURE
 # endif
 #endif
 
-#ifndef YY_ATTRIBUTE_PURE
-# define YY_ATTRIBUTE_PURE   YY_ATTRIBUTE ((__pure__))
-#endif
-
 #ifndef YY_ATTRIBUTE_UNUSED
-# define YY_ATTRIBUTE_UNUSED YY_ATTRIBUTE ((__unused__))
+# if defined __GNUC__ && 2 < __GNUC__ + (7 <= __GNUC_MINOR__)
+#  define YY_ATTRIBUTE_UNUSED __attribute__ ((__unused__))
+# else
+#  define YY_ATTRIBUTE_UNUSED
+# endif
 #endif
 
 /* Suppress unused-variable warnings by "using" E.  */
@@ -149,11 +148,11 @@
 
 #if defined __GNUC__ && ! defined __ICC && 407 <= __GNUC__ * 100 + __GNUC_MINOR__
 /* Suppress an incorrect diagnostic about yylval being uninitialized.  */
-# define YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN \
-    _Pragma ("GCC diagnostic push") \
-    _Pragma ("GCC diagnostic ignored \"-Wuninitialized\"")\
+# define YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN                            \
+    _Pragma ("GCC diagnostic push")                                     \
+    _Pragma ("GCC diagnostic ignored \"-Wuninitialized\"")              \
     _Pragma ("GCC diagnostic ignored \"-Wmaybe-uninitialized\"")
-# define YY_IGNORE_MAYBE_UNINITIALIZED_END \
+# define YY_IGNORE_MAYBE_UNINITIALIZED_END      \
     _Pragma ("GCC diagnostic pop")
 #else
 # define YY_INITIAL_VALUE(Value) Value
@@ -166,6 +165,27 @@
 # define YY_INITIAL_VALUE(Value) /* Nothing. */
 #endif
 
+#if defined __cplusplus && defined __GNUC__ && ! defined __ICC && 6 <= __GNUC__
+# define YY_IGNORE_USELESS_CAST_BEGIN                          \
+    _Pragma ("GCC diagnostic push")                            \
+    _Pragma ("GCC diagnostic ignored \"-Wuseless-cast\"")
+# define YY_IGNORE_USELESS_CAST_END            \
+    _Pragma ("GCC diagnostic pop")
+#endif
+#ifndef YY_IGNORE_USELESS_CAST_BEGIN
+# define YY_IGNORE_USELESS_CAST_BEGIN
+# define YY_IGNORE_USELESS_CAST_END
+#endif
+
+# ifndef YY_CAST
+#  ifdef __cplusplus
+#   define YY_CAST(Type, Val) static_cast<Type> (Val)
+#   define YY_REINTERPRET_CAST(Type, Val) reinterpret_cast<Type> (Val)
+#  else
+#   define YY_CAST(Type, Val) ((Type) (Val))
+#   define YY_REINTERPRET_CAST(Type, Val) ((Type) (Val))
+#  endif
+# endif
 # ifndef YY_NULLPTR
 #  if defined __cplusplus
 #   if 201103L <= __cplusplus
@@ -183,9 +203,9 @@
 # define YYDEBUG 1
 #endif
 
-#line 47 "../../obj/src/GrammarParser.yy"
+#line 48 "../../obj/src/GrammarParser.yy"
 namespace libtptp {
-#line 189 "GrammarParser.tab.h"
+#line 209 "GrammarParser.tab.h"
 
 
 
@@ -217,14 +237,21 @@ namespace libtptp {
     semantic_type (YY_RVREF (T) t)
       : yytypeid_ (&typeid (T))
     {
-      YYASSERT (sizeof (T) <= size);
+      YY_ASSERT (sizeof (T) <= size);
       new (yyas_<T> ()) T (YY_MOVE (t));
     }
+
+#if 201103L <= YY_CPLUSPLUS
+    /// Non copyable.
+    semantic_type (const self_type&) = delete;
+    /// Non copyable.
+    self_type& operator= (const self_type&) = delete;
+#endif
 
     /// Destruction, allowed only if empty.
     ~semantic_type () YY_NOEXCEPT
     {
-      YYASSERT (!yytypeid_);
+      YY_ASSERT (!yytypeid_);
     }
 
 # if 201103L <= YY_CPLUSPLUS
@@ -233,8 +260,8 @@ namespace libtptp {
     T&
     emplace (U&&... u)
     {
-      YYASSERT (!yytypeid_);
-      YYASSERT (sizeof (T) <= size);
+      YY_ASSERT (!yytypeid_);
+      YY_ASSERT (sizeof (T) <= size);
       yytypeid_ = & typeid (T);
       return *new (yyas_<T> ()) T (std::forward <U>(u)...);
     }
@@ -244,8 +271,8 @@ namespace libtptp {
     T&
     emplace ()
     {
-      YYASSERT (!yytypeid_);
-      YYASSERT (sizeof (T) <= size);
+      YY_ASSERT (!yytypeid_);
+      YY_ASSERT (sizeof (T) <= size);
       yytypeid_ = & typeid (T);
       return *new (yyas_<T> ()) T ();
     }
@@ -255,8 +282,8 @@ namespace libtptp {
     T&
     emplace (const T& t)
     {
-      YYASSERT (!yytypeid_);
-      YYASSERT (sizeof (T) <= size);
+      YY_ASSERT (!yytypeid_);
+      YY_ASSERT (sizeof (T) <= size);
       yytypeid_ = & typeid (T);
       return *new (yyas_<T> ()) T (t);
     }
@@ -285,9 +312,9 @@ namespace libtptp {
     T&
     as () YY_NOEXCEPT
     {
-      YYASSERT (yytypeid_);
-      YYASSERT (*yytypeid_ == typeid (T));
-      YYASSERT (sizeof (T) <= size);
+      YY_ASSERT (yytypeid_);
+      YY_ASSERT (*yytypeid_ == typeid (T));
+      YY_ASSERT (sizeof (T) <= size);
       return *yyas_<T> ();
     }
 
@@ -296,9 +323,9 @@ namespace libtptp {
     const T&
     as () const YY_NOEXCEPT
     {
-      YYASSERT (yytypeid_);
-      YYASSERT (*yytypeid_ == typeid (T));
-      YYASSERT (sizeof (T) <= size);
+      YY_ASSERT (yytypeid_);
+      YY_ASSERT (*yytypeid_ == typeid (T));
+      YY_ASSERT (sizeof (T) <= size);
       return *yyas_<T> ();
     }
 
@@ -314,8 +341,8 @@ namespace libtptp {
     void
     swap (self_type& that) YY_NOEXCEPT
     {
-      YYASSERT (yytypeid_);
-      YYASSERT (*yytypeid_ == *that.yytypeid_);
+      YY_ASSERT (yytypeid_);
+      YY_ASSERT (*yytypeid_ == *that.yytypeid_);
       std::swap (as<T> (), that.as<T> ());
     }
 
@@ -364,9 +391,12 @@ namespace libtptp {
     }
 
   private:
-    /// Prohibit blind copies.
-    self_type& operator= (const self_type&);
+#if YY_CPLUSPLUS < 201103L
+    /// Non copyable.
     semantic_type (const self_type&);
+    /// Non copyable.
+    self_type& operator= (const self_type&);
+#endif
 
     /// Accessor to raw memory as \a T.
     template <typename T>
@@ -784,90 +814,359 @@ namespace libtptp {
       location_type location;
     };
 
-    /// Tokens.
+    /// Token kinds.
     struct token
     {
-      enum yytokentype
+      enum token_kind_type
       {
-        END = 0,
-        TPI = 258,
-        THF = 259,
-        TFF = 260,
-        TCF = 261,
-        FOF = 262,
-        CNF = 263,
-        FOT = 264,
-        ITE = 265,
-        LET = 266,
-        AT = 267,
-        AND = 268,
-        DOLLAR = 269,
-        DOLLARDOLLAR = 270,
-        COLON = 271,
-        COMMA = 272,
-        DOT = 273,
-        PLUS = 274,
-        EQUAL = 275,
-        INFIXINEQUALITY = 276,
-        LPAREN = 277,
-        RPAREN = 278,
-        LSQPAREN = 279,
-        RSQPAREN = 280,
-        LCURPAREN = 281,
-        RCURPAREN = 282,
-        VLINE = 283,
-        STAR = 284,
-        GREATER = 285,
-        EXCLAMATION = 286,
-        TILDE = 287,
-        QUESTIONMARK = 288,
-        ATMINUS = 289,
-        ATPLUS = 290,
-        CARET = 291,
-        DOUBLEEXCLAMATION = 292,
-        DOUBLEQUESTIONMARK = 293,
-        DOUBLEATPLUS = 294,
-        DOUBLEATMINUS = 295,
-        ATEQUAL = 296,
-        EXCLAMATIONGREATER = 297,
-        QUESTIONMARKSTAR = 298,
-        EQUALITY = 299,
-        IMPLICATION = 300,
-        RIMPLICATION = 301,
-        INEQUALITY = 302,
-        NOR = 303,
-        NAND = 304,
-        ASSIGNMENT = 305,
-        GENTZENARROW = 306,
-        SUBTYPESIGN = 307,
-        INCLUDE = 308,
-        INTEGER = 309,
-        REAL = 310,
-        RATIONAL = 311,
-        DQUOTED = 312,
-        LOWER_WORD = 313,
-        UPPER_WORD = 314,
-        IDENTIFIER = 315,
-        SINGLE_QUOTED = 316
+        YYEMPTY = -2,
+    END = 0,                       // "end of file"
+    YYerror = 256,                 // error
+    YYUNDEF = 257,                 // "invalid token"
+    TPI = 258,                     // "tpi"
+    THF = 259,                     // "thf"
+    TFF = 260,                     // "tff"
+    TCF = 261,                     // "tcf"
+    FOF = 262,                     // "fof"
+    CNF = 263,                     // "cnf"
+    FOT = 264,                     // "fot"
+    ITE = 265,                     // "ite"
+    LET = 266,                     // "let"
+    AT = 267,                      // "@"
+    AND = 268,                     // "&"
+    DOLLAR = 269,                  // "$"
+    DOLLARDOLLAR = 270,            // "$$"
+    COLON = 271,                   // ":"
+    COMMA = 272,                   // ","
+    DOT = 273,                     // "."
+    PLUS = 274,                    // "+"
+    EQUAL = 275,                   // "="
+    INFIXINEQUALITY = 276,         // "!="
+    LPAREN = 277,                  // "("
+    RPAREN = 278,                  // ")"
+    LSQPAREN = 279,                // "["
+    RSQPAREN = 280,                // "]"
+    LCURPAREN = 281,               // "{"
+    RCURPAREN = 282,               // "}"
+    VLINE = 283,                   // "|"
+    STAR = 284,                    // "*"
+    GREATER = 285,                 // ">"
+    EXCLAMATION = 286,             // "!"
+    TILDE = 287,                   // "~"
+    QUESTIONMARK = 288,            // "?"
+    ATMINUS = 289,                 // "@-"
+    ATPLUS = 290,                  // "@+"
+    CARET = 291,                   // "^"
+    DOUBLEEXCLAMATION = 292,       // "!!"
+    DOUBLEQUESTIONMARK = 293,      // "??"
+    DOUBLEATPLUS = 294,            // "@@+"
+    DOUBLEATMINUS = 295,           // "@@-"
+    ATEQUAL = 296,                 // "@="
+    EXCLAMATIONGREATER = 297,      // "!>"
+    QUESTIONMARKSTAR = 298,        // "?*"
+    EQUALITY = 299,                // "<=>"
+    IMPLICATION = 300,             // "=>"
+    RIMPLICATION = 301,            // "<="
+    INEQUALITY = 302,              // "<~>"
+    NOR = 303,                     // "~|"
+    NAND = 304,                    // "~&"
+    ASSIGNMENT = 305,              // ":="
+    GENTZENARROW = 306,            // "-->"
+    SUBTYPESIGN = 307,             // "<<"
+    INCLUDE = 308,                 // "include"
+    INTEGER = 309,                 // "integer"
+    REAL = 310,                    // "real"
+    RATIONAL = 311,                // "rational"
+    DQUOTED = 312,                 // "double_quoted"
+    LOWER_WORD = 313,              // "lower_word"
+    UPPER_WORD = 314,              // "upper_word"
+    IDENTIFIER = 315,              // "identifier"
+    SINGLE_QUOTED = 316            // "single_quoted"
+      };
+      /// Backward compatibility alias (Bison 3.6).
+      typedef token_kind_type yytokentype;
+    };
+
+    /// Token kind, as returned by yylex.
+    typedef token::yytokentype token_kind_type;
+
+    /// Backward compatibility alias (Bison 3.6).
+    typedef token_kind_type token_type;
+
+    /// Symbol kinds.
+    struct symbol_kind
+    {
+      enum symbol_kind_type
+      {
+        YYNTOKENS = 62, ///< Number of tokens.
+        S_YYEMPTY = -2,
+        S_YYEOF = 0,                             // "end of file"
+        S_YYerror = 1,                           // error
+        S_YYUNDEF = 2,                           // "invalid token"
+        S_TPI = 3,                               // "tpi"
+        S_THF = 4,                               // "thf"
+        S_TFF = 5,                               // "tff"
+        S_TCF = 6,                               // "tcf"
+        S_FOF = 7,                               // "fof"
+        S_CNF = 8,                               // "cnf"
+        S_FOT = 9,                               // "fot"
+        S_ITE = 10,                              // "ite"
+        S_LET = 11,                              // "let"
+        S_AT = 12,                               // "@"
+        S_AND = 13,                              // "&"
+        S_DOLLAR = 14,                           // "$"
+        S_DOLLARDOLLAR = 15,                     // "$$"
+        S_COLON = 16,                            // ":"
+        S_COMMA = 17,                            // ","
+        S_DOT = 18,                              // "."
+        S_PLUS = 19,                             // "+"
+        S_EQUAL = 20,                            // "="
+        S_INFIXINEQUALITY = 21,                  // "!="
+        S_LPAREN = 22,                           // "("
+        S_RPAREN = 23,                           // ")"
+        S_LSQPAREN = 24,                         // "["
+        S_RSQPAREN = 25,                         // "]"
+        S_LCURPAREN = 26,                        // "{"
+        S_RCURPAREN = 27,                        // "}"
+        S_VLINE = 28,                            // "|"
+        S_STAR = 29,                             // "*"
+        S_GREATER = 30,                          // ">"
+        S_EXCLAMATION = 31,                      // "!"
+        S_TILDE = 32,                            // "~"
+        S_QUESTIONMARK = 33,                     // "?"
+        S_ATMINUS = 34,                          // "@-"
+        S_ATPLUS = 35,                           // "@+"
+        S_CARET = 36,                            // "^"
+        S_DOUBLEEXCLAMATION = 37,                // "!!"
+        S_DOUBLEQUESTIONMARK = 38,               // "??"
+        S_DOUBLEATPLUS = 39,                     // "@@+"
+        S_DOUBLEATMINUS = 40,                    // "@@-"
+        S_ATEQUAL = 41,                          // "@="
+        S_EXCLAMATIONGREATER = 42,               // "!>"
+        S_QUESTIONMARKSTAR = 43,                 // "?*"
+        S_EQUALITY = 44,                         // "<=>"
+        S_IMPLICATION = 45,                      // "=>"
+        S_RIMPLICATION = 46,                     // "<="
+        S_INEQUALITY = 47,                       // "<~>"
+        S_NOR = 48,                              // "~|"
+        S_NAND = 49,                             // "~&"
+        S_ASSIGNMENT = 50,                       // ":="
+        S_GENTZENARROW = 51,                     // "-->"
+        S_SUBTYPESIGN = 52,                      // "<<"
+        S_INCLUDE = 53,                          // "include"
+        S_INTEGER = 54,                          // "integer"
+        S_REAL = 55,                             // "real"
+        S_RATIONAL = 56,                         // "rational"
+        S_DQUOTED = 57,                          // "double_quoted"
+        S_LOWER_WORD = 58,                       // "lower_word"
+        S_UPPER_WORD = 59,                       // "upper_word"
+        S_IDENTIFIER = 60,                       // "identifier"
+        S_SINGLE_QUOTED = 61,                    // "single_quoted"
+        S_YYACCEPT = 62,                         // $accept
+        S_Specification = 63,                    // Specification
+        S_Definitions = 64,                      // Definitions
+        S_Definition = 65,                       // Definition
+        S_AnnotatedFormula = 66,                 // AnnotatedFormula
+        S_ThfAnnotated = 67,                     // ThfAnnotated
+        S_TffAnnotated = 68,                     // TffAnnotated
+        S_TcfAnnotated = 69,                     // TcfAnnotated
+        S_FofAnnotated = 70,                     // FofAnnotated
+        S_CnfAnnotated = 71,                     // CnfAnnotated
+        S_TpiAnnotated = 72,                     // TpiAnnotated
+        S_Annotations = 73,                      // Annotations
+        S_TpiFormula = 74,                       // TpiFormula
+        S_ThfFormula = 75,                       // ThfFormula
+        S_ThfLogicFormula = 76,                  // ThfLogicFormula
+        S_ThfBinaryFormula = 77,                 // ThfBinaryFormula
+        S_ThfBinaryNonassoc = 78,                // ThfBinaryNonassoc
+        S_ThfBinaryAssoc = 79,                   // ThfBinaryAssoc
+        S_ThfOrFormula = 80,                     // ThfOrFormula
+        S_ThfAndFormula = 81,                    // ThfAndFormula
+        S_ThfApplyFormula = 82,                  // ThfApplyFormula
+        S_ThfUnitFormula = 83,                   // ThfUnitFormula
+        S_ThfPreunitFormula = 84,                // ThfPreunitFormula
+        S_ThfUnitaryFormula = 85,                // ThfUnitaryFormula
+        S_ThfQuantifiedFormula = 86,             // ThfQuantifiedFormula
+        S_ThfVariableList = 87,                  // ThfVariableList
+        S_ThfTypedVariable = 88,                 // ThfTypedVariable
+        S_ThfUnaryFormula = 89,                  // ThfUnaryFormula
+        S_ThfPrefixUnary = 90,                   // ThfPrefixUnary
+        S_ThfInfixUnary = 91,                    // ThfInfixUnary
+        S_ThfAtomicFormula = 92,                 // ThfAtomicFormula
+        S_ThfPlainAtomic = 93,                   // ThfPlainAtomic
+        S_ThfDefinedAtomic = 94,                 // ThfDefinedAtomic
+        S_ThfDefinedInfix = 95,                  // ThfDefinedInfix
+        S_ThfSystemAtomic = 96,                  // ThfSystemAtomic
+        S_ThfFofFunction = 97,                   // ThfFofFunction
+        S_ThfConditional = 98,                   // ThfConditional
+        S_ThfLet = 99,                           // ThfLet
+        S_ThfLetTypes = 100,                     // ThfLetTypes
+        S_ThfAtomTypingList = 101,               // ThfAtomTypingList
+        S_ThfLetDefns = 102,                     // ThfLetDefns
+        S_ThfLetDefn = 103,                      // ThfLetDefn
+        S_ThfLetDefnList = 104,                  // ThfLetDefnList
+        S_ThfUnitaryTerm = 105,                  // ThfUnitaryTerm
+        S_ThfTuple = 106,                        // ThfTuple
+        S_ThfFormulaList = 107,                  // ThfFormulaList
+        S_ThfConnTerm = 108,                     // ThfConnTerm
+        S_ThfArguments = 109,                    // ThfArguments
+        S_ThfAtomTyping = 110,                   // ThfAtomTyping
+        S_ThfTopLevelType = 111,                 // ThfTopLevelType
+        S_ThfUnitaryType = 112,                  // ThfUnitaryType
+        S_ThfApplyType = 113,                    // ThfApplyType
+        S_ThfBinaryType = 114,                   // ThfBinaryType
+        S_ThfMappingType = 115,                  // ThfMappingType
+        S_ThfXprodType = 116,                    // ThfXprodType
+        S_ThfUnionType = 117,                    // ThfUnionType
+        S_ThfSubtype = 118,                      // ThfSubtype
+        S_ThfSequent = 119,                      // ThfSequent
+        S_TffFormula = 120,                      // TffFormula
+        S_TffLogicFormula = 121,                 // TffLogicFormula
+        S_TffBinaryFormula = 122,                // TffBinaryFormula
+        S_TffBinaryNonassoc = 123,               // TffBinaryNonassoc
+        S_TffBinaryAssoc = 124,                  // TffBinaryAssoc
+        S_TffOrFormula = 125,                    // TffOrFormula
+        S_TffAndFormula = 126,                   // TffAndFormula
+        S_TffUnitFormula = 127,                  // TffUnitFormula
+        S_TffPreunitFormula = 128,               // TffPreunitFormula
+        S_TffUnitaryFormula = 129,               // TffUnitaryFormula
+        S_TfxUnitaryFormula = 130,               // TfxUnitaryFormula
+        S_TffQuantifiedFormula = 131,            // TffQuantifiedFormula
+        S_TffVariableList = 132,                 // TffVariableList
+        S_TffVariable = 133,                     // TffVariable
+        S_TffTypedVariable = 134,                // TffTypedVariable
+        S_TffUnaryFormula = 135,                 // TffUnaryFormula
+        S_TffPrefixUnary = 136,                  // TffPrefixUnary
+        S_TffInfixUnary = 137,                   // TffInfixUnary
+        S_TffAtomicFormula = 138,                // TffAtomicFormula
+        S_TffPlainAtomic = 139,                  // TffPlainAtomic
+        S_TffDefinedAtomic = 140,                // TffDefinedAtomic
+        S_TffDefinedPlain = 141,                 // TffDefinedPlain
+        S_TffDefinedInfix = 142,                 // TffDefinedInfix
+        S_TffSystemAtomic = 143,                 // TffSystemAtomic
+        S_TfxConditional = 144,                  // TfxConditional
+        S_TfxLet = 145,                          // TfxLet
+        S_TfxLetTypes = 146,                     // TfxLetTypes
+        S_TffAtomTypingList = 147,               // TffAtomTypingList
+        S_TfxLetDefns = 148,                     // TfxLetDefns
+        S_TfxLetDefn = 149,                      // TfxLetDefn
+        S_TfxLetLhs = 150,                       // TfxLetLhs
+        S_TfxLetDefnList = 151,                  // TfxLetDefnList
+        S_TffTerm = 152,                         // TffTerm
+        S_TffUnitaryTerm = 153,                  // TffUnitaryTerm
+        S_TfxTuple = 154,                        // TfxTuple
+        S_TffArguments = 155,                    // TffArguments
+        S_TffAtomTyping = 156,                   // TffAtomTyping
+        S_TffTopLevelType = 157,                 // TffTopLevelType
+        S_Tf1QuantifiedType = 158,               // Tf1QuantifiedType
+        S_TffMonotype = 159,                     // TffMonotype
+        S_TffUnitaryType = 160,                  // TffUnitaryType
+        S_TffAtomicType = 161,                   // TffAtomicType
+        S_TffTypeArguments = 162,                // TffTypeArguments
+        S_TffMappingType = 163,                  // TffMappingType
+        S_TffXprodType = 164,                    // TffXprodType
+        S_TfxTupleType = 165,                    // TfxTupleType
+        S_TffTypeList = 166,                     // TffTypeList
+        S_TffSubtype = 167,                      // TffSubtype
+        S_TfxSequent = 168,                      // TfxSequent
+        S_TcfFormula = 169,                      // TcfFormula
+        S_TcfLogicFormula = 170,                 // TcfLogicFormula
+        S_TcfQuantifiedFormula = 171,            // TcfQuantifiedFormula
+        S_FofFormula = 172,                      // FofFormula
+        S_FofLogicFormula = 173,                 // FofLogicFormula
+        S_FofBinaryFormula = 174,                // FofBinaryFormula
+        S_FofBinaryNonassoc = 175,               // FofBinaryNonassoc
+        S_FofBinaryAssoc = 176,                  // FofBinaryAssoc
+        S_FofOrFormula = 177,                    // FofOrFormula
+        S_FofAndFormula = 178,                   // FofAndFormula
+        S_FofUnaryFormula = 179,                 // FofUnaryFormula
+        S_FofInfixUnary = 180,                   // FofInfixUnary
+        S_FofUnitFormula = 181,                  // FofUnitFormula
+        S_FofUnitaryFormula = 182,               // FofUnitaryFormula
+        S_FofQuantifiedFormula = 183,            // FofQuantifiedFormula
+        S_FofVariableList = 184,                 // FofVariableList
+        S_FofAtomicFormula = 185,                // FofAtomicFormula
+        S_FofPlainAtomicFormula = 186,           // FofPlainAtomicFormula
+        S_FofDefinedAtomicFormula = 187,         // FofDefinedAtomicFormula
+        S_FofDefinedPlainFormula = 188,          // FofDefinedPlainFormula
+        S_FofDefinedInfixFormula = 189,          // FofDefinedInfixFormula
+        S_FofSystemAtomicFormula = 190,          // FofSystemAtomicFormula
+        S_FofPlainTerm = 191,                    // FofPlainTerm
+        S_FofDefinedTerm = 192,                  // FofDefinedTerm
+        S_FofDefinedAtomicTerm = 193,            // FofDefinedAtomicTerm
+        S_FofDefinedPlainTerm = 194,             // FofDefinedPlainTerm
+        S_FofSystemTerm = 195,                   // FofSystemTerm
+        S_FofArguments = 196,                    // FofArguments
+        S_FofTerm = 197,                         // FofTerm
+        S_FofFunctionTerm = 198,                 // FofFunctionTerm
+        S_FofSequent = 199,                      // FofSequent
+        S_FofFormulaTuple = 200,                 // FofFormulaTuple
+        S_FofFormulaTupleList = 201,             // FofFormulaTupleList
+        S_CnfFormula = 202,                      // CnfFormula
+        S_Disjunction = 203,                     // Disjunction
+        S_Literal = 204,                         // Literal
+        S_ThfQuantifier = 205,                   // ThfQuantifier
+        S_Th1Quantifier = 206,                   // Th1Quantifier
+        S_Th0Quantifier = 207,                   // Th0Quantifier
+        S_ThfUnaryConnective = 208,              // ThfUnaryConnective
+        S_Th1UnaryConnective = 209,              // Th1UnaryConnective
+        S_FofQuantifier = 210,                   // FofQuantifier
+        S_NonassocConnective = 211,              // NonassocConnective
+        S_AssocConnective = 212,                 // AssocConnective
+        S_UnaryConnective = 213,                 // UnaryConnective
+        S_TypeConstant = 214,                    // TypeConstant
+        S_TypeFunctor = 215,                     // TypeFunctor
+        S_DefinedType = 216,                     // DefinedType
+        S_Atom = 217,                            // Atom
+        S_UntypedAtom = 218,                     // UntypedAtom
+        S_DefinedInfixPred = 219,                // DefinedInfixPred
+        S_InfixEquality = 220,                   // InfixEquality
+        S_InfixInequality = 221,                 // InfixInequality
+        S_Constant = 222,                        // Constant
+        S_Functor = 223,                         // Functor
+        S_SystemConstant = 224,                  // SystemConstant
+        S_SystemFunctor = 225,                   // SystemFunctor
+        S_DefinedConstant = 226,                 // DefinedConstant
+        S_DefinedFunctor = 227,                  // DefinedFunctor
+        S_DefinedTerm = 228,                     // DefinedTerm
+        S_NameList = 229,                        // NameList
+        S_Name = 230,                            // Name
+        S_FormulaRole = 231,                     // FormulaRole
+        S_GeneralTerm = 232,                     // GeneralTerm
+        S_GeneralData = 233,                     // GeneralData
+        S_GeneralFunction = 234,                 // GeneralFunction
+        S_GeneralTerms = 235,                    // GeneralTerms
+        S_FormulaData = 236,                     // FormulaData
+        S_GeneralList = 237,                     // GeneralList
+        S_IncludeDefinition = 238,               // IncludeDefinition
+        S_FormulaSelection = 239,                // FormulaSelection
+        S_AtomicWord = 240,                      // AtomicWord
+        S_AtomicDefinedWord = 241,               // AtomicDefinedWord
+        S_AtomicSystemWord = 242,                // AtomicSystemWord
+        S_Number = 243,                          // Number
+        S_FileName = 244,                        // FileName
+        S_IntegerLiteral = 245,                  // IntegerLiteral
+        S_RealLiteral = 246,                     // RealLiteral
+        S_RationalLiteral = 247,                 // RationalLiteral
+        S_Variable = 248,                        // Variable
+        S_DistinctObjectLiteral = 249,           // DistinctObjectLiteral
+        S_LowerWordLiteral = 250,                // LowerWordLiteral
+        S_SingleQuotedLiteral = 251,             // SingleQuotedLiteral
+        S_DollarWordLiteral = 252,               // DollarWordLiteral
+        S_DollarDollarWordLiteral = 253          // DollarDollarWordLiteral
       };
     };
 
-    /// (External) token type, as returned by yylex.
-    typedef token::yytokentype token_type;
+    /// (Internal) symbol kind.
+    typedef symbol_kind::symbol_kind_type symbol_kind_type;
 
-    /// Symbol type: an internal symbol number.
-    typedef int symbol_number_type;
-
-    /// The symbol type number to denote an empty symbol.
-    enum { empty_symbol = -2 };
-
-    /// Internal symbol number for tokens (subsumed by symbol_number_type).
-    typedef unsigned char token_number_type;
+    /// The number of tokens.
+    static const symbol_kind_type YYNTOKENS = symbol_kind::YYNTOKENS;
 
     /// A complete symbol.
     ///
-    /// Expects its Base type to provide access to the symbol type
-    /// via type_get ().
+    /// Expects its Base type to provide access to the symbol kind
+    /// via kind ().
     ///
     /// Provide access to semantic value and location.
     template <typename Base>
@@ -884,7 +1183,424 @@ namespace libtptp {
 
 #if 201103L <= YY_CPLUSPLUS
       /// Move constructor.
-      basic_symbol (basic_symbol&& that);
+      basic_symbol (basic_symbol&& that)
+        : Base (std::move (that))
+        , value ()
+        , location (std::move (that.location))
+      {
+        switch (this->kind ())
+    {
+      case symbol_kind::S_Annotations: // Annotations
+        value.move< Annotation::Ptr > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_TffPlainAtomic: // TffPlainAtomic
+      case symbol_kind::S_TffSystemAtomic: // TffSystemAtomic
+      case symbol_kind::S_FofPlainTerm: // FofPlainTerm
+      case symbol_kind::S_FofDefinedTerm: // FofDefinedTerm
+      case symbol_kind::S_FofDefinedAtomicTerm: // FofDefinedAtomicTerm
+      case symbol_kind::S_FofDefinedPlainTerm: // FofDefinedPlainTerm
+      case symbol_kind::S_FofSystemTerm: // FofSystemTerm
+      case symbol_kind::S_FofFunctionTerm: // FofFunctionTerm
+        value.move< Atom::Ptr > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_ThfUnitaryType: // ThfUnitaryType
+      case symbol_kind::S_ThfApplyType: // ThfApplyType
+      case symbol_kind::S_TffAtomicType: // TffAtomicType
+        value.move< AtomType::Ptr > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_NonassocConnective: // NonassocConnective
+      case symbol_kind::S_AssocConnective: // AssocConnective
+        value.move< BinaryConnective_t > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_ThfBinaryNonassoc: // ThfBinaryNonassoc
+      case symbol_kind::S_ThfBinaryAssoc: // ThfBinaryAssoc
+      case symbol_kind::S_ThfOrFormula: // ThfOrFormula
+      case symbol_kind::S_ThfAndFormula: // ThfAndFormula
+      case symbol_kind::S_ThfApplyFormula: // ThfApplyFormula
+      case symbol_kind::S_TffBinaryFormula: // TffBinaryFormula
+      case symbol_kind::S_TffBinaryNonassoc: // TffBinaryNonassoc
+      case symbol_kind::S_TffBinaryAssoc: // TffBinaryAssoc
+      case symbol_kind::S_TffOrFormula: // TffOrFormula
+      case symbol_kind::S_TffAndFormula: // TffAndFormula
+      case symbol_kind::S_FofBinaryFormula: // FofBinaryFormula
+      case symbol_kind::S_FofBinaryNonassoc: // FofBinaryNonassoc
+      case symbol_kind::S_FofBinaryAssoc: // FofBinaryAssoc
+      case symbol_kind::S_FofOrFormula: // FofOrFormula
+      case symbol_kind::S_FofAndFormula: // FofAndFormula
+        value.move< BinaryLogic::Ptr > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_ThfBinaryType: // ThfBinaryType
+      case symbol_kind::S_ThfMappingType: // ThfMappingType
+      case symbol_kind::S_ThfXprodType: // ThfXprodType
+      case symbol_kind::S_ThfUnionType: // ThfUnionType
+      case symbol_kind::S_TffMappingType: // TffMappingType
+      case symbol_kind::S_TffXprodType: // TffXprodType
+        value.move< BinaryType::Ptr > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_ThfConditional: // ThfConditional
+      case symbol_kind::S_TfxConditional: // TfxConditional
+        value.move< ConditionalTerm::Ptr > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_ThfConnTerm: // ThfConnTerm
+        value.move< ConnectiveAtom::Ptr > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_ThfSystemAtomic: // ThfSystemAtomic
+        value.move< ConstantAtom::Ptr > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_DefinedTerm: // DefinedTerm
+        value.move< DefinedAtom::Ptr > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_Definition: // Definition
+        value.move< Definition::Ptr > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_ThfLetDefn: // ThfLetDefn
+      case symbol_kind::S_TfxLetDefn: // TfxLetDefn
+        value.move< DefinitionAtom::Ptr > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_ThfLet: // ThfLet
+      case symbol_kind::S_TfxLet: // TfxLet
+        value.move< DefinitionTerm::Ptr > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_Definitions: // Definitions
+        value.move< Definitions::Ptr > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_DistinctObjectLiteral: // DistinctObjectLiteral
+        value.move< DistinctObjectLiteral::Ptr > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_FormulaData: // FormulaData
+        value.move< FormulaData::Ptr > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_AnnotatedFormula: // AnnotatedFormula
+      case symbol_kind::S_ThfAnnotated: // ThfAnnotated
+      case symbol_kind::S_TffAnnotated: // TffAnnotated
+      case symbol_kind::S_TcfAnnotated: // TcfAnnotated
+      case symbol_kind::S_FofAnnotated: // FofAnnotated
+      case symbol_kind::S_CnfAnnotated: // CnfAnnotated
+      case symbol_kind::S_TpiAnnotated: // TpiAnnotated
+        value.move< FormulaDefinition::Ptr > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_ThfFofFunction: // ThfFofFunction
+        value.move< FunctorAtom::Ptr > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_GeneralData: // GeneralData
+        value.move< GeneralData::Ptr > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_GeneralFunction: // GeneralFunction
+        value.move< GeneralFunction::Ptr > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_GeneralList: // GeneralList
+        value.move< GeneralList::Ptr > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_GeneralTerm: // GeneralTerm
+        value.move< GeneralTerm::Ptr > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_TypeConstant: // TypeConstant
+      case symbol_kind::S_TypeFunctor: // TypeFunctor
+      case symbol_kind::S_DefinedType: // DefinedType
+      case symbol_kind::S_Atom: // Atom
+      case symbol_kind::S_UntypedAtom: // UntypedAtom
+      case symbol_kind::S_Constant: // Constant
+      case symbol_kind::S_Functor: // Functor
+      case symbol_kind::S_SystemConstant: // SystemConstant
+      case symbol_kind::S_SystemFunctor: // SystemFunctor
+      case symbol_kind::S_DefinedConstant: // DefinedConstant
+      case symbol_kind::S_DefinedFunctor: // DefinedFunctor
+      case symbol_kind::S_Name: // Name
+      case symbol_kind::S_AtomicWord: // AtomicWord
+      case symbol_kind::S_AtomicDefinedWord: // AtomicDefinedWord
+      case symbol_kind::S_AtomicSystemWord: // AtomicSystemWord
+      case symbol_kind::S_FileName: // FileName
+      case symbol_kind::S_LowerWordLiteral: // LowerWordLiteral
+      case symbol_kind::S_SingleQuotedLiteral: // SingleQuotedLiteral
+      case symbol_kind::S_DollarWordLiteral: // DollarWordLiteral
+      case symbol_kind::S_DollarDollarWordLiteral: // DollarDollarWordLiteral
+        value.move< Identifier::Ptr > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_IncludeDefinition: // IncludeDefinition
+        value.move< IncludeDefinition::Ptr > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_DefinedInfixPred: // DefinedInfixPred
+      case symbol_kind::S_InfixEquality: // InfixEquality
+      case symbol_kind::S_InfixInequality: // InfixInequality
+        value.move< InfixConnective_t > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_ThfInfixUnary: // ThfInfixUnary
+      case symbol_kind::S_ThfDefinedInfix: // ThfDefinedInfix
+      case symbol_kind::S_TffInfixUnary: // TffInfixUnary
+      case symbol_kind::S_TffDefinedInfix: // TffDefinedInfix
+      case symbol_kind::S_FofInfixUnary: // FofInfixUnary
+      case symbol_kind::S_FofDefinedInfixFormula: // FofDefinedInfixFormula
+        value.move< InfixLogic::Ptr > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_IntegerLiteral: // IntegerLiteral
+        value.move< IntegerLiteral::Ptr > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_FormulaSelection: // FormulaSelection
+        value.move< ListLiteral::Ptr > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_ThfLetDefnList: // ThfLetDefnList
+      case symbol_kind::S_ThfFormulaList: // ThfFormulaList
+      case symbol_kind::S_ThfArguments: // ThfArguments
+      case symbol_kind::S_TfxLetDefnList: // TfxLetDefnList
+      case symbol_kind::S_TffArguments: // TffArguments
+      case symbol_kind::S_TffTypeArguments: // TffTypeArguments
+      case symbol_kind::S_FofArguments: // FofArguments
+      case symbol_kind::S_FofFormulaTupleList: // FofFormulaTupleList
+        value.move< ListLogicElements::Ptr > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_ThfVariableList: // ThfVariableList
+      case symbol_kind::S_TffVariableList: // TffVariableList
+      case symbol_kind::S_FofVariableList: // FofVariableList
+      case symbol_kind::S_NameList: // NameList
+      case symbol_kind::S_GeneralTerms: // GeneralTerms
+        value.move< ListNodeElements::Ptr > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_ThfAtomTypingList: // ThfAtomTypingList
+      case symbol_kind::S_TffAtomTypingList: // TffAtomTypingList
+      case symbol_kind::S_TffTypeList: // TffTypeList
+        value.move< ListTypeElements::Ptr > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_TpiFormula: // TpiFormula
+      case symbol_kind::S_ThfFormula: // ThfFormula
+      case symbol_kind::S_ThfLogicFormula: // ThfLogicFormula
+      case symbol_kind::S_ThfBinaryFormula: // ThfBinaryFormula
+      case symbol_kind::S_ThfUnitFormula: // ThfUnitFormula
+      case symbol_kind::S_ThfPreunitFormula: // ThfPreunitFormula
+      case symbol_kind::S_ThfUnitaryFormula: // ThfUnitaryFormula
+      case symbol_kind::S_ThfUnaryFormula: // ThfUnaryFormula
+      case symbol_kind::S_ThfAtomicFormula: // ThfAtomicFormula
+      case symbol_kind::S_ThfPlainAtomic: // ThfPlainAtomic
+      case symbol_kind::S_ThfLetDefns: // ThfLetDefns
+      case symbol_kind::S_ThfUnitaryTerm: // ThfUnitaryTerm
+      case symbol_kind::S_TffFormula: // TffFormula
+      case symbol_kind::S_TffLogicFormula: // TffLogicFormula
+      case symbol_kind::S_TffUnitFormula: // TffUnitFormula
+      case symbol_kind::S_TffPreunitFormula: // TffPreunitFormula
+      case symbol_kind::S_TffUnitaryFormula: // TffUnitaryFormula
+      case symbol_kind::S_TffUnaryFormula: // TffUnaryFormula
+      case symbol_kind::S_TfxLetDefns: // TfxLetDefns
+      case symbol_kind::S_TfxLetLhs: // TfxLetLhs
+      case symbol_kind::S_TffTerm: // TffTerm
+      case symbol_kind::S_TffUnitaryTerm: // TffUnitaryTerm
+      case symbol_kind::S_TcfFormula: // TcfFormula
+      case symbol_kind::S_TcfLogicFormula: // TcfLogicFormula
+      case symbol_kind::S_FofFormula: // FofFormula
+      case symbol_kind::S_FofLogicFormula: // FofLogicFormula
+      case symbol_kind::S_FofUnaryFormula: // FofUnaryFormula
+      case symbol_kind::S_FofUnitFormula: // FofUnitFormula
+      case symbol_kind::S_FofUnitaryFormula: // FofUnitaryFormula
+      case symbol_kind::S_FofAtomicFormula: // FofAtomicFormula
+      case symbol_kind::S_FofDefinedAtomicFormula: // FofDefinedAtomicFormula
+      case symbol_kind::S_CnfFormula: // CnfFormula
+      case symbol_kind::S_Disjunction: // Disjunction
+      case symbol_kind::S_Literal: // Literal
+        value.move< Logic::Ptr > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_ThfTuple: // ThfTuple
+      case symbol_kind::S_TfxTuple: // TfxTuple
+      case symbol_kind::S_FofFormulaTuple: // FofFormulaTuple
+        value.move< LogicTuple::Ptr > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_ThfQuantifiedFormula: // ThfQuantifiedFormula
+      case symbol_kind::S_TffQuantifiedFormula: // TffQuantifiedFormula
+      case symbol_kind::S_TcfQuantifiedFormula: // TcfQuantifiedFormula
+      case symbol_kind::S_FofQuantifiedFormula: // FofQuantifiedFormula
+        value.move< QuantifiedLogic::Ptr > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_ThfQuantifier: // ThfQuantifier
+      case symbol_kind::S_Th1Quantifier: // Th1Quantifier
+      case symbol_kind::S_Th0Quantifier: // Th0Quantifier
+      case symbol_kind::S_FofQuantifier: // FofQuantifier
+        value.move< QuantifiedQuantifier_t > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_Tf1QuantifiedType: // Tf1QuantifiedType
+        value.move< QuantifiedType::Ptr > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_RationalLiteral: // RationalLiteral
+        value.move< RationalLiteral::Ptr > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_RealLiteral: // RealLiteral
+        value.move< RealLiteral::Ptr > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_FormulaRole: // FormulaRole
+        value.move< Role::Ptr > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_ThfSequent: // ThfSequent
+      case symbol_kind::S_TfxSequent: // TfxSequent
+      case symbol_kind::S_FofSequent: // FofSequent
+        value.move< SequentLogic::Ptr > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_Specification: // Specification
+        value.move< Specification::Ptr > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_ThfSubtype: // ThfSubtype
+      case symbol_kind::S_TffSubtype: // TffSubtype
+        value.move< SubType::Ptr > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_ThfDefinedAtomic: // ThfDefinedAtomic
+      case symbol_kind::S_TffAtomicFormula: // TffAtomicFormula
+      case symbol_kind::S_TffDefinedAtomic: // TffDefinedAtomic
+      case symbol_kind::S_TffDefinedPlain: // TffDefinedPlain
+      case symbol_kind::S_FofPlainAtomicFormula: // FofPlainAtomicFormula
+      case symbol_kind::S_FofDefinedPlainFormula: // FofDefinedPlainFormula
+      case symbol_kind::S_FofSystemAtomicFormula: // FofSystemAtomicFormula
+      case symbol_kind::S_FofTerm: // FofTerm
+        value.move< Term::Ptr > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_TPI: // "tpi"
+      case symbol_kind::S_THF: // "thf"
+      case symbol_kind::S_TFF: // "tff"
+      case symbol_kind::S_TCF: // "tcf"
+      case symbol_kind::S_FOF: // "fof"
+      case symbol_kind::S_CNF: // "cnf"
+      case symbol_kind::S_FOT: // "fot"
+      case symbol_kind::S_ITE: // "ite"
+      case symbol_kind::S_LET: // "let"
+      case symbol_kind::S_AT: // "@"
+      case symbol_kind::S_AND: // "&"
+      case symbol_kind::S_DOLLAR: // "$"
+      case symbol_kind::S_DOLLARDOLLAR: // "$$"
+      case symbol_kind::S_COLON: // ":"
+      case symbol_kind::S_COMMA: // ","
+      case symbol_kind::S_DOT: // "."
+      case symbol_kind::S_PLUS: // "+"
+      case symbol_kind::S_EQUAL: // "="
+      case symbol_kind::S_INFIXINEQUALITY: // "!="
+      case symbol_kind::S_LPAREN: // "("
+      case symbol_kind::S_RPAREN: // ")"
+      case symbol_kind::S_LSQPAREN: // "["
+      case symbol_kind::S_RSQPAREN: // "]"
+      case symbol_kind::S_LCURPAREN: // "{"
+      case symbol_kind::S_RCURPAREN: // "}"
+      case symbol_kind::S_VLINE: // "|"
+      case symbol_kind::S_STAR: // "*"
+      case symbol_kind::S_GREATER: // ">"
+      case symbol_kind::S_EXCLAMATION: // "!"
+      case symbol_kind::S_TILDE: // "~"
+      case symbol_kind::S_QUESTIONMARK: // "?"
+      case symbol_kind::S_ATMINUS: // "@-"
+      case symbol_kind::S_ATPLUS: // "@+"
+      case symbol_kind::S_CARET: // "^"
+      case symbol_kind::S_DOUBLEEXCLAMATION: // "!!"
+      case symbol_kind::S_DOUBLEQUESTIONMARK: // "??"
+      case symbol_kind::S_DOUBLEATPLUS: // "@@+"
+      case symbol_kind::S_DOUBLEATMINUS: // "@@-"
+      case symbol_kind::S_ATEQUAL: // "@="
+      case symbol_kind::S_EXCLAMATIONGREATER: // "!>"
+      case symbol_kind::S_QUESTIONMARKSTAR: // "?*"
+      case symbol_kind::S_EQUALITY: // "<=>"
+      case symbol_kind::S_IMPLICATION: // "=>"
+      case symbol_kind::S_RIMPLICATION: // "<="
+      case symbol_kind::S_INEQUALITY: // "<~>"
+      case symbol_kind::S_NOR: // "~|"
+      case symbol_kind::S_NAND: // "~&"
+      case symbol_kind::S_ASSIGNMENT: // ":="
+      case symbol_kind::S_GENTZENARROW: // "-->"
+      case symbol_kind::S_SUBTYPESIGN: // "<<"
+      case symbol_kind::S_INCLUDE: // "include"
+        value.move< Token::Ptr > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_TfxTupleType: // TfxTupleType
+        value.move< TupleType::Ptr > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_ThfLetTypes: // ThfLetTypes
+      case symbol_kind::S_ThfTopLevelType: // ThfTopLevelType
+      case symbol_kind::S_TfxLetTypes: // TfxLetTypes
+      case symbol_kind::S_TffTopLevelType: // TffTopLevelType
+      case symbol_kind::S_TffMonotype: // TffMonotype
+      case symbol_kind::S_TffUnitaryType: // TffUnitaryType
+        value.move< Type::Ptr > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_ThfAtomTyping: // ThfAtomTyping
+      case symbol_kind::S_TffAtomTyping: // TffAtomTyping
+        value.move< TypedAtom::Ptr > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_ThfUnaryConnective: // ThfUnaryConnective
+      case symbol_kind::S_Th1UnaryConnective: // Th1UnaryConnective
+      case symbol_kind::S_UnaryConnective: // UnaryConnective
+        value.move< UnaryConnective_t > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_ThfPrefixUnary: // ThfPrefixUnary
+      case symbol_kind::S_TffPrefixUnary: // TffPrefixUnary
+        value.move< UnaryLogic::Ptr > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_Number: // Number
+        value.move< ValueLiteral::Ptr > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_ThfTypedVariable: // ThfTypedVariable
+      case symbol_kind::S_TfxUnitaryFormula: // TfxUnitaryFormula
+      case symbol_kind::S_TffVariable: // TffVariable
+      case symbol_kind::S_TffTypedVariable: // TffTypedVariable
+      case symbol_kind::S_Variable: // Variable
+        value.move< VariableTerm::Ptr > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_INTEGER: // "integer"
+      case symbol_kind::S_REAL: // "real"
+      case symbol_kind::S_RATIONAL: // "rational"
+      case symbol_kind::S_DQUOTED: // "double_quoted"
+      case symbol_kind::S_LOWER_WORD: // "lower_word"
+      case symbol_kind::S_UPPER_WORD: // "upper_word"
+      case symbol_kind::S_IDENTIFIER: // "identifier"
+      case symbol_kind::S_SINGLE_QUOTED: // "single_quoted"
+        value.move< std::string > (std::move (that.value));
+        break;
+
+      default:
+        break;
+    }
+
+      }
 #endif
 
       /// Copy constructor.
@@ -1589,421 +2305,421 @@ namespace libtptp {
       void clear ()
       {
         // User destructor.
-        symbol_number_type yytype = this->type_get ();
+        symbol_kind_type yykind = this->kind ();
         basic_symbol<Base>& yysym = *this;
         (void) yysym;
-        switch (yytype)
+        switch (yykind)
         {
        default:
           break;
         }
 
-        // Type destructor.
-switch (yytype)
+        // Value type destructor.
+switch (yykind)
     {
-      case 73: // Annotations
+      case symbol_kind::S_Annotations: // Annotations
         value.template destroy< Annotation::Ptr > ();
         break;
 
-      case 139: // TffPlainAtomic
-      case 143: // TffSystemAtomic
-      case 191: // FofPlainTerm
-      case 192: // FofDefinedTerm
-      case 193: // FofDefinedAtomicTerm
-      case 194: // FofDefinedPlainTerm
-      case 195: // FofSystemTerm
-      case 198: // FofFunctionTerm
+      case symbol_kind::S_TffPlainAtomic: // TffPlainAtomic
+      case symbol_kind::S_TffSystemAtomic: // TffSystemAtomic
+      case symbol_kind::S_FofPlainTerm: // FofPlainTerm
+      case symbol_kind::S_FofDefinedTerm: // FofDefinedTerm
+      case symbol_kind::S_FofDefinedAtomicTerm: // FofDefinedAtomicTerm
+      case symbol_kind::S_FofDefinedPlainTerm: // FofDefinedPlainTerm
+      case symbol_kind::S_FofSystemTerm: // FofSystemTerm
+      case symbol_kind::S_FofFunctionTerm: // FofFunctionTerm
         value.template destroy< Atom::Ptr > ();
         break;
 
-      case 112: // ThfUnitaryType
-      case 113: // ThfApplyType
-      case 161: // TffAtomicType
+      case symbol_kind::S_ThfUnitaryType: // ThfUnitaryType
+      case symbol_kind::S_ThfApplyType: // ThfApplyType
+      case symbol_kind::S_TffAtomicType: // TffAtomicType
         value.template destroy< AtomType::Ptr > ();
         break;
 
-      case 211: // NonassocConnective
-      case 212: // AssocConnective
+      case symbol_kind::S_NonassocConnective: // NonassocConnective
+      case symbol_kind::S_AssocConnective: // AssocConnective
         value.template destroy< BinaryConnective_t > ();
         break;
 
-      case 78: // ThfBinaryNonassoc
-      case 79: // ThfBinaryAssoc
-      case 80: // ThfOrFormula
-      case 81: // ThfAndFormula
-      case 82: // ThfApplyFormula
-      case 122: // TffBinaryFormula
-      case 123: // TffBinaryNonassoc
-      case 124: // TffBinaryAssoc
-      case 125: // TffOrFormula
-      case 126: // TffAndFormula
-      case 174: // FofBinaryFormula
-      case 175: // FofBinaryNonassoc
-      case 176: // FofBinaryAssoc
-      case 177: // FofOrFormula
-      case 178: // FofAndFormula
+      case symbol_kind::S_ThfBinaryNonassoc: // ThfBinaryNonassoc
+      case symbol_kind::S_ThfBinaryAssoc: // ThfBinaryAssoc
+      case symbol_kind::S_ThfOrFormula: // ThfOrFormula
+      case symbol_kind::S_ThfAndFormula: // ThfAndFormula
+      case symbol_kind::S_ThfApplyFormula: // ThfApplyFormula
+      case symbol_kind::S_TffBinaryFormula: // TffBinaryFormula
+      case symbol_kind::S_TffBinaryNonassoc: // TffBinaryNonassoc
+      case symbol_kind::S_TffBinaryAssoc: // TffBinaryAssoc
+      case symbol_kind::S_TffOrFormula: // TffOrFormula
+      case symbol_kind::S_TffAndFormula: // TffAndFormula
+      case symbol_kind::S_FofBinaryFormula: // FofBinaryFormula
+      case symbol_kind::S_FofBinaryNonassoc: // FofBinaryNonassoc
+      case symbol_kind::S_FofBinaryAssoc: // FofBinaryAssoc
+      case symbol_kind::S_FofOrFormula: // FofOrFormula
+      case symbol_kind::S_FofAndFormula: // FofAndFormula
         value.template destroy< BinaryLogic::Ptr > ();
         break;
 
-      case 114: // ThfBinaryType
-      case 115: // ThfMappingType
-      case 116: // ThfXprodType
-      case 117: // ThfUnionType
-      case 163: // TffMappingType
-      case 164: // TffXprodType
+      case symbol_kind::S_ThfBinaryType: // ThfBinaryType
+      case symbol_kind::S_ThfMappingType: // ThfMappingType
+      case symbol_kind::S_ThfXprodType: // ThfXprodType
+      case symbol_kind::S_ThfUnionType: // ThfUnionType
+      case symbol_kind::S_TffMappingType: // TffMappingType
+      case symbol_kind::S_TffXprodType: // TffXprodType
         value.template destroy< BinaryType::Ptr > ();
         break;
 
-      case 98: // ThfConditional
-      case 144: // TfxConditional
+      case symbol_kind::S_ThfConditional: // ThfConditional
+      case symbol_kind::S_TfxConditional: // TfxConditional
         value.template destroy< ConditionalTerm::Ptr > ();
         break;
 
-      case 108: // ThfConnTerm
+      case symbol_kind::S_ThfConnTerm: // ThfConnTerm
         value.template destroy< ConnectiveAtom::Ptr > ();
         break;
 
-      case 96: // ThfSystemAtomic
+      case symbol_kind::S_ThfSystemAtomic: // ThfSystemAtomic
         value.template destroy< ConstantAtom::Ptr > ();
         break;
 
-      case 228: // DefinedTerm
+      case symbol_kind::S_DefinedTerm: // DefinedTerm
         value.template destroy< DefinedAtom::Ptr > ();
         break;
 
-      case 65: // Definition
+      case symbol_kind::S_Definition: // Definition
         value.template destroy< Definition::Ptr > ();
         break;
 
-      case 103: // ThfLetDefn
-      case 149: // TfxLetDefn
+      case symbol_kind::S_ThfLetDefn: // ThfLetDefn
+      case symbol_kind::S_TfxLetDefn: // TfxLetDefn
         value.template destroy< DefinitionAtom::Ptr > ();
         break;
 
-      case 99: // ThfLet
-      case 145: // TfxLet
+      case symbol_kind::S_ThfLet: // ThfLet
+      case symbol_kind::S_TfxLet: // TfxLet
         value.template destroy< DefinitionTerm::Ptr > ();
         break;
 
-      case 64: // Definitions
+      case symbol_kind::S_Definitions: // Definitions
         value.template destroy< Definitions::Ptr > ();
         break;
 
-      case 249: // DistinctObjectLiteral
+      case symbol_kind::S_DistinctObjectLiteral: // DistinctObjectLiteral
         value.template destroy< DistinctObjectLiteral::Ptr > ();
         break;
 
-      case 236: // FormulaData
+      case symbol_kind::S_FormulaData: // FormulaData
         value.template destroy< FormulaData::Ptr > ();
         break;
 
-      case 66: // AnnotatedFormula
-      case 67: // ThfAnnotated
-      case 68: // TffAnnotated
-      case 69: // TcfAnnotated
-      case 70: // FofAnnotated
-      case 71: // CnfAnnotated
-      case 72: // TpiAnnotated
+      case symbol_kind::S_AnnotatedFormula: // AnnotatedFormula
+      case symbol_kind::S_ThfAnnotated: // ThfAnnotated
+      case symbol_kind::S_TffAnnotated: // TffAnnotated
+      case symbol_kind::S_TcfAnnotated: // TcfAnnotated
+      case symbol_kind::S_FofAnnotated: // FofAnnotated
+      case symbol_kind::S_CnfAnnotated: // CnfAnnotated
+      case symbol_kind::S_TpiAnnotated: // TpiAnnotated
         value.template destroy< FormulaDefinition::Ptr > ();
         break;
 
-      case 97: // ThfFofFunction
+      case symbol_kind::S_ThfFofFunction: // ThfFofFunction
         value.template destroy< FunctorAtom::Ptr > ();
         break;
 
-      case 233: // GeneralData
+      case symbol_kind::S_GeneralData: // GeneralData
         value.template destroy< GeneralData::Ptr > ();
         break;
 
-      case 234: // GeneralFunction
+      case symbol_kind::S_GeneralFunction: // GeneralFunction
         value.template destroy< GeneralFunction::Ptr > ();
         break;
 
-      case 237: // GeneralList
+      case symbol_kind::S_GeneralList: // GeneralList
         value.template destroy< GeneralList::Ptr > ();
         break;
 
-      case 232: // GeneralTerm
+      case symbol_kind::S_GeneralTerm: // GeneralTerm
         value.template destroy< GeneralTerm::Ptr > ();
         break;
 
-      case 214: // TypeConstant
-      case 215: // TypeFunctor
-      case 216: // DefinedType
-      case 217: // Atom
-      case 218: // UntypedAtom
-      case 222: // Constant
-      case 223: // Functor
-      case 224: // SystemConstant
-      case 225: // SystemFunctor
-      case 226: // DefinedConstant
-      case 227: // DefinedFunctor
-      case 230: // Name
-      case 240: // AtomicWord
-      case 241: // AtomicDefinedWord
-      case 242: // AtomicSystemWord
-      case 244: // FileName
-      case 250: // LowerWordLiteral
-      case 251: // SingleQuotedLiteral
-      case 252: // DollarWordLiteral
-      case 253: // DollarDollarWordLiteral
+      case symbol_kind::S_TypeConstant: // TypeConstant
+      case symbol_kind::S_TypeFunctor: // TypeFunctor
+      case symbol_kind::S_DefinedType: // DefinedType
+      case symbol_kind::S_Atom: // Atom
+      case symbol_kind::S_UntypedAtom: // UntypedAtom
+      case symbol_kind::S_Constant: // Constant
+      case symbol_kind::S_Functor: // Functor
+      case symbol_kind::S_SystemConstant: // SystemConstant
+      case symbol_kind::S_SystemFunctor: // SystemFunctor
+      case symbol_kind::S_DefinedConstant: // DefinedConstant
+      case symbol_kind::S_DefinedFunctor: // DefinedFunctor
+      case symbol_kind::S_Name: // Name
+      case symbol_kind::S_AtomicWord: // AtomicWord
+      case symbol_kind::S_AtomicDefinedWord: // AtomicDefinedWord
+      case symbol_kind::S_AtomicSystemWord: // AtomicSystemWord
+      case symbol_kind::S_FileName: // FileName
+      case symbol_kind::S_LowerWordLiteral: // LowerWordLiteral
+      case symbol_kind::S_SingleQuotedLiteral: // SingleQuotedLiteral
+      case symbol_kind::S_DollarWordLiteral: // DollarWordLiteral
+      case symbol_kind::S_DollarDollarWordLiteral: // DollarDollarWordLiteral
         value.template destroy< Identifier::Ptr > ();
         break;
 
-      case 238: // IncludeDefinition
+      case symbol_kind::S_IncludeDefinition: // IncludeDefinition
         value.template destroy< IncludeDefinition::Ptr > ();
         break;
 
-      case 219: // DefinedInfixPred
-      case 220: // InfixEquality
-      case 221: // InfixInequality
+      case symbol_kind::S_DefinedInfixPred: // DefinedInfixPred
+      case symbol_kind::S_InfixEquality: // InfixEquality
+      case symbol_kind::S_InfixInequality: // InfixInequality
         value.template destroy< InfixConnective_t > ();
         break;
 
-      case 91: // ThfInfixUnary
-      case 95: // ThfDefinedInfix
-      case 137: // TffInfixUnary
-      case 142: // TffDefinedInfix
-      case 180: // FofInfixUnary
-      case 189: // FofDefinedInfixFormula
+      case symbol_kind::S_ThfInfixUnary: // ThfInfixUnary
+      case symbol_kind::S_ThfDefinedInfix: // ThfDefinedInfix
+      case symbol_kind::S_TffInfixUnary: // TffInfixUnary
+      case symbol_kind::S_TffDefinedInfix: // TffDefinedInfix
+      case symbol_kind::S_FofInfixUnary: // FofInfixUnary
+      case symbol_kind::S_FofDefinedInfixFormula: // FofDefinedInfixFormula
         value.template destroy< InfixLogic::Ptr > ();
         break;
 
-      case 245: // IntegerLiteral
+      case symbol_kind::S_IntegerLiteral: // IntegerLiteral
         value.template destroy< IntegerLiteral::Ptr > ();
         break;
 
-      case 239: // FormulaSelection
+      case symbol_kind::S_FormulaSelection: // FormulaSelection
         value.template destroy< ListLiteral::Ptr > ();
         break;
 
-      case 104: // ThfLetDefnList
-      case 107: // ThfFormulaList
-      case 109: // ThfArguments
-      case 151: // TfxLetDefnList
-      case 155: // TffArguments
-      case 162: // TffTypeArguments
-      case 196: // FofArguments
-      case 201: // FofFormulaTupleList
+      case symbol_kind::S_ThfLetDefnList: // ThfLetDefnList
+      case symbol_kind::S_ThfFormulaList: // ThfFormulaList
+      case symbol_kind::S_ThfArguments: // ThfArguments
+      case symbol_kind::S_TfxLetDefnList: // TfxLetDefnList
+      case symbol_kind::S_TffArguments: // TffArguments
+      case symbol_kind::S_TffTypeArguments: // TffTypeArguments
+      case symbol_kind::S_FofArguments: // FofArguments
+      case symbol_kind::S_FofFormulaTupleList: // FofFormulaTupleList
         value.template destroy< ListLogicElements::Ptr > ();
         break;
 
-      case 87: // ThfVariableList
-      case 132: // TffVariableList
-      case 184: // FofVariableList
-      case 229: // NameList
-      case 235: // GeneralTerms
+      case symbol_kind::S_ThfVariableList: // ThfVariableList
+      case symbol_kind::S_TffVariableList: // TffVariableList
+      case symbol_kind::S_FofVariableList: // FofVariableList
+      case symbol_kind::S_NameList: // NameList
+      case symbol_kind::S_GeneralTerms: // GeneralTerms
         value.template destroy< ListNodeElements::Ptr > ();
         break;
 
-      case 101: // ThfAtomTypingList
-      case 147: // TffAtomTypingList
-      case 166: // TffTypeList
+      case symbol_kind::S_ThfAtomTypingList: // ThfAtomTypingList
+      case symbol_kind::S_TffAtomTypingList: // TffAtomTypingList
+      case symbol_kind::S_TffTypeList: // TffTypeList
         value.template destroy< ListTypeElements::Ptr > ();
         break;
 
-      case 74: // TpiFormula
-      case 75: // ThfFormula
-      case 76: // ThfLogicFormula
-      case 77: // ThfBinaryFormula
-      case 83: // ThfUnitFormula
-      case 84: // ThfPreunitFormula
-      case 85: // ThfUnitaryFormula
-      case 89: // ThfUnaryFormula
-      case 92: // ThfAtomicFormula
-      case 93: // ThfPlainAtomic
-      case 102: // ThfLetDefns
-      case 105: // ThfUnitaryTerm
-      case 120: // TffFormula
-      case 121: // TffLogicFormula
-      case 127: // TffUnitFormula
-      case 128: // TffPreunitFormula
-      case 129: // TffUnitaryFormula
-      case 135: // TffUnaryFormula
-      case 148: // TfxLetDefns
-      case 150: // TfxLetLhs
-      case 152: // TffTerm
-      case 153: // TffUnitaryTerm
-      case 169: // TcfFormula
-      case 170: // TcfLogicFormula
-      case 172: // FofFormula
-      case 173: // FofLogicFormula
-      case 179: // FofUnaryFormula
-      case 181: // FofUnitFormula
-      case 182: // FofUnitaryFormula
-      case 185: // FofAtomicFormula
-      case 187: // FofDefinedAtomicFormula
-      case 202: // CnfFormula
-      case 203: // Disjunction
-      case 204: // Literal
+      case symbol_kind::S_TpiFormula: // TpiFormula
+      case symbol_kind::S_ThfFormula: // ThfFormula
+      case symbol_kind::S_ThfLogicFormula: // ThfLogicFormula
+      case symbol_kind::S_ThfBinaryFormula: // ThfBinaryFormula
+      case symbol_kind::S_ThfUnitFormula: // ThfUnitFormula
+      case symbol_kind::S_ThfPreunitFormula: // ThfPreunitFormula
+      case symbol_kind::S_ThfUnitaryFormula: // ThfUnitaryFormula
+      case symbol_kind::S_ThfUnaryFormula: // ThfUnaryFormula
+      case symbol_kind::S_ThfAtomicFormula: // ThfAtomicFormula
+      case symbol_kind::S_ThfPlainAtomic: // ThfPlainAtomic
+      case symbol_kind::S_ThfLetDefns: // ThfLetDefns
+      case symbol_kind::S_ThfUnitaryTerm: // ThfUnitaryTerm
+      case symbol_kind::S_TffFormula: // TffFormula
+      case symbol_kind::S_TffLogicFormula: // TffLogicFormula
+      case symbol_kind::S_TffUnitFormula: // TffUnitFormula
+      case symbol_kind::S_TffPreunitFormula: // TffPreunitFormula
+      case symbol_kind::S_TffUnitaryFormula: // TffUnitaryFormula
+      case symbol_kind::S_TffUnaryFormula: // TffUnaryFormula
+      case symbol_kind::S_TfxLetDefns: // TfxLetDefns
+      case symbol_kind::S_TfxLetLhs: // TfxLetLhs
+      case symbol_kind::S_TffTerm: // TffTerm
+      case symbol_kind::S_TffUnitaryTerm: // TffUnitaryTerm
+      case symbol_kind::S_TcfFormula: // TcfFormula
+      case symbol_kind::S_TcfLogicFormula: // TcfLogicFormula
+      case symbol_kind::S_FofFormula: // FofFormula
+      case symbol_kind::S_FofLogicFormula: // FofLogicFormula
+      case symbol_kind::S_FofUnaryFormula: // FofUnaryFormula
+      case symbol_kind::S_FofUnitFormula: // FofUnitFormula
+      case symbol_kind::S_FofUnitaryFormula: // FofUnitaryFormula
+      case symbol_kind::S_FofAtomicFormula: // FofAtomicFormula
+      case symbol_kind::S_FofDefinedAtomicFormula: // FofDefinedAtomicFormula
+      case symbol_kind::S_CnfFormula: // CnfFormula
+      case symbol_kind::S_Disjunction: // Disjunction
+      case symbol_kind::S_Literal: // Literal
         value.template destroy< Logic::Ptr > ();
         break;
 
-      case 106: // ThfTuple
-      case 154: // TfxTuple
-      case 200: // FofFormulaTuple
+      case symbol_kind::S_ThfTuple: // ThfTuple
+      case symbol_kind::S_TfxTuple: // TfxTuple
+      case symbol_kind::S_FofFormulaTuple: // FofFormulaTuple
         value.template destroy< LogicTuple::Ptr > ();
         break;
 
-      case 86: // ThfQuantifiedFormula
-      case 131: // TffQuantifiedFormula
-      case 171: // TcfQuantifiedFormula
-      case 183: // FofQuantifiedFormula
+      case symbol_kind::S_ThfQuantifiedFormula: // ThfQuantifiedFormula
+      case symbol_kind::S_TffQuantifiedFormula: // TffQuantifiedFormula
+      case symbol_kind::S_TcfQuantifiedFormula: // TcfQuantifiedFormula
+      case symbol_kind::S_FofQuantifiedFormula: // FofQuantifiedFormula
         value.template destroy< QuantifiedLogic::Ptr > ();
         break;
 
-      case 205: // ThfQuantifier
-      case 206: // Th1Quantifier
-      case 207: // Th0Quantifier
-      case 210: // FofQuantifier
+      case symbol_kind::S_ThfQuantifier: // ThfQuantifier
+      case symbol_kind::S_Th1Quantifier: // Th1Quantifier
+      case symbol_kind::S_Th0Quantifier: // Th0Quantifier
+      case symbol_kind::S_FofQuantifier: // FofQuantifier
         value.template destroy< QuantifiedQuantifier_t > ();
         break;
 
-      case 158: // Tf1QuantifiedType
+      case symbol_kind::S_Tf1QuantifiedType: // Tf1QuantifiedType
         value.template destroy< QuantifiedType::Ptr > ();
         break;
 
-      case 247: // RationalLiteral
+      case symbol_kind::S_RationalLiteral: // RationalLiteral
         value.template destroy< RationalLiteral::Ptr > ();
         break;
 
-      case 246: // RealLiteral
+      case symbol_kind::S_RealLiteral: // RealLiteral
         value.template destroy< RealLiteral::Ptr > ();
         break;
 
-      case 231: // FormulaRole
+      case symbol_kind::S_FormulaRole: // FormulaRole
         value.template destroy< Role::Ptr > ();
         break;
 
-      case 119: // ThfSequent
-      case 168: // TfxSequent
-      case 199: // FofSequent
+      case symbol_kind::S_ThfSequent: // ThfSequent
+      case symbol_kind::S_TfxSequent: // TfxSequent
+      case symbol_kind::S_FofSequent: // FofSequent
         value.template destroy< SequentLogic::Ptr > ();
         break;
 
-      case 63: // Specification
+      case symbol_kind::S_Specification: // Specification
         value.template destroy< Specification::Ptr > ();
         break;
 
-      case 118: // ThfSubtype
-      case 167: // TffSubtype
+      case symbol_kind::S_ThfSubtype: // ThfSubtype
+      case symbol_kind::S_TffSubtype: // TffSubtype
         value.template destroy< SubType::Ptr > ();
         break;
 
-      case 94: // ThfDefinedAtomic
-      case 138: // TffAtomicFormula
-      case 140: // TffDefinedAtomic
-      case 141: // TffDefinedPlain
-      case 186: // FofPlainAtomicFormula
-      case 188: // FofDefinedPlainFormula
-      case 190: // FofSystemAtomicFormula
-      case 197: // FofTerm
+      case symbol_kind::S_ThfDefinedAtomic: // ThfDefinedAtomic
+      case symbol_kind::S_TffAtomicFormula: // TffAtomicFormula
+      case symbol_kind::S_TffDefinedAtomic: // TffDefinedAtomic
+      case symbol_kind::S_TffDefinedPlain: // TffDefinedPlain
+      case symbol_kind::S_FofPlainAtomicFormula: // FofPlainAtomicFormula
+      case symbol_kind::S_FofDefinedPlainFormula: // FofDefinedPlainFormula
+      case symbol_kind::S_FofSystemAtomicFormula: // FofSystemAtomicFormula
+      case symbol_kind::S_FofTerm: // FofTerm
         value.template destroy< Term::Ptr > ();
         break;
 
-      case 3: // "tpi"
-      case 4: // "thf"
-      case 5: // "tff"
-      case 6: // "tcf"
-      case 7: // "fof"
-      case 8: // "cnf"
-      case 9: // "fot"
-      case 10: // "ite"
-      case 11: // "let"
-      case 12: // "@"
-      case 13: // "&"
-      case 14: // "$"
-      case 15: // "$$"
-      case 16: // ":"
-      case 17: // ","
-      case 18: // "."
-      case 19: // "+"
-      case 20: // "="
-      case 21: // "!="
-      case 22: // "("
-      case 23: // ")"
-      case 24: // "["
-      case 25: // "]"
-      case 26: // "{"
-      case 27: // "}"
-      case 28: // "|"
-      case 29: // "*"
-      case 30: // ">"
-      case 31: // "!"
-      case 32: // "~"
-      case 33: // "?"
-      case 34: // "@-"
-      case 35: // "@+"
-      case 36: // "^"
-      case 37: // "!!"
-      case 38: // "??"
-      case 39: // "@@+"
-      case 40: // "@@-"
-      case 41: // "@="
-      case 42: // "!>"
-      case 43: // "?*"
-      case 44: // "<=>"
-      case 45: // "=>"
-      case 46: // "<="
-      case 47: // "<~>"
-      case 48: // "~|"
-      case 49: // "~&"
-      case 50: // ":="
-      case 51: // "-->"
-      case 52: // "<<"
-      case 53: // "include"
+      case symbol_kind::S_TPI: // "tpi"
+      case symbol_kind::S_THF: // "thf"
+      case symbol_kind::S_TFF: // "tff"
+      case symbol_kind::S_TCF: // "tcf"
+      case symbol_kind::S_FOF: // "fof"
+      case symbol_kind::S_CNF: // "cnf"
+      case symbol_kind::S_FOT: // "fot"
+      case symbol_kind::S_ITE: // "ite"
+      case symbol_kind::S_LET: // "let"
+      case symbol_kind::S_AT: // "@"
+      case symbol_kind::S_AND: // "&"
+      case symbol_kind::S_DOLLAR: // "$"
+      case symbol_kind::S_DOLLARDOLLAR: // "$$"
+      case symbol_kind::S_COLON: // ":"
+      case symbol_kind::S_COMMA: // ","
+      case symbol_kind::S_DOT: // "."
+      case symbol_kind::S_PLUS: // "+"
+      case symbol_kind::S_EQUAL: // "="
+      case symbol_kind::S_INFIXINEQUALITY: // "!="
+      case symbol_kind::S_LPAREN: // "("
+      case symbol_kind::S_RPAREN: // ")"
+      case symbol_kind::S_LSQPAREN: // "["
+      case symbol_kind::S_RSQPAREN: // "]"
+      case symbol_kind::S_LCURPAREN: // "{"
+      case symbol_kind::S_RCURPAREN: // "}"
+      case symbol_kind::S_VLINE: // "|"
+      case symbol_kind::S_STAR: // "*"
+      case symbol_kind::S_GREATER: // ">"
+      case symbol_kind::S_EXCLAMATION: // "!"
+      case symbol_kind::S_TILDE: // "~"
+      case symbol_kind::S_QUESTIONMARK: // "?"
+      case symbol_kind::S_ATMINUS: // "@-"
+      case symbol_kind::S_ATPLUS: // "@+"
+      case symbol_kind::S_CARET: // "^"
+      case symbol_kind::S_DOUBLEEXCLAMATION: // "!!"
+      case symbol_kind::S_DOUBLEQUESTIONMARK: // "??"
+      case symbol_kind::S_DOUBLEATPLUS: // "@@+"
+      case symbol_kind::S_DOUBLEATMINUS: // "@@-"
+      case symbol_kind::S_ATEQUAL: // "@="
+      case symbol_kind::S_EXCLAMATIONGREATER: // "!>"
+      case symbol_kind::S_QUESTIONMARKSTAR: // "?*"
+      case symbol_kind::S_EQUALITY: // "<=>"
+      case symbol_kind::S_IMPLICATION: // "=>"
+      case symbol_kind::S_RIMPLICATION: // "<="
+      case symbol_kind::S_INEQUALITY: // "<~>"
+      case symbol_kind::S_NOR: // "~|"
+      case symbol_kind::S_NAND: // "~&"
+      case symbol_kind::S_ASSIGNMENT: // ":="
+      case symbol_kind::S_GENTZENARROW: // "-->"
+      case symbol_kind::S_SUBTYPESIGN: // "<<"
+      case symbol_kind::S_INCLUDE: // "include"
         value.template destroy< Token::Ptr > ();
         break;
 
-      case 165: // TfxTupleType
+      case symbol_kind::S_TfxTupleType: // TfxTupleType
         value.template destroy< TupleType::Ptr > ();
         break;
 
-      case 100: // ThfLetTypes
-      case 111: // ThfTopLevelType
-      case 146: // TfxLetTypes
-      case 157: // TffTopLevelType
-      case 159: // TffMonotype
-      case 160: // TffUnitaryType
+      case symbol_kind::S_ThfLetTypes: // ThfLetTypes
+      case symbol_kind::S_ThfTopLevelType: // ThfTopLevelType
+      case symbol_kind::S_TfxLetTypes: // TfxLetTypes
+      case symbol_kind::S_TffTopLevelType: // TffTopLevelType
+      case symbol_kind::S_TffMonotype: // TffMonotype
+      case symbol_kind::S_TffUnitaryType: // TffUnitaryType
         value.template destroy< Type::Ptr > ();
         break;
 
-      case 110: // ThfAtomTyping
-      case 156: // TffAtomTyping
+      case symbol_kind::S_ThfAtomTyping: // ThfAtomTyping
+      case symbol_kind::S_TffAtomTyping: // TffAtomTyping
         value.template destroy< TypedAtom::Ptr > ();
         break;
 
-      case 208: // ThfUnaryConnective
-      case 209: // Th1UnaryConnective
-      case 213: // UnaryConnective
+      case symbol_kind::S_ThfUnaryConnective: // ThfUnaryConnective
+      case symbol_kind::S_Th1UnaryConnective: // Th1UnaryConnective
+      case symbol_kind::S_UnaryConnective: // UnaryConnective
         value.template destroy< UnaryConnective_t > ();
         break;
 
-      case 90: // ThfPrefixUnary
-      case 136: // TffPrefixUnary
+      case symbol_kind::S_ThfPrefixUnary: // ThfPrefixUnary
+      case symbol_kind::S_TffPrefixUnary: // TffPrefixUnary
         value.template destroy< UnaryLogic::Ptr > ();
         break;
 
-      case 243: // Number
+      case symbol_kind::S_Number: // Number
         value.template destroy< ValueLiteral::Ptr > ();
         break;
 
-      case 88: // ThfTypedVariable
-      case 130: // TfxUnitaryFormula
-      case 133: // TffVariable
-      case 134: // TffTypedVariable
-      case 248: // Variable
+      case symbol_kind::S_ThfTypedVariable: // ThfTypedVariable
+      case symbol_kind::S_TfxUnitaryFormula: // TfxUnitaryFormula
+      case symbol_kind::S_TffVariable: // TffVariable
+      case symbol_kind::S_TffTypedVariable: // TffTypedVariable
+      case symbol_kind::S_Variable: // Variable
         value.template destroy< VariableTerm::Ptr > ();
         break;
 
-      case 54: // "integer"
-      case 55: // "real"
-      case 56: // "rational"
-      case 57: // "double_quoted"
-      case 58: // "lower_word"
-      case 59: // "upper_word"
-      case 60: // "identifier"
-      case 61: // "single_quoted"
+      case symbol_kind::S_INTEGER: // "integer"
+      case symbol_kind::S_REAL: // "real"
+      case symbol_kind::S_RATIONAL: // "rational"
+      case symbol_kind::S_DQUOTED: // "double_quoted"
+      case symbol_kind::S_LOWER_WORD: // "lower_word"
+      case symbol_kind::S_UPPER_WORD: // "upper_word"
+      case symbol_kind::S_IDENTIFIER: // "identifier"
+      case symbol_kind::S_SINGLE_QUOTED: // "single_quoted"
         value.template destroy< std::string > ();
         break;
 
@@ -2013,6 +2729,15 @@ switch (yytype)
 
         Base::clear ();
       }
+
+      /// The user-facing name of this symbol.
+      std::string name () const YY_NOEXCEPT
+      {
+        return Parser::symbol_name (this->kind ());
+      }
+
+      /// Backward compatibility (Bison 3.6).
+      symbol_kind_type type_get () const YY_NOEXCEPT;
 
       /// Whether empty.
       bool empty () const YY_NOEXCEPT;
@@ -2034,49 +2759,51 @@ switch (yytype)
     };
 
     /// Type access provider for token (enum) based symbols.
-    struct by_type
+    struct by_kind
     {
       /// Default constructor.
-      by_type ();
+      by_kind ();
 
 #if 201103L <= YY_CPLUSPLUS
       /// Move constructor.
-      by_type (by_type&& that);
+      by_kind (by_kind&& that);
 #endif
 
       /// Copy constructor.
-      by_type (const by_type& that);
+      by_kind (const by_kind& that);
 
-      /// The symbol type as needed by the constructor.
-      typedef token_type kind_type;
+      /// The symbol kind as needed by the constructor.
+      typedef token_kind_type kind_type;
 
       /// Constructor from (external) token numbers.
-      by_type (kind_type t);
+      by_kind (kind_type t);
 
       /// Record that this symbol is empty.
       void clear ();
 
-      /// Steal the symbol type from \a that.
-      void move (by_type& that);
+      /// Steal the symbol kind from \a that.
+      void move (by_kind& that);
 
       /// The (internal) type number (corresponding to \a type).
       /// \a empty when empty.
-      symbol_number_type type_get () const YY_NOEXCEPT;
+      symbol_kind_type kind () const YY_NOEXCEPT;
 
-      /// The token.
-      token_type token () const YY_NOEXCEPT;
+      /// Backward compatibility (Bison 3.6).
+      symbol_kind_type type_get () const YY_NOEXCEPT;
 
-      /// The symbol type.
-      /// \a empty_symbol when empty.
-      /// An int, not token_number_type, to be able to store empty_symbol.
-      int type;
+      /// The symbol kind.
+      /// \a S_YYEMPTY when empty.
+      symbol_kind_type kind_;
     };
 
+    /// Backward compatibility for a private implementation detail (Bison 3.6).
+    typedef by_kind by_type;
+
     /// "External" symbols: returned by the scanner.
-    struct symbol_type : basic_symbol<by_type>
+    struct symbol_type : basic_symbol<by_kind>
     {
       /// Superclass.
-      typedef basic_symbol<by_type> super_type;
+      typedef basic_symbol<by_kind> super_type;
 
       /// Empty symbol.
       symbol_type () {}
@@ -2086,39 +2813,39 @@ switch (yytype)
       symbol_type (int tok, location_type l)
         : super_type(token_type (tok), std::move (l))
       {
-        YYASSERT (tok == token::END);
+        YY_ASSERT (tok == token::END || tok == token::YYerror || tok == token::YYUNDEF);
       }
 #else
       symbol_type (int tok, const location_type& l)
         : super_type(token_type (tok), l)
       {
-        YYASSERT (tok == token::END);
+        YY_ASSERT (tok == token::END || tok == token::YYerror || tok == token::YYUNDEF);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
       symbol_type (int tok, Token::Ptr v, location_type l)
         : super_type(token_type (tok), std::move (v), std::move (l))
       {
-        YYASSERT (tok == token::TPI || tok == token::THF || tok == token::TFF || tok == token::TCF || tok == token::FOF || tok == token::CNF || tok == token::FOT || tok == token::ITE || tok == token::LET || tok == token::AT || tok == token::AND || tok == token::DOLLAR || tok == token::DOLLARDOLLAR || tok == token::COLON || tok == token::COMMA || tok == token::DOT || tok == token::PLUS || tok == token::EQUAL || tok == token::INFIXINEQUALITY || tok == token::LPAREN || tok == token::RPAREN || tok == token::LSQPAREN || tok == token::RSQPAREN || tok == token::LCURPAREN || tok == token::RCURPAREN || tok == token::VLINE || tok == token::STAR || tok == token::GREATER || tok == token::EXCLAMATION || tok == token::TILDE || tok == token::QUESTIONMARK || tok == token::ATMINUS || tok == token::ATPLUS || tok == token::CARET || tok == token::DOUBLEEXCLAMATION || tok == token::DOUBLEQUESTIONMARK || tok == token::DOUBLEATPLUS || tok == token::DOUBLEATMINUS || tok == token::ATEQUAL || tok == token::EXCLAMATIONGREATER || tok == token::QUESTIONMARKSTAR || tok == token::EQUALITY || tok == token::IMPLICATION || tok == token::RIMPLICATION || tok == token::INEQUALITY || tok == token::NOR || tok == token::NAND || tok == token::ASSIGNMENT || tok == token::GENTZENARROW || tok == token::SUBTYPESIGN || tok == token::INCLUDE);
+        YY_ASSERT (tok == token::TPI || tok == token::THF || tok == token::TFF || tok == token::TCF || tok == token::FOF || tok == token::CNF || tok == token::FOT || tok == token::ITE || tok == token::LET || tok == token::AT || tok == token::AND || tok == token::DOLLAR || tok == token::DOLLARDOLLAR || tok == token::COLON || tok == token::COMMA || tok == token::DOT || tok == token::PLUS || tok == token::EQUAL || tok == token::INFIXINEQUALITY || tok == token::LPAREN || tok == token::RPAREN || tok == token::LSQPAREN || tok == token::RSQPAREN || tok == token::LCURPAREN || tok == token::RCURPAREN || tok == token::VLINE || tok == token::STAR || tok == token::GREATER || tok == token::EXCLAMATION || tok == token::TILDE || tok == token::QUESTIONMARK || tok == token::ATMINUS || tok == token::ATPLUS || tok == token::CARET || tok == token::DOUBLEEXCLAMATION || tok == token::DOUBLEQUESTIONMARK || tok == token::DOUBLEATPLUS || tok == token::DOUBLEATMINUS || tok == token::ATEQUAL || tok == token::EXCLAMATIONGREATER || tok == token::QUESTIONMARKSTAR || tok == token::EQUALITY || tok == token::IMPLICATION || tok == token::RIMPLICATION || tok == token::INEQUALITY || tok == token::NOR || tok == token::NAND || tok == token::ASSIGNMENT || tok == token::GENTZENARROW || tok == token::SUBTYPESIGN || tok == token::INCLUDE);
       }
 #else
       symbol_type (int tok, const Token::Ptr& v, const location_type& l)
         : super_type(token_type (tok), v, l)
       {
-        YYASSERT (tok == token::TPI || tok == token::THF || tok == token::TFF || tok == token::TCF || tok == token::FOF || tok == token::CNF || tok == token::FOT || tok == token::ITE || tok == token::LET || tok == token::AT || tok == token::AND || tok == token::DOLLAR || tok == token::DOLLARDOLLAR || tok == token::COLON || tok == token::COMMA || tok == token::DOT || tok == token::PLUS || tok == token::EQUAL || tok == token::INFIXINEQUALITY || tok == token::LPAREN || tok == token::RPAREN || tok == token::LSQPAREN || tok == token::RSQPAREN || tok == token::LCURPAREN || tok == token::RCURPAREN || tok == token::VLINE || tok == token::STAR || tok == token::GREATER || tok == token::EXCLAMATION || tok == token::TILDE || tok == token::QUESTIONMARK || tok == token::ATMINUS || tok == token::ATPLUS || tok == token::CARET || tok == token::DOUBLEEXCLAMATION || tok == token::DOUBLEQUESTIONMARK || tok == token::DOUBLEATPLUS || tok == token::DOUBLEATMINUS || tok == token::ATEQUAL || tok == token::EXCLAMATIONGREATER || tok == token::QUESTIONMARKSTAR || tok == token::EQUALITY || tok == token::IMPLICATION || tok == token::RIMPLICATION || tok == token::INEQUALITY || tok == token::NOR || tok == token::NAND || tok == token::ASSIGNMENT || tok == token::GENTZENARROW || tok == token::SUBTYPESIGN || tok == token::INCLUDE);
+        YY_ASSERT (tok == token::TPI || tok == token::THF || tok == token::TFF || tok == token::TCF || tok == token::FOF || tok == token::CNF || tok == token::FOT || tok == token::ITE || tok == token::LET || tok == token::AT || tok == token::AND || tok == token::DOLLAR || tok == token::DOLLARDOLLAR || tok == token::COLON || tok == token::COMMA || tok == token::DOT || tok == token::PLUS || tok == token::EQUAL || tok == token::INFIXINEQUALITY || tok == token::LPAREN || tok == token::RPAREN || tok == token::LSQPAREN || tok == token::RSQPAREN || tok == token::LCURPAREN || tok == token::RCURPAREN || tok == token::VLINE || tok == token::STAR || tok == token::GREATER || tok == token::EXCLAMATION || tok == token::TILDE || tok == token::QUESTIONMARK || tok == token::ATMINUS || tok == token::ATPLUS || tok == token::CARET || tok == token::DOUBLEEXCLAMATION || tok == token::DOUBLEQUESTIONMARK || tok == token::DOUBLEATPLUS || tok == token::DOUBLEATMINUS || tok == token::ATEQUAL || tok == token::EXCLAMATIONGREATER || tok == token::QUESTIONMARKSTAR || tok == token::EQUALITY || tok == token::IMPLICATION || tok == token::RIMPLICATION || tok == token::INEQUALITY || tok == token::NOR || tok == token::NAND || tok == token::ASSIGNMENT || tok == token::GENTZENARROW || tok == token::SUBTYPESIGN || tok == token::INCLUDE);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
       symbol_type (int tok, std::string v, location_type l)
         : super_type(token_type (tok), std::move (v), std::move (l))
       {
-        YYASSERT (tok == token::INTEGER || tok == token::REAL || tok == token::RATIONAL || tok == token::DQUOTED || tok == token::LOWER_WORD || tok == token::UPPER_WORD || tok == token::IDENTIFIER || tok == token::SINGLE_QUOTED);
+        YY_ASSERT (tok == token::INTEGER || tok == token::REAL || tok == token::RATIONAL || tok == token::DQUOTED || tok == token::LOWER_WORD || tok == token::UPPER_WORD || tok == token::IDENTIFIER || tok == token::SINGLE_QUOTED);
       }
 #else
       symbol_type (int tok, const std::string& v, const location_type& l)
         : super_type(token_type (tok), v, l)
       {
-        YYASSERT (tok == token::INTEGER || tok == token::REAL || tok == token::RATIONAL || tok == token::DQUOTED || tok == token::LOWER_WORD || tok == token::UPPER_WORD || tok == token::IDENTIFIER || tok == token::SINGLE_QUOTED);
+        YY_ASSERT (tok == token::INTEGER || tok == token::REAL || tok == token::RATIONAL || tok == token::DQUOTED || tok == token::LOWER_WORD || tok == token::UPPER_WORD || tok == token::IDENTIFIER || tok == token::SINGLE_QUOTED);
       }
 #endif
     };
@@ -2126,6 +2853,13 @@ switch (yytype)
     /// Build a parser object.
     Parser (Logger& m_log_yyarg, Lexer& m_lexer_yyarg, Specification& m_specification_yyarg);
     virtual ~Parser ();
+
+#if 201103L <= YY_CPLUSPLUS
+    /// Non copyable.
+    Parser (const Parser&) = delete;
+    /// Non copyable.
+    Parser& operator= (const Parser&) = delete;
+#endif
 
     /// Parse.  An alias for parse ().
     /// \returns  0 iff parsing succeeded.
@@ -2157,6 +2891,10 @@ switch (yytype)
     /// Report a syntax error.
     void error (const syntax_error& err);
 
+    /// The user-facing name of the symbol whose (internal) number is
+    /// YYSYMBOL.  No bounds checking.
+    static std::string symbol_name (symbol_kind_type yysymbol);
+
     // Implementation of make_symbol for each symbol type.
 #if 201103L <= YY_CPLUSPLUS
       static
@@ -2171,6 +2909,36 @@ switch (yytype)
       make_END (const location_type& l)
       {
         return symbol_type (token::END, l);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_YYerror (location_type l)
+      {
+        return symbol_type (token::YYerror, std::move (l));
+      }
+#else
+      static
+      symbol_type
+      make_YYerror (const location_type& l)
+      {
+        return symbol_type (token::YYerror, l);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_YYUNDEF (location_type l)
+      {
+        return symbol_type (token::YYUNDEF, std::move (l));
+      }
+#else
+      static
+      symbol_type
+      make_YYUNDEF (const location_type& l)
+      {
+        return symbol_type (token::YYUNDEF, l);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
@@ -3060,24 +3828,47 @@ switch (yytype)
 #endif
 
 
-  private:
-    /// This class is not copyable.
-    Parser (const Parser&);
-    Parser& operator= (const Parser&);
+    class context
+    {
+    public:
+      context (const Parser& yyparser, const symbol_type& yyla);
+      const symbol_type& lookahead () const { return yyla_; }
+      symbol_kind_type token () const { return yyla_.kind (); }
+      const location_type& location () const { return yyla_.location; }
 
-    /// State numbers.
-    typedef int state_type;
+      /// Put in YYARG at most YYARGN of the expected tokens, and return the
+      /// number of tokens stored in YYARG.  If YYARG is null, return the
+      /// number of expected tokens (guaranteed to be less than YYNTOKENS).
+      int expected_tokens (symbol_kind_type yyarg[], int yyargn) const;
+
+    private:
+      const Parser& yyparser_;
+      const symbol_type& yyla_;
+    };
+
+  private:
+#if YY_CPLUSPLUS < 201103L
+    /// Non copyable.
+    Parser (const Parser&);
+    /// Non copyable.
+    Parser& operator= (const Parser&);
+#endif
+
+
+    /// Stored state numbers (used for stacks).
+    typedef short state_type;
+
+    /// The arguments of the error message.
+    int yy_syntax_error_arguments_ (const context& yyctx,
+                                    symbol_kind_type yyarg[], int yyargn) const;
 
     /// Generate an error message.
-    /// \param yystate   the state where the error occurred.
-    /// \param yyla      the lookahead token.
-    virtual std::string yysyntax_error_ (state_type yystate,
-                                         const symbol_type& yyla) const;
-
+    /// \param yyctx     the context in which the error occurred.
+    virtual std::string yysyntax_error_ (const context& yyctx) const;
     /// Compute post-reduction state.
     /// \param yystate   the current state
     /// \param yysym     the nonterminal to push on the stack
-    state_type yy_lr_goto_state_ (state_type yystate, int yysym);
+    static state_type yy_lr_goto_state_ (state_type yystate, int yysym);
 
     /// Whether the given \c yypact_ value indicates a defaulted state.
     /// \param yyvalue   the value to check
@@ -3090,63 +3881,66 @@ switch (yytype)
     static const short yypact_ninf_;
     static const short yytable_ninf_;
 
-    /// Convert a scanner token number \a t to a symbol number.
-    static token_number_type yytranslate_ (token_type t);
-
-    // Tables.
-  // YYPACT[STATE-NUM] -- Index in YYTABLE of the portion describing
-  // STATE-NUM.
-  static const short yypact_[];
-
-  // YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
-  // Performed when YYTABLE does not specify something else to do.  Zero
-  // means the default is an error.
-  static const unsigned short yydefact_[];
-
-  // YYPGOTO[NTERM-NUM].
-  static const short yypgoto_[];
-
-  // YYDEFGOTO[NTERM-NUM].
-  static const short yydefgoto_[];
-
-  // YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
-  // positive, shift that token.  If negative, reduce the rule whose
-  // number is the opposite.  If YYTABLE_NINF, syntax error.
-  static const short yytable_[];
-
-  static const short yycheck_[];
-
-  // YYSTOS[STATE-NUM] -- The (internal number of the) accessing
-  // symbol of state STATE-NUM.
-  static const unsigned char yystos_[];
-
-  // YYR1[YYN] -- Symbol number of symbol that rule YYN derives.
-  static const unsigned char yyr1_[];
-
-  // YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.
-  static const unsigned char yyr2_[];
-
+    /// Convert a scanner token kind \a t to a symbol kind.
+    /// In theory \a t should be a token_kind_type, but character literals
+    /// are valid, yet not members of the token_type enum.
+    static symbol_kind_type yytranslate_ (int t);
 
     /// Convert the symbol name \a n to a form suitable for a diagnostic.
-    static std::string yytnamerr_ (const char *n);
-
+    static std::string yytnamerr_ (const char *yystr);
 
     /// For a symbol, its name in clear.
     static const char* const yytname_[];
+
+
+    // Tables.
+    // YYPACT[STATE-NUM] -- Index in YYTABLE of the portion describing
+    // STATE-NUM.
+    static const short yypact_[];
+
+    // YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
+    // Performed when YYTABLE does not specify something else to do.  Zero
+    // means the default is an error.
+    static const short yydefact_[];
+
+    // YYPGOTO[NTERM-NUM].
+    static const short yypgoto_[];
+
+    // YYDEFGOTO[NTERM-NUM].
+    static const short yydefgoto_[];
+
+    // YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
+    // positive, shift that token.  If negative, reduce the rule whose
+    // number is the opposite.  If YYTABLE_NINF, syntax error.
+    static const short yytable_[];
+
+    static const short yycheck_[];
+
+    // YYSTOS[STATE-NUM] -- The (internal number of the) accessing
+    // symbol of state STATE-NUM.
+    static const unsigned char yystos_[];
+
+    // YYR1[YYN] -- Symbol number of symbol that rule YYN derives.
+    static const unsigned char yyr1_[];
+
+    // YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.
+    static const signed char yyr2_[];
+
+
 #if YYDEBUG
-  // YYRLINE[YYN] -- Source line where rule number YYN was defined.
-  static const unsigned short yyrline_[];
+    // YYRLINE[YYN] -- Source line where rule number YYN was defined.
+    static const short yyrline_[];
     /// Report on the debug stream that the rule \a r is going to be reduced.
-    virtual void yy_reduce_print_ (int r);
+    virtual void yy_reduce_print_ (int r) const;
     /// Print the state stack on the debug stream.
-    virtual void yystack_print_ ();
+    virtual void yy_stack_print_ () const;
 
     /// Debugging level.
     int yydebug_;
     /// Debug stream.
     std::ostream* yycdebug_;
 
-    /// \brief Display a symbol type, value and location.
+    /// \brief Display a symbol kind, value and location.
     /// \param yyo    The output stream.
     /// \param yysym  The symbol.
     template <typename Base>
@@ -3167,7 +3961,7 @@ switch (yytype)
       /// Default constructor.
       by_state () YY_NOEXCEPT;
 
-      /// The symbol type as needed by the constructor.
+      /// The symbol kind as needed by the constructor.
       typedef state_type kind_type;
 
       /// Constructor.
@@ -3179,15 +3973,16 @@ switch (yytype)
       /// Record that this symbol is empty.
       void clear () YY_NOEXCEPT;
 
-      /// Steal the symbol type from \a that.
+      /// Steal the symbol kind from \a that.
       void move (by_state& that);
 
-      /// The (internal) type number (corresponding to \a state).
-      /// \a empty_symbol when empty.
-      symbol_number_type type_get () const YY_NOEXCEPT;
+      /// The symbol kind (corresponding to \a state).
+      /// \a symbol_kind::S_YYEMPTY when empty.
+      symbol_kind_type kind () const YY_NOEXCEPT;
 
       /// The state number used to denote an empty symbol.
-      enum { empty_state = -1 };
+      /// We use the initial state, as it does not have a value.
+      enum { empty_state = 0 };
 
       /// The state.
       /// \a empty when empty.
@@ -3209,6 +4004,10 @@ switch (yytype)
       /// Assignment, needed by push_back by some old implementations.
       /// Moves the contents of that.
       stack_symbol_type& operator= (stack_symbol_type& that);
+
+      /// Assignment, needed by push_back by other implementations.
+      /// Needed by some other old implementations.
+      stack_symbol_type& operator= (const stack_symbol_type& that);
 #endif
     };
 
@@ -3218,48 +4017,38 @@ switch (yytype)
     {
     public:
       // Hide our reversed order.
-      typedef typename S::reverse_iterator iterator;
-      typedef typename S::const_reverse_iterator const_iterator;
+      typedef typename S::iterator iterator;
+      typedef typename S::const_iterator const_iterator;
       typedef typename S::size_type size_type;
+      typedef typename std::ptrdiff_t index_type;
 
       stack (size_type n = 200)
         : seq_ (n)
       {}
 
-      /// Random access.
-      ///
-      /// Index 0 returns the topmost element.
-      T&
-      operator[] (size_type i)
-      {
-        return seq_[size () - 1 - i];
-      }
-
-      /// Random access.
-      ///
-      /// Index 0 returns the topmost element.
-      T&
-      operator[] (int i)
-      {
-        return operator[] (size_type (i));
-      }
+#if 201103L <= YY_CPLUSPLUS
+      /// Non copyable.
+      stack (const stack&) = delete;
+      /// Non copyable.
+      stack& operator= (const stack&) = delete;
+#endif
 
       /// Random access.
       ///
       /// Index 0 returns the topmost element.
       const T&
-      operator[] (size_type i) const
+      operator[] (index_type i) const
       {
-        return seq_[size () - 1 - i];
+        return seq_[size_type (size () - 1 - i)];
       }
 
       /// Random access.
       ///
       /// Index 0 returns the topmost element.
-      const T&
-      operator[] (int i) const
+      T&
+      operator[] (index_type i)
       {
-        return operator[] (size_type (i));
+        return seq_[size_type (size () - 1 - i)];
       }
 
       /// Steal the contents of \a t.
@@ -3274,7 +4063,7 @@ switch (yytype)
 
       /// Pop elements from the stack.
       void
-      pop (int n = 1) YY_NOEXCEPT
+      pop (std::ptrdiff_t n = 1) YY_NOEXCEPT
       {
         for (; 0 < n; --n)
           seq_.pop_back ();
@@ -3288,49 +4077,53 @@ switch (yytype)
       }
 
       /// Number of elements on the stack.
-      size_type
+      index_type
       size () const YY_NOEXCEPT
       {
-        return seq_.size ();
+        return index_type (seq_.size ());
       }
 
       /// Iterator on top of the stack (going downwards).
       const_iterator
       begin () const YY_NOEXCEPT
       {
-        return seq_.rbegin ();
+        return seq_.begin ();
       }
 
       /// Bottom of the stack.
       const_iterator
       end () const YY_NOEXCEPT
       {
-        return seq_.rend ();
+        return seq_.end ();
       }
 
       /// Present a slice of the top of a stack.
       class slice
       {
       public:
-        slice (const stack& stack, int range)
+        slice (const stack& stack, index_type range)
           : stack_ (stack)
           , range_ (range)
         {}
 
         const T&
-        operator[] (int i) const
+        operator[] (index_type i) const
         {
           return stack_[range_ - i];
         }
 
       private:
         const stack& stack_;
-        int range_;
+        index_type range_;
       };
 
     private:
+#if YY_CPLUSPLUS < 201103L
+      /// Non copyable.
       stack (const stack&);
+      /// Non copyable.
       stack& operator= (const stack&);
+#endif
       /// The wrapped container.
       S seq_;
     };
@@ -3363,13 +4156,9 @@ switch (yytype)
     /// Constants.
     enum
     {
-      yyeof_ = 0,
       yylast_ = 2748,     ///< Last index in yytable_.
       yynnts_ = 192,  ///< Number of nonterminal symbols.
-      yyfinal_ = 26, ///< Termination state number.
-      yyterror_ = 1,
-      yyerrcode_ = 256,
-      yyntokens_ = 62  ///< Number of tokens.
+      yyfinal_ = 26 ///< Termination state number.
     };
 
 
@@ -3377,16 +4166,17 @@ switch (yytype)
     Logger& m_log;
     Lexer& m_lexer;
     Specification& m_specification;
+
   };
 
   inline
-  Parser::token_number_type
-  Parser::yytranslate_ (token_type t)
+  Parser::symbol_kind_type
+  Parser::yytranslate_ (int t)
   {
     // YYTRANSLATE[TOKEN-NUM] -- Symbol number corresponding to
     // TOKEN-NUM as returned by yylex.
     static
-    const token_number_type
+    const signed char
     translate_table[] =
     {
        0,     2,     2,     2,     2,     2,     2,     2,     2,     2,
@@ -3422,851 +4212,429 @@ switch (yytype)
       45,    46,    47,    48,    49,    50,    51,    52,    53,    54,
       55,    56,    57,    58,    59,    60,    61
     };
-    const unsigned user_token_number_max_ = 316;
-    const token_number_type undef_token_ = 2;
+    // Last valid token kind.
+    const int code_max = 316;
 
-    if (static_cast<int> (t) <= yyeof_)
-      return yyeof_;
-    else if (static_cast<unsigned> (t) <= user_token_number_max_)
-      return translate_table[t];
+    if (t <= 0)
+      return symbol_kind::S_YYEOF;
+    else if (t <= code_max)
+      return YY_CAST (symbol_kind_type, translate_table[t]);
     else
-      return undef_token_;
+      return symbol_kind::S_YYUNDEF;
   }
 
   // basic_symbol.
-#if 201103L <= YY_CPLUSPLUS
-  template <typename Base>
-  Parser::basic_symbol<Base>::basic_symbol (basic_symbol&& that)
-    : Base (std::move (that))
-    , value ()
-    , location (std::move (that.location))
-  {
-    switch (this->type_get ())
-    {
-      case 73: // Annotations
-        value.move< Annotation::Ptr > (std::move (that.value));
-        break;
-
-      case 139: // TffPlainAtomic
-      case 143: // TffSystemAtomic
-      case 191: // FofPlainTerm
-      case 192: // FofDefinedTerm
-      case 193: // FofDefinedAtomicTerm
-      case 194: // FofDefinedPlainTerm
-      case 195: // FofSystemTerm
-      case 198: // FofFunctionTerm
-        value.move< Atom::Ptr > (std::move (that.value));
-        break;
-
-      case 112: // ThfUnitaryType
-      case 113: // ThfApplyType
-      case 161: // TffAtomicType
-        value.move< AtomType::Ptr > (std::move (that.value));
-        break;
-
-      case 211: // NonassocConnective
-      case 212: // AssocConnective
-        value.move< BinaryConnective_t > (std::move (that.value));
-        break;
-
-      case 78: // ThfBinaryNonassoc
-      case 79: // ThfBinaryAssoc
-      case 80: // ThfOrFormula
-      case 81: // ThfAndFormula
-      case 82: // ThfApplyFormula
-      case 122: // TffBinaryFormula
-      case 123: // TffBinaryNonassoc
-      case 124: // TffBinaryAssoc
-      case 125: // TffOrFormula
-      case 126: // TffAndFormula
-      case 174: // FofBinaryFormula
-      case 175: // FofBinaryNonassoc
-      case 176: // FofBinaryAssoc
-      case 177: // FofOrFormula
-      case 178: // FofAndFormula
-        value.move< BinaryLogic::Ptr > (std::move (that.value));
-        break;
-
-      case 114: // ThfBinaryType
-      case 115: // ThfMappingType
-      case 116: // ThfXprodType
-      case 117: // ThfUnionType
-      case 163: // TffMappingType
-      case 164: // TffXprodType
-        value.move< BinaryType::Ptr > (std::move (that.value));
-        break;
-
-      case 98: // ThfConditional
-      case 144: // TfxConditional
-        value.move< ConditionalTerm::Ptr > (std::move (that.value));
-        break;
-
-      case 108: // ThfConnTerm
-        value.move< ConnectiveAtom::Ptr > (std::move (that.value));
-        break;
-
-      case 96: // ThfSystemAtomic
-        value.move< ConstantAtom::Ptr > (std::move (that.value));
-        break;
-
-      case 228: // DefinedTerm
-        value.move< DefinedAtom::Ptr > (std::move (that.value));
-        break;
-
-      case 65: // Definition
-        value.move< Definition::Ptr > (std::move (that.value));
-        break;
-
-      case 103: // ThfLetDefn
-      case 149: // TfxLetDefn
-        value.move< DefinitionAtom::Ptr > (std::move (that.value));
-        break;
-
-      case 99: // ThfLet
-      case 145: // TfxLet
-        value.move< DefinitionTerm::Ptr > (std::move (that.value));
-        break;
-
-      case 64: // Definitions
-        value.move< Definitions::Ptr > (std::move (that.value));
-        break;
-
-      case 249: // DistinctObjectLiteral
-        value.move< DistinctObjectLiteral::Ptr > (std::move (that.value));
-        break;
-
-      case 236: // FormulaData
-        value.move< FormulaData::Ptr > (std::move (that.value));
-        break;
-
-      case 66: // AnnotatedFormula
-      case 67: // ThfAnnotated
-      case 68: // TffAnnotated
-      case 69: // TcfAnnotated
-      case 70: // FofAnnotated
-      case 71: // CnfAnnotated
-      case 72: // TpiAnnotated
-        value.move< FormulaDefinition::Ptr > (std::move (that.value));
-        break;
-
-      case 97: // ThfFofFunction
-        value.move< FunctorAtom::Ptr > (std::move (that.value));
-        break;
-
-      case 233: // GeneralData
-        value.move< GeneralData::Ptr > (std::move (that.value));
-        break;
-
-      case 234: // GeneralFunction
-        value.move< GeneralFunction::Ptr > (std::move (that.value));
-        break;
-
-      case 237: // GeneralList
-        value.move< GeneralList::Ptr > (std::move (that.value));
-        break;
-
-      case 232: // GeneralTerm
-        value.move< GeneralTerm::Ptr > (std::move (that.value));
-        break;
-
-      case 214: // TypeConstant
-      case 215: // TypeFunctor
-      case 216: // DefinedType
-      case 217: // Atom
-      case 218: // UntypedAtom
-      case 222: // Constant
-      case 223: // Functor
-      case 224: // SystemConstant
-      case 225: // SystemFunctor
-      case 226: // DefinedConstant
-      case 227: // DefinedFunctor
-      case 230: // Name
-      case 240: // AtomicWord
-      case 241: // AtomicDefinedWord
-      case 242: // AtomicSystemWord
-      case 244: // FileName
-      case 250: // LowerWordLiteral
-      case 251: // SingleQuotedLiteral
-      case 252: // DollarWordLiteral
-      case 253: // DollarDollarWordLiteral
-        value.move< Identifier::Ptr > (std::move (that.value));
-        break;
-
-      case 238: // IncludeDefinition
-        value.move< IncludeDefinition::Ptr > (std::move (that.value));
-        break;
-
-      case 219: // DefinedInfixPred
-      case 220: // InfixEquality
-      case 221: // InfixInequality
-        value.move< InfixConnective_t > (std::move (that.value));
-        break;
-
-      case 91: // ThfInfixUnary
-      case 95: // ThfDefinedInfix
-      case 137: // TffInfixUnary
-      case 142: // TffDefinedInfix
-      case 180: // FofInfixUnary
-      case 189: // FofDefinedInfixFormula
-        value.move< InfixLogic::Ptr > (std::move (that.value));
-        break;
-
-      case 245: // IntegerLiteral
-        value.move< IntegerLiteral::Ptr > (std::move (that.value));
-        break;
-
-      case 239: // FormulaSelection
-        value.move< ListLiteral::Ptr > (std::move (that.value));
-        break;
-
-      case 104: // ThfLetDefnList
-      case 107: // ThfFormulaList
-      case 109: // ThfArguments
-      case 151: // TfxLetDefnList
-      case 155: // TffArguments
-      case 162: // TffTypeArguments
-      case 196: // FofArguments
-      case 201: // FofFormulaTupleList
-        value.move< ListLogicElements::Ptr > (std::move (that.value));
-        break;
-
-      case 87: // ThfVariableList
-      case 132: // TffVariableList
-      case 184: // FofVariableList
-      case 229: // NameList
-      case 235: // GeneralTerms
-        value.move< ListNodeElements::Ptr > (std::move (that.value));
-        break;
-
-      case 101: // ThfAtomTypingList
-      case 147: // TffAtomTypingList
-      case 166: // TffTypeList
-        value.move< ListTypeElements::Ptr > (std::move (that.value));
-        break;
-
-      case 74: // TpiFormula
-      case 75: // ThfFormula
-      case 76: // ThfLogicFormula
-      case 77: // ThfBinaryFormula
-      case 83: // ThfUnitFormula
-      case 84: // ThfPreunitFormula
-      case 85: // ThfUnitaryFormula
-      case 89: // ThfUnaryFormula
-      case 92: // ThfAtomicFormula
-      case 93: // ThfPlainAtomic
-      case 102: // ThfLetDefns
-      case 105: // ThfUnitaryTerm
-      case 120: // TffFormula
-      case 121: // TffLogicFormula
-      case 127: // TffUnitFormula
-      case 128: // TffPreunitFormula
-      case 129: // TffUnitaryFormula
-      case 135: // TffUnaryFormula
-      case 148: // TfxLetDefns
-      case 150: // TfxLetLhs
-      case 152: // TffTerm
-      case 153: // TffUnitaryTerm
-      case 169: // TcfFormula
-      case 170: // TcfLogicFormula
-      case 172: // FofFormula
-      case 173: // FofLogicFormula
-      case 179: // FofUnaryFormula
-      case 181: // FofUnitFormula
-      case 182: // FofUnitaryFormula
-      case 185: // FofAtomicFormula
-      case 187: // FofDefinedAtomicFormula
-      case 202: // CnfFormula
-      case 203: // Disjunction
-      case 204: // Literal
-        value.move< Logic::Ptr > (std::move (that.value));
-        break;
-
-      case 106: // ThfTuple
-      case 154: // TfxTuple
-      case 200: // FofFormulaTuple
-        value.move< LogicTuple::Ptr > (std::move (that.value));
-        break;
-
-      case 86: // ThfQuantifiedFormula
-      case 131: // TffQuantifiedFormula
-      case 171: // TcfQuantifiedFormula
-      case 183: // FofQuantifiedFormula
-        value.move< QuantifiedLogic::Ptr > (std::move (that.value));
-        break;
-
-      case 205: // ThfQuantifier
-      case 206: // Th1Quantifier
-      case 207: // Th0Quantifier
-      case 210: // FofQuantifier
-        value.move< QuantifiedQuantifier_t > (std::move (that.value));
-        break;
-
-      case 158: // Tf1QuantifiedType
-        value.move< QuantifiedType::Ptr > (std::move (that.value));
-        break;
-
-      case 247: // RationalLiteral
-        value.move< RationalLiteral::Ptr > (std::move (that.value));
-        break;
-
-      case 246: // RealLiteral
-        value.move< RealLiteral::Ptr > (std::move (that.value));
-        break;
-
-      case 231: // FormulaRole
-        value.move< Role::Ptr > (std::move (that.value));
-        break;
-
-      case 119: // ThfSequent
-      case 168: // TfxSequent
-      case 199: // FofSequent
-        value.move< SequentLogic::Ptr > (std::move (that.value));
-        break;
-
-      case 63: // Specification
-        value.move< Specification::Ptr > (std::move (that.value));
-        break;
-
-      case 118: // ThfSubtype
-      case 167: // TffSubtype
-        value.move< SubType::Ptr > (std::move (that.value));
-        break;
-
-      case 94: // ThfDefinedAtomic
-      case 138: // TffAtomicFormula
-      case 140: // TffDefinedAtomic
-      case 141: // TffDefinedPlain
-      case 186: // FofPlainAtomicFormula
-      case 188: // FofDefinedPlainFormula
-      case 190: // FofSystemAtomicFormula
-      case 197: // FofTerm
-        value.move< Term::Ptr > (std::move (that.value));
-        break;
-
-      case 3: // "tpi"
-      case 4: // "thf"
-      case 5: // "tff"
-      case 6: // "tcf"
-      case 7: // "fof"
-      case 8: // "cnf"
-      case 9: // "fot"
-      case 10: // "ite"
-      case 11: // "let"
-      case 12: // "@"
-      case 13: // "&"
-      case 14: // "$"
-      case 15: // "$$"
-      case 16: // ":"
-      case 17: // ","
-      case 18: // "."
-      case 19: // "+"
-      case 20: // "="
-      case 21: // "!="
-      case 22: // "("
-      case 23: // ")"
-      case 24: // "["
-      case 25: // "]"
-      case 26: // "{"
-      case 27: // "}"
-      case 28: // "|"
-      case 29: // "*"
-      case 30: // ">"
-      case 31: // "!"
-      case 32: // "~"
-      case 33: // "?"
-      case 34: // "@-"
-      case 35: // "@+"
-      case 36: // "^"
-      case 37: // "!!"
-      case 38: // "??"
-      case 39: // "@@+"
-      case 40: // "@@-"
-      case 41: // "@="
-      case 42: // "!>"
-      case 43: // "?*"
-      case 44: // "<=>"
-      case 45: // "=>"
-      case 46: // "<="
-      case 47: // "<~>"
-      case 48: // "~|"
-      case 49: // "~&"
-      case 50: // ":="
-      case 51: // "-->"
-      case 52: // "<<"
-      case 53: // "include"
-        value.move< Token::Ptr > (std::move (that.value));
-        break;
-
-      case 165: // TfxTupleType
-        value.move< TupleType::Ptr > (std::move (that.value));
-        break;
-
-      case 100: // ThfLetTypes
-      case 111: // ThfTopLevelType
-      case 146: // TfxLetTypes
-      case 157: // TffTopLevelType
-      case 159: // TffMonotype
-      case 160: // TffUnitaryType
-        value.move< Type::Ptr > (std::move (that.value));
-        break;
-
-      case 110: // ThfAtomTyping
-      case 156: // TffAtomTyping
-        value.move< TypedAtom::Ptr > (std::move (that.value));
-        break;
-
-      case 208: // ThfUnaryConnective
-      case 209: // Th1UnaryConnective
-      case 213: // UnaryConnective
-        value.move< UnaryConnective_t > (std::move (that.value));
-        break;
-
-      case 90: // ThfPrefixUnary
-      case 136: // TffPrefixUnary
-        value.move< UnaryLogic::Ptr > (std::move (that.value));
-        break;
-
-      case 243: // Number
-        value.move< ValueLiteral::Ptr > (std::move (that.value));
-        break;
-
-      case 88: // ThfTypedVariable
-      case 130: // TfxUnitaryFormula
-      case 133: // TffVariable
-      case 134: // TffTypedVariable
-      case 248: // Variable
-        value.move< VariableTerm::Ptr > (std::move (that.value));
-        break;
-
-      case 54: // "integer"
-      case 55: // "real"
-      case 56: // "rational"
-      case 57: // "double_quoted"
-      case 58: // "lower_word"
-      case 59: // "upper_word"
-      case 60: // "identifier"
-      case 61: // "single_quoted"
-        value.move< std::string > (std::move (that.value));
-        break;
-
-      default:
-        break;
-    }
-
-  }
-#endif
-
   template <typename Base>
   Parser::basic_symbol<Base>::basic_symbol (const basic_symbol& that)
     : Base (that)
     , value ()
     , location (that.location)
   {
-    switch (this->type_get ())
+    switch (this->kind ())
     {
-      case 73: // Annotations
+      case symbol_kind::S_Annotations: // Annotations
         value.copy< Annotation::Ptr > (YY_MOVE (that.value));
         break;
 
-      case 139: // TffPlainAtomic
-      case 143: // TffSystemAtomic
-      case 191: // FofPlainTerm
-      case 192: // FofDefinedTerm
-      case 193: // FofDefinedAtomicTerm
-      case 194: // FofDefinedPlainTerm
-      case 195: // FofSystemTerm
-      case 198: // FofFunctionTerm
+      case symbol_kind::S_TffPlainAtomic: // TffPlainAtomic
+      case symbol_kind::S_TffSystemAtomic: // TffSystemAtomic
+      case symbol_kind::S_FofPlainTerm: // FofPlainTerm
+      case symbol_kind::S_FofDefinedTerm: // FofDefinedTerm
+      case symbol_kind::S_FofDefinedAtomicTerm: // FofDefinedAtomicTerm
+      case symbol_kind::S_FofDefinedPlainTerm: // FofDefinedPlainTerm
+      case symbol_kind::S_FofSystemTerm: // FofSystemTerm
+      case symbol_kind::S_FofFunctionTerm: // FofFunctionTerm
         value.copy< Atom::Ptr > (YY_MOVE (that.value));
         break;
 
-      case 112: // ThfUnitaryType
-      case 113: // ThfApplyType
-      case 161: // TffAtomicType
+      case symbol_kind::S_ThfUnitaryType: // ThfUnitaryType
+      case symbol_kind::S_ThfApplyType: // ThfApplyType
+      case symbol_kind::S_TffAtomicType: // TffAtomicType
         value.copy< AtomType::Ptr > (YY_MOVE (that.value));
         break;
 
-      case 211: // NonassocConnective
-      case 212: // AssocConnective
+      case symbol_kind::S_NonassocConnective: // NonassocConnective
+      case symbol_kind::S_AssocConnective: // AssocConnective
         value.copy< BinaryConnective_t > (YY_MOVE (that.value));
         break;
 
-      case 78: // ThfBinaryNonassoc
-      case 79: // ThfBinaryAssoc
-      case 80: // ThfOrFormula
-      case 81: // ThfAndFormula
-      case 82: // ThfApplyFormula
-      case 122: // TffBinaryFormula
-      case 123: // TffBinaryNonassoc
-      case 124: // TffBinaryAssoc
-      case 125: // TffOrFormula
-      case 126: // TffAndFormula
-      case 174: // FofBinaryFormula
-      case 175: // FofBinaryNonassoc
-      case 176: // FofBinaryAssoc
-      case 177: // FofOrFormula
-      case 178: // FofAndFormula
+      case symbol_kind::S_ThfBinaryNonassoc: // ThfBinaryNonassoc
+      case symbol_kind::S_ThfBinaryAssoc: // ThfBinaryAssoc
+      case symbol_kind::S_ThfOrFormula: // ThfOrFormula
+      case symbol_kind::S_ThfAndFormula: // ThfAndFormula
+      case symbol_kind::S_ThfApplyFormula: // ThfApplyFormula
+      case symbol_kind::S_TffBinaryFormula: // TffBinaryFormula
+      case symbol_kind::S_TffBinaryNonassoc: // TffBinaryNonassoc
+      case symbol_kind::S_TffBinaryAssoc: // TffBinaryAssoc
+      case symbol_kind::S_TffOrFormula: // TffOrFormula
+      case symbol_kind::S_TffAndFormula: // TffAndFormula
+      case symbol_kind::S_FofBinaryFormula: // FofBinaryFormula
+      case symbol_kind::S_FofBinaryNonassoc: // FofBinaryNonassoc
+      case symbol_kind::S_FofBinaryAssoc: // FofBinaryAssoc
+      case symbol_kind::S_FofOrFormula: // FofOrFormula
+      case symbol_kind::S_FofAndFormula: // FofAndFormula
         value.copy< BinaryLogic::Ptr > (YY_MOVE (that.value));
         break;
 
-      case 114: // ThfBinaryType
-      case 115: // ThfMappingType
-      case 116: // ThfXprodType
-      case 117: // ThfUnionType
-      case 163: // TffMappingType
-      case 164: // TffXprodType
+      case symbol_kind::S_ThfBinaryType: // ThfBinaryType
+      case symbol_kind::S_ThfMappingType: // ThfMappingType
+      case symbol_kind::S_ThfXprodType: // ThfXprodType
+      case symbol_kind::S_ThfUnionType: // ThfUnionType
+      case symbol_kind::S_TffMappingType: // TffMappingType
+      case symbol_kind::S_TffXprodType: // TffXprodType
         value.copy< BinaryType::Ptr > (YY_MOVE (that.value));
         break;
 
-      case 98: // ThfConditional
-      case 144: // TfxConditional
+      case symbol_kind::S_ThfConditional: // ThfConditional
+      case symbol_kind::S_TfxConditional: // TfxConditional
         value.copy< ConditionalTerm::Ptr > (YY_MOVE (that.value));
         break;
 
-      case 108: // ThfConnTerm
+      case symbol_kind::S_ThfConnTerm: // ThfConnTerm
         value.copy< ConnectiveAtom::Ptr > (YY_MOVE (that.value));
         break;
 
-      case 96: // ThfSystemAtomic
+      case symbol_kind::S_ThfSystemAtomic: // ThfSystemAtomic
         value.copy< ConstantAtom::Ptr > (YY_MOVE (that.value));
         break;
 
-      case 228: // DefinedTerm
+      case symbol_kind::S_DefinedTerm: // DefinedTerm
         value.copy< DefinedAtom::Ptr > (YY_MOVE (that.value));
         break;
 
-      case 65: // Definition
+      case symbol_kind::S_Definition: // Definition
         value.copy< Definition::Ptr > (YY_MOVE (that.value));
         break;
 
-      case 103: // ThfLetDefn
-      case 149: // TfxLetDefn
+      case symbol_kind::S_ThfLetDefn: // ThfLetDefn
+      case symbol_kind::S_TfxLetDefn: // TfxLetDefn
         value.copy< DefinitionAtom::Ptr > (YY_MOVE (that.value));
         break;
 
-      case 99: // ThfLet
-      case 145: // TfxLet
+      case symbol_kind::S_ThfLet: // ThfLet
+      case symbol_kind::S_TfxLet: // TfxLet
         value.copy< DefinitionTerm::Ptr > (YY_MOVE (that.value));
         break;
 
-      case 64: // Definitions
+      case symbol_kind::S_Definitions: // Definitions
         value.copy< Definitions::Ptr > (YY_MOVE (that.value));
         break;
 
-      case 249: // DistinctObjectLiteral
+      case symbol_kind::S_DistinctObjectLiteral: // DistinctObjectLiteral
         value.copy< DistinctObjectLiteral::Ptr > (YY_MOVE (that.value));
         break;
 
-      case 236: // FormulaData
+      case symbol_kind::S_FormulaData: // FormulaData
         value.copy< FormulaData::Ptr > (YY_MOVE (that.value));
         break;
 
-      case 66: // AnnotatedFormula
-      case 67: // ThfAnnotated
-      case 68: // TffAnnotated
-      case 69: // TcfAnnotated
-      case 70: // FofAnnotated
-      case 71: // CnfAnnotated
-      case 72: // TpiAnnotated
+      case symbol_kind::S_AnnotatedFormula: // AnnotatedFormula
+      case symbol_kind::S_ThfAnnotated: // ThfAnnotated
+      case symbol_kind::S_TffAnnotated: // TffAnnotated
+      case symbol_kind::S_TcfAnnotated: // TcfAnnotated
+      case symbol_kind::S_FofAnnotated: // FofAnnotated
+      case symbol_kind::S_CnfAnnotated: // CnfAnnotated
+      case symbol_kind::S_TpiAnnotated: // TpiAnnotated
         value.copy< FormulaDefinition::Ptr > (YY_MOVE (that.value));
         break;
 
-      case 97: // ThfFofFunction
+      case symbol_kind::S_ThfFofFunction: // ThfFofFunction
         value.copy< FunctorAtom::Ptr > (YY_MOVE (that.value));
         break;
 
-      case 233: // GeneralData
+      case symbol_kind::S_GeneralData: // GeneralData
         value.copy< GeneralData::Ptr > (YY_MOVE (that.value));
         break;
 
-      case 234: // GeneralFunction
+      case symbol_kind::S_GeneralFunction: // GeneralFunction
         value.copy< GeneralFunction::Ptr > (YY_MOVE (that.value));
         break;
 
-      case 237: // GeneralList
+      case symbol_kind::S_GeneralList: // GeneralList
         value.copy< GeneralList::Ptr > (YY_MOVE (that.value));
         break;
 
-      case 232: // GeneralTerm
+      case symbol_kind::S_GeneralTerm: // GeneralTerm
         value.copy< GeneralTerm::Ptr > (YY_MOVE (that.value));
         break;
 
-      case 214: // TypeConstant
-      case 215: // TypeFunctor
-      case 216: // DefinedType
-      case 217: // Atom
-      case 218: // UntypedAtom
-      case 222: // Constant
-      case 223: // Functor
-      case 224: // SystemConstant
-      case 225: // SystemFunctor
-      case 226: // DefinedConstant
-      case 227: // DefinedFunctor
-      case 230: // Name
-      case 240: // AtomicWord
-      case 241: // AtomicDefinedWord
-      case 242: // AtomicSystemWord
-      case 244: // FileName
-      case 250: // LowerWordLiteral
-      case 251: // SingleQuotedLiteral
-      case 252: // DollarWordLiteral
-      case 253: // DollarDollarWordLiteral
+      case symbol_kind::S_TypeConstant: // TypeConstant
+      case symbol_kind::S_TypeFunctor: // TypeFunctor
+      case symbol_kind::S_DefinedType: // DefinedType
+      case symbol_kind::S_Atom: // Atom
+      case symbol_kind::S_UntypedAtom: // UntypedAtom
+      case symbol_kind::S_Constant: // Constant
+      case symbol_kind::S_Functor: // Functor
+      case symbol_kind::S_SystemConstant: // SystemConstant
+      case symbol_kind::S_SystemFunctor: // SystemFunctor
+      case symbol_kind::S_DefinedConstant: // DefinedConstant
+      case symbol_kind::S_DefinedFunctor: // DefinedFunctor
+      case symbol_kind::S_Name: // Name
+      case symbol_kind::S_AtomicWord: // AtomicWord
+      case symbol_kind::S_AtomicDefinedWord: // AtomicDefinedWord
+      case symbol_kind::S_AtomicSystemWord: // AtomicSystemWord
+      case symbol_kind::S_FileName: // FileName
+      case symbol_kind::S_LowerWordLiteral: // LowerWordLiteral
+      case symbol_kind::S_SingleQuotedLiteral: // SingleQuotedLiteral
+      case symbol_kind::S_DollarWordLiteral: // DollarWordLiteral
+      case symbol_kind::S_DollarDollarWordLiteral: // DollarDollarWordLiteral
         value.copy< Identifier::Ptr > (YY_MOVE (that.value));
         break;
 
-      case 238: // IncludeDefinition
+      case symbol_kind::S_IncludeDefinition: // IncludeDefinition
         value.copy< IncludeDefinition::Ptr > (YY_MOVE (that.value));
         break;
 
-      case 219: // DefinedInfixPred
-      case 220: // InfixEquality
-      case 221: // InfixInequality
+      case symbol_kind::S_DefinedInfixPred: // DefinedInfixPred
+      case symbol_kind::S_InfixEquality: // InfixEquality
+      case symbol_kind::S_InfixInequality: // InfixInequality
         value.copy< InfixConnective_t > (YY_MOVE (that.value));
         break;
 
-      case 91: // ThfInfixUnary
-      case 95: // ThfDefinedInfix
-      case 137: // TffInfixUnary
-      case 142: // TffDefinedInfix
-      case 180: // FofInfixUnary
-      case 189: // FofDefinedInfixFormula
+      case symbol_kind::S_ThfInfixUnary: // ThfInfixUnary
+      case symbol_kind::S_ThfDefinedInfix: // ThfDefinedInfix
+      case symbol_kind::S_TffInfixUnary: // TffInfixUnary
+      case symbol_kind::S_TffDefinedInfix: // TffDefinedInfix
+      case symbol_kind::S_FofInfixUnary: // FofInfixUnary
+      case symbol_kind::S_FofDefinedInfixFormula: // FofDefinedInfixFormula
         value.copy< InfixLogic::Ptr > (YY_MOVE (that.value));
         break;
 
-      case 245: // IntegerLiteral
+      case symbol_kind::S_IntegerLiteral: // IntegerLiteral
         value.copy< IntegerLiteral::Ptr > (YY_MOVE (that.value));
         break;
 
-      case 239: // FormulaSelection
+      case symbol_kind::S_FormulaSelection: // FormulaSelection
         value.copy< ListLiteral::Ptr > (YY_MOVE (that.value));
         break;
 
-      case 104: // ThfLetDefnList
-      case 107: // ThfFormulaList
-      case 109: // ThfArguments
-      case 151: // TfxLetDefnList
-      case 155: // TffArguments
-      case 162: // TffTypeArguments
-      case 196: // FofArguments
-      case 201: // FofFormulaTupleList
+      case symbol_kind::S_ThfLetDefnList: // ThfLetDefnList
+      case symbol_kind::S_ThfFormulaList: // ThfFormulaList
+      case symbol_kind::S_ThfArguments: // ThfArguments
+      case symbol_kind::S_TfxLetDefnList: // TfxLetDefnList
+      case symbol_kind::S_TffArguments: // TffArguments
+      case symbol_kind::S_TffTypeArguments: // TffTypeArguments
+      case symbol_kind::S_FofArguments: // FofArguments
+      case symbol_kind::S_FofFormulaTupleList: // FofFormulaTupleList
         value.copy< ListLogicElements::Ptr > (YY_MOVE (that.value));
         break;
 
-      case 87: // ThfVariableList
-      case 132: // TffVariableList
-      case 184: // FofVariableList
-      case 229: // NameList
-      case 235: // GeneralTerms
+      case symbol_kind::S_ThfVariableList: // ThfVariableList
+      case symbol_kind::S_TffVariableList: // TffVariableList
+      case symbol_kind::S_FofVariableList: // FofVariableList
+      case symbol_kind::S_NameList: // NameList
+      case symbol_kind::S_GeneralTerms: // GeneralTerms
         value.copy< ListNodeElements::Ptr > (YY_MOVE (that.value));
         break;
 
-      case 101: // ThfAtomTypingList
-      case 147: // TffAtomTypingList
-      case 166: // TffTypeList
+      case symbol_kind::S_ThfAtomTypingList: // ThfAtomTypingList
+      case symbol_kind::S_TffAtomTypingList: // TffAtomTypingList
+      case symbol_kind::S_TffTypeList: // TffTypeList
         value.copy< ListTypeElements::Ptr > (YY_MOVE (that.value));
         break;
 
-      case 74: // TpiFormula
-      case 75: // ThfFormula
-      case 76: // ThfLogicFormula
-      case 77: // ThfBinaryFormula
-      case 83: // ThfUnitFormula
-      case 84: // ThfPreunitFormula
-      case 85: // ThfUnitaryFormula
-      case 89: // ThfUnaryFormula
-      case 92: // ThfAtomicFormula
-      case 93: // ThfPlainAtomic
-      case 102: // ThfLetDefns
-      case 105: // ThfUnitaryTerm
-      case 120: // TffFormula
-      case 121: // TffLogicFormula
-      case 127: // TffUnitFormula
-      case 128: // TffPreunitFormula
-      case 129: // TffUnitaryFormula
-      case 135: // TffUnaryFormula
-      case 148: // TfxLetDefns
-      case 150: // TfxLetLhs
-      case 152: // TffTerm
-      case 153: // TffUnitaryTerm
-      case 169: // TcfFormula
-      case 170: // TcfLogicFormula
-      case 172: // FofFormula
-      case 173: // FofLogicFormula
-      case 179: // FofUnaryFormula
-      case 181: // FofUnitFormula
-      case 182: // FofUnitaryFormula
-      case 185: // FofAtomicFormula
-      case 187: // FofDefinedAtomicFormula
-      case 202: // CnfFormula
-      case 203: // Disjunction
-      case 204: // Literal
+      case symbol_kind::S_TpiFormula: // TpiFormula
+      case symbol_kind::S_ThfFormula: // ThfFormula
+      case symbol_kind::S_ThfLogicFormula: // ThfLogicFormula
+      case symbol_kind::S_ThfBinaryFormula: // ThfBinaryFormula
+      case symbol_kind::S_ThfUnitFormula: // ThfUnitFormula
+      case symbol_kind::S_ThfPreunitFormula: // ThfPreunitFormula
+      case symbol_kind::S_ThfUnitaryFormula: // ThfUnitaryFormula
+      case symbol_kind::S_ThfUnaryFormula: // ThfUnaryFormula
+      case symbol_kind::S_ThfAtomicFormula: // ThfAtomicFormula
+      case symbol_kind::S_ThfPlainAtomic: // ThfPlainAtomic
+      case symbol_kind::S_ThfLetDefns: // ThfLetDefns
+      case symbol_kind::S_ThfUnitaryTerm: // ThfUnitaryTerm
+      case symbol_kind::S_TffFormula: // TffFormula
+      case symbol_kind::S_TffLogicFormula: // TffLogicFormula
+      case symbol_kind::S_TffUnitFormula: // TffUnitFormula
+      case symbol_kind::S_TffPreunitFormula: // TffPreunitFormula
+      case symbol_kind::S_TffUnitaryFormula: // TffUnitaryFormula
+      case symbol_kind::S_TffUnaryFormula: // TffUnaryFormula
+      case symbol_kind::S_TfxLetDefns: // TfxLetDefns
+      case symbol_kind::S_TfxLetLhs: // TfxLetLhs
+      case symbol_kind::S_TffTerm: // TffTerm
+      case symbol_kind::S_TffUnitaryTerm: // TffUnitaryTerm
+      case symbol_kind::S_TcfFormula: // TcfFormula
+      case symbol_kind::S_TcfLogicFormula: // TcfLogicFormula
+      case symbol_kind::S_FofFormula: // FofFormula
+      case symbol_kind::S_FofLogicFormula: // FofLogicFormula
+      case symbol_kind::S_FofUnaryFormula: // FofUnaryFormula
+      case symbol_kind::S_FofUnitFormula: // FofUnitFormula
+      case symbol_kind::S_FofUnitaryFormula: // FofUnitaryFormula
+      case symbol_kind::S_FofAtomicFormula: // FofAtomicFormula
+      case symbol_kind::S_FofDefinedAtomicFormula: // FofDefinedAtomicFormula
+      case symbol_kind::S_CnfFormula: // CnfFormula
+      case symbol_kind::S_Disjunction: // Disjunction
+      case symbol_kind::S_Literal: // Literal
         value.copy< Logic::Ptr > (YY_MOVE (that.value));
         break;
 
-      case 106: // ThfTuple
-      case 154: // TfxTuple
-      case 200: // FofFormulaTuple
+      case symbol_kind::S_ThfTuple: // ThfTuple
+      case symbol_kind::S_TfxTuple: // TfxTuple
+      case symbol_kind::S_FofFormulaTuple: // FofFormulaTuple
         value.copy< LogicTuple::Ptr > (YY_MOVE (that.value));
         break;
 
-      case 86: // ThfQuantifiedFormula
-      case 131: // TffQuantifiedFormula
-      case 171: // TcfQuantifiedFormula
-      case 183: // FofQuantifiedFormula
+      case symbol_kind::S_ThfQuantifiedFormula: // ThfQuantifiedFormula
+      case symbol_kind::S_TffQuantifiedFormula: // TffQuantifiedFormula
+      case symbol_kind::S_TcfQuantifiedFormula: // TcfQuantifiedFormula
+      case symbol_kind::S_FofQuantifiedFormula: // FofQuantifiedFormula
         value.copy< QuantifiedLogic::Ptr > (YY_MOVE (that.value));
         break;
 
-      case 205: // ThfQuantifier
-      case 206: // Th1Quantifier
-      case 207: // Th0Quantifier
-      case 210: // FofQuantifier
+      case symbol_kind::S_ThfQuantifier: // ThfQuantifier
+      case symbol_kind::S_Th1Quantifier: // Th1Quantifier
+      case symbol_kind::S_Th0Quantifier: // Th0Quantifier
+      case symbol_kind::S_FofQuantifier: // FofQuantifier
         value.copy< QuantifiedQuantifier_t > (YY_MOVE (that.value));
         break;
 
-      case 158: // Tf1QuantifiedType
+      case symbol_kind::S_Tf1QuantifiedType: // Tf1QuantifiedType
         value.copy< QuantifiedType::Ptr > (YY_MOVE (that.value));
         break;
 
-      case 247: // RationalLiteral
+      case symbol_kind::S_RationalLiteral: // RationalLiteral
         value.copy< RationalLiteral::Ptr > (YY_MOVE (that.value));
         break;
 
-      case 246: // RealLiteral
+      case symbol_kind::S_RealLiteral: // RealLiteral
         value.copy< RealLiteral::Ptr > (YY_MOVE (that.value));
         break;
 
-      case 231: // FormulaRole
+      case symbol_kind::S_FormulaRole: // FormulaRole
         value.copy< Role::Ptr > (YY_MOVE (that.value));
         break;
 
-      case 119: // ThfSequent
-      case 168: // TfxSequent
-      case 199: // FofSequent
+      case symbol_kind::S_ThfSequent: // ThfSequent
+      case symbol_kind::S_TfxSequent: // TfxSequent
+      case symbol_kind::S_FofSequent: // FofSequent
         value.copy< SequentLogic::Ptr > (YY_MOVE (that.value));
         break;
 
-      case 63: // Specification
+      case symbol_kind::S_Specification: // Specification
         value.copy< Specification::Ptr > (YY_MOVE (that.value));
         break;
 
-      case 118: // ThfSubtype
-      case 167: // TffSubtype
+      case symbol_kind::S_ThfSubtype: // ThfSubtype
+      case symbol_kind::S_TffSubtype: // TffSubtype
         value.copy< SubType::Ptr > (YY_MOVE (that.value));
         break;
 
-      case 94: // ThfDefinedAtomic
-      case 138: // TffAtomicFormula
-      case 140: // TffDefinedAtomic
-      case 141: // TffDefinedPlain
-      case 186: // FofPlainAtomicFormula
-      case 188: // FofDefinedPlainFormula
-      case 190: // FofSystemAtomicFormula
-      case 197: // FofTerm
+      case symbol_kind::S_ThfDefinedAtomic: // ThfDefinedAtomic
+      case symbol_kind::S_TffAtomicFormula: // TffAtomicFormula
+      case symbol_kind::S_TffDefinedAtomic: // TffDefinedAtomic
+      case symbol_kind::S_TffDefinedPlain: // TffDefinedPlain
+      case symbol_kind::S_FofPlainAtomicFormula: // FofPlainAtomicFormula
+      case symbol_kind::S_FofDefinedPlainFormula: // FofDefinedPlainFormula
+      case symbol_kind::S_FofSystemAtomicFormula: // FofSystemAtomicFormula
+      case symbol_kind::S_FofTerm: // FofTerm
         value.copy< Term::Ptr > (YY_MOVE (that.value));
         break;
 
-      case 3: // "tpi"
-      case 4: // "thf"
-      case 5: // "tff"
-      case 6: // "tcf"
-      case 7: // "fof"
-      case 8: // "cnf"
-      case 9: // "fot"
-      case 10: // "ite"
-      case 11: // "let"
-      case 12: // "@"
-      case 13: // "&"
-      case 14: // "$"
-      case 15: // "$$"
-      case 16: // ":"
-      case 17: // ","
-      case 18: // "."
-      case 19: // "+"
-      case 20: // "="
-      case 21: // "!="
-      case 22: // "("
-      case 23: // ")"
-      case 24: // "["
-      case 25: // "]"
-      case 26: // "{"
-      case 27: // "}"
-      case 28: // "|"
-      case 29: // "*"
-      case 30: // ">"
-      case 31: // "!"
-      case 32: // "~"
-      case 33: // "?"
-      case 34: // "@-"
-      case 35: // "@+"
-      case 36: // "^"
-      case 37: // "!!"
-      case 38: // "??"
-      case 39: // "@@+"
-      case 40: // "@@-"
-      case 41: // "@="
-      case 42: // "!>"
-      case 43: // "?*"
-      case 44: // "<=>"
-      case 45: // "=>"
-      case 46: // "<="
-      case 47: // "<~>"
-      case 48: // "~|"
-      case 49: // "~&"
-      case 50: // ":="
-      case 51: // "-->"
-      case 52: // "<<"
-      case 53: // "include"
+      case symbol_kind::S_TPI: // "tpi"
+      case symbol_kind::S_THF: // "thf"
+      case symbol_kind::S_TFF: // "tff"
+      case symbol_kind::S_TCF: // "tcf"
+      case symbol_kind::S_FOF: // "fof"
+      case symbol_kind::S_CNF: // "cnf"
+      case symbol_kind::S_FOT: // "fot"
+      case symbol_kind::S_ITE: // "ite"
+      case symbol_kind::S_LET: // "let"
+      case symbol_kind::S_AT: // "@"
+      case symbol_kind::S_AND: // "&"
+      case symbol_kind::S_DOLLAR: // "$"
+      case symbol_kind::S_DOLLARDOLLAR: // "$$"
+      case symbol_kind::S_COLON: // ":"
+      case symbol_kind::S_COMMA: // ","
+      case symbol_kind::S_DOT: // "."
+      case symbol_kind::S_PLUS: // "+"
+      case symbol_kind::S_EQUAL: // "="
+      case symbol_kind::S_INFIXINEQUALITY: // "!="
+      case symbol_kind::S_LPAREN: // "("
+      case symbol_kind::S_RPAREN: // ")"
+      case symbol_kind::S_LSQPAREN: // "["
+      case symbol_kind::S_RSQPAREN: // "]"
+      case symbol_kind::S_LCURPAREN: // "{"
+      case symbol_kind::S_RCURPAREN: // "}"
+      case symbol_kind::S_VLINE: // "|"
+      case symbol_kind::S_STAR: // "*"
+      case symbol_kind::S_GREATER: // ">"
+      case symbol_kind::S_EXCLAMATION: // "!"
+      case symbol_kind::S_TILDE: // "~"
+      case symbol_kind::S_QUESTIONMARK: // "?"
+      case symbol_kind::S_ATMINUS: // "@-"
+      case symbol_kind::S_ATPLUS: // "@+"
+      case symbol_kind::S_CARET: // "^"
+      case symbol_kind::S_DOUBLEEXCLAMATION: // "!!"
+      case symbol_kind::S_DOUBLEQUESTIONMARK: // "??"
+      case symbol_kind::S_DOUBLEATPLUS: // "@@+"
+      case symbol_kind::S_DOUBLEATMINUS: // "@@-"
+      case symbol_kind::S_ATEQUAL: // "@="
+      case symbol_kind::S_EXCLAMATIONGREATER: // "!>"
+      case symbol_kind::S_QUESTIONMARKSTAR: // "?*"
+      case symbol_kind::S_EQUALITY: // "<=>"
+      case symbol_kind::S_IMPLICATION: // "=>"
+      case symbol_kind::S_RIMPLICATION: // "<="
+      case symbol_kind::S_INEQUALITY: // "<~>"
+      case symbol_kind::S_NOR: // "~|"
+      case symbol_kind::S_NAND: // "~&"
+      case symbol_kind::S_ASSIGNMENT: // ":="
+      case symbol_kind::S_GENTZENARROW: // "-->"
+      case symbol_kind::S_SUBTYPESIGN: // "<<"
+      case symbol_kind::S_INCLUDE: // "include"
         value.copy< Token::Ptr > (YY_MOVE (that.value));
         break;
 
-      case 165: // TfxTupleType
+      case symbol_kind::S_TfxTupleType: // TfxTupleType
         value.copy< TupleType::Ptr > (YY_MOVE (that.value));
         break;
 
-      case 100: // ThfLetTypes
-      case 111: // ThfTopLevelType
-      case 146: // TfxLetTypes
-      case 157: // TffTopLevelType
-      case 159: // TffMonotype
-      case 160: // TffUnitaryType
+      case symbol_kind::S_ThfLetTypes: // ThfLetTypes
+      case symbol_kind::S_ThfTopLevelType: // ThfTopLevelType
+      case symbol_kind::S_TfxLetTypes: // TfxLetTypes
+      case symbol_kind::S_TffTopLevelType: // TffTopLevelType
+      case symbol_kind::S_TffMonotype: // TffMonotype
+      case symbol_kind::S_TffUnitaryType: // TffUnitaryType
         value.copy< Type::Ptr > (YY_MOVE (that.value));
         break;
 
-      case 110: // ThfAtomTyping
-      case 156: // TffAtomTyping
+      case symbol_kind::S_ThfAtomTyping: // ThfAtomTyping
+      case symbol_kind::S_TffAtomTyping: // TffAtomTyping
         value.copy< TypedAtom::Ptr > (YY_MOVE (that.value));
         break;
 
-      case 208: // ThfUnaryConnective
-      case 209: // Th1UnaryConnective
-      case 213: // UnaryConnective
+      case symbol_kind::S_ThfUnaryConnective: // ThfUnaryConnective
+      case symbol_kind::S_Th1UnaryConnective: // Th1UnaryConnective
+      case symbol_kind::S_UnaryConnective: // UnaryConnective
         value.copy< UnaryConnective_t > (YY_MOVE (that.value));
         break;
 
-      case 90: // ThfPrefixUnary
-      case 136: // TffPrefixUnary
+      case symbol_kind::S_ThfPrefixUnary: // ThfPrefixUnary
+      case symbol_kind::S_TffPrefixUnary: // TffPrefixUnary
         value.copy< UnaryLogic::Ptr > (YY_MOVE (that.value));
         break;
 
-      case 243: // Number
+      case symbol_kind::S_Number: // Number
         value.copy< ValueLiteral::Ptr > (YY_MOVE (that.value));
         break;
 
-      case 88: // ThfTypedVariable
-      case 130: // TfxUnitaryFormula
-      case 133: // TffVariable
-      case 134: // TffTypedVariable
-      case 248: // Variable
+      case symbol_kind::S_ThfTypedVariable: // ThfTypedVariable
+      case symbol_kind::S_TfxUnitaryFormula: // TfxUnitaryFormula
+      case symbol_kind::S_TffVariable: // TffVariable
+      case symbol_kind::S_TffTypedVariable: // TffTypedVariable
+      case symbol_kind::S_Variable: // Variable
         value.copy< VariableTerm::Ptr > (YY_MOVE (that.value));
         break;
 
-      case 54: // "integer"
-      case 55: // "real"
-      case 56: // "rational"
-      case 57: // "double_quoted"
-      case 58: // "lower_word"
-      case 59: // "upper_word"
-      case 60: // "identifier"
-      case 61: // "single_quoted"
+      case symbol_kind::S_INTEGER: // "integer"
+      case symbol_kind::S_REAL: // "real"
+      case symbol_kind::S_RATIONAL: // "rational"
+      case symbol_kind::S_DQUOTED: // "double_quoted"
+      case symbol_kind::S_LOWER_WORD: // "lower_word"
+      case symbol_kind::S_UPPER_WORD: // "upper_word"
+      case symbol_kind::S_IDENTIFIER: // "identifier"
+      case symbol_kind::S_SINGLE_QUOTED: // "single_quoted"
         value.copy< std::string > (YY_MOVE (that.value));
         break;
 
@@ -4279,10 +4647,17 @@ switch (yytype)
 
 
   template <typename Base>
+  Parser::symbol_kind_type
+  Parser::basic_symbol<Base>::type_get () const YY_NOEXCEPT
+  {
+    return this->kind ();
+  }
+
+  template <typename Base>
   bool
   Parser::basic_symbol<Base>::empty () const YY_NOEXCEPT
   {
-    return Base::type_get () == empty_symbol;
+    return this->kind () == symbol_kind::S_YYEMPTY;
   }
 
   template <typename Base>
@@ -4290,411 +4665,411 @@ switch (yytype)
   Parser::basic_symbol<Base>::move (basic_symbol& s)
   {
     super_type::move (s);
-    switch (this->type_get ())
+    switch (this->kind ())
     {
-      case 73: // Annotations
+      case symbol_kind::S_Annotations: // Annotations
         value.move< Annotation::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 139: // TffPlainAtomic
-      case 143: // TffSystemAtomic
-      case 191: // FofPlainTerm
-      case 192: // FofDefinedTerm
-      case 193: // FofDefinedAtomicTerm
-      case 194: // FofDefinedPlainTerm
-      case 195: // FofSystemTerm
-      case 198: // FofFunctionTerm
+      case symbol_kind::S_TffPlainAtomic: // TffPlainAtomic
+      case symbol_kind::S_TffSystemAtomic: // TffSystemAtomic
+      case symbol_kind::S_FofPlainTerm: // FofPlainTerm
+      case symbol_kind::S_FofDefinedTerm: // FofDefinedTerm
+      case symbol_kind::S_FofDefinedAtomicTerm: // FofDefinedAtomicTerm
+      case symbol_kind::S_FofDefinedPlainTerm: // FofDefinedPlainTerm
+      case symbol_kind::S_FofSystemTerm: // FofSystemTerm
+      case symbol_kind::S_FofFunctionTerm: // FofFunctionTerm
         value.move< Atom::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 112: // ThfUnitaryType
-      case 113: // ThfApplyType
-      case 161: // TffAtomicType
+      case symbol_kind::S_ThfUnitaryType: // ThfUnitaryType
+      case symbol_kind::S_ThfApplyType: // ThfApplyType
+      case symbol_kind::S_TffAtomicType: // TffAtomicType
         value.move< AtomType::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 211: // NonassocConnective
-      case 212: // AssocConnective
+      case symbol_kind::S_NonassocConnective: // NonassocConnective
+      case symbol_kind::S_AssocConnective: // AssocConnective
         value.move< BinaryConnective_t > (YY_MOVE (s.value));
         break;
 
-      case 78: // ThfBinaryNonassoc
-      case 79: // ThfBinaryAssoc
-      case 80: // ThfOrFormula
-      case 81: // ThfAndFormula
-      case 82: // ThfApplyFormula
-      case 122: // TffBinaryFormula
-      case 123: // TffBinaryNonassoc
-      case 124: // TffBinaryAssoc
-      case 125: // TffOrFormula
-      case 126: // TffAndFormula
-      case 174: // FofBinaryFormula
-      case 175: // FofBinaryNonassoc
-      case 176: // FofBinaryAssoc
-      case 177: // FofOrFormula
-      case 178: // FofAndFormula
+      case symbol_kind::S_ThfBinaryNonassoc: // ThfBinaryNonassoc
+      case symbol_kind::S_ThfBinaryAssoc: // ThfBinaryAssoc
+      case symbol_kind::S_ThfOrFormula: // ThfOrFormula
+      case symbol_kind::S_ThfAndFormula: // ThfAndFormula
+      case symbol_kind::S_ThfApplyFormula: // ThfApplyFormula
+      case symbol_kind::S_TffBinaryFormula: // TffBinaryFormula
+      case symbol_kind::S_TffBinaryNonassoc: // TffBinaryNonassoc
+      case symbol_kind::S_TffBinaryAssoc: // TffBinaryAssoc
+      case symbol_kind::S_TffOrFormula: // TffOrFormula
+      case symbol_kind::S_TffAndFormula: // TffAndFormula
+      case symbol_kind::S_FofBinaryFormula: // FofBinaryFormula
+      case symbol_kind::S_FofBinaryNonassoc: // FofBinaryNonassoc
+      case symbol_kind::S_FofBinaryAssoc: // FofBinaryAssoc
+      case symbol_kind::S_FofOrFormula: // FofOrFormula
+      case symbol_kind::S_FofAndFormula: // FofAndFormula
         value.move< BinaryLogic::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 114: // ThfBinaryType
-      case 115: // ThfMappingType
-      case 116: // ThfXprodType
-      case 117: // ThfUnionType
-      case 163: // TffMappingType
-      case 164: // TffXprodType
+      case symbol_kind::S_ThfBinaryType: // ThfBinaryType
+      case symbol_kind::S_ThfMappingType: // ThfMappingType
+      case symbol_kind::S_ThfXprodType: // ThfXprodType
+      case symbol_kind::S_ThfUnionType: // ThfUnionType
+      case symbol_kind::S_TffMappingType: // TffMappingType
+      case symbol_kind::S_TffXprodType: // TffXprodType
         value.move< BinaryType::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 98: // ThfConditional
-      case 144: // TfxConditional
+      case symbol_kind::S_ThfConditional: // ThfConditional
+      case symbol_kind::S_TfxConditional: // TfxConditional
         value.move< ConditionalTerm::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 108: // ThfConnTerm
+      case symbol_kind::S_ThfConnTerm: // ThfConnTerm
         value.move< ConnectiveAtom::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 96: // ThfSystemAtomic
+      case symbol_kind::S_ThfSystemAtomic: // ThfSystemAtomic
         value.move< ConstantAtom::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 228: // DefinedTerm
+      case symbol_kind::S_DefinedTerm: // DefinedTerm
         value.move< DefinedAtom::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 65: // Definition
+      case symbol_kind::S_Definition: // Definition
         value.move< Definition::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 103: // ThfLetDefn
-      case 149: // TfxLetDefn
+      case symbol_kind::S_ThfLetDefn: // ThfLetDefn
+      case symbol_kind::S_TfxLetDefn: // TfxLetDefn
         value.move< DefinitionAtom::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 99: // ThfLet
-      case 145: // TfxLet
+      case symbol_kind::S_ThfLet: // ThfLet
+      case symbol_kind::S_TfxLet: // TfxLet
         value.move< DefinitionTerm::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 64: // Definitions
+      case symbol_kind::S_Definitions: // Definitions
         value.move< Definitions::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 249: // DistinctObjectLiteral
+      case symbol_kind::S_DistinctObjectLiteral: // DistinctObjectLiteral
         value.move< DistinctObjectLiteral::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 236: // FormulaData
+      case symbol_kind::S_FormulaData: // FormulaData
         value.move< FormulaData::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 66: // AnnotatedFormula
-      case 67: // ThfAnnotated
-      case 68: // TffAnnotated
-      case 69: // TcfAnnotated
-      case 70: // FofAnnotated
-      case 71: // CnfAnnotated
-      case 72: // TpiAnnotated
+      case symbol_kind::S_AnnotatedFormula: // AnnotatedFormula
+      case symbol_kind::S_ThfAnnotated: // ThfAnnotated
+      case symbol_kind::S_TffAnnotated: // TffAnnotated
+      case symbol_kind::S_TcfAnnotated: // TcfAnnotated
+      case symbol_kind::S_FofAnnotated: // FofAnnotated
+      case symbol_kind::S_CnfAnnotated: // CnfAnnotated
+      case symbol_kind::S_TpiAnnotated: // TpiAnnotated
         value.move< FormulaDefinition::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 97: // ThfFofFunction
+      case symbol_kind::S_ThfFofFunction: // ThfFofFunction
         value.move< FunctorAtom::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 233: // GeneralData
+      case symbol_kind::S_GeneralData: // GeneralData
         value.move< GeneralData::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 234: // GeneralFunction
+      case symbol_kind::S_GeneralFunction: // GeneralFunction
         value.move< GeneralFunction::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 237: // GeneralList
+      case symbol_kind::S_GeneralList: // GeneralList
         value.move< GeneralList::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 232: // GeneralTerm
+      case symbol_kind::S_GeneralTerm: // GeneralTerm
         value.move< GeneralTerm::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 214: // TypeConstant
-      case 215: // TypeFunctor
-      case 216: // DefinedType
-      case 217: // Atom
-      case 218: // UntypedAtom
-      case 222: // Constant
-      case 223: // Functor
-      case 224: // SystemConstant
-      case 225: // SystemFunctor
-      case 226: // DefinedConstant
-      case 227: // DefinedFunctor
-      case 230: // Name
-      case 240: // AtomicWord
-      case 241: // AtomicDefinedWord
-      case 242: // AtomicSystemWord
-      case 244: // FileName
-      case 250: // LowerWordLiteral
-      case 251: // SingleQuotedLiteral
-      case 252: // DollarWordLiteral
-      case 253: // DollarDollarWordLiteral
+      case symbol_kind::S_TypeConstant: // TypeConstant
+      case symbol_kind::S_TypeFunctor: // TypeFunctor
+      case symbol_kind::S_DefinedType: // DefinedType
+      case symbol_kind::S_Atom: // Atom
+      case symbol_kind::S_UntypedAtom: // UntypedAtom
+      case symbol_kind::S_Constant: // Constant
+      case symbol_kind::S_Functor: // Functor
+      case symbol_kind::S_SystemConstant: // SystemConstant
+      case symbol_kind::S_SystemFunctor: // SystemFunctor
+      case symbol_kind::S_DefinedConstant: // DefinedConstant
+      case symbol_kind::S_DefinedFunctor: // DefinedFunctor
+      case symbol_kind::S_Name: // Name
+      case symbol_kind::S_AtomicWord: // AtomicWord
+      case symbol_kind::S_AtomicDefinedWord: // AtomicDefinedWord
+      case symbol_kind::S_AtomicSystemWord: // AtomicSystemWord
+      case symbol_kind::S_FileName: // FileName
+      case symbol_kind::S_LowerWordLiteral: // LowerWordLiteral
+      case symbol_kind::S_SingleQuotedLiteral: // SingleQuotedLiteral
+      case symbol_kind::S_DollarWordLiteral: // DollarWordLiteral
+      case symbol_kind::S_DollarDollarWordLiteral: // DollarDollarWordLiteral
         value.move< Identifier::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 238: // IncludeDefinition
+      case symbol_kind::S_IncludeDefinition: // IncludeDefinition
         value.move< IncludeDefinition::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 219: // DefinedInfixPred
-      case 220: // InfixEquality
-      case 221: // InfixInequality
+      case symbol_kind::S_DefinedInfixPred: // DefinedInfixPred
+      case symbol_kind::S_InfixEquality: // InfixEquality
+      case symbol_kind::S_InfixInequality: // InfixInequality
         value.move< InfixConnective_t > (YY_MOVE (s.value));
         break;
 
-      case 91: // ThfInfixUnary
-      case 95: // ThfDefinedInfix
-      case 137: // TffInfixUnary
-      case 142: // TffDefinedInfix
-      case 180: // FofInfixUnary
-      case 189: // FofDefinedInfixFormula
+      case symbol_kind::S_ThfInfixUnary: // ThfInfixUnary
+      case symbol_kind::S_ThfDefinedInfix: // ThfDefinedInfix
+      case symbol_kind::S_TffInfixUnary: // TffInfixUnary
+      case symbol_kind::S_TffDefinedInfix: // TffDefinedInfix
+      case symbol_kind::S_FofInfixUnary: // FofInfixUnary
+      case symbol_kind::S_FofDefinedInfixFormula: // FofDefinedInfixFormula
         value.move< InfixLogic::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 245: // IntegerLiteral
+      case symbol_kind::S_IntegerLiteral: // IntegerLiteral
         value.move< IntegerLiteral::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 239: // FormulaSelection
+      case symbol_kind::S_FormulaSelection: // FormulaSelection
         value.move< ListLiteral::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 104: // ThfLetDefnList
-      case 107: // ThfFormulaList
-      case 109: // ThfArguments
-      case 151: // TfxLetDefnList
-      case 155: // TffArguments
-      case 162: // TffTypeArguments
-      case 196: // FofArguments
-      case 201: // FofFormulaTupleList
+      case symbol_kind::S_ThfLetDefnList: // ThfLetDefnList
+      case symbol_kind::S_ThfFormulaList: // ThfFormulaList
+      case symbol_kind::S_ThfArguments: // ThfArguments
+      case symbol_kind::S_TfxLetDefnList: // TfxLetDefnList
+      case symbol_kind::S_TffArguments: // TffArguments
+      case symbol_kind::S_TffTypeArguments: // TffTypeArguments
+      case symbol_kind::S_FofArguments: // FofArguments
+      case symbol_kind::S_FofFormulaTupleList: // FofFormulaTupleList
         value.move< ListLogicElements::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 87: // ThfVariableList
-      case 132: // TffVariableList
-      case 184: // FofVariableList
-      case 229: // NameList
-      case 235: // GeneralTerms
+      case symbol_kind::S_ThfVariableList: // ThfVariableList
+      case symbol_kind::S_TffVariableList: // TffVariableList
+      case symbol_kind::S_FofVariableList: // FofVariableList
+      case symbol_kind::S_NameList: // NameList
+      case symbol_kind::S_GeneralTerms: // GeneralTerms
         value.move< ListNodeElements::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 101: // ThfAtomTypingList
-      case 147: // TffAtomTypingList
-      case 166: // TffTypeList
+      case symbol_kind::S_ThfAtomTypingList: // ThfAtomTypingList
+      case symbol_kind::S_TffAtomTypingList: // TffAtomTypingList
+      case symbol_kind::S_TffTypeList: // TffTypeList
         value.move< ListTypeElements::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 74: // TpiFormula
-      case 75: // ThfFormula
-      case 76: // ThfLogicFormula
-      case 77: // ThfBinaryFormula
-      case 83: // ThfUnitFormula
-      case 84: // ThfPreunitFormula
-      case 85: // ThfUnitaryFormula
-      case 89: // ThfUnaryFormula
-      case 92: // ThfAtomicFormula
-      case 93: // ThfPlainAtomic
-      case 102: // ThfLetDefns
-      case 105: // ThfUnitaryTerm
-      case 120: // TffFormula
-      case 121: // TffLogicFormula
-      case 127: // TffUnitFormula
-      case 128: // TffPreunitFormula
-      case 129: // TffUnitaryFormula
-      case 135: // TffUnaryFormula
-      case 148: // TfxLetDefns
-      case 150: // TfxLetLhs
-      case 152: // TffTerm
-      case 153: // TffUnitaryTerm
-      case 169: // TcfFormula
-      case 170: // TcfLogicFormula
-      case 172: // FofFormula
-      case 173: // FofLogicFormula
-      case 179: // FofUnaryFormula
-      case 181: // FofUnitFormula
-      case 182: // FofUnitaryFormula
-      case 185: // FofAtomicFormula
-      case 187: // FofDefinedAtomicFormula
-      case 202: // CnfFormula
-      case 203: // Disjunction
-      case 204: // Literal
+      case symbol_kind::S_TpiFormula: // TpiFormula
+      case symbol_kind::S_ThfFormula: // ThfFormula
+      case symbol_kind::S_ThfLogicFormula: // ThfLogicFormula
+      case symbol_kind::S_ThfBinaryFormula: // ThfBinaryFormula
+      case symbol_kind::S_ThfUnitFormula: // ThfUnitFormula
+      case symbol_kind::S_ThfPreunitFormula: // ThfPreunitFormula
+      case symbol_kind::S_ThfUnitaryFormula: // ThfUnitaryFormula
+      case symbol_kind::S_ThfUnaryFormula: // ThfUnaryFormula
+      case symbol_kind::S_ThfAtomicFormula: // ThfAtomicFormula
+      case symbol_kind::S_ThfPlainAtomic: // ThfPlainAtomic
+      case symbol_kind::S_ThfLetDefns: // ThfLetDefns
+      case symbol_kind::S_ThfUnitaryTerm: // ThfUnitaryTerm
+      case symbol_kind::S_TffFormula: // TffFormula
+      case symbol_kind::S_TffLogicFormula: // TffLogicFormula
+      case symbol_kind::S_TffUnitFormula: // TffUnitFormula
+      case symbol_kind::S_TffPreunitFormula: // TffPreunitFormula
+      case symbol_kind::S_TffUnitaryFormula: // TffUnitaryFormula
+      case symbol_kind::S_TffUnaryFormula: // TffUnaryFormula
+      case symbol_kind::S_TfxLetDefns: // TfxLetDefns
+      case symbol_kind::S_TfxLetLhs: // TfxLetLhs
+      case symbol_kind::S_TffTerm: // TffTerm
+      case symbol_kind::S_TffUnitaryTerm: // TffUnitaryTerm
+      case symbol_kind::S_TcfFormula: // TcfFormula
+      case symbol_kind::S_TcfLogicFormula: // TcfLogicFormula
+      case symbol_kind::S_FofFormula: // FofFormula
+      case symbol_kind::S_FofLogicFormula: // FofLogicFormula
+      case symbol_kind::S_FofUnaryFormula: // FofUnaryFormula
+      case symbol_kind::S_FofUnitFormula: // FofUnitFormula
+      case symbol_kind::S_FofUnitaryFormula: // FofUnitaryFormula
+      case symbol_kind::S_FofAtomicFormula: // FofAtomicFormula
+      case symbol_kind::S_FofDefinedAtomicFormula: // FofDefinedAtomicFormula
+      case symbol_kind::S_CnfFormula: // CnfFormula
+      case symbol_kind::S_Disjunction: // Disjunction
+      case symbol_kind::S_Literal: // Literal
         value.move< Logic::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 106: // ThfTuple
-      case 154: // TfxTuple
-      case 200: // FofFormulaTuple
+      case symbol_kind::S_ThfTuple: // ThfTuple
+      case symbol_kind::S_TfxTuple: // TfxTuple
+      case symbol_kind::S_FofFormulaTuple: // FofFormulaTuple
         value.move< LogicTuple::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 86: // ThfQuantifiedFormula
-      case 131: // TffQuantifiedFormula
-      case 171: // TcfQuantifiedFormula
-      case 183: // FofQuantifiedFormula
+      case symbol_kind::S_ThfQuantifiedFormula: // ThfQuantifiedFormula
+      case symbol_kind::S_TffQuantifiedFormula: // TffQuantifiedFormula
+      case symbol_kind::S_TcfQuantifiedFormula: // TcfQuantifiedFormula
+      case symbol_kind::S_FofQuantifiedFormula: // FofQuantifiedFormula
         value.move< QuantifiedLogic::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 205: // ThfQuantifier
-      case 206: // Th1Quantifier
-      case 207: // Th0Quantifier
-      case 210: // FofQuantifier
+      case symbol_kind::S_ThfQuantifier: // ThfQuantifier
+      case symbol_kind::S_Th1Quantifier: // Th1Quantifier
+      case symbol_kind::S_Th0Quantifier: // Th0Quantifier
+      case symbol_kind::S_FofQuantifier: // FofQuantifier
         value.move< QuantifiedQuantifier_t > (YY_MOVE (s.value));
         break;
 
-      case 158: // Tf1QuantifiedType
+      case symbol_kind::S_Tf1QuantifiedType: // Tf1QuantifiedType
         value.move< QuantifiedType::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 247: // RationalLiteral
+      case symbol_kind::S_RationalLiteral: // RationalLiteral
         value.move< RationalLiteral::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 246: // RealLiteral
+      case symbol_kind::S_RealLiteral: // RealLiteral
         value.move< RealLiteral::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 231: // FormulaRole
+      case symbol_kind::S_FormulaRole: // FormulaRole
         value.move< Role::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 119: // ThfSequent
-      case 168: // TfxSequent
-      case 199: // FofSequent
+      case symbol_kind::S_ThfSequent: // ThfSequent
+      case symbol_kind::S_TfxSequent: // TfxSequent
+      case symbol_kind::S_FofSequent: // FofSequent
         value.move< SequentLogic::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 63: // Specification
+      case symbol_kind::S_Specification: // Specification
         value.move< Specification::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 118: // ThfSubtype
-      case 167: // TffSubtype
+      case symbol_kind::S_ThfSubtype: // ThfSubtype
+      case symbol_kind::S_TffSubtype: // TffSubtype
         value.move< SubType::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 94: // ThfDefinedAtomic
-      case 138: // TffAtomicFormula
-      case 140: // TffDefinedAtomic
-      case 141: // TffDefinedPlain
-      case 186: // FofPlainAtomicFormula
-      case 188: // FofDefinedPlainFormula
-      case 190: // FofSystemAtomicFormula
-      case 197: // FofTerm
+      case symbol_kind::S_ThfDefinedAtomic: // ThfDefinedAtomic
+      case symbol_kind::S_TffAtomicFormula: // TffAtomicFormula
+      case symbol_kind::S_TffDefinedAtomic: // TffDefinedAtomic
+      case symbol_kind::S_TffDefinedPlain: // TffDefinedPlain
+      case symbol_kind::S_FofPlainAtomicFormula: // FofPlainAtomicFormula
+      case symbol_kind::S_FofDefinedPlainFormula: // FofDefinedPlainFormula
+      case symbol_kind::S_FofSystemAtomicFormula: // FofSystemAtomicFormula
+      case symbol_kind::S_FofTerm: // FofTerm
         value.move< Term::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 3: // "tpi"
-      case 4: // "thf"
-      case 5: // "tff"
-      case 6: // "tcf"
-      case 7: // "fof"
-      case 8: // "cnf"
-      case 9: // "fot"
-      case 10: // "ite"
-      case 11: // "let"
-      case 12: // "@"
-      case 13: // "&"
-      case 14: // "$"
-      case 15: // "$$"
-      case 16: // ":"
-      case 17: // ","
-      case 18: // "."
-      case 19: // "+"
-      case 20: // "="
-      case 21: // "!="
-      case 22: // "("
-      case 23: // ")"
-      case 24: // "["
-      case 25: // "]"
-      case 26: // "{"
-      case 27: // "}"
-      case 28: // "|"
-      case 29: // "*"
-      case 30: // ">"
-      case 31: // "!"
-      case 32: // "~"
-      case 33: // "?"
-      case 34: // "@-"
-      case 35: // "@+"
-      case 36: // "^"
-      case 37: // "!!"
-      case 38: // "??"
-      case 39: // "@@+"
-      case 40: // "@@-"
-      case 41: // "@="
-      case 42: // "!>"
-      case 43: // "?*"
-      case 44: // "<=>"
-      case 45: // "=>"
-      case 46: // "<="
-      case 47: // "<~>"
-      case 48: // "~|"
-      case 49: // "~&"
-      case 50: // ":="
-      case 51: // "-->"
-      case 52: // "<<"
-      case 53: // "include"
+      case symbol_kind::S_TPI: // "tpi"
+      case symbol_kind::S_THF: // "thf"
+      case symbol_kind::S_TFF: // "tff"
+      case symbol_kind::S_TCF: // "tcf"
+      case symbol_kind::S_FOF: // "fof"
+      case symbol_kind::S_CNF: // "cnf"
+      case symbol_kind::S_FOT: // "fot"
+      case symbol_kind::S_ITE: // "ite"
+      case symbol_kind::S_LET: // "let"
+      case symbol_kind::S_AT: // "@"
+      case symbol_kind::S_AND: // "&"
+      case symbol_kind::S_DOLLAR: // "$"
+      case symbol_kind::S_DOLLARDOLLAR: // "$$"
+      case symbol_kind::S_COLON: // ":"
+      case symbol_kind::S_COMMA: // ","
+      case symbol_kind::S_DOT: // "."
+      case symbol_kind::S_PLUS: // "+"
+      case symbol_kind::S_EQUAL: // "="
+      case symbol_kind::S_INFIXINEQUALITY: // "!="
+      case symbol_kind::S_LPAREN: // "("
+      case symbol_kind::S_RPAREN: // ")"
+      case symbol_kind::S_LSQPAREN: // "["
+      case symbol_kind::S_RSQPAREN: // "]"
+      case symbol_kind::S_LCURPAREN: // "{"
+      case symbol_kind::S_RCURPAREN: // "}"
+      case symbol_kind::S_VLINE: // "|"
+      case symbol_kind::S_STAR: // "*"
+      case symbol_kind::S_GREATER: // ">"
+      case symbol_kind::S_EXCLAMATION: // "!"
+      case symbol_kind::S_TILDE: // "~"
+      case symbol_kind::S_QUESTIONMARK: // "?"
+      case symbol_kind::S_ATMINUS: // "@-"
+      case symbol_kind::S_ATPLUS: // "@+"
+      case symbol_kind::S_CARET: // "^"
+      case symbol_kind::S_DOUBLEEXCLAMATION: // "!!"
+      case symbol_kind::S_DOUBLEQUESTIONMARK: // "??"
+      case symbol_kind::S_DOUBLEATPLUS: // "@@+"
+      case symbol_kind::S_DOUBLEATMINUS: // "@@-"
+      case symbol_kind::S_ATEQUAL: // "@="
+      case symbol_kind::S_EXCLAMATIONGREATER: // "!>"
+      case symbol_kind::S_QUESTIONMARKSTAR: // "?*"
+      case symbol_kind::S_EQUALITY: // "<=>"
+      case symbol_kind::S_IMPLICATION: // "=>"
+      case symbol_kind::S_RIMPLICATION: // "<="
+      case symbol_kind::S_INEQUALITY: // "<~>"
+      case symbol_kind::S_NOR: // "~|"
+      case symbol_kind::S_NAND: // "~&"
+      case symbol_kind::S_ASSIGNMENT: // ":="
+      case symbol_kind::S_GENTZENARROW: // "-->"
+      case symbol_kind::S_SUBTYPESIGN: // "<<"
+      case symbol_kind::S_INCLUDE: // "include"
         value.move< Token::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 165: // TfxTupleType
+      case symbol_kind::S_TfxTupleType: // TfxTupleType
         value.move< TupleType::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 100: // ThfLetTypes
-      case 111: // ThfTopLevelType
-      case 146: // TfxLetTypes
-      case 157: // TffTopLevelType
-      case 159: // TffMonotype
-      case 160: // TffUnitaryType
+      case symbol_kind::S_ThfLetTypes: // ThfLetTypes
+      case symbol_kind::S_ThfTopLevelType: // ThfTopLevelType
+      case symbol_kind::S_TfxLetTypes: // TfxLetTypes
+      case symbol_kind::S_TffTopLevelType: // TffTopLevelType
+      case symbol_kind::S_TffMonotype: // TffMonotype
+      case symbol_kind::S_TffUnitaryType: // TffUnitaryType
         value.move< Type::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 110: // ThfAtomTyping
-      case 156: // TffAtomTyping
+      case symbol_kind::S_ThfAtomTyping: // ThfAtomTyping
+      case symbol_kind::S_TffAtomTyping: // TffAtomTyping
         value.move< TypedAtom::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 208: // ThfUnaryConnective
-      case 209: // Th1UnaryConnective
-      case 213: // UnaryConnective
+      case symbol_kind::S_ThfUnaryConnective: // ThfUnaryConnective
+      case symbol_kind::S_Th1UnaryConnective: // Th1UnaryConnective
+      case symbol_kind::S_UnaryConnective: // UnaryConnective
         value.move< UnaryConnective_t > (YY_MOVE (s.value));
         break;
 
-      case 90: // ThfPrefixUnary
-      case 136: // TffPrefixUnary
+      case symbol_kind::S_ThfPrefixUnary: // ThfPrefixUnary
+      case symbol_kind::S_TffPrefixUnary: // TffPrefixUnary
         value.move< UnaryLogic::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 243: // Number
+      case symbol_kind::S_Number: // Number
         value.move< ValueLiteral::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 88: // ThfTypedVariable
-      case 130: // TfxUnitaryFormula
-      case 133: // TffVariable
-      case 134: // TffTypedVariable
-      case 248: // Variable
+      case symbol_kind::S_ThfTypedVariable: // ThfTypedVariable
+      case symbol_kind::S_TfxUnitaryFormula: // TfxUnitaryFormula
+      case symbol_kind::S_TffVariable: // TffVariable
+      case symbol_kind::S_TffTypedVariable: // TffTypedVariable
+      case symbol_kind::S_Variable: // Variable
         value.move< VariableTerm::Ptr > (YY_MOVE (s.value));
         break;
 
-      case 54: // "integer"
-      case 55: // "real"
-      case 56: // "rational"
-      case 57: // "double_quoted"
-      case 58: // "lower_word"
-      case 59: // "upper_word"
-      case 60: // "identifier"
-      case 61: // "single_quoted"
+      case symbol_kind::S_INTEGER: // "integer"
+      case symbol_kind::S_REAL: // "real"
+      case symbol_kind::S_RATIONAL: // "rational"
+      case symbol_kind::S_DQUOTED: // "double_quoted"
+      case symbol_kind::S_LOWER_WORD: // "lower_word"
+      case symbol_kind::S_UPPER_WORD: // "upper_word"
+      case symbol_kind::S_IDENTIFIER: // "identifier"
+      case symbol_kind::S_SINGLE_QUOTED: // "single_quoted"
         value.move< std::string > (YY_MOVE (s.value));
         break;
 
@@ -4705,78 +5080,63 @@ switch (yytype)
     location = YY_MOVE (s.location);
   }
 
-  // by_type.
+  // by_kind.
   inline
-  Parser::by_type::by_type ()
-    : type (empty_symbol)
+  Parser::by_kind::by_kind ()
+    : kind_ (symbol_kind::S_YYEMPTY)
   {}
 
 #if 201103L <= YY_CPLUSPLUS
   inline
-  Parser::by_type::by_type (by_type&& that)
-    : type (that.type)
+  Parser::by_kind::by_kind (by_kind&& that)
+    : kind_ (that.kind_)
   {
     that.clear ();
   }
 #endif
 
   inline
-  Parser::by_type::by_type (const by_type& that)
-    : type (that.type)
+  Parser::by_kind::by_kind (const by_kind& that)
+    : kind_ (that.kind_)
   {}
 
   inline
-  Parser::by_type::by_type (token_type t)
-    : type (yytranslate_ (t))
+  Parser::by_kind::by_kind (token_kind_type t)
+    : kind_ (yytranslate_ (t))
   {}
 
   inline
   void
-  Parser::by_type::clear ()
+  Parser::by_kind::clear ()
   {
-    type = empty_symbol;
+    kind_ = symbol_kind::S_YYEMPTY;
   }
 
   inline
   void
-  Parser::by_type::move (by_type& that)
+  Parser::by_kind::move (by_kind& that)
   {
-    type = that.type;
+    kind_ = that.kind_;
     that.clear ();
   }
 
   inline
-  int
-  Parser::by_type::type_get () const YY_NOEXCEPT
+  Parser::symbol_kind_type
+  Parser::by_kind::kind () const YY_NOEXCEPT
   {
-    return type;
+    return kind_;
   }
 
   inline
-  Parser::token_type
-  Parser::by_type::token () const YY_NOEXCEPT
+  Parser::symbol_kind_type
+  Parser::by_kind::type_get () const YY_NOEXCEPT
   {
-    // YYTOKNUM[NUM] -- (External) token number corresponding to the
-    // (internal) symbol number NUM (which must be that of a token).  */
-    static
-    const unsigned short
-    yytoken_number_[] =
-    {
-       0,   256,   257,   258,   259,   260,   261,   262,   263,   264,
-     265,   266,   267,   268,   269,   270,   271,   272,   273,   274,
-     275,   276,   277,   278,   279,   280,   281,   282,   283,   284,
-     285,   286,   287,   288,   289,   290,   291,   292,   293,   294,
-     295,   296,   297,   298,   299,   300,   301,   302,   303,   304,
-     305,   306,   307,   308,   309,   310,   311,   312,   313,   314,
-     315,   316
-    };
-    return token_type (yytoken_number_[type]);
+    return this->kind ();
   }
 
-#line 47 "../../obj/src/GrammarParser.yy"
+#line 48 "../../obj/src/GrammarParser.yy"
 } // libtptp
-#line 4779 "GrammarParser.tab.h"
-
+#line 5140 "GrammarParser.tab.h"
 
 
 

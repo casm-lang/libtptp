@@ -1225,7 +1225,7 @@ Nonterminals, with rules where they appear
 
 State 0
 
-    0 $accept: . Specification "end of file"
+    0 $accept: • Specification "end of file"
 
     "tpi"      shift, and go to state 1
     "thf"      shift, and go to state 2
@@ -1250,71 +1250,71 @@ State 0
 
 State 1
 
-   22 TpiAnnotated: "tpi" . "(" Name "," FormulaRole "," TpiFormula ")" "."
-   23             | "tpi" . "(" Name "," FormulaRole "," TpiFormula "," Annotations ")" "."
+   22 TpiAnnotated: "tpi" • "(" Name "," FormulaRole "," TpiFormula ")" "."
+   23             | "tpi" • "(" Name "," FormulaRole "," TpiFormula "," Annotations ")" "."
 
     "("  shift, and go to state 19
 
 
 State 2
 
-   12 ThfAnnotated: "thf" . "(" Name "," FormulaRole "," ThfFormula ")" "."
-   13             | "thf" . "(" Name "," FormulaRole "," ThfFormula "," Annotations ")" "."
+   12 ThfAnnotated: "thf" • "(" Name "," FormulaRole "," ThfFormula ")" "."
+   13             | "thf" • "(" Name "," FormulaRole "," ThfFormula "," Annotations ")" "."
 
     "("  shift, and go to state 20
 
 
 State 3
 
-   14 TffAnnotated: "tff" . "(" Name "," FormulaRole "," TffFormula ")" "."
-   15             | "tff" . "(" Name "," FormulaRole "," TffFormula "," Annotations ")" "."
+   14 TffAnnotated: "tff" • "(" Name "," FormulaRole "," TffFormula ")" "."
+   15             | "tff" • "(" Name "," FormulaRole "," TffFormula "," Annotations ")" "."
 
     "("  shift, and go to state 21
 
 
 State 4
 
-   16 TcfAnnotated: "tcf" . "(" Name "," FormulaRole "," TcfFormula ")" "."
-   17             | "tcf" . "(" Name "," FormulaRole "," TcfFormula "," Annotations ")" "."
+   16 TcfAnnotated: "tcf" • "(" Name "," FormulaRole "," TcfFormula ")" "."
+   17             | "tcf" • "(" Name "," FormulaRole "," TcfFormula "," Annotations ")" "."
 
     "("  shift, and go to state 22
 
 
 State 5
 
-   18 FofAnnotated: "fof" . "(" Name "," FormulaRole "," FofFormula ")" "."
-   19             | "fof" . "(" Name "," FormulaRole "," FofFormula "," Annotations ")" "."
+   18 FofAnnotated: "fof" • "(" Name "," FormulaRole "," FofFormula ")" "."
+   19             | "fof" • "(" Name "," FormulaRole "," FofFormula "," Annotations ")" "."
 
     "("  shift, and go to state 23
 
 
 State 6
 
-   20 CnfAnnotated: "cnf" . "(" Name "," FormulaRole "," CnfFormula ")" "."
-   21             | "cnf" . "(" Name "," FormulaRole "," CnfFormula "," Annotations ")" "."
+   20 CnfAnnotated: "cnf" • "(" Name "," FormulaRole "," CnfFormula ")" "."
+   21             | "cnf" • "(" Name "," FormulaRole "," CnfFormula "," Annotations ")" "."
 
     "("  shift, and go to state 24
 
 
 State 7
 
-  361 IncludeDefinition: "include" . "(" FileName ")" "."
-  362                  | "include" . "(" FileName "," FormulaSelection ")" "."
+  361 IncludeDefinition: "include" • "(" FileName ")" "."
+  362                  | "include" • "(" FileName "," FormulaSelection ")" "."
 
     "("  shift, and go to state 25
 
 
 State 8
 
-    0 $accept: Specification . "end of file"
+    0 $accept: Specification • "end of file"
 
     "end of file"  shift, and go to state 26
 
 
 State 9
 
-    1 Specification: Definitions .
-    2 Definitions: Definitions . Definition
+    1 Specification: Definitions •
+    2 Definitions: Definitions • Definition
 
     "tpi"      shift, and go to state 1
     "thf"      shift, and go to state 2
@@ -1339,71 +1339,71 @@ State 9
 
 State 10
 
-    3 Definitions: Definition .
+    3 Definitions: Definition •
 
     $default  reduce using rule 3 (Definitions)
 
 
 State 11
 
-    4 Definition: AnnotatedFormula .
+    4 Definition: AnnotatedFormula •
 
     $default  reduce using rule 4 (Definition)
 
 
 State 12
 
-    6 AnnotatedFormula: ThfAnnotated .
+    6 AnnotatedFormula: ThfAnnotated •
 
     $default  reduce using rule 6 (AnnotatedFormula)
 
 
 State 13
 
-    7 AnnotatedFormula: TffAnnotated .
+    7 AnnotatedFormula: TffAnnotated •
 
     $default  reduce using rule 7 (AnnotatedFormula)
 
 
 State 14
 
-    8 AnnotatedFormula: TcfAnnotated .
+    8 AnnotatedFormula: TcfAnnotated •
 
     $default  reduce using rule 8 (AnnotatedFormula)
 
 
 State 15
 
-    9 AnnotatedFormula: FofAnnotated .
+    9 AnnotatedFormula: FofAnnotated •
 
     $default  reduce using rule 9 (AnnotatedFormula)
 
 
 State 16
 
-   10 AnnotatedFormula: CnfAnnotated .
+   10 AnnotatedFormula: CnfAnnotated •
 
     $default  reduce using rule 10 (AnnotatedFormula)
 
 
 State 17
 
-   11 AnnotatedFormula: TpiAnnotated .
+   11 AnnotatedFormula: TpiAnnotated •
 
     $default  reduce using rule 11 (AnnotatedFormula)
 
 
 State 18
 
-    5 Definition: IncludeDefinition .
+    5 Definition: IncludeDefinition •
 
     $default  reduce using rule 5 (Definition)
 
 
 State 19
 
-   22 TpiAnnotated: "tpi" "(" . Name "," FormulaRole "," TpiFormula ")" "."
-   23             | "tpi" "(" . Name "," FormulaRole "," TpiFormula "," Annotations ")" "."
+   22 TpiAnnotated: "tpi" "(" • Name "," FormulaRole "," TpiFormula ")" "."
+   23             | "tpi" "(" • Name "," FormulaRole "," TpiFormula "," Annotations ")" "."
 
     "integer"        shift, and go to state 28
     "lower_word"     shift, and go to state 29
@@ -1417,8 +1417,8 @@ State 19
 
 State 20
 
-   12 ThfAnnotated: "thf" "(" . Name "," FormulaRole "," ThfFormula ")" "."
-   13             | "thf" "(" . Name "," FormulaRole "," ThfFormula "," Annotations ")" "."
+   12 ThfAnnotated: "thf" "(" • Name "," FormulaRole "," ThfFormula ")" "."
+   13             | "thf" "(" • Name "," FormulaRole "," ThfFormula "," Annotations ")" "."
 
     "integer"        shift, and go to state 28
     "lower_word"     shift, and go to state 29
@@ -1432,8 +1432,8 @@ State 20
 
 State 21
 
-   14 TffAnnotated: "tff" "(" . Name "," FormulaRole "," TffFormula ")" "."
-   15             | "tff" "(" . Name "," FormulaRole "," TffFormula "," Annotations ")" "."
+   14 TffAnnotated: "tff" "(" • Name "," FormulaRole "," TffFormula ")" "."
+   15             | "tff" "(" • Name "," FormulaRole "," TffFormula "," Annotations ")" "."
 
     "integer"        shift, and go to state 28
     "lower_word"     shift, and go to state 29
@@ -1447,8 +1447,8 @@ State 21
 
 State 22
 
-   16 TcfAnnotated: "tcf" "(" . Name "," FormulaRole "," TcfFormula ")" "."
-   17             | "tcf" "(" . Name "," FormulaRole "," TcfFormula "," Annotations ")" "."
+   16 TcfAnnotated: "tcf" "(" • Name "," FormulaRole "," TcfFormula ")" "."
+   17             | "tcf" "(" • Name "," FormulaRole "," TcfFormula "," Annotations ")" "."
 
     "integer"        shift, and go to state 28
     "lower_word"     shift, and go to state 29
@@ -1462,8 +1462,8 @@ State 22
 
 State 23
 
-   18 FofAnnotated: "fof" "(" . Name "," FormulaRole "," FofFormula ")" "."
-   19             | "fof" "(" . Name "," FormulaRole "," FofFormula "," Annotations ")" "."
+   18 FofAnnotated: "fof" "(" • Name "," FormulaRole "," FofFormula ")" "."
+   19             | "fof" "(" • Name "," FormulaRole "," FofFormula "," Annotations ")" "."
 
     "integer"        shift, and go to state 28
     "lower_word"     shift, and go to state 29
@@ -1477,8 +1477,8 @@ State 23
 
 State 24
 
-   20 CnfAnnotated: "cnf" "(" . Name "," FormulaRole "," CnfFormula ")" "."
-   21             | "cnf" "(" . Name "," FormulaRole "," CnfFormula "," Annotations ")" "."
+   20 CnfAnnotated: "cnf" "(" • Name "," FormulaRole "," CnfFormula ")" "."
+   21             | "cnf" "(" • Name "," FormulaRole "," CnfFormula "," Annotations ")" "."
 
     "integer"        shift, and go to state 28
     "lower_word"     shift, and go to state 29
@@ -1492,8 +1492,8 @@ State 24
 
 State 25
 
-  361 IncludeDefinition: "include" "(" . FileName ")" "."
-  362                  | "include" "(" . FileName "," FormulaSelection ")" "."
+  361 IncludeDefinition: "include" "(" • FileName ")" "."
+  362                  | "include" "(" • FileName "," FormulaSelection ")" "."
 
     "single_quoted"  shift, and go to state 30
 
@@ -1503,112 +1503,112 @@ State 25
 
 State 26
 
-    0 $accept: Specification "end of file" .
+    0 $accept: Specification "end of file" •
 
     $default  accept
 
 
 State 27
 
-    2 Definitions: Definitions Definition .
+    2 Definitions: Definitions Definition •
 
     $default  reduce using rule 2 (Definitions)
 
 
 State 28
 
-  340 Name: "integer" .
+  340 Name: "integer" •
 
     $default  reduce using rule 340 (Name)
 
 
 State 29
 
-  377 LowerWordLiteral: "lower_word" .
+  377 LowerWordLiteral: "lower_word" •
 
     $default  reduce using rule 377 (LowerWordLiteral)
 
 
 State 30
 
-  378 SingleQuotedLiteral: "single_quoted" .
+  378 SingleQuotedLiteral: "single_quoted" •
 
     $default  reduce using rule 378 (SingleQuotedLiteral)
 
 
 State 31
 
-   22 TpiAnnotated: "tpi" "(" Name . "," FormulaRole "," TpiFormula ")" "."
-   23             | "tpi" "(" Name . "," FormulaRole "," TpiFormula "," Annotations ")" "."
+   22 TpiAnnotated: "tpi" "(" Name • "," FormulaRole "," TpiFormula ")" "."
+   23             | "tpi" "(" Name • "," FormulaRole "," TpiFormula "," Annotations ")" "."
 
     ","  shift, and go to state 42
 
 
 State 32
 
-  339 Name: AtomicWord .
+  339 Name: AtomicWord •
 
     $default  reduce using rule 339 (Name)
 
 
 State 33
 
-  364 AtomicWord: LowerWordLiteral .
+  364 AtomicWord: LowerWordLiteral •
 
     $default  reduce using rule 364 (AtomicWord)
 
 
 State 34
 
-  365 AtomicWord: SingleQuotedLiteral .
+  365 AtomicWord: SingleQuotedLiteral •
 
     $default  reduce using rule 365 (AtomicWord)
 
 
 State 35
 
-   12 ThfAnnotated: "thf" "(" Name . "," FormulaRole "," ThfFormula ")" "."
-   13             | "thf" "(" Name . "," FormulaRole "," ThfFormula "," Annotations ")" "."
+   12 ThfAnnotated: "thf" "(" Name • "," FormulaRole "," ThfFormula ")" "."
+   13             | "thf" "(" Name • "," FormulaRole "," ThfFormula "," Annotations ")" "."
 
     ","  shift, and go to state 43
 
 
 State 36
 
-   14 TffAnnotated: "tff" "(" Name . "," FormulaRole "," TffFormula ")" "."
-   15             | "tff" "(" Name . "," FormulaRole "," TffFormula "," Annotations ")" "."
+   14 TffAnnotated: "tff" "(" Name • "," FormulaRole "," TffFormula ")" "."
+   15             | "tff" "(" Name • "," FormulaRole "," TffFormula "," Annotations ")" "."
 
     ","  shift, and go to state 44
 
 
 State 37
 
-   16 TcfAnnotated: "tcf" "(" Name . "," FormulaRole "," TcfFormula ")" "."
-   17             | "tcf" "(" Name . "," FormulaRole "," TcfFormula "," Annotations ")" "."
+   16 TcfAnnotated: "tcf" "(" Name • "," FormulaRole "," TcfFormula ")" "."
+   17             | "tcf" "(" Name • "," FormulaRole "," TcfFormula "," Annotations ")" "."
 
     ","  shift, and go to state 45
 
 
 State 38
 
-   18 FofAnnotated: "fof" "(" Name . "," FormulaRole "," FofFormula ")" "."
-   19             | "fof" "(" Name . "," FormulaRole "," FofFormula "," Annotations ")" "."
+   18 FofAnnotated: "fof" "(" Name • "," FormulaRole "," FofFormula ")" "."
+   19             | "fof" "(" Name • "," FormulaRole "," FofFormula "," Annotations ")" "."
 
     ","  shift, and go to state 46
 
 
 State 39
 
-   20 CnfAnnotated: "cnf" "(" Name . "," FormulaRole "," CnfFormula ")" "."
-   21             | "cnf" "(" Name . "," FormulaRole "," CnfFormula "," Annotations ")" "."
+   20 CnfAnnotated: "cnf" "(" Name • "," FormulaRole "," CnfFormula ")" "."
+   21             | "cnf" "(" Name • "," FormulaRole "," CnfFormula "," Annotations ")" "."
 
     ","  shift, and go to state 47
 
 
 State 40
 
-  361 IncludeDefinition: "include" "(" FileName . ")" "."
-  362                  | "include" "(" FileName . "," FormulaSelection ")" "."
+  361 IncludeDefinition: "include" "(" FileName • ")" "."
+  362                  | "include" "(" FileName • "," FormulaSelection ")" "."
 
     ","  shift, and go to state 48
     ")"  shift, and go to state 49
@@ -1616,15 +1616,15 @@ State 40
 
 State 41
 
-  371 FileName: SingleQuotedLiteral .
+  371 FileName: SingleQuotedLiteral •
 
     $default  reduce using rule 371 (FileName)
 
 
 State 42
 
-   22 TpiAnnotated: "tpi" "(" Name "," . FormulaRole "," TpiFormula ")" "."
-   23             | "tpi" "(" Name "," . FormulaRole "," TpiFormula "," Annotations ")" "."
+   22 TpiAnnotated: "tpi" "(" Name "," • FormulaRole "," TpiFormula ")" "."
+   23             | "tpi" "(" Name "," • FormulaRole "," TpiFormula "," Annotations ")" "."
 
     "lower_word"  shift, and go to state 29
 
@@ -1634,8 +1634,8 @@ State 42
 
 State 43
 
-   12 ThfAnnotated: "thf" "(" Name "," . FormulaRole "," ThfFormula ")" "."
-   13             | "thf" "(" Name "," . FormulaRole "," ThfFormula "," Annotations ")" "."
+   12 ThfAnnotated: "thf" "(" Name "," • FormulaRole "," ThfFormula ")" "."
+   13             | "thf" "(" Name "," • FormulaRole "," ThfFormula "," Annotations ")" "."
 
     "lower_word"  shift, and go to state 29
 
@@ -1645,8 +1645,8 @@ State 43
 
 State 44
 
-   14 TffAnnotated: "tff" "(" Name "," . FormulaRole "," TffFormula ")" "."
-   15             | "tff" "(" Name "," . FormulaRole "," TffFormula "," Annotations ")" "."
+   14 TffAnnotated: "tff" "(" Name "," • FormulaRole "," TffFormula ")" "."
+   15             | "tff" "(" Name "," • FormulaRole "," TffFormula "," Annotations ")" "."
 
     "lower_word"  shift, and go to state 29
 
@@ -1656,8 +1656,8 @@ State 44
 
 State 45
 
-   16 TcfAnnotated: "tcf" "(" Name "," . FormulaRole "," TcfFormula ")" "."
-   17             | "tcf" "(" Name "," . FormulaRole "," TcfFormula "," Annotations ")" "."
+   16 TcfAnnotated: "tcf" "(" Name "," • FormulaRole "," TcfFormula ")" "."
+   17             | "tcf" "(" Name "," • FormulaRole "," TcfFormula "," Annotations ")" "."
 
     "lower_word"  shift, and go to state 29
 
@@ -1667,8 +1667,8 @@ State 45
 
 State 46
 
-   18 FofAnnotated: "fof" "(" Name "," . FormulaRole "," FofFormula ")" "."
-   19             | "fof" "(" Name "," . FormulaRole "," FofFormula "," Annotations ")" "."
+   18 FofAnnotated: "fof" "(" Name "," • FormulaRole "," FofFormula ")" "."
+   19             | "fof" "(" Name "," • FormulaRole "," FofFormula "," Annotations ")" "."
 
     "lower_word"  shift, and go to state 29
 
@@ -1678,8 +1678,8 @@ State 46
 
 State 47
 
-   20 CnfAnnotated: "cnf" "(" Name "," . FormulaRole "," CnfFormula ")" "."
-   21             | "cnf" "(" Name "," . FormulaRole "," CnfFormula "," Annotations ")" "."
+   20 CnfAnnotated: "cnf" "(" Name "," • FormulaRole "," CnfFormula ")" "."
+   21             | "cnf" "(" Name "," • FormulaRole "," CnfFormula "," Annotations ")" "."
 
     "lower_word"  shift, and go to state 29
 
@@ -1689,7 +1689,7 @@ State 47
 
 State 48
 
-  362 IncludeDefinition: "include" "(" FileName "," . FormulaSelection ")" "."
+  362 IncludeDefinition: "include" "(" FileName "," • FormulaSelection ")" "."
 
     "["  shift, and go to state 57
 
@@ -1698,69 +1698,69 @@ State 48
 
 State 49
 
-  361 IncludeDefinition: "include" "(" FileName ")" . "."
+  361 IncludeDefinition: "include" "(" FileName ")" • "."
 
     "."  shift, and go to state 59
 
 
 State 50
 
-   22 TpiAnnotated: "tpi" "(" Name "," FormulaRole . "," TpiFormula ")" "."
-   23             | "tpi" "(" Name "," FormulaRole . "," TpiFormula "," Annotations ")" "."
+   22 TpiAnnotated: "tpi" "(" Name "," FormulaRole • "," TpiFormula ")" "."
+   23             | "tpi" "(" Name "," FormulaRole • "," TpiFormula "," Annotations ")" "."
 
     ","  shift, and go to state 60
 
 
 State 51
 
-  341 FormulaRole: LowerWordLiteral .
+  341 FormulaRole: LowerWordLiteral •
 
     $default  reduce using rule 341 (FormulaRole)
 
 
 State 52
 
-   12 ThfAnnotated: "thf" "(" Name "," FormulaRole . "," ThfFormula ")" "."
-   13             | "thf" "(" Name "," FormulaRole . "," ThfFormula "," Annotations ")" "."
+   12 ThfAnnotated: "thf" "(" Name "," FormulaRole • "," ThfFormula ")" "."
+   13             | "thf" "(" Name "," FormulaRole • "," ThfFormula "," Annotations ")" "."
 
     ","  shift, and go to state 61
 
 
 State 53
 
-   14 TffAnnotated: "tff" "(" Name "," FormulaRole . "," TffFormula ")" "."
-   15             | "tff" "(" Name "," FormulaRole . "," TffFormula "," Annotations ")" "."
+   14 TffAnnotated: "tff" "(" Name "," FormulaRole • "," TffFormula ")" "."
+   15             | "tff" "(" Name "," FormulaRole • "," TffFormula "," Annotations ")" "."
 
     ","  shift, and go to state 62
 
 
 State 54
 
-   16 TcfAnnotated: "tcf" "(" Name "," FormulaRole . "," TcfFormula ")" "."
-   17             | "tcf" "(" Name "," FormulaRole . "," TcfFormula "," Annotations ")" "."
+   16 TcfAnnotated: "tcf" "(" Name "," FormulaRole • "," TcfFormula ")" "."
+   17             | "tcf" "(" Name "," FormulaRole • "," TcfFormula "," Annotations ")" "."
 
     ","  shift, and go to state 63
 
 
 State 55
 
-   18 FofAnnotated: "fof" "(" Name "," FormulaRole . "," FofFormula ")" "."
-   19             | "fof" "(" Name "," FormulaRole . "," FofFormula "," Annotations ")" "."
+   18 FofAnnotated: "fof" "(" Name "," FormulaRole • "," FofFormula ")" "."
+   19             | "fof" "(" Name "," FormulaRole • "," FofFormula "," Annotations ")" "."
 
     ","  shift, and go to state 64
 
 
 State 56
 
-   20 CnfAnnotated: "cnf" "(" Name "," FormulaRole . "," CnfFormula ")" "."
-   21             | "cnf" "(" Name "," FormulaRole . "," CnfFormula "," Annotations ")" "."
+   20 CnfAnnotated: "cnf" "(" Name "," FormulaRole • "," CnfFormula ")" "."
+   21             | "cnf" "(" Name "," FormulaRole • "," CnfFormula "," Annotations ")" "."
 
     ","  shift, and go to state 65
 
 
 State 57
 
-  363 FormulaSelection: "[" . NameList "]"
+  363 FormulaSelection: "[" • NameList "]"
 
     "integer"        shift, and go to state 28
     "lower_word"     shift, and go to state 29
@@ -1775,22 +1775,22 @@ State 57
 
 State 58
 
-  362 IncludeDefinition: "include" "(" FileName "," FormulaSelection . ")" "."
+  362 IncludeDefinition: "include" "(" FileName "," FormulaSelection • ")" "."
 
     ")"  shift, and go to state 68
 
 
 State 59
 
-  361 IncludeDefinition: "include" "(" FileName ")" "." .
+  361 IncludeDefinition: "include" "(" FileName ")" "." •
 
     $default  reduce using rule 361 (IncludeDefinition)
 
 
 State 60
 
-   22 TpiAnnotated: "tpi" "(" Name "," FormulaRole "," . TpiFormula ")" "."
-   23             | "tpi" "(" Name "," FormulaRole "," . TpiFormula "," Annotations ")" "."
+   22 TpiAnnotated: "tpi" "(" Name "," FormulaRole "," • TpiFormula ")" "."
+   23             | "tpi" "(" Name "," FormulaRole "," • TpiFormula "," Annotations ")" "."
 
     "$"              shift, and go to state 69
     "$$"             shift, and go to state 70
@@ -1861,8 +1861,8 @@ State 60
 
 State 61
 
-   12 ThfAnnotated: "thf" "(" Name "," FormulaRole "," . ThfFormula ")" "."
-   13             | "thf" "(" Name "," FormulaRole "," . ThfFormula "," Annotations ")" "."
+   12 ThfAnnotated: "thf" "(" Name "," FormulaRole "," • ThfFormula ")" "."
+   13             | "thf" "(" Name "," FormulaRole "," • ThfFormula "," Annotations ")" "."
 
     "$"              shift, and go to state 129
     "$$"             shift, and go to state 70
@@ -1953,8 +1953,8 @@ State 61
 
 State 62
 
-   14 TffAnnotated: "tff" "(" Name "," FormulaRole "," . TffFormula ")" "."
-   15             | "tff" "(" Name "," FormulaRole "," . TffFormula "," Annotations ")" "."
+   14 TffAnnotated: "tff" "(" Name "," FormulaRole "," • TffFormula ")" "."
+   15             | "tff" "(" Name "," FormulaRole "," • TffFormula "," Annotations ")" "."
 
     "$"              shift, and go to state 190
     "$$"             shift, and go to state 70
@@ -2025,8 +2025,8 @@ State 62
 
 State 63
 
-   16 TcfAnnotated: "tcf" "(" Name "," FormulaRole "," . TcfFormula ")" "."
-   17             | "tcf" "(" Name "," FormulaRole "," . TcfFormula "," Annotations ")" "."
+   16 TcfAnnotated: "tcf" "(" Name "," FormulaRole "," • TcfFormula ")" "."
+   17             | "tcf" "(" Name "," FormulaRole "," • TcfFormula "," Annotations ")" "."
 
     "$"              shift, and go to state 69
     "$$"             shift, and go to state 70
@@ -2087,8 +2087,8 @@ State 63
 
 State 64
 
-   18 FofAnnotated: "fof" "(" Name "," FormulaRole "," . FofFormula ")" "."
-   19             | "fof" "(" Name "," FormulaRole "," . FofFormula "," Annotations ")" "."
+   18 FofAnnotated: "fof" "(" Name "," FormulaRole "," • FofFormula ")" "."
+   19             | "fof" "(" Name "," FormulaRole "," • FofFormula "," Annotations ")" "."
 
     "$"              shift, and go to state 69
     "$$"             shift, and go to state 70
@@ -2158,8 +2158,8 @@ State 64
 
 State 65
 
-   20 CnfAnnotated: "cnf" "(" Name "," FormulaRole "," . CnfFormula ")" "."
-   21             | "cnf" "(" Name "," FormulaRole "," . CnfFormula "," Annotations ")" "."
+   20 CnfAnnotated: "cnf" "(" Name "," FormulaRole "," • CnfFormula ")" "."
+   21             | "cnf" "(" Name "," FormulaRole "," • CnfFormula "," Annotations ")" "."
 
     "$"              shift, and go to state 69
     "$$"             shift, and go to state 70
@@ -2214,8 +2214,8 @@ State 65
 
 State 66
 
-  338 NameList: NameList . "," Name
-  363 FormulaSelection: "[" NameList . "]"
+  338 NameList: NameList • "," Name
+  363 FormulaSelection: "[" NameList • "]"
 
     ","  shift, and go to state 249
     "]"  shift, and go to state 250
@@ -2223,36 +2223,36 @@ State 66
 
 State 67
 
-  337 NameList: Name .
+  337 NameList: Name •
 
     $default  reduce using rule 337 (NameList)
 
 
 State 68
 
-  362 IncludeDefinition: "include" "(" FileName "," FormulaSelection ")" . "."
+  362 IncludeDefinition: "include" "(" FileName "," FormulaSelection ")" • "."
 
     "."  shift, and go to state 251
 
 
 State 69
 
-  379 DollarWordLiteral: "$" . "lower_word"
+  379 DollarWordLiteral: "$" • "lower_word"
 
     "lower_word"  shift, and go to state 252
 
 
 State 70
 
-  380 DollarDollarWordLiteral: "$$" . "lower_word"
+  380 DollarDollarWordLiteral: "$$" • "lower_word"
 
     "lower_word"  shift, and go to state 253
 
 
 State 71
 
-  251 FofUnitaryFormula: "(" . FofLogicFormula ")"
-  281 FofSequent: "(" . FofSequent ")"
+  251 FofUnitaryFormula: "(" • FofLogicFormula ")"
+  281 FofSequent: "(" • FofSequent ")"
 
     "$"              shift, and go to state 69
     "$$"             shift, and go to state 70
@@ -2321,8 +2321,8 @@ State 71
 
 State 72
 
-  282 FofFormulaTuple: "{" . "}"
-  283                | "{" . FofFormulaTupleList "}"
+  282 FofFormulaTuple: "{" • "}"
+  283                | "{" • FofFormulaTupleList "}"
 
     "$"              shift, and go to state 69
     "$$"             shift, and go to state 70
@@ -2390,64 +2390,64 @@ State 72
 
 State 73
 
-  308 FofQuantifier: "!" .
+  308 FofQuantifier: "!" •
 
     $default  reduce using rule 308 (FofQuantifier)
 
 
 State 74
 
-  318 UnaryConnective: "~" .
+  318 UnaryConnective: "~" •
 
     $default  reduce using rule 318 (UnaryConnective)
 
 
 State 75
 
-  309 FofQuantifier: "?" .
+  309 FofQuantifier: "?" •
 
     $default  reduce using rule 309 (FofQuantifier)
 
 
 State 76
 
-  372 IntegerLiteral: "integer" .
+  372 IntegerLiteral: "integer" •
 
     $default  reduce using rule 372 (IntegerLiteral)
 
 
 State 77
 
-  373 RealLiteral: "real" .
+  373 RealLiteral: "real" •
 
     $default  reduce using rule 373 (RealLiteral)
 
 
 State 78
 
-  374 RationalLiteral: "rational" .
+  374 RationalLiteral: "rational" •
 
     $default  reduce using rule 374 (RationalLiteral)
 
 
 State 79
 
-  376 DistinctObjectLiteral: "double_quoted" .
+  376 DistinctObjectLiteral: "double_quoted" •
 
     $default  reduce using rule 376 (DistinctObjectLiteral)
 
 
 State 80
 
-  375 Variable: "upper_word" .
+  375 Variable: "upper_word" •
 
     $default  reduce using rule 375 (Variable)
 
 
 State 81
 
-   22 TpiAnnotated: "tpi" "(" Name "," FormulaRole "," TpiFormula . ")" "."
-   23             | "tpi" "(" Name "," FormulaRole "," TpiFormula . "," Annotations ")" "."
+   22 TpiAnnotated: "tpi" "(" Name "," FormulaRole "," TpiFormula • ")" "."
+   23             | "tpi" "(" Name "," FormulaRole "," TpiFormula • "," Annotations ")" "."
 
     ","  shift, and go to state 260
     ")"  shift, and go to state 261
@@ -2455,43 +2455,43 @@ State 81
 
 State 82
 
-   26 TpiFormula: FofFormula .
+   26 TpiFormula: FofFormula •
 
     $default  reduce using rule 26 (TpiFormula)
 
 
 State 83
 
-  230 FofFormula: FofLogicFormula .
+  230 FofFormula: FofLogicFormula •
 
     $default  reduce using rule 230 (FofFormula)
 
 
 State 84
 
-  232 FofLogicFormula: FofBinaryFormula .
+  232 FofLogicFormula: FofBinaryFormula •
 
     $default  reduce using rule 232 (FofLogicFormula)
 
 
 State 85
 
-  235 FofBinaryFormula: FofBinaryNonassoc .
+  235 FofBinaryFormula: FofBinaryNonassoc •
 
     $default  reduce using rule 235 (FofBinaryFormula)
 
 
 State 86
 
-  236 FofBinaryFormula: FofBinaryAssoc .
+  236 FofBinaryFormula: FofBinaryAssoc •
 
     $default  reduce using rule 236 (FofBinaryFormula)
 
 
 State 87
 
-  238 FofBinaryAssoc: FofOrFormula .
-  241 FofOrFormula: FofOrFormula . "|" FofUnitFormula
+  238 FofBinaryAssoc: FofOrFormula •
+  241 FofOrFormula: FofOrFormula • "|" FofUnitFormula
 
     "|"  shift, and go to state 262
 
@@ -2500,8 +2500,8 @@ State 87
 
 State 88
 
-  239 FofBinaryAssoc: FofAndFormula .
-  243 FofAndFormula: FofAndFormula . "&" FofUnitFormula
+  239 FofBinaryAssoc: FofAndFormula •
+  243 FofAndFormula: FofAndFormula • "&" FofUnitFormula
 
     "&"  shift, and go to state 263
 
@@ -2510,8 +2510,8 @@ State 88
 
 State 89
 
-  233 FofLogicFormula: FofUnaryFormula .
-  248 FofUnitFormula: FofUnaryFormula .
+  233 FofLogicFormula: FofUnaryFormula •
+  248 FofUnitFormula: FofUnaryFormula •
 
     ","       reduce using rule 233 (FofLogicFormula)
     ")"       reduce using rule 233 (FofLogicFormula)
@@ -2521,16 +2521,16 @@ State 89
 
 State 90
 
-  245 FofUnaryFormula: FofInfixUnary .
+  245 FofUnaryFormula: FofInfixUnary •
 
     $default  reduce using rule 245 (FofUnaryFormula)
 
 
 State 91
 
-  237 FofBinaryNonassoc: FofUnitFormula . NonassocConnective FofUnitFormula
-  240 FofOrFormula: FofUnitFormula . "|" FofUnitFormula
-  242 FofAndFormula: FofUnitFormula . "&" FofUnitFormula
+  237 FofBinaryNonassoc: FofUnitFormula • NonassocConnective FofUnitFormula
+  240 FofOrFormula: FofUnitFormula • "|" FofUnitFormula
+  242 FofAndFormula: FofUnitFormula • "&" FofUnitFormula
 
     "&"    shift, and go to state 264
     "|"    shift, and go to state 265
@@ -2546,8 +2546,8 @@ State 91
 
 State 92
 
-  234 FofLogicFormula: FofUnitaryFormula .
-  247 FofUnitFormula: FofUnitaryFormula .
+  234 FofLogicFormula: FofUnitaryFormula •
+  247 FofUnitFormula: FofUnitaryFormula •
 
     ","       reduce using rule 234 (FofLogicFormula)
     ")"       reduce using rule 234 (FofLogicFormula)
@@ -2557,57 +2557,57 @@ State 92
 
 State 93
 
-  249 FofUnitaryFormula: FofQuantifiedFormula .
+  249 FofUnitaryFormula: FofQuantifiedFormula •
 
     $default  reduce using rule 249 (FofUnitaryFormula)
 
 
 State 94
 
-  250 FofUnitaryFormula: FofAtomicFormula .
+  250 FofUnitaryFormula: FofAtomicFormula •
 
     $default  reduce using rule 250 (FofUnitaryFormula)
 
 
 State 95
 
-  255 FofAtomicFormula: FofPlainAtomicFormula .
+  255 FofAtomicFormula: FofPlainAtomicFormula •
 
     $default  reduce using rule 255 (FofAtomicFormula)
 
 
 State 96
 
-  256 FofAtomicFormula: FofDefinedAtomicFormula .
+  256 FofAtomicFormula: FofDefinedAtomicFormula •
 
     $default  reduce using rule 256 (FofAtomicFormula)
 
 
 State 97
 
-  259 FofDefinedAtomicFormula: FofDefinedPlainFormula .
+  259 FofDefinedAtomicFormula: FofDefinedPlainFormula •
 
     $default  reduce using rule 259 (FofDefinedAtomicFormula)
 
 
 State 98
 
-  260 FofDefinedAtomicFormula: FofDefinedInfixFormula .
+  260 FofDefinedAtomicFormula: FofDefinedInfixFormula •
 
     $default  reduce using rule 260 (FofDefinedAtomicFormula)
 
 
 State 99
 
-  257 FofAtomicFormula: FofSystemAtomicFormula .
+  257 FofAtomicFormula: FofSystemAtomicFormula •
 
     $default  reduce using rule 257 (FofAtomicFormula)
 
 
 State 100
 
-  258 FofPlainAtomicFormula: FofPlainTerm .
-  277 FofFunctionTerm: FofPlainTerm .
+  258 FofPlainAtomicFormula: FofPlainTerm •
+  277 FofFunctionTerm: FofPlainTerm •
 
     "="       reduce using rule 277 (FofFunctionTerm)
     "!="      reduce using rule 277 (FofFunctionTerm)
@@ -2616,22 +2616,22 @@ State 100
 
 State 101
 
-  278 FofFunctionTerm: FofDefinedTerm .
+  278 FofFunctionTerm: FofDefinedTerm •
 
     $default  reduce using rule 278 (FofFunctionTerm)
 
 
 State 102
 
-  267 FofDefinedTerm: FofDefinedAtomicTerm .
+  267 FofDefinedTerm: FofDefinedAtomicTerm •
 
     $default  reduce using rule 267 (FofDefinedTerm)
 
 
 State 103
 
-  261 FofDefinedPlainFormula: FofDefinedPlainTerm .
-  268 FofDefinedAtomicTerm: FofDefinedPlainTerm .
+  261 FofDefinedPlainFormula: FofDefinedPlainTerm •
+  268 FofDefinedAtomicTerm: FofDefinedPlainTerm •
 
     "="       reduce using rule 268 (FofDefinedAtomicTerm)
     "!="      reduce using rule 268 (FofDefinedAtomicTerm)
@@ -2640,8 +2640,8 @@ State 103
 
 State 104
 
-  263 FofSystemAtomicFormula: FofSystemTerm .
-  279 FofFunctionTerm: FofSystemTerm .
+  263 FofSystemAtomicFormula: FofSystemTerm •
+  279 FofFunctionTerm: FofSystemTerm •
 
     "="       reduce using rule 279 (FofFunctionTerm)
     "!="      reduce using rule 279 (FofFunctionTerm)
@@ -2650,8 +2650,8 @@ State 104
 
 State 105
 
-  246 FofInfixUnary: FofTerm . InfixInequality FofTerm
-  262 FofDefinedInfixFormula: FofTerm . DefinedInfixPred FofTerm
+  246 FofInfixUnary: FofTerm • InfixInequality FofTerm
+  262 FofDefinedInfixFormula: FofTerm • DefinedInfixPred FofTerm
 
     "="   shift, and go to state 273
     "!="  shift, and go to state 274
@@ -2663,35 +2663,35 @@ State 105
 
 State 106
 
-  275 FofTerm: FofFunctionTerm .
+  275 FofTerm: FofFunctionTerm •
 
     $default  reduce using rule 275 (FofTerm)
 
 
 State 107
 
-  231 FofFormula: FofSequent .
+  231 FofFormula: FofSequent •
 
     $default  reduce using rule 231 (FofFormula)
 
 
 State 108
 
-  280 FofSequent: FofFormulaTuple . "-->" FofFormulaTuple
+  280 FofSequent: FofFormulaTuple • "-->" FofFormulaTuple
 
     "-->"  shift, and go to state 278
 
 
 State 109
 
-  252 FofQuantifiedFormula: FofQuantifier . "[" FofVariableList "]" ":" FofUnitFormula
+  252 FofQuantifiedFormula: FofQuantifier • "[" FofVariableList "]" ":" FofUnitFormula
 
     "["  shift, and go to state 279
 
 
 State 110
 
-  244 FofUnaryFormula: UnaryConnective . FofUnitFormula
+  244 FofUnaryFormula: UnaryConnective • FofUnitFormula
 
     "$"              shift, and go to state 69
     "$$"             shift, and go to state 70
@@ -2751,15 +2751,15 @@ State 110
 
 State 111
 
-  264 FofPlainTerm: Constant .
+  264 FofPlainTerm: Constant •
 
     $default  reduce using rule 264 (FofPlainTerm)
 
 
 State 112
 
-  265 FofPlainTerm: Functor . "(" FofArguments ")"
-  329 Constant: Functor .
+  265 FofPlainTerm: Functor • "(" FofArguments ")"
+  329 Constant: Functor •
 
     "("  shift, and go to state 283
 
@@ -2768,15 +2768,15 @@ State 112
 
 State 113
 
-  271 FofSystemTerm: SystemConstant .
+  271 FofSystemTerm: SystemConstant •
 
     $default  reduce using rule 271 (FofSystemTerm)
 
 
 State 114
 
-  272 FofSystemTerm: SystemFunctor . "(" FofArguments ")"
-  331 SystemConstant: SystemFunctor .
+  272 FofSystemTerm: SystemFunctor • "(" FofArguments ")"
+  331 SystemConstant: SystemFunctor •
 
     "("  shift, and go to state 284
 
@@ -2785,15 +2785,15 @@ State 114
 
 State 115
 
-  269 FofDefinedPlainTerm: DefinedConstant .
+  269 FofDefinedPlainTerm: DefinedConstant •
 
     $default  reduce using rule 269 (FofDefinedPlainTerm)
 
 
 State 116
 
-  270 FofDefinedPlainTerm: DefinedFunctor . "(" FofArguments ")"
-  333 DefinedConstant: DefinedFunctor .
+  270 FofDefinedPlainTerm: DefinedFunctor • "(" FofArguments ")"
+  333 DefinedConstant: DefinedFunctor •
 
     "("  shift, and go to state 285
 
@@ -2802,93 +2802,93 @@ State 116
 
 State 117
 
-  266 FofDefinedTerm: DefinedTerm .
+  266 FofDefinedTerm: DefinedTerm •
 
     $default  reduce using rule 266 (FofDefinedTerm)
 
 
 State 118
 
-  330 Functor: AtomicWord .
+  330 Functor: AtomicWord •
 
     $default  reduce using rule 330 (Functor)
 
 
 State 119
 
-  334 DefinedFunctor: AtomicDefinedWord .
+  334 DefinedFunctor: AtomicDefinedWord •
 
     $default  reduce using rule 334 (DefinedFunctor)
 
 
 State 120
 
-  332 SystemFunctor: AtomicSystemWord .
+  332 SystemFunctor: AtomicSystemWord •
 
     $default  reduce using rule 332 (SystemFunctor)
 
 
 State 121
 
-  335 DefinedTerm: Number .
+  335 DefinedTerm: Number •
 
     $default  reduce using rule 335 (DefinedTerm)
 
 
 State 122
 
-  368 Number: IntegerLiteral .
+  368 Number: IntegerLiteral •
 
     $default  reduce using rule 368 (Number)
 
 
 State 123
 
-  369 Number: RealLiteral .
+  369 Number: RealLiteral •
 
     $default  reduce using rule 369 (Number)
 
 
 State 124
 
-  370 Number: RationalLiteral .
+  370 Number: RationalLiteral •
 
     $default  reduce using rule 370 (Number)
 
 
 State 125
 
-  276 FofTerm: Variable .
+  276 FofTerm: Variable •
 
     $default  reduce using rule 276 (FofTerm)
 
 
 State 126
 
-  336 DefinedTerm: DistinctObjectLiteral .
+  336 DefinedTerm: DistinctObjectLiteral •
 
     $default  reduce using rule 336 (DefinedTerm)
 
 
 State 127
 
-  366 AtomicDefinedWord: DollarWordLiteral .
+  366 AtomicDefinedWord: DollarWordLiteral •
 
     $default  reduce using rule 366 (AtomicDefinedWord)
 
 
 State 128
 
-  367 AtomicSystemWord: DollarDollarWordLiteral .
+  367 AtomicSystemWord: DollarDollarWordLiteral •
 
     $default  reduce using rule 367 (AtomicSystemWord)
 
 
 State 129
 
-   81 ThfConditional: "$" . "ite" "(" ThfLogicFormula "," ThfLogicFormula "," ThfLogicFormula ")"
-   82 ThfLet: "$" . "let" "(" ThfLetTypes "," ThfLetDefns "," ThfFormula ")"
-  379 DollarWordLiteral: "$" . "lower_word"
+   81 ThfConditional: "$" • "ite" "(" ThfLogicFormula "," ThfLogicFormula "," ThfLogicFormula ")"
+   82 ThfLet: "$" • "let" "(" ThfLetTypes "," ThfLetDefns "," ThfFormula ")"
+  379 DollarWordLiteral: "$" • "lower_word"
 
     "ite"         shift, and go to state 286
     "let"         shift, and go to state 287
@@ -2897,11 +2897,11 @@ State 129
 
 State 130
 
-   56 ThfUnitaryFormula: "(" . ThfLogicFormula ")"
-   74 ThfDefinedAtomic: "(" . ThfConnTerm ")"
-   94 ThfUnitaryTerm: "(" . ThfLogicFormula ")"
-  105 ThfAtomTyping: "(" . ThfAtomTyping ")"
-  122 ThfSequent: "(" . ThfSequent ")"
+   56 ThfUnitaryFormula: "(" • ThfLogicFormula ")"
+   74 ThfDefinedAtomic: "(" • ThfConnTerm ")"
+   94 ThfUnitaryTerm: "(" • ThfLogicFormula ")"
+  105 ThfAtomTyping: "(" • ThfAtomTyping ")"
+  122 ThfSequent: "(" • ThfSequent ")"
 
     "&"              shift, and go to state 288
     "$"              shift, and go to state 129
@@ -3003,8 +3003,8 @@ State 130
 
 State 131
 
-   95 ThfTuple: "[" . "]"
-   96         | "[" . ThfFormulaList "]"
+   95 ThfTuple: "[" • "]"
+   96         | "[" • ThfFormulaList "]"
 
     "$"              shift, and go to state 129
     "$$"             shift, and go to state 70
@@ -3092,78 +3092,78 @@ State 131
 
 State 132
 
-  300 Th0Quantifier: "@-" .
+  300 Th0Quantifier: "@-" •
 
     $default  reduce using rule 300 (Th0Quantifier)
 
 
 State 133
 
-  299 Th0Quantifier: "@+" .
+  299 Th0Quantifier: "@+" •
 
     $default  reduce using rule 299 (Th0Quantifier)
 
 
 State 134
 
-  298 Th0Quantifier: "^" .
+  298 Th0Quantifier: "^" •
 
     $default  reduce using rule 298 (Th0Quantifier)
 
 
 State 135
 
-  303 Th1UnaryConnective: "!!" .
+  303 Th1UnaryConnective: "!!" •
 
     $default  reduce using rule 303 (Th1UnaryConnective)
 
 
 State 136
 
-  304 Th1UnaryConnective: "??" .
+  304 Th1UnaryConnective: "??" •
 
     $default  reduce using rule 304 (Th1UnaryConnective)
 
 
 State 137
 
-  305 Th1UnaryConnective: "@@+" .
+  305 Th1UnaryConnective: "@@+" •
 
     $default  reduce using rule 305 (Th1UnaryConnective)
 
 
 State 138
 
-  306 Th1UnaryConnective: "@@-" .
+  306 Th1UnaryConnective: "@@-" •
 
     $default  reduce using rule 306 (Th1UnaryConnective)
 
 
 State 139
 
-  307 Th1UnaryConnective: "@=" .
+  307 Th1UnaryConnective: "@=" •
 
     $default  reduce using rule 307 (Th1UnaryConnective)
 
 
 State 140
 
-  296 Th1Quantifier: "!>" .
+  296 Th1Quantifier: "!>" •
 
     $default  reduce using rule 296 (Th1Quantifier)
 
 
 State 141
 
-  297 Th1Quantifier: "?*" .
+  297 Th1Quantifier: "?*" •
 
     $default  reduce using rule 297 (Th1Quantifier)
 
 
 State 142
 
-   12 ThfAnnotated: "thf" "(" Name "," FormulaRole "," ThfFormula . ")" "."
-   13             | "thf" "(" Name "," FormulaRole "," ThfFormula . "," Annotations ")" "."
+   12 ThfAnnotated: "thf" "(" Name "," FormulaRole "," ThfFormula • ")" "."
+   13             | "thf" "(" Name "," FormulaRole "," ThfFormula • "," Annotations ")" "."
 
     ","  shift, and go to state 306
     ")"  shift, and go to state 307
@@ -3171,36 +3171,36 @@ State 142
 
 State 143
 
-   27 ThfFormula: ThfLogicFormula .
+   27 ThfFormula: ThfLogicFormula •
 
     $default  reduce using rule 27 (ThfFormula)
 
 
 State 144
 
-   33 ThfLogicFormula: ThfBinaryFormula .
+   33 ThfLogicFormula: ThfBinaryFormula •
 
     $default  reduce using rule 33 (ThfLogicFormula)
 
 
 State 145
 
-   35 ThfBinaryFormula: ThfBinaryNonassoc .
+   35 ThfBinaryFormula: ThfBinaryNonassoc •
 
     $default  reduce using rule 35 (ThfBinaryFormula)
 
 
 State 146
 
-   36 ThfBinaryFormula: ThfBinaryAssoc .
+   36 ThfBinaryFormula: ThfBinaryAssoc •
 
     $default  reduce using rule 36 (ThfBinaryFormula)
 
 
 State 147
 
-   39 ThfBinaryAssoc: ThfOrFormula .
-   43 ThfOrFormula: ThfOrFormula . "|" ThfUnitFormula
+   39 ThfBinaryAssoc: ThfOrFormula •
+   43 ThfOrFormula: ThfOrFormula • "|" ThfUnitFormula
 
     "|"  shift, and go to state 308
 
@@ -3209,8 +3209,8 @@ State 147
 
 State 148
 
-   40 ThfBinaryAssoc: ThfAndFormula .
-   45 ThfAndFormula: ThfAndFormula . "&" ThfUnitFormula
+   40 ThfBinaryAssoc: ThfAndFormula •
+   45 ThfAndFormula: ThfAndFormula • "&" ThfUnitFormula
 
     "&"  shift, and go to state 309
 
@@ -3219,8 +3219,8 @@ State 148
 
 State 149
 
-   41 ThfBinaryAssoc: ThfApplyFormula .
-   47 ThfApplyFormula: ThfApplyFormula . "@" ThfUnitFormula
+   41 ThfBinaryAssoc: ThfApplyFormula •
+   47 ThfApplyFormula: ThfApplyFormula • "@" ThfUnitFormula
 
     "@"  shift, and go to state 310
 
@@ -3229,10 +3229,10 @@ State 149
 
 State 150
 
-   38 ThfBinaryNonassoc: ThfUnitFormula . NonassocConnective ThfUnitFormula
-   42 ThfOrFormula: ThfUnitFormula . "|" ThfUnitFormula
-   44 ThfAndFormula: ThfUnitFormula . "&" ThfUnitFormula
-   46 ThfApplyFormula: ThfUnitFormula . "@" ThfUnitFormula
+   38 ThfBinaryNonassoc: ThfUnitFormula • NonassocConnective ThfUnitFormula
+   42 ThfOrFormula: ThfUnitFormula • "|" ThfUnitFormula
+   44 ThfAndFormula: ThfUnitFormula • "&" ThfUnitFormula
+   46 ThfApplyFormula: ThfUnitFormula • "@" ThfUnitFormula
 
     "@"    shift, and go to state 311
     "&"    shift, and go to state 312
@@ -3249,9 +3249,9 @@ State 150
 
 State 151
 
-   31 ThfLogicFormula: ThfUnitaryFormula .
-   48 ThfUnitFormula: ThfUnitaryFormula .
-  109 ThfUnitaryType: ThfUnitaryFormula .
+   31 ThfLogicFormula: ThfUnitaryFormula •
+   48 ThfUnitFormula: ThfUnitaryFormula •
+  109 ThfUnitaryType: ThfUnitaryFormula •
 
     ","       reduce using rule 31 (ThfLogicFormula)
     "+"       reduce using rule 109 (ThfUnitaryType)
@@ -3265,15 +3265,15 @@ State 151
 
 State 152
 
-   53 ThfUnitaryFormula: ThfQuantifiedFormula .
+   53 ThfUnitaryFormula: ThfQuantifiedFormula •
 
     $default  reduce using rule 53 (ThfUnitaryFormula)
 
 
 State 153
 
-   32 ThfLogicFormula: ThfUnaryFormula .
-   49 ThfUnitFormula: ThfUnaryFormula .
+   32 ThfLogicFormula: ThfUnaryFormula •
+   49 ThfUnitFormula: ThfUnaryFormula •
 
     ","       reduce using rule 32 (ThfLogicFormula)
     ")"       reduce using rule 32 (ThfLogicFormula)
@@ -3284,22 +3284,22 @@ State 153
 
 State 154
 
-   61 ThfUnaryFormula: ThfPrefixUnary .
+   61 ThfUnaryFormula: ThfPrefixUnary •
 
     $default  reduce using rule 61 (ThfUnaryFormula)
 
 
 State 155
 
-   62 ThfUnaryFormula: ThfInfixUnary .
+   62 ThfUnaryFormula: ThfInfixUnary •
 
     $default  reduce using rule 62 (ThfUnaryFormula)
 
 
 State 156
 
-   54 ThfUnitaryFormula: ThfAtomicFormula .
-   92 ThfUnitaryTerm: ThfAtomicFormula .
+   54 ThfUnitaryFormula: ThfAtomicFormula •
+   92 ThfUnitaryTerm: ThfAtomicFormula •
 
     "="       reduce using rule 92 (ThfUnitaryTerm)
     "!="      reduce using rule 92 (ThfUnitaryTerm)
@@ -3308,22 +3308,22 @@ State 156
 
 State 157
 
-   65 ThfAtomicFormula: ThfPlainAtomic .
+   65 ThfAtomicFormula: ThfPlainAtomic •
 
     $default  reduce using rule 65 (ThfAtomicFormula)
 
 
 State 158
 
-   66 ThfAtomicFormula: ThfDefinedAtomic .
+   66 ThfAtomicFormula: ThfDefinedAtomic •
 
     $default  reduce using rule 66 (ThfAtomicFormula)
 
 
 State 159
 
-   34 ThfLogicFormula: ThfDefinedInfix .
-   50 ThfUnitFormula: ThfDefinedInfix .
+   34 ThfLogicFormula: ThfDefinedInfix •
+   50 ThfUnitFormula: ThfDefinedInfix •
 
     ","       reduce using rule 34 (ThfLogicFormula)
     ")"       reduce using rule 34 (ThfLogicFormula)
@@ -3334,36 +3334,36 @@ State 159
 
 State 160
 
-   67 ThfAtomicFormula: ThfSystemAtomic .
+   67 ThfAtomicFormula: ThfSystemAtomic •
 
     $default  reduce using rule 67 (ThfAtomicFormula)
 
 
 State 161
 
-   68 ThfAtomicFormula: ThfFofFunction .
+   68 ThfAtomicFormula: ThfFofFunction •
 
     $default  reduce using rule 68 (ThfAtomicFormula)
 
 
 State 162
 
-   72 ThfDefinedAtomic: ThfConditional .
+   72 ThfDefinedAtomic: ThfConditional •
 
     $default  reduce using rule 72 (ThfDefinedAtomic)
 
 
 State 163
 
-   73 ThfDefinedAtomic: ThfLet .
+   73 ThfDefinedAtomic: ThfLet •
 
     $default  reduce using rule 73 (ThfDefinedAtomic)
 
 
 State 164
 
-   64 ThfInfixUnary: ThfUnitaryTerm . InfixInequality ThfUnitaryTerm
-   76 ThfDefinedInfix: ThfUnitaryTerm . DefinedInfixPred ThfUnitaryTerm
+   64 ThfInfixUnary: ThfUnitaryTerm • InfixInequality ThfUnitaryTerm
+   76 ThfDefinedInfix: ThfUnitaryTerm • DefinedInfixPred ThfUnitaryTerm
 
     "="   shift, and go to state 273
     "!="  shift, and go to state 274
@@ -3375,8 +3375,8 @@ State 164
 
 State 165
 
-   70 ThfPlainAtomic: ThfTuple .
-  121 ThfSequent: ThfTuple . "-->" ThfTuple
+   70 ThfPlainAtomic: ThfTuple •
+  121 ThfSequent: ThfTuple • "-->" ThfTuple
 
     "-->"  shift, and go to state 317
 
@@ -3385,17 +3385,17 @@ State 165
 
 State 166
 
-   28 ThfFormula: ThfAtomTyping .
+   28 ThfFormula: ThfAtomTyping •
 
     $default  reduce using rule 28 (ThfFormula)
 
 
 State 167
 
-  114 ThfMappingType: ThfUnitaryType . ">" ThfUnitaryType
-  115               | ThfUnitaryType . ">" ThfMappingType
-  116 ThfXprodType: ThfUnitaryType . "*" ThfUnitaryType
-  118 ThfUnionType: ThfUnitaryType . "+" ThfUnitaryType
+  114 ThfMappingType: ThfUnitaryType • ">" ThfUnitaryType
+  115               | ThfUnitaryType • ">" ThfMappingType
+  116 ThfXprodType: ThfUnitaryType • "*" ThfUnitaryType
+  118 ThfUnionType: ThfUnitaryType • "+" ThfUnitaryType
 
     "+"  shift, and go to state 318
     "*"  shift, and go to state 319
@@ -3404,22 +3404,22 @@ State 167
 
 State 168
 
-   37 ThfBinaryFormula: ThfBinaryType .
+   37 ThfBinaryFormula: ThfBinaryType •
 
     $default  reduce using rule 37 (ThfBinaryFormula)
 
 
 State 169
 
-  111 ThfBinaryType: ThfMappingType .
+  111 ThfBinaryType: ThfMappingType •
 
     $default  reduce using rule 111 (ThfBinaryType)
 
 
 State 170
 
-  112 ThfBinaryType: ThfXprodType .
-  117 ThfXprodType: ThfXprodType . "*" ThfUnitaryType
+  112 ThfBinaryType: ThfXprodType •
+  117 ThfXprodType: ThfXprodType • "*" ThfUnitaryType
 
     "*"  shift, and go to state 321
 
@@ -3428,8 +3428,8 @@ State 170
 
 State 171
 
-  113 ThfBinaryType: ThfUnionType .
-  119 ThfUnionType: ThfUnionType . "+" ThfUnitaryType
+  113 ThfBinaryType: ThfUnionType •
+  119 ThfUnionType: ThfUnionType • "+" ThfUnitaryType
 
     "+"  shift, and go to state 322
 
@@ -3438,42 +3438,42 @@ State 171
 
 State 172
 
-   29 ThfFormula: ThfSubtype .
+   29 ThfFormula: ThfSubtype •
 
     $default  reduce using rule 29 (ThfFormula)
 
 
 State 173
 
-   30 ThfFormula: ThfSequent .
+   30 ThfFormula: ThfSequent •
 
     $default  reduce using rule 30 (ThfFormula)
 
 
 State 174
 
-   57 ThfQuantifiedFormula: ThfQuantifier . "[" ThfVariableList "]" ":" ThfUnitFormula
+   57 ThfQuantifiedFormula: ThfQuantifier • "[" ThfVariableList "]" ":" ThfUnitFormula
 
     "["  shift, and go to state 323
 
 
 State 175
 
-  295 ThfQuantifier: Th1Quantifier .
+  295 ThfQuantifier: Th1Quantifier •
 
     $default  reduce using rule 295 (ThfQuantifier)
 
 
 State 176
 
-  294 ThfQuantifier: Th0Quantifier .
+  294 ThfQuantifier: Th0Quantifier •
 
     $default  reduce using rule 294 (ThfQuantifier)
 
 
 State 177
 
-   63 ThfPrefixUnary: ThfUnaryConnective . ThfPreunitFormula
+   63 ThfPrefixUnary: ThfUnaryConnective • ThfPreunitFormula
 
     "$"              shift, and go to state 129
     "$$"             shift, and go to state 70
@@ -3543,29 +3543,29 @@ State 177
 
 State 178
 
-  302 ThfUnaryConnective: Th1UnaryConnective .
+  302 ThfUnaryConnective: Th1UnaryConnective •
 
     $default  reduce using rule 302 (ThfUnaryConnective)
 
 
 State 179
 
-  293 ThfQuantifier: FofQuantifier .
+  293 ThfQuantifier: FofQuantifier •
 
     $default  reduce using rule 293 (ThfQuantifier)
 
 
 State 180
 
-  301 ThfUnaryConnective: UnaryConnective .
+  301 ThfUnaryConnective: UnaryConnective •
 
     $default  reduce using rule 301 (ThfUnaryConnective)
 
 
 State 181
 
-  104 ThfAtomTyping: UntypedAtom . ":" ThfTopLevelType
-  120 ThfSubtype: UntypedAtom . "<<" Atom
+  104 ThfAtomTyping: UntypedAtom • ":" ThfTopLevelType
+  120 ThfSubtype: UntypedAtom • "<<" Atom
 
     ":"   shift, and go to state 330
     "<<"  shift, and go to state 331
@@ -3573,8 +3573,8 @@ State 181
 
 State 182
 
-   69 ThfPlainAtomic: Constant .
-  324 UntypedAtom: Constant .
+   69 ThfPlainAtomic: Constant •
+  324 UntypedAtom: Constant •
 
     ":"       reduce using rule 324 (UntypedAtom)
     "<<"      reduce using rule 324 (UntypedAtom)
@@ -3583,8 +3583,8 @@ State 182
 
 State 183
 
-   78 ThfFofFunction: Functor . "(" ThfArguments ")"
-  329 Constant: Functor .
+   78 ThfFofFunction: Functor • "(" ThfArguments ")"
+  329 Constant: Functor •
 
     "("  shift, and go to state 332
 
@@ -3593,8 +3593,8 @@ State 183
 
 State 184
 
-   77 ThfSystemAtomic: SystemConstant .
-  325 UntypedAtom: SystemConstant .
+   77 ThfSystemAtomic: SystemConstant •
+  325 UntypedAtom: SystemConstant •
 
     ":"       reduce using rule 325 (UntypedAtom)
     "<<"      reduce using rule 325 (UntypedAtom)
@@ -3603,8 +3603,8 @@ State 184
 
 State 185
 
-   80 ThfFofFunction: SystemFunctor . "(" ThfArguments ")"
-  331 SystemConstant: SystemFunctor .
+   80 ThfFofFunction: SystemFunctor • "(" ThfArguments ")"
+  331 SystemConstant: SystemFunctor •
 
     "("  shift, and go to state 333
 
@@ -3613,15 +3613,15 @@ State 185
 
 State 186
 
-   71 ThfDefinedAtomic: DefinedConstant .
+   71 ThfDefinedAtomic: DefinedConstant •
 
     $default  reduce using rule 71 (ThfDefinedAtomic)
 
 
 State 187
 
-   79 ThfFofFunction: DefinedFunctor . "(" ThfArguments ")"
-  333 DefinedConstant: DefinedFunctor .
+   79 ThfFofFunction: DefinedFunctor • "(" ThfArguments ")"
+  333 DefinedConstant: DefinedFunctor •
 
     "("  shift, and go to state 334
 
@@ -3630,15 +3630,15 @@ State 187
 
 State 188
 
-   75 ThfDefinedAtomic: DefinedTerm .
+   75 ThfDefinedAtomic: DefinedTerm •
 
     $default  reduce using rule 75 (ThfDefinedAtomic)
 
 
 State 189
 
-   55 ThfUnitaryFormula: Variable .
-   93 ThfUnitaryTerm: Variable .
+   55 ThfUnitaryFormula: Variable •
+   93 ThfUnitaryTerm: Variable •
 
     "="       reduce using rule 93 (ThfUnitaryTerm)
     "!="      reduce using rule 93 (ThfUnitaryTerm)
@@ -3647,9 +3647,9 @@ State 189
 
 State 190
 
-  173 TfxConditional: "$" . "ite" "(" TffLogicFormula "," TffTerm "," TffTerm ")"
-  174 TfxLet: "$" . "let" "(" TfxLetTypes "," TfxLetDefns "," TffTerm ")"
-  379 DollarWordLiteral: "$" . "lower_word"
+  173 TfxConditional: "$" • "ite" "(" TffLogicFormula "," TffTerm "," TffTerm ")"
+  174 TfxLet: "$" • "let" "(" TfxLetTypes "," TfxLetDefns "," TffTerm ")"
+  379 DollarWordLiteral: "$" • "lower_word"
 
     "ite"         shift, and go to state 335
     "let"         shift, and go to state 336
@@ -3658,10 +3658,10 @@ State 190
 
 State 191
 
-  148 TffUnitaryFormula: "(" . TffLogicFormula ")"
-  193 TffUnitaryTerm: "(" . TffLogicFormula ")"
-  199 TffAtomTyping: "(" . TffAtomTyping ")"
-  224 TfxSequent: "(" . TfxSequent ")"
+  148 TffUnitaryFormula: "(" • TffLogicFormula ")"
+  193 TffUnitaryTerm: "(" • TffLogicFormula ")"
+  199 TffAtomTyping: "(" • TffAtomTyping ")"
+  224 TfxSequent: "(" • TfxSequent ")"
 
     "$"              shift, and go to state 190
     "$$"             shift, and go to state 70
@@ -3730,8 +3730,8 @@ State 191
 
 State 192
 
-  194 TfxTuple: "[" . "]"
-  195         | "[" . TffArguments "]"
+  194 TfxTuple: "[" • "]"
+  195         | "[" • TffArguments "]"
 
     "$"              shift, and go to state 190
     "$$"             shift, and go to state 70
@@ -3800,8 +3800,8 @@ State 192
 
 State 193
 
-   14 TffAnnotated: "tff" "(" Name "," FormulaRole "," TffFormula . ")" "."
-   15             | "tff" "(" Name "," FormulaRole "," TffFormula . "," Annotations ")" "."
+   14 TffAnnotated: "tff" "(" Name "," FormulaRole "," TffFormula • ")" "."
+   15             | "tff" "(" Name "," FormulaRole "," TffFormula • "," Annotations ")" "."
 
     ","  shift, and go to state 349
     ")"  shift, and go to state 350
@@ -3809,36 +3809,36 @@ State 193
 
 State 194
 
-  123 TffFormula: TffLogicFormula .
+  123 TffFormula: TffLogicFormula •
 
     $default  reduce using rule 123 (TffFormula)
 
 
 State 195
 
-  129 TffLogicFormula: TffBinaryFormula .
+  129 TffLogicFormula: TffBinaryFormula •
 
     $default  reduce using rule 129 (TffLogicFormula)
 
 
 State 196
 
-  131 TffBinaryFormula: TffBinaryNonassoc .
+  131 TffBinaryFormula: TffBinaryNonassoc •
 
     $default  reduce using rule 131 (TffBinaryFormula)
 
 
 State 197
 
-  132 TffBinaryFormula: TffBinaryAssoc .
+  132 TffBinaryFormula: TffBinaryAssoc •
 
     $default  reduce using rule 132 (TffBinaryFormula)
 
 
 State 198
 
-  134 TffBinaryAssoc: TffOrFormula .
-  137 TffOrFormula: TffOrFormula . "|" TffUnitFormula
+  134 TffBinaryAssoc: TffOrFormula •
+  137 TffOrFormula: TffOrFormula • "|" TffUnitFormula
 
     "|"  shift, and go to state 351
 
@@ -3847,8 +3847,8 @@ State 198
 
 State 199
 
-  135 TffBinaryAssoc: TffAndFormula .
-  139 TffAndFormula: TffAndFormula . "&" TffUnitFormula
+  135 TffBinaryAssoc: TffAndFormula •
+  139 TffAndFormula: TffAndFormula • "&" TffUnitFormula
 
     "&"  shift, and go to state 352
 
@@ -3857,9 +3857,9 @@ State 199
 
 State 200
 
-  133 TffBinaryNonassoc: TffUnitFormula . NonassocConnective TffUnitFormula
-  136 TffOrFormula: TffUnitFormula . "|" TffUnitFormula
-  138 TffAndFormula: TffUnitFormula . "&" TffUnitFormula
+  133 TffBinaryNonassoc: TffUnitFormula • NonassocConnective TffUnitFormula
+  136 TffOrFormula: TffUnitFormula • "|" TffUnitFormula
+  138 TffAndFormula: TffUnitFormula • "&" TffUnitFormula
 
     "&"    shift, and go to state 353
     "|"    shift, and go to state 354
@@ -3875,8 +3875,8 @@ State 200
 
 State 201
 
-  127 TffLogicFormula: TffUnitaryFormula .
-  140 TffUnitFormula: TffUnitaryFormula .
+  127 TffLogicFormula: TffUnitaryFormula •
+  140 TffUnitFormula: TffUnitaryFormula •
 
     ","       reduce using rule 127 (TffLogicFormula)
     ")"       reduce using rule 127 (TffLogicFormula)
@@ -3886,22 +3886,22 @@ State 201
 
 State 202
 
-  147 TffUnitaryFormula: TfxUnitaryFormula .
+  147 TffUnitaryFormula: TfxUnitaryFormula •
 
     $default  reduce using rule 147 (TffUnitaryFormula)
 
 
 State 203
 
-  145 TffUnitaryFormula: TffQuantifiedFormula .
+  145 TffUnitaryFormula: TffQuantifiedFormula •
 
     $default  reduce using rule 145 (TffUnitaryFormula)
 
 
 State 204
 
-  128 TffLogicFormula: TffUnaryFormula .
-  141 TffUnitFormula: TffUnaryFormula .
+  128 TffLogicFormula: TffUnaryFormula •
+  141 TffUnitFormula: TffUnaryFormula •
 
     ","       reduce using rule 128 (TffLogicFormula)
     ")"       reduce using rule 128 (TffLogicFormula)
@@ -3911,22 +3911,22 @@ State 204
 
 State 205
 
-  156 TffUnaryFormula: TffPrefixUnary .
+  156 TffUnaryFormula: TffPrefixUnary •
 
     $default  reduce using rule 156 (TffUnaryFormula)
 
 
 State 206
 
-  157 TffUnaryFormula: TffInfixUnary .
+  157 TffUnaryFormula: TffInfixUnary •
 
     $default  reduce using rule 157 (TffUnaryFormula)
 
 
 State 207
 
-  146 TffUnitaryFormula: TffAtomicFormula .
-  189 TffUnitaryTerm: TffAtomicFormula .
+  146 TffUnitaryFormula: TffAtomicFormula •
+  189 TffUnitaryTerm: TffAtomicFormula •
 
     "="       reduce using rule 189 (TffUnitaryTerm)
     "!="      reduce using rule 189 (TffUnitaryTerm)
@@ -3935,29 +3935,29 @@ State 207
 
 State 208
 
-  160 TffAtomicFormula: TffPlainAtomic .
+  160 TffAtomicFormula: TffPlainAtomic •
 
     $default  reduce using rule 160 (TffAtomicFormula)
 
 
 State 209
 
-  161 TffAtomicFormula: TffDefinedAtomic .
+  161 TffAtomicFormula: TffDefinedAtomic •
 
     $default  reduce using rule 161 (TffAtomicFormula)
 
 
 State 210
 
-  165 TffDefinedAtomic: TffDefinedPlain .
+  165 TffDefinedAtomic: TffDefinedPlain •
 
     $default  reduce using rule 165 (TffDefinedAtomic)
 
 
 State 211
 
-  130 TffLogicFormula: TffDefinedInfix .
-  142 TffUnitFormula: TffDefinedInfix .
+  130 TffLogicFormula: TffDefinedInfix •
+  142 TffUnitFormula: TffDefinedInfix •
 
     ","       reduce using rule 130 (TffLogicFormula)
     ")"       reduce using rule 130 (TffLogicFormula)
@@ -3967,29 +3967,29 @@ State 211
 
 State 212
 
-  162 TffAtomicFormula: TffSystemAtomic .
+  162 TffAtomicFormula: TffSystemAtomic •
 
     $default  reduce using rule 162 (TffAtomicFormula)
 
 
 State 213
 
-  168 TffDefinedPlain: TfxConditional .
+  168 TffDefinedPlain: TfxConditional •
 
     $default  reduce using rule 168 (TffDefinedPlain)
 
 
 State 214
 
-  169 TffDefinedPlain: TfxLet .
+  169 TffDefinedPlain: TfxLet •
 
     $default  reduce using rule 169 (TffDefinedPlain)
 
 
 State 215
 
-  159 TffInfixUnary: TffUnitaryTerm . InfixInequality TffUnitaryTerm
-  170 TffDefinedInfix: TffUnitaryTerm . DefinedInfixPred TffUnitaryTerm
+  159 TffInfixUnary: TffUnitaryTerm • InfixInequality TffUnitaryTerm
+  170 TffDefinedInfix: TffUnitaryTerm • DefinedInfixPred TffUnitaryTerm
 
     "="   shift, and go to state 273
     "!="  shift, and go to state 274
@@ -4001,8 +4001,8 @@ State 215
 
 State 216
 
-  191 TffUnitaryTerm: TfxTuple .
-  223 TfxSequent: TfxTuple . "-->" TfxTuple
+  191 TffUnitaryTerm: TfxTuple •
+  223 TfxSequent: TfxTuple • "-->" TfxTuple
 
     "-->"  shift, and go to state 358
 
@@ -4011,35 +4011,35 @@ State 216
 
 State 217
 
-  124 TffFormula: TffAtomTyping .
+  124 TffFormula: TffAtomTyping •
 
     $default  reduce using rule 124 (TffFormula)
 
 
 State 218
 
-  125 TffFormula: TffSubtype .
+  125 TffFormula: TffSubtype •
 
     $default  reduce using rule 125 (TffFormula)
 
 
 State 219
 
-  126 TffFormula: TfxSequent .
+  126 TffFormula: TfxSequent •
 
     $default  reduce using rule 126 (TffFormula)
 
 
 State 220
 
-  150 TffQuantifiedFormula: FofQuantifier . "[" TffVariableList "]" ":" TffUnitFormula
+  150 TffQuantifiedFormula: FofQuantifier • "[" TffVariableList "]" ":" TffUnitFormula
 
     "["  shift, and go to state 359
 
 
 State 221
 
-  158 TffPrefixUnary: UnaryConnective . TffPreunitFormula
+  158 TffPrefixUnary: UnaryConnective • TffPreunitFormula
 
     "$"              shift, and go to state 190
     "$$"             shift, and go to state 70
@@ -4083,8 +4083,8 @@ State 221
 
 State 222
 
-  198 TffAtomTyping: UntypedAtom . ":" TffTopLevelType
-  222 TffSubtype: UntypedAtom . "<<" Atom
+  198 TffAtomTyping: UntypedAtom • ":" TffTopLevelType
+  222 TffSubtype: UntypedAtom • "<<" Atom
 
     ":"   shift, and go to state 366
     "<<"  shift, and go to state 367
@@ -4092,8 +4092,8 @@ State 222
 
 State 223
 
-  163 TffPlainAtomic: Constant .
-  324 UntypedAtom: Constant .
+  163 TffPlainAtomic: Constant •
+  324 UntypedAtom: Constant •
 
     ":"       reduce using rule 324 (UntypedAtom)
     "<<"      reduce using rule 324 (UntypedAtom)
@@ -4102,8 +4102,8 @@ State 223
 
 State 224
 
-  164 TffPlainAtomic: Functor . "(" TffArguments ")"
-  329 Constant: Functor .
+  164 TffPlainAtomic: Functor • "(" TffArguments ")"
+  329 Constant: Functor •
 
     "("  shift, and go to state 368
 
@@ -4112,8 +4112,8 @@ State 224
 
 State 225
 
-  171 TffSystemAtomic: SystemConstant .
-  325 UntypedAtom: SystemConstant .
+  171 TffSystemAtomic: SystemConstant •
+  325 UntypedAtom: SystemConstant •
 
     ":"       reduce using rule 325 (UntypedAtom)
     "<<"      reduce using rule 325 (UntypedAtom)
@@ -4122,8 +4122,8 @@ State 225
 
 State 226
 
-  172 TffSystemAtomic: SystemFunctor . "(" TffArguments ")"
-  331 SystemConstant: SystemFunctor .
+  172 TffSystemAtomic: SystemFunctor • "(" TffArguments ")"
+  331 SystemConstant: SystemFunctor •
 
     "("  shift, and go to state 369
 
@@ -4132,15 +4132,15 @@ State 226
 
 State 227
 
-  166 TffDefinedPlain: DefinedConstant .
+  166 TffDefinedPlain: DefinedConstant •
 
     $default  reduce using rule 166 (TffDefinedPlain)
 
 
 State 228
 
-  167 TffDefinedPlain: DefinedFunctor . "(" TffArguments ")"
-  333 DefinedConstant: DefinedFunctor .
+  167 TffDefinedPlain: DefinedFunctor • "(" TffArguments ")"
+  333 DefinedConstant: DefinedFunctor •
 
     "("  shift, and go to state 370
 
@@ -4149,15 +4149,15 @@ State 228
 
 State 229
 
-  190 TffUnitaryTerm: DefinedTerm .
+  190 TffUnitaryTerm: DefinedTerm •
 
     $default  reduce using rule 190 (TffUnitaryTerm)
 
 
 State 230
 
-  149 TfxUnitaryFormula: Variable .
-  192 TffUnitaryTerm: Variable .
+  149 TfxUnitaryFormula: Variable •
+  192 TffUnitaryTerm: Variable •
 
     "="       reduce using rule 192 (TffUnitaryTerm)
     "!="      reduce using rule 192 (TffUnitaryTerm)
@@ -4166,8 +4166,8 @@ State 230
 
 State 231
 
-  199 TffAtomTyping: "(" . TffAtomTyping ")"
-  287 CnfFormula: "(" . Disjunction ")"
+  199 TffAtomTyping: "(" • TffAtomTyping ")"
+  287 CnfFormula: "(" • Disjunction ")"
 
     "$"              shift, and go to state 69
     "$$"             shift, and go to state 70
@@ -4223,14 +4223,14 @@ State 231
 
 State 232
 
-  229 TcfQuantifiedFormula: "!" . "[" TffVariableList "]" ":" CnfFormula
+  229 TcfQuantifiedFormula: "!" • "[" TffVariableList "]" ":" CnfFormula
 
     "["  shift, and go to state 373
 
 
 State 233
 
-  291 Literal: "~" . FofAtomicFormula
+  291 Literal: "~" • FofAtomicFormula
 
     "$"              shift, and go to state 69
     "$$"             shift, and go to state 70
@@ -4279,15 +4279,15 @@ State 233
 
 State 234
 
-  226 TcfFormula: TffAtomTyping .
+  226 TcfFormula: TffAtomTyping •
 
     $default  reduce using rule 226 (TcfFormula)
 
 
 State 235
 
-   16 TcfAnnotated: "tcf" "(" Name "," FormulaRole "," TcfFormula . ")" "."
-   17             | "tcf" "(" Name "," FormulaRole "," TcfFormula . "," Annotations ")" "."
+   16 TcfAnnotated: "tcf" "(" Name "," FormulaRole "," TcfFormula • ")" "."
+   17             | "tcf" "(" Name "," FormulaRole "," TcfFormula • "," Annotations ")" "."
 
     ","  shift, and go to state 376
     ")"  shift, and go to state 377
@@ -4295,43 +4295,43 @@ State 235
 
 State 236
 
-  225 TcfFormula: TcfLogicFormula .
+  225 TcfFormula: TcfLogicFormula •
 
     $default  reduce using rule 225 (TcfFormula)
 
 
 State 237
 
-  227 TcfLogicFormula: TcfQuantifiedFormula .
+  227 TcfLogicFormula: TcfQuantifiedFormula •
 
     $default  reduce using rule 227 (TcfLogicFormula)
 
 
 State 238
 
-  292 Literal: FofInfixUnary .
+  292 Literal: FofInfixUnary •
 
     $default  reduce using rule 292 (Literal)
 
 
 State 239
 
-  290 Literal: FofAtomicFormula .
+  290 Literal: FofAtomicFormula •
 
     $default  reduce using rule 290 (Literal)
 
 
 State 240
 
-  228 TcfLogicFormula: CnfFormula .
+  228 TcfLogicFormula: CnfFormula •
 
     $default  reduce using rule 228 (TcfLogicFormula)
 
 
 State 241
 
-  286 CnfFormula: Disjunction .
-  289 Disjunction: Disjunction . "|" Literal
+  286 CnfFormula: Disjunction •
+  289 Disjunction: Disjunction • "|" Literal
 
     "|"  shift, and go to state 378
 
@@ -4340,22 +4340,22 @@ State 241
 
 State 242
 
-  288 Disjunction: Literal .
+  288 Disjunction: Literal •
 
     $default  reduce using rule 288 (Disjunction)
 
 
 State 243
 
-  198 TffAtomTyping: UntypedAtom . ":" TffTopLevelType
+  198 TffAtomTyping: UntypedAtom • ":" TffTopLevelType
 
     ":"  shift, and go to state 366
 
 
 State 244
 
-  264 FofPlainTerm: Constant .
-  324 UntypedAtom: Constant .
+  264 FofPlainTerm: Constant •
+  324 UntypedAtom: Constant •
 
     ":"       reduce using rule 324 (UntypedAtom)
     $default  reduce using rule 264 (FofPlainTerm)
@@ -4363,8 +4363,8 @@ State 244
 
 State 245
 
-  271 FofSystemTerm: SystemConstant .
-  325 UntypedAtom: SystemConstant .
+  271 FofSystemTerm: SystemConstant •
+  325 UntypedAtom: SystemConstant •
 
     ":"       reduce using rule 325 (UntypedAtom)
     $default  reduce using rule 271 (FofSystemTerm)
@@ -4372,8 +4372,8 @@ State 245
 
 State 246
 
-   18 FofAnnotated: "fof" "(" Name "," FormulaRole "," FofFormula . ")" "."
-   19             | "fof" "(" Name "," FormulaRole "," FofFormula . "," Annotations ")" "."
+   18 FofAnnotated: "fof" "(" Name "," FormulaRole "," FofFormula • ")" "."
+   19             | "fof" "(" Name "," FormulaRole "," FofFormula • "," Annotations ")" "."
 
     ","  shift, and go to state 379
     ")"  shift, and go to state 380
@@ -4381,7 +4381,7 @@ State 246
 
 State 247
 
-  287 CnfFormula: "(" . Disjunction ")"
+  287 CnfFormula: "(" • Disjunction ")"
 
     "$"              shift, and go to state 69
     "$$"             shift, and go to state 70
@@ -4434,8 +4434,8 @@ State 247
 
 State 248
 
-   20 CnfAnnotated: "cnf" "(" Name "," FormulaRole "," CnfFormula . ")" "."
-   21             | "cnf" "(" Name "," FormulaRole "," CnfFormula . "," Annotations ")" "."
+   20 CnfAnnotated: "cnf" "(" Name "," FormulaRole "," CnfFormula • ")" "."
+   21             | "cnf" "(" Name "," FormulaRole "," CnfFormula • "," Annotations ")" "."
 
     ","  shift, and go to state 381
     ")"  shift, and go to state 382
@@ -4443,7 +4443,7 @@ State 248
 
 State 249
 
-  338 NameList: NameList "," . Name
+  338 NameList: NameList "," • Name
 
     "integer"        shift, and go to state 28
     "lower_word"     shift, and go to state 29
@@ -4457,49 +4457,49 @@ State 249
 
 State 250
 
-  363 FormulaSelection: "[" NameList "]" .
+  363 FormulaSelection: "[" NameList "]" •
 
     $default  reduce using rule 363 (FormulaSelection)
 
 
 State 251
 
-  362 IncludeDefinition: "include" "(" FileName "," FormulaSelection ")" "." .
+  362 IncludeDefinition: "include" "(" FileName "," FormulaSelection ")" "." •
 
     $default  reduce using rule 362 (IncludeDefinition)
 
 
 State 252
 
-  379 DollarWordLiteral: "$" "lower_word" .
+  379 DollarWordLiteral: "$" "lower_word" •
 
     $default  reduce using rule 379 (DollarWordLiteral)
 
 
 State 253
 
-  380 DollarDollarWordLiteral: "$$" "lower_word" .
+  380 DollarDollarWordLiteral: "$$" "lower_word" •
 
     $default  reduce using rule 380 (DollarDollarWordLiteral)
 
 
 State 254
 
-  251 FofUnitaryFormula: "(" FofLogicFormula . ")"
+  251 FofUnitaryFormula: "(" FofLogicFormula • ")"
 
     ")"  shift, and go to state 384
 
 
 State 255
 
-  281 FofSequent: "(" FofSequent . ")"
+  281 FofSequent: "(" FofSequent • ")"
 
     ")"  shift, and go to state 385
 
 
 State 256
 
-  251 FofUnitaryFormula: "(" . FofLogicFormula ")"
+  251 FofUnitaryFormula: "(" • FofLogicFormula ")"
 
     "$"              shift, and go to state 69
     "$$"             shift, and go to state 70
@@ -4565,22 +4565,22 @@ State 256
 
 State 257
 
-  282 FofFormulaTuple: "{" "}" .
+  282 FofFormulaTuple: "{" "}" •
 
     $default  reduce using rule 282 (FofFormulaTuple)
 
 
 State 258
 
-  284 FofFormulaTupleList: FofLogicFormula .
+  284 FofFormulaTupleList: FofLogicFormula •
 
     $default  reduce using rule 284 (FofFormulaTupleList)
 
 
 State 259
 
-  283 FofFormulaTuple: "{" FofFormulaTupleList . "}"
-  285 FofFormulaTupleList: FofFormulaTupleList . "," FofLogicFormula
+  283 FofFormulaTuple: "{" FofFormulaTupleList • "}"
+  285 FofFormulaTupleList: FofFormulaTupleList • "," FofLogicFormula
 
     ","  shift, and go to state 386
     "}"  shift, and go to state 387
@@ -4588,7 +4588,7 @@ State 259
 
 State 260
 
-   23 TpiAnnotated: "tpi" "(" Name "," FormulaRole "," TpiFormula "," . Annotations ")" "."
+   23 TpiAnnotated: "tpi" "(" Name "," FormulaRole "," TpiFormula "," • Annotations ")" "."
 
     "$"              shift, and go to state 388
     "["              shift, and go to state 389
@@ -4619,14 +4619,14 @@ State 260
 
 State 261
 
-   22 TpiAnnotated: "tpi" "(" Name "," FormulaRole "," TpiFormula ")" . "."
+   22 TpiAnnotated: "tpi" "(" Name "," FormulaRole "," TpiFormula ")" • "."
 
     "."  shift, and go to state 400
 
 
 State 262
 
-  241 FofOrFormula: FofOrFormula "|" . FofUnitFormula
+  241 FofOrFormula: FofOrFormula "|" • FofUnitFormula
 
     "$"              shift, and go to state 69
     "$$"             shift, and go to state 70
@@ -4686,7 +4686,7 @@ State 262
 
 State 263
 
-  243 FofAndFormula: FofAndFormula "&" . FofUnitFormula
+  243 FofAndFormula: FofAndFormula "&" • FofUnitFormula
 
     "$"              shift, and go to state 69
     "$$"             shift, and go to state 70
@@ -4746,7 +4746,7 @@ State 263
 
 State 264
 
-  242 FofAndFormula: FofUnitFormula "&" . FofUnitFormula
+  242 FofAndFormula: FofUnitFormula "&" • FofUnitFormula
 
     "$"              shift, and go to state 69
     "$$"             shift, and go to state 70
@@ -4806,7 +4806,7 @@ State 264
 
 State 265
 
-  240 FofOrFormula: FofUnitFormula "|" . FofUnitFormula
+  240 FofOrFormula: FofUnitFormula "|" • FofUnitFormula
 
     "$"              shift, and go to state 69
     "$$"             shift, and go to state 70
@@ -4866,49 +4866,49 @@ State 265
 
 State 266
 
-  310 NonassocConnective: "<=>" .
+  310 NonassocConnective: "<=>" •
 
     $default  reduce using rule 310 (NonassocConnective)
 
 
 State 267
 
-  311 NonassocConnective: "=>" .
+  311 NonassocConnective: "=>" •
 
     $default  reduce using rule 311 (NonassocConnective)
 
 
 State 268
 
-  312 NonassocConnective: "<=" .
+  312 NonassocConnective: "<=" •
 
     $default  reduce using rule 312 (NonassocConnective)
 
 
 State 269
 
-  313 NonassocConnective: "<~>" .
+  313 NonassocConnective: "<~>" •
 
     $default  reduce using rule 313 (NonassocConnective)
 
 
 State 270
 
-  314 NonassocConnective: "~|" .
+  314 NonassocConnective: "~|" •
 
     $default  reduce using rule 314 (NonassocConnective)
 
 
 State 271
 
-  315 NonassocConnective: "~&" .
+  315 NonassocConnective: "~&" •
 
     $default  reduce using rule 315 (NonassocConnective)
 
 
 State 272
 
-  237 FofBinaryNonassoc: FofUnitFormula NonassocConnective . FofUnitFormula
+  237 FofBinaryNonassoc: FofUnitFormula NonassocConnective • FofUnitFormula
 
     "$"              shift, and go to state 69
     "$$"             shift, and go to state 70
@@ -4968,21 +4968,21 @@ State 272
 
 State 273
 
-  327 InfixEquality: "=" .
+  327 InfixEquality: "=" •
 
     $default  reduce using rule 327 (InfixEquality)
 
 
 State 274
 
-  328 InfixInequality: "!=" .
+  328 InfixInequality: "!=" •
 
     $default  reduce using rule 328 (InfixInequality)
 
 
 State 275
 
-  262 FofDefinedInfixFormula: FofTerm DefinedInfixPred . FofTerm
+  262 FofDefinedInfixFormula: FofTerm DefinedInfixPred • FofTerm
 
     "$"              shift, and go to state 69
     "$$"             shift, and go to state 70
@@ -5025,14 +5025,14 @@ State 275
 
 State 276
 
-  326 DefinedInfixPred: InfixEquality .
+  326 DefinedInfixPred: InfixEquality •
 
     $default  reduce using rule 326 (DefinedInfixPred)
 
 
 State 277
 
-  246 FofInfixUnary: FofTerm InfixInequality . FofTerm
+  246 FofInfixUnary: FofTerm InfixInequality • FofTerm
 
     "$"              shift, and go to state 69
     "$$"             shift, and go to state 70
@@ -5075,7 +5075,7 @@ State 277
 
 State 278
 
-  280 FofSequent: FofFormulaTuple "-->" . FofFormulaTuple
+  280 FofSequent: FofFormulaTuple "-->" • FofFormulaTuple
 
     "{"  shift, and go to state 72
 
@@ -5084,7 +5084,7 @@ State 278
 
 State 279
 
-  252 FofQuantifiedFormula: FofQuantifier "[" . FofVariableList "]" ":" FofUnitFormula
+  252 FofQuantifiedFormula: FofQuantifier "[" • FofVariableList "]" ":" FofUnitFormula
 
     "upper_word"  shift, and go to state 80
 
@@ -5094,28 +5094,28 @@ State 279
 
 State 280
 
-  248 FofUnitFormula: FofUnaryFormula .
+  248 FofUnitFormula: FofUnaryFormula •
 
     $default  reduce using rule 248 (FofUnitFormula)
 
 
 State 281
 
-  244 FofUnaryFormula: UnaryConnective FofUnitFormula .
+  244 FofUnaryFormula: UnaryConnective FofUnitFormula •
 
     $default  reduce using rule 244 (FofUnaryFormula)
 
 
 State 282
 
-  247 FofUnitFormula: FofUnitaryFormula .
+  247 FofUnitFormula: FofUnitaryFormula •
 
     $default  reduce using rule 247 (FofUnitFormula)
 
 
 State 283
 
-  265 FofPlainTerm: Functor "(" . FofArguments ")"
+  265 FofPlainTerm: Functor "(" • FofArguments ")"
 
     "$"              shift, and go to state 69
     "$$"             shift, and go to state 70
@@ -5159,7 +5159,7 @@ State 283
 
 State 284
 
-  272 FofSystemTerm: SystemFunctor "(" . FofArguments ")"
+  272 FofSystemTerm: SystemFunctor "(" • FofArguments ")"
 
     "$"              shift, and go to state 69
     "$$"             shift, and go to state 70
@@ -5203,7 +5203,7 @@ State 284
 
 State 285
 
-  270 FofDefinedPlainTerm: DefinedFunctor "(" . FofArguments ")"
+  270 FofDefinedPlainTerm: DefinedFunctor "(" • FofArguments ")"
 
     "$"              shift, and go to state 69
     "$$"             shift, and go to state 70
@@ -5247,65 +5247,65 @@ State 285
 
 State 286
 
-   81 ThfConditional: "$" "ite" . "(" ThfLogicFormula "," ThfLogicFormula "," ThfLogicFormula ")"
+   81 ThfConditional: "$" "ite" • "(" ThfLogicFormula "," ThfLogicFormula "," ThfLogicFormula ")"
 
     "("  shift, and go to state 418
 
 
 State 287
 
-   82 ThfLet: "$" "let" . "(" ThfLetTypes "," ThfLetDefns "," ThfFormula ")"
+   82 ThfLet: "$" "let" • "(" ThfLetTypes "," ThfLetDefns "," ThfFormula ")"
 
     "("  shift, and go to state 419
 
 
 State 288
 
-  317 AssocConnective: "&" .
+  317 AssocConnective: "&" •
 
     $default  reduce using rule 317 (AssocConnective)
 
 
 State 289
 
-  316 AssocConnective: "|" .
+  316 AssocConnective: "|" •
 
     $default  reduce using rule 316 (AssocConnective)
 
 
 State 290
 
-   56 ThfUnitaryFormula: "(" ThfLogicFormula . ")"
-   94 ThfUnitaryTerm: "(" ThfLogicFormula . ")"
+   56 ThfUnitaryFormula: "(" ThfLogicFormula • ")"
+   94 ThfUnitaryTerm: "(" ThfLogicFormula • ")"
 
     ")"  shift, and go to state 420
 
 
 State 291
 
-   74 ThfDefinedAtomic: "(" ThfConnTerm . ")"
+   74 ThfDefinedAtomic: "(" ThfConnTerm • ")"
 
     ")"  shift, and go to state 421
 
 
 State 292
 
-  105 ThfAtomTyping: "(" ThfAtomTyping . ")"
+  105 ThfAtomTyping: "(" ThfAtomTyping • ")"
 
     ")"  shift, and go to state 422
 
 
 State 293
 
-  122 ThfSequent: "(" ThfSequent . ")"
+  122 ThfSequent: "(" ThfSequent • ")"
 
     ")"  shift, and go to state 423
 
 
 State 294
 
-   63 ThfPrefixUnary: ThfUnaryConnective . ThfPreunitFormula
-  102 ThfConnTerm: ThfUnaryConnective .
+   63 ThfPrefixUnary: ThfUnaryConnective • ThfPreunitFormula
+  102 ThfConnTerm: ThfUnaryConnective •
 
     "$"              shift, and go to state 129
     "$$"             shift, and go to state 70
@@ -5377,37 +5377,37 @@ State 294
 
 State 295
 
-   99 ThfConnTerm: NonassocConnective .
+   99 ThfConnTerm: NonassocConnective •
 
     $default  reduce using rule 99 (ThfConnTerm)
 
 
 State 296
 
-  100 ThfConnTerm: AssocConnective .
+  100 ThfConnTerm: AssocConnective •
 
     $default  reduce using rule 100 (ThfConnTerm)
 
 
 State 297
 
-  104 ThfAtomTyping: UntypedAtom . ":" ThfTopLevelType
+  104 ThfAtomTyping: UntypedAtom • ":" ThfTopLevelType
 
     ":"  shift, and go to state 330
 
 
 State 298
 
-  101 ThfConnTerm: InfixEquality .
+  101 ThfConnTerm: InfixEquality •
 
     $default  reduce using rule 101 (ThfConnTerm)
 
 
 State 299
 
-   56 ThfUnitaryFormula: "(" . ThfLogicFormula ")"
-   74 ThfDefinedAtomic: "(" . ThfConnTerm ")"
-   94 ThfUnitaryTerm: "(" . ThfLogicFormula ")"
+   56 ThfUnitaryFormula: "(" • ThfLogicFormula ")"
+   74 ThfDefinedAtomic: "(" • ThfConnTerm ")"
+   94 ThfUnitaryTerm: "(" • ThfLogicFormula ")"
 
     "&"              shift, and go to state 288
     "$"              shift, and go to state 129
@@ -5506,29 +5506,29 @@ State 299
 
 State 300
 
-   95 ThfTuple: "[" "]" .
+   95 ThfTuple: "[" "]" •
 
     $default  reduce using rule 95 (ThfTuple)
 
 
 State 301
 
-   97 ThfFormulaList: ThfLogicFormula .
+   97 ThfFormulaList: ThfLogicFormula •
 
     $default  reduce using rule 97 (ThfFormulaList)
 
 
 State 302
 
-   70 ThfPlainAtomic: ThfTuple .
+   70 ThfPlainAtomic: ThfTuple •
 
     $default  reduce using rule 70 (ThfPlainAtomic)
 
 
 State 303
 
-   96 ThfTuple: "[" ThfFormulaList . "]"
-   98 ThfFormulaList: ThfFormulaList . "," ThfLogicFormula
+   96 ThfTuple: "[" ThfFormulaList • "]"
+   98 ThfFormulaList: ThfFormulaList • "," ThfLogicFormula
 
     ","  shift, and go to state 424
     "]"  shift, and go to state 425
@@ -5536,21 +5536,21 @@ State 303
 
 State 304
 
-   69 ThfPlainAtomic: Constant .
+   69 ThfPlainAtomic: Constant •
 
     $default  reduce using rule 69 (ThfPlainAtomic)
 
 
 State 305
 
-   77 ThfSystemAtomic: SystemConstant .
+   77 ThfSystemAtomic: SystemConstant •
 
     $default  reduce using rule 77 (ThfSystemAtomic)
 
 
 State 306
 
-   13 ThfAnnotated: "thf" "(" Name "," FormulaRole "," ThfFormula "," . Annotations ")" "."
+   13 ThfAnnotated: "thf" "(" Name "," FormulaRole "," ThfFormula "," • Annotations ")" "."
 
     "$"              shift, and go to state 388
     "["              shift, and go to state 389
@@ -5581,14 +5581,14 @@ State 306
 
 State 307
 
-   12 ThfAnnotated: "thf" "(" Name "," FormulaRole "," ThfFormula ")" . "."
+   12 ThfAnnotated: "thf" "(" Name "," FormulaRole "," ThfFormula ")" • "."
 
     "."  shift, and go to state 427
 
 
 State 308
 
-   43 ThfOrFormula: ThfOrFormula "|" . ThfUnitFormula
+   43 ThfOrFormula: ThfOrFormula "|" • ThfUnitFormula
 
     "$"              shift, and go to state 129
     "$$"             shift, and go to state 70
@@ -5662,7 +5662,7 @@ State 308
 
 State 309
 
-   45 ThfAndFormula: ThfAndFormula "&" . ThfUnitFormula
+   45 ThfAndFormula: ThfAndFormula "&" • ThfUnitFormula
 
     "$"              shift, and go to state 129
     "$$"             shift, and go to state 70
@@ -5736,7 +5736,7 @@ State 309
 
 State 310
 
-   47 ThfApplyFormula: ThfApplyFormula "@" . ThfUnitFormula
+   47 ThfApplyFormula: ThfApplyFormula "@" • ThfUnitFormula
 
     "$"              shift, and go to state 129
     "$$"             shift, and go to state 70
@@ -5810,7 +5810,7 @@ State 310
 
 State 311
 
-   46 ThfApplyFormula: ThfUnitFormula "@" . ThfUnitFormula
+   46 ThfApplyFormula: ThfUnitFormula "@" • ThfUnitFormula
 
     "$"              shift, and go to state 129
     "$$"             shift, and go to state 70
@@ -5884,7 +5884,7 @@ State 311
 
 State 312
 
-   44 ThfAndFormula: ThfUnitFormula "&" . ThfUnitFormula
+   44 ThfAndFormula: ThfUnitFormula "&" • ThfUnitFormula
 
     "$"              shift, and go to state 129
     "$$"             shift, and go to state 70
@@ -5958,7 +5958,7 @@ State 312
 
 State 313
 
-   42 ThfOrFormula: ThfUnitFormula "|" . ThfUnitFormula
+   42 ThfOrFormula: ThfUnitFormula "|" • ThfUnitFormula
 
     "$"              shift, and go to state 129
     "$$"             shift, and go to state 70
@@ -6032,7 +6032,7 @@ State 313
 
 State 314
 
-   38 ThfBinaryNonassoc: ThfUnitFormula NonassocConnective . ThfUnitFormula
+   38 ThfBinaryNonassoc: ThfUnitFormula NonassocConnective • ThfUnitFormula
 
     "$"              shift, and go to state 129
     "$$"             shift, and go to state 70
@@ -6106,7 +6106,7 @@ State 314
 
 State 315
 
-   76 ThfDefinedInfix: ThfUnitaryTerm DefinedInfixPred . ThfUnitaryTerm
+   76 ThfDefinedInfix: ThfUnitaryTerm DefinedInfixPred • ThfUnitaryTerm
 
     "$"              shift, and go to state 129
     "$$"             shift, and go to state 70
@@ -6153,7 +6153,7 @@ State 315
 
 State 316
 
-   64 ThfInfixUnary: ThfUnitaryTerm InfixInequality . ThfUnitaryTerm
+   64 ThfInfixUnary: ThfUnitaryTerm InfixInequality • ThfUnitaryTerm
 
     "$"              shift, and go to state 129
     "$$"             shift, and go to state 70
@@ -6200,7 +6200,7 @@ State 316
 
 State 317
 
-  121 ThfSequent: ThfTuple "-->" . ThfTuple
+  121 ThfSequent: ThfTuple "-->" • ThfTuple
 
     "["  shift, and go to state 131
 
@@ -6209,7 +6209,7 @@ State 317
 
 State 318
 
-  118 ThfUnionType: ThfUnitaryType "+" . ThfUnitaryType
+  118 ThfUnionType: ThfUnitaryType "+" • ThfUnitaryType
 
     "$"              shift, and go to state 129
     "$$"             shift, and go to state 70
@@ -6269,7 +6269,7 @@ State 318
 
 State 319
 
-  116 ThfXprodType: ThfUnitaryType "*" . ThfUnitaryType
+  116 ThfXprodType: ThfUnitaryType "*" • ThfUnitaryType
 
     "$"              shift, and go to state 129
     "$$"             shift, and go to state 70
@@ -6329,8 +6329,8 @@ State 319
 
 State 320
 
-  114 ThfMappingType: ThfUnitaryType ">" . ThfUnitaryType
-  115               | ThfUnitaryType ">" . ThfMappingType
+  114 ThfMappingType: ThfUnitaryType ">" • ThfUnitaryType
+  115               | ThfUnitaryType ">" • ThfMappingType
 
     "$"              shift, and go to state 129
     "$$"             shift, and go to state 70
@@ -6391,7 +6391,7 @@ State 320
 
 State 321
 
-  117 ThfXprodType: ThfXprodType "*" . ThfUnitaryType
+  117 ThfXprodType: ThfXprodType "*" • ThfUnitaryType
 
     "$"              shift, and go to state 129
     "$$"             shift, and go to state 70
@@ -6451,7 +6451,7 @@ State 321
 
 State 322
 
-  119 ThfUnionType: ThfUnionType "+" . ThfUnitaryType
+  119 ThfUnionType: ThfUnionType "+" • ThfUnitaryType
 
     "$"              shift, and go to state 129
     "$$"             shift, and go to state 70
@@ -6511,7 +6511,7 @@ State 322
 
 State 323
 
-   57 ThfQuantifiedFormula: ThfQuantifier "[" . ThfVariableList "]" ":" ThfUnitFormula
+   57 ThfQuantifiedFormula: ThfQuantifier "[" • ThfVariableList "]" ":" ThfUnitFormula
 
     "upper_word"  shift, and go to state 80
 
@@ -6522,8 +6522,8 @@ State 323
 
 State 324
 
-   56 ThfUnitaryFormula: "(" . ThfLogicFormula ")"
-   74 ThfDefinedAtomic: "(" . ThfConnTerm ")"
+   56 ThfUnitaryFormula: "(" • ThfLogicFormula ")"
+   74 ThfDefinedAtomic: "(" • ThfConnTerm ")"
 
     "&"              shift, and go to state 288
     "$"              shift, and go to state 129
@@ -6622,42 +6622,42 @@ State 324
 
 State 325
 
-   63 ThfPrefixUnary: ThfUnaryConnective ThfPreunitFormula .
+   63 ThfPrefixUnary: ThfUnaryConnective ThfPreunitFormula •
 
     $default  reduce using rule 63 (ThfPrefixUnary)
 
 
 State 326
 
-   51 ThfPreunitFormula: ThfUnitaryFormula .
+   51 ThfPreunitFormula: ThfUnitaryFormula •
 
     $default  reduce using rule 51 (ThfPreunitFormula)
 
 
 State 327
 
-   52 ThfPreunitFormula: ThfPrefixUnary .
+   52 ThfPreunitFormula: ThfPrefixUnary •
 
     $default  reduce using rule 52 (ThfPreunitFormula)
 
 
 State 328
 
-   54 ThfUnitaryFormula: ThfAtomicFormula .
+   54 ThfUnitaryFormula: ThfAtomicFormula •
 
     $default  reduce using rule 54 (ThfUnitaryFormula)
 
 
 State 329
 
-   55 ThfUnitaryFormula: Variable .
+   55 ThfUnitaryFormula: Variable •
 
     $default  reduce using rule 55 (ThfUnitaryFormula)
 
 
 State 330
 
-  104 ThfAtomTyping: UntypedAtom ":" . ThfTopLevelType
+  104 ThfAtomTyping: UntypedAtom ":" • ThfTopLevelType
 
     "$"              shift, and go to state 129
     "$$"             shift, and go to state 70
@@ -6736,7 +6736,7 @@ State 330
 
 State 331
 
-  120 ThfSubtype: UntypedAtom "<<" . Atom
+  120 ThfSubtype: UntypedAtom "<<" • Atom
 
     "$"              shift, and go to state 69
     "$$"             shift, and go to state 70
@@ -6762,7 +6762,7 @@ State 331
 
 State 332
 
-   78 ThfFofFunction: Functor "(" . ThfArguments ")"
+   78 ThfFofFunction: Functor "(" • ThfArguments ")"
 
     "$"              shift, and go to state 129
     "$$"             shift, and go to state 70
@@ -6850,7 +6850,7 @@ State 332
 
 State 333
 
-   80 ThfFofFunction: SystemFunctor "(" . ThfArguments ")"
+   80 ThfFofFunction: SystemFunctor "(" • ThfArguments ")"
 
     "$"              shift, and go to state 129
     "$$"             shift, and go to state 70
@@ -6938,7 +6938,7 @@ State 333
 
 State 334
 
-   79 ThfFofFunction: DefinedFunctor "(" . ThfArguments ")"
+   79 ThfFofFunction: DefinedFunctor "(" • ThfArguments ")"
 
     "$"              shift, and go to state 129
     "$$"             shift, and go to state 70
@@ -7026,44 +7026,44 @@ State 334
 
 State 335
 
-  173 TfxConditional: "$" "ite" . "(" TffLogicFormula "," TffTerm "," TffTerm ")"
+  173 TfxConditional: "$" "ite" • "(" TffLogicFormula "," TffTerm "," TffTerm ")"
 
     "("  shift, and go to state 474
 
 
 State 336
 
-  174 TfxLet: "$" "let" . "(" TfxLetTypes "," TfxLetDefns "," TffTerm ")"
+  174 TfxLet: "$" "let" • "(" TfxLetTypes "," TfxLetDefns "," TffTerm ")"
 
     "("  shift, and go to state 475
 
 
 State 337
 
-  148 TffUnitaryFormula: "(" TffLogicFormula . ")"
-  193 TffUnitaryTerm: "(" TffLogicFormula . ")"
+  148 TffUnitaryFormula: "(" TffLogicFormula • ")"
+  193 TffUnitaryTerm: "(" TffLogicFormula • ")"
 
     ")"  shift, and go to state 476
 
 
 State 338
 
-  199 TffAtomTyping: "(" TffAtomTyping . ")"
+  199 TffAtomTyping: "(" TffAtomTyping • ")"
 
     ")"  shift, and go to state 477
 
 
 State 339
 
-  224 TfxSequent: "(" TfxSequent . ")"
+  224 TfxSequent: "(" TfxSequent • ")"
 
     ")"  shift, and go to state 478
 
 
 State 340
 
-  148 TffUnitaryFormula: "(" . TffLogicFormula ")"
-  193 TffUnitaryTerm: "(" . TffLogicFormula ")"
+  148 TffUnitaryFormula: "(" • TffLogicFormula ")"
+  193 TffUnitaryTerm: "(" • TffLogicFormula ")"
 
     "$"              shift, and go to state 190
     "$$"             shift, and go to state 70
@@ -7129,29 +7129,29 @@ State 340
 
 State 341
 
-  194 TfxTuple: "[" "]" .
+  194 TfxTuple: "[" "]" •
 
     $default  reduce using rule 194 (TfxTuple)
 
 
 State 342
 
-  186 TffTerm: TffLogicFormula .
+  186 TffTerm: TffLogicFormula •
 
     $default  reduce using rule 186 (TffTerm)
 
 
 State 343
 
-  196 TffArguments: TffTerm .
+  196 TffArguments: TffTerm •
 
     $default  reduce using rule 196 (TffArguments)
 
 
 State 344
 
-  188 TffTerm: TfxTuple .
-  191 TffUnitaryTerm: TfxTuple .
+  188 TffTerm: TfxTuple •
+  191 TffUnitaryTerm: TfxTuple •
 
     "="       reduce using rule 191 (TffUnitaryTerm)
     "!="      reduce using rule 191 (TffUnitaryTerm)
@@ -7160,8 +7160,8 @@ State 344
 
 State 345
 
-  195 TfxTuple: "[" TffArguments . "]"
-  197 TffArguments: TffArguments . "," TffTerm
+  195 TfxTuple: "[" TffArguments • "]"
+  197 TffArguments: TffArguments • "," TffTerm
 
     ","  shift, and go to state 480
     "]"  shift, and go to state 481
@@ -7169,22 +7169,22 @@ State 345
 
 State 346
 
-  163 TffPlainAtomic: Constant .
+  163 TffPlainAtomic: Constant •
 
     $default  reduce using rule 163 (TffPlainAtomic)
 
 
 State 347
 
-  171 TffSystemAtomic: SystemConstant .
+  171 TffSystemAtomic: SystemConstant •
 
     $default  reduce using rule 171 (TffSystemAtomic)
 
 
 State 348
 
-  187 TffTerm: DefinedTerm .
-  190 TffUnitaryTerm: DefinedTerm .
+  187 TffTerm: DefinedTerm •
+  190 TffUnitaryTerm: DefinedTerm •
 
     "="       reduce using rule 190 (TffUnitaryTerm)
     "!="      reduce using rule 190 (TffUnitaryTerm)
@@ -7193,7 +7193,7 @@ State 348
 
 State 349
 
-   15 TffAnnotated: "tff" "(" Name "," FormulaRole "," TffFormula "," . Annotations ")" "."
+   15 TffAnnotated: "tff" "(" Name "," FormulaRole "," TffFormula "," • Annotations ")" "."
 
     "$"              shift, and go to state 388
     "["              shift, and go to state 389
@@ -7224,14 +7224,14 @@ State 349
 
 State 350
 
-   14 TffAnnotated: "tff" "(" Name "," FormulaRole "," TffFormula ")" . "."
+   14 TffAnnotated: "tff" "(" Name "," FormulaRole "," TffFormula ")" • "."
 
     "."  shift, and go to state 483
 
 
 State 351
 
-  137 TffOrFormula: TffOrFormula "|" . TffUnitFormula
+  137 TffOrFormula: TffOrFormula "|" • TffUnitFormula
 
     "$"              shift, and go to state 190
     "$$"             shift, and go to state 70
@@ -7291,7 +7291,7 @@ State 351
 
 State 352
 
-  139 TffAndFormula: TffAndFormula "&" . TffUnitFormula
+  139 TffAndFormula: TffAndFormula "&" • TffUnitFormula
 
     "$"              shift, and go to state 190
     "$$"             shift, and go to state 70
@@ -7351,7 +7351,7 @@ State 352
 
 State 353
 
-  138 TffAndFormula: TffUnitFormula "&" . TffUnitFormula
+  138 TffAndFormula: TffUnitFormula "&" • TffUnitFormula
 
     "$"              shift, and go to state 190
     "$$"             shift, and go to state 70
@@ -7411,7 +7411,7 @@ State 353
 
 State 354
 
-  136 TffOrFormula: TffUnitFormula "|" . TffUnitFormula
+  136 TffOrFormula: TffUnitFormula "|" • TffUnitFormula
 
     "$"              shift, and go to state 190
     "$$"             shift, and go to state 70
@@ -7471,7 +7471,7 @@ State 354
 
 State 355
 
-  133 TffBinaryNonassoc: TffUnitFormula NonassocConnective . TffUnitFormula
+  133 TffBinaryNonassoc: TffUnitFormula NonassocConnective • TffUnitFormula
 
     "$"              shift, and go to state 190
     "$$"             shift, and go to state 70
@@ -7531,7 +7531,7 @@ State 355
 
 State 356
 
-  170 TffDefinedInfix: TffUnitaryTerm DefinedInfixPred . TffUnitaryTerm
+  170 TffDefinedInfix: TffUnitaryTerm DefinedInfixPred • TffUnitaryTerm
 
     "$"              shift, and go to state 190
     "$$"             shift, and go to state 70
@@ -7578,7 +7578,7 @@ State 356
 
 State 357
 
-  159 TffInfixUnary: TffUnitaryTerm InfixInequality . TffUnitaryTerm
+  159 TffInfixUnary: TffUnitaryTerm InfixInequality • TffUnitaryTerm
 
     "$"              shift, and go to state 190
     "$$"             shift, and go to state 70
@@ -7625,7 +7625,7 @@ State 357
 
 State 358
 
-  223 TfxSequent: TfxTuple "-->" . TfxTuple
+  223 TfxSequent: TfxTuple "-->" • TfxTuple
 
     "["  shift, and go to state 192
 
@@ -7634,7 +7634,7 @@ State 358
 
 State 359
 
-  150 TffQuantifiedFormula: FofQuantifier "[" . TffVariableList "]" ":" TffUnitFormula
+  150 TffQuantifiedFormula: FofQuantifier "[" • TffVariableList "]" ":" TffUnitFormula
 
     "upper_word"  shift, and go to state 80
 
@@ -7646,7 +7646,7 @@ State 359
 
 State 360
 
-  148 TffUnitaryFormula: "(" . TffLogicFormula ")"
+  148 TffUnitaryFormula: "(" • TffLogicFormula ")"
 
     "$"              shift, and go to state 190
     "$$"             shift, and go to state 70
@@ -7712,42 +7712,42 @@ State 360
 
 State 361
 
-  158 TffPrefixUnary: UnaryConnective TffPreunitFormula .
+  158 TffPrefixUnary: UnaryConnective TffPreunitFormula •
 
     $default  reduce using rule 158 (TffPrefixUnary)
 
 
 State 362
 
-  143 TffPreunitFormula: TffUnitaryFormula .
+  143 TffPreunitFormula: TffUnitaryFormula •
 
     $default  reduce using rule 143 (TffPreunitFormula)
 
 
 State 363
 
-  144 TffPreunitFormula: TffPrefixUnary .
+  144 TffPreunitFormula: TffPrefixUnary •
 
     $default  reduce using rule 144 (TffPreunitFormula)
 
 
 State 364
 
-  146 TffUnitaryFormula: TffAtomicFormula .
+  146 TffUnitaryFormula: TffAtomicFormula •
 
     $default  reduce using rule 146 (TffUnitaryFormula)
 
 
 State 365
 
-  149 TfxUnitaryFormula: Variable .
+  149 TfxUnitaryFormula: Variable •
 
     $default  reduce using rule 149 (TfxUnitaryFormula)
 
 
 State 366
 
-  198 TffAtomTyping: UntypedAtom ":" . TffTopLevelType
+  198 TffAtomTyping: UntypedAtom ":" • TffTopLevelType
 
     "$"              shift, and go to state 69
     "("              shift, and go to state 503
@@ -7776,7 +7776,7 @@ State 366
 
 State 367
 
-  222 TffSubtype: UntypedAtom "<<" . Atom
+  222 TffSubtype: UntypedAtom "<<" • Atom
 
     "$"              shift, and go to state 69
     "$$"             shift, and go to state 70
@@ -7802,7 +7802,7 @@ State 367
 
 State 368
 
-  164 TffPlainAtomic: Functor "(" . TffArguments ")"
+  164 TffPlainAtomic: Functor "(" • TffArguments ")"
 
     "$"              shift, and go to state 190
     "$$"             shift, and go to state 70
@@ -7870,7 +7870,7 @@ State 368
 
 State 369
 
-  172 TffSystemAtomic: SystemFunctor "(" . TffArguments ")"
+  172 TffSystemAtomic: SystemFunctor "(" • TffArguments ")"
 
     "$"              shift, and go to state 190
     "$$"             shift, and go to state 70
@@ -7938,7 +7938,7 @@ State 369
 
 State 370
 
-  167 TffDefinedPlain: DefinedFunctor "(" . TffArguments ")"
+  167 TffDefinedPlain: DefinedFunctor "(" • TffArguments ")"
 
     "$"              shift, and go to state 190
     "$$"             shift, and go to state 70
@@ -8006,7 +8006,7 @@ State 370
 
 State 371
 
-  199 TffAtomTyping: "(" . TffAtomTyping ")"
+  199 TffAtomTyping: "(" • TffAtomTyping ")"
 
     "$$"             shift, and go to state 70
     "("              shift, and go to state 371
@@ -8028,8 +8028,8 @@ State 371
 
 State 372
 
-  287 CnfFormula: "(" Disjunction . ")"
-  289 Disjunction: Disjunction . "|" Literal
+  287 CnfFormula: "(" Disjunction • ")"
+  289 Disjunction: Disjunction • "|" Literal
 
     ")"  shift, and go to state 522
     "|"  shift, and go to state 378
@@ -8037,7 +8037,7 @@ State 372
 
 State 373
 
-  229 TcfQuantifiedFormula: "!" "[" . TffVariableList "]" ":" CnfFormula
+  229 TcfQuantifiedFormula: "!" "[" • TffVariableList "]" ":" CnfFormula
 
     "upper_word"  shift, and go to state 80
 
@@ -8049,14 +8049,14 @@ State 373
 
 State 374
 
-  291 Literal: "~" FofAtomicFormula .
+  291 Literal: "~" FofAtomicFormula •
 
     $default  reduce using rule 291 (Literal)
 
 
 State 375
 
-  262 FofDefinedInfixFormula: FofTerm . DefinedInfixPred FofTerm
+  262 FofDefinedInfixFormula: FofTerm • DefinedInfixPred FofTerm
 
     "="  shift, and go to state 273
 
@@ -8066,7 +8066,7 @@ State 375
 
 State 376
 
-   17 TcfAnnotated: "tcf" "(" Name "," FormulaRole "," TcfFormula "," . Annotations ")" "."
+   17 TcfAnnotated: "tcf" "(" Name "," FormulaRole "," TcfFormula "," • Annotations ")" "."
 
     "$"              shift, and go to state 388
     "["              shift, and go to state 389
@@ -8097,14 +8097,14 @@ State 376
 
 State 377
 
-   16 TcfAnnotated: "tcf" "(" Name "," FormulaRole "," TcfFormula ")" . "."
+   16 TcfAnnotated: "tcf" "(" Name "," FormulaRole "," TcfFormula ")" • "."
 
     "."  shift, and go to state 525
 
 
 State 378
 
-  289 Disjunction: Disjunction "|" . Literal
+  289 Disjunction: Disjunction "|" • Literal
 
     "$"              shift, and go to state 69
     "$$"             shift, and go to state 70
@@ -8156,7 +8156,7 @@ State 378
 
 State 379
 
-   19 FofAnnotated: "fof" "(" Name "," FormulaRole "," FofFormula "," . Annotations ")" "."
+   19 FofAnnotated: "fof" "(" Name "," FormulaRole "," FofFormula "," • Annotations ")" "."
 
     "$"              shift, and go to state 388
     "["              shift, and go to state 389
@@ -8187,14 +8187,14 @@ State 379
 
 State 380
 
-   18 FofAnnotated: "fof" "(" Name "," FormulaRole "," FofFormula ")" . "."
+   18 FofAnnotated: "fof" "(" Name "," FormulaRole "," FofFormula ")" • "."
 
     "."  shift, and go to state 528
 
 
 State 381
 
-   21 CnfAnnotated: "cnf" "(" Name "," FormulaRole "," CnfFormula "," . Annotations ")" "."
+   21 CnfAnnotated: "cnf" "(" Name "," FormulaRole "," CnfFormula "," • Annotations ")" "."
 
     "$"              shift, and go to state 388
     "["              shift, and go to state 389
@@ -8225,35 +8225,35 @@ State 381
 
 State 382
 
-   20 CnfAnnotated: "cnf" "(" Name "," FormulaRole "," CnfFormula ")" . "."
+   20 CnfAnnotated: "cnf" "(" Name "," FormulaRole "," CnfFormula ")" • "."
 
     "."  shift, and go to state 530
 
 
 State 383
 
-  338 NameList: NameList "," Name .
+  338 NameList: NameList "," Name •
 
     $default  reduce using rule 338 (NameList)
 
 
 State 384
 
-  251 FofUnitaryFormula: "(" FofLogicFormula ")" .
+  251 FofUnitaryFormula: "(" FofLogicFormula ")" •
 
     $default  reduce using rule 251 (FofUnitaryFormula)
 
 
 State 385
 
-  281 FofSequent: "(" FofSequent ")" .
+  281 FofSequent: "(" FofSequent ")" •
 
     $default  reduce using rule 281 (FofSequent)
 
 
 State 386
 
-  285 FofFormulaTupleList: FofFormulaTupleList "," . FofLogicFormula
+  285 FofFormulaTupleList: FofFormulaTupleList "," • FofLogicFormula
 
     "$"              shift, and go to state 69
     "$$"             shift, and go to state 70
@@ -8319,18 +8319,18 @@ State 386
 
 State 387
 
-  283 FofFormulaTuple: "{" FofFormulaTupleList "}" .
+  283 FofFormulaTuple: "{" FofFormulaTupleList "}" •
 
     $default  reduce using rule 283 (FofFormulaTuple)
 
 
 State 388
 
-  354 FormulaData: "$" . "thf" "(" ThfFormula ")"
-  355            | "$" . "tff" "(" TffFormula ")"
-  356            | "$" . "fof" "(" FofFormula ")"
-  357            | "$" . "cnf" "(" CnfFormula ")"
-  358            | "$" . "fot" "(" FofTerm ")"
+  354 FormulaData: "$" • "thf" "(" ThfFormula ")"
+  355            | "$" • "tff" "(" TffFormula ")"
+  356            | "$" • "fof" "(" FofFormula ")"
+  357            | "$" • "cnf" "(" CnfFormula ")"
+  358            | "$" • "fot" "(" FofTerm ")"
 
     "thf"  shift, and go to state 532
     "tff"  shift, and go to state 533
@@ -8341,8 +8341,8 @@ State 388
 
 State 389
 
-  359 GeneralList: "[" . "]"
-  360            | "[" . GeneralTerms "]"
+  359 GeneralList: "[" • "]"
+  360            | "[" • GeneralTerms "]"
 
     "$"              shift, and go to state 388
     "["              shift, and go to state 389
@@ -8374,15 +8374,15 @@ State 389
 
 State 390
 
-   23 TpiAnnotated: "tpi" "(" Name "," FormulaRole "," TpiFormula "," Annotations . ")" "."
+   23 TpiAnnotated: "tpi" "(" Name "," FormulaRole "," TpiFormula "," Annotations • ")" "."
 
     ")"  shift, and go to state 540
 
 
 State 391
 
-   24 Annotations: GeneralTerm .
-   25            | GeneralTerm . "," GeneralList
+   24 Annotations: GeneralTerm •
+   25            | GeneralTerm • "," GeneralList
 
     ","  shift, and go to state 541
 
@@ -8391,8 +8391,8 @@ State 391
 
 State 392
 
-  342 GeneralTerm: GeneralData .
-  343            | GeneralData . ":" GeneralTerm
+  342 GeneralTerm: GeneralData •
+  343            | GeneralData • ":" GeneralTerm
 
     ":"  shift, and go to state 542
 
@@ -8401,29 +8401,29 @@ State 392
 
 State 393
 
-  346 GeneralData: GeneralFunction .
+  346 GeneralData: GeneralFunction •
 
     $default  reduce using rule 346 (GeneralData)
 
 
 State 394
 
-  350 GeneralData: FormulaData .
+  350 GeneralData: FormulaData •
 
     $default  reduce using rule 350 (GeneralData)
 
 
 State 395
 
-  344 GeneralTerm: GeneralList .
+  344 GeneralTerm: GeneralList •
 
     $default  reduce using rule 344 (GeneralTerm)
 
 
 State 396
 
-  345 GeneralData: AtomicWord .
-  351 GeneralFunction: AtomicWord . "(" GeneralTerms ")"
+  345 GeneralData: AtomicWord •
+  351 GeneralFunction: AtomicWord • "(" GeneralTerms ")"
 
     "("  shift, and go to state 543
 
@@ -8432,113 +8432,113 @@ State 396
 
 State 397
 
-  348 GeneralData: Number .
+  348 GeneralData: Number •
 
     $default  reduce using rule 348 (GeneralData)
 
 
 State 398
 
-  347 GeneralData: Variable .
+  347 GeneralData: Variable •
 
     $default  reduce using rule 347 (GeneralData)
 
 
 State 399
 
-  349 GeneralData: DistinctObjectLiteral .
+  349 GeneralData: DistinctObjectLiteral •
 
     $default  reduce using rule 349 (GeneralData)
 
 
 State 400
 
-   22 TpiAnnotated: "tpi" "(" Name "," FormulaRole "," TpiFormula ")" "." .
+   22 TpiAnnotated: "tpi" "(" Name "," FormulaRole "," TpiFormula ")" "." •
 
     $default  reduce using rule 22 (TpiAnnotated)
 
 
 State 401
 
-  241 FofOrFormula: FofOrFormula "|" FofUnitFormula .
+  241 FofOrFormula: FofOrFormula "|" FofUnitFormula •
 
     $default  reduce using rule 241 (FofOrFormula)
 
 
 State 402
 
-  243 FofAndFormula: FofAndFormula "&" FofUnitFormula .
+  243 FofAndFormula: FofAndFormula "&" FofUnitFormula •
 
     $default  reduce using rule 243 (FofAndFormula)
 
 
 State 403
 
-  242 FofAndFormula: FofUnitFormula "&" FofUnitFormula .
+  242 FofAndFormula: FofUnitFormula "&" FofUnitFormula •
 
     $default  reduce using rule 242 (FofAndFormula)
 
 
 State 404
 
-  240 FofOrFormula: FofUnitFormula "|" FofUnitFormula .
+  240 FofOrFormula: FofUnitFormula "|" FofUnitFormula •
 
     $default  reduce using rule 240 (FofOrFormula)
 
 
 State 405
 
-  237 FofBinaryNonassoc: FofUnitFormula NonassocConnective FofUnitFormula .
+  237 FofBinaryNonassoc: FofUnitFormula NonassocConnective FofUnitFormula •
 
     $default  reduce using rule 237 (FofBinaryNonassoc)
 
 
 State 406
 
-  277 FofFunctionTerm: FofPlainTerm .
+  277 FofFunctionTerm: FofPlainTerm •
 
     $default  reduce using rule 277 (FofFunctionTerm)
 
 
 State 407
 
-  268 FofDefinedAtomicTerm: FofDefinedPlainTerm .
+  268 FofDefinedAtomicTerm: FofDefinedPlainTerm •
 
     $default  reduce using rule 268 (FofDefinedAtomicTerm)
 
 
 State 408
 
-  279 FofFunctionTerm: FofSystemTerm .
+  279 FofFunctionTerm: FofSystemTerm •
 
     $default  reduce using rule 279 (FofFunctionTerm)
 
 
 State 409
 
-  262 FofDefinedInfixFormula: FofTerm DefinedInfixPred FofTerm .
+  262 FofDefinedInfixFormula: FofTerm DefinedInfixPred FofTerm •
 
     $default  reduce using rule 262 (FofDefinedInfixFormula)
 
 
 State 410
 
-  246 FofInfixUnary: FofTerm InfixInequality FofTerm .
+  246 FofInfixUnary: FofTerm InfixInequality FofTerm •
 
     $default  reduce using rule 246 (FofInfixUnary)
 
 
 State 411
 
-  280 FofSequent: FofFormulaTuple "-->" FofFormulaTuple .
+  280 FofSequent: FofFormulaTuple "-->" FofFormulaTuple •
 
     $default  reduce using rule 280 (FofSequent)
 
 
 State 412
 
-  252 FofQuantifiedFormula: FofQuantifier "[" FofVariableList . "]" ":" FofUnitFormula
-  254 FofVariableList: FofVariableList . "," Variable
+  252 FofQuantifiedFormula: FofQuantifier "[" FofVariableList • "]" ":" FofUnitFormula
+  254 FofVariableList: FofVariableList • "," Variable
 
     ","  shift, and go to state 544
     "]"  shift, and go to state 545
@@ -8546,15 +8546,15 @@ State 412
 
 State 413
 
-  253 FofVariableList: Variable .
+  253 FofVariableList: Variable •
 
     $default  reduce using rule 253 (FofVariableList)
 
 
 State 414
 
-  265 FofPlainTerm: Functor "(" FofArguments . ")"
-  274 FofArguments: FofArguments . "," FofTerm
+  265 FofPlainTerm: Functor "(" FofArguments • ")"
+  274 FofArguments: FofArguments • "," FofTerm
 
     ","  shift, and go to state 546
     ")"  shift, and go to state 547
@@ -8562,15 +8562,15 @@ State 414
 
 State 415
 
-  273 FofArguments: FofTerm .
+  273 FofArguments: FofTerm •
 
     $default  reduce using rule 273 (FofArguments)
 
 
 State 416
 
-  272 FofSystemTerm: SystemFunctor "(" FofArguments . ")"
-  274 FofArguments: FofArguments . "," FofTerm
+  272 FofSystemTerm: SystemFunctor "(" FofArguments • ")"
+  274 FofArguments: FofArguments • "," FofTerm
 
     ","  shift, and go to state 546
     ")"  shift, and go to state 548
@@ -8578,8 +8578,8 @@ State 416
 
 State 417
 
-  270 FofDefinedPlainTerm: DefinedFunctor "(" FofArguments . ")"
-  274 FofArguments: FofArguments . "," FofTerm
+  270 FofDefinedPlainTerm: DefinedFunctor "(" FofArguments • ")"
+  274 FofArguments: FofArguments • "," FofTerm
 
     ","  shift, and go to state 546
     ")"  shift, and go to state 549
@@ -8587,7 +8587,7 @@ State 417
 
 State 418
 
-   81 ThfConditional: "$" "ite" "(" . ThfLogicFormula "," ThfLogicFormula "," ThfLogicFormula ")"
+   81 ThfConditional: "$" "ite" "(" • ThfLogicFormula "," ThfLogicFormula "," ThfLogicFormula ")"
 
     "$"              shift, and go to state 129
     "$$"             shift, and go to state 70
@@ -8673,7 +8673,7 @@ State 418
 
 State 419
 
-   82 ThfLet: "$" "let" "(" . ThfLetTypes "," ThfLetDefns "," ThfFormula ")"
+   82 ThfLet: "$" "let" "(" • ThfLetTypes "," ThfLetDefns "," ThfFormula ")"
 
     "$$"             shift, and go to state 70
     "("              shift, and go to state 551
@@ -8697,8 +8697,8 @@ State 419
 
 State 420
 
-   56 ThfUnitaryFormula: "(" ThfLogicFormula ")" .
-   94 ThfUnitaryTerm: "(" ThfLogicFormula ")" .
+   56 ThfUnitaryFormula: "(" ThfLogicFormula ")" •
+   94 ThfUnitaryTerm: "(" ThfLogicFormula ")" •
 
     "="       reduce using rule 94 (ThfUnitaryTerm)
     "!="      reduce using rule 94 (ThfUnitaryTerm)
@@ -8707,28 +8707,28 @@ State 420
 
 State 421
 
-   74 ThfDefinedAtomic: "(" ThfConnTerm ")" .
+   74 ThfDefinedAtomic: "(" ThfConnTerm ")" •
 
     $default  reduce using rule 74 (ThfDefinedAtomic)
 
 
 State 422
 
-  105 ThfAtomTyping: "(" ThfAtomTyping ")" .
+  105 ThfAtomTyping: "(" ThfAtomTyping ")" •
 
     $default  reduce using rule 105 (ThfAtomTyping)
 
 
 State 423
 
-  122 ThfSequent: "(" ThfSequent ")" .
+  122 ThfSequent: "(" ThfSequent ")" •
 
     $default  reduce using rule 122 (ThfSequent)
 
 
 State 424
 
-   98 ThfFormulaList: ThfFormulaList "," . ThfLogicFormula
+   98 ThfFormulaList: ThfFormulaList "," • ThfLogicFormula
 
     "$"              shift, and go to state 129
     "$$"             shift, and go to state 70
@@ -8814,99 +8814,99 @@ State 424
 
 State 425
 
-   96 ThfTuple: "[" ThfFormulaList "]" .
+   96 ThfTuple: "[" ThfFormulaList "]" •
 
     $default  reduce using rule 96 (ThfTuple)
 
 
 State 426
 
-   13 ThfAnnotated: "thf" "(" Name "," FormulaRole "," ThfFormula "," Annotations . ")" "."
+   13 ThfAnnotated: "thf" "(" Name "," FormulaRole "," ThfFormula "," Annotations • ")" "."
 
     ")"  shift, and go to state 556
 
 
 State 427
 
-   12 ThfAnnotated: "thf" "(" Name "," FormulaRole "," ThfFormula ")" "." .
+   12 ThfAnnotated: "thf" "(" Name "," FormulaRole "," ThfFormula ")" "." •
 
     $default  reduce using rule 12 (ThfAnnotated)
 
 
 State 428
 
-   43 ThfOrFormula: ThfOrFormula "|" ThfUnitFormula .
+   43 ThfOrFormula: ThfOrFormula "|" ThfUnitFormula •
 
     $default  reduce using rule 43 (ThfOrFormula)
 
 
 State 429
 
-   48 ThfUnitFormula: ThfUnitaryFormula .
+   48 ThfUnitFormula: ThfUnitaryFormula •
 
     $default  reduce using rule 48 (ThfUnitFormula)
 
 
 State 430
 
-   49 ThfUnitFormula: ThfUnaryFormula .
+   49 ThfUnitFormula: ThfUnaryFormula •
 
     $default  reduce using rule 49 (ThfUnitFormula)
 
 
 State 431
 
-   50 ThfUnitFormula: ThfDefinedInfix .
+   50 ThfUnitFormula: ThfDefinedInfix •
 
     $default  reduce using rule 50 (ThfUnitFormula)
 
 
 State 432
 
-   45 ThfAndFormula: ThfAndFormula "&" ThfUnitFormula .
+   45 ThfAndFormula: ThfAndFormula "&" ThfUnitFormula •
 
     $default  reduce using rule 45 (ThfAndFormula)
 
 
 State 433
 
-   47 ThfApplyFormula: ThfApplyFormula "@" ThfUnitFormula .
+   47 ThfApplyFormula: ThfApplyFormula "@" ThfUnitFormula •
 
     $default  reduce using rule 47 (ThfApplyFormula)
 
 
 State 434
 
-   46 ThfApplyFormula: ThfUnitFormula "@" ThfUnitFormula .
+   46 ThfApplyFormula: ThfUnitFormula "@" ThfUnitFormula •
 
     $default  reduce using rule 46 (ThfApplyFormula)
 
 
 State 435
 
-   44 ThfAndFormula: ThfUnitFormula "&" ThfUnitFormula .
+   44 ThfAndFormula: ThfUnitFormula "&" ThfUnitFormula •
 
     $default  reduce using rule 44 (ThfAndFormula)
 
 
 State 436
 
-   42 ThfOrFormula: ThfUnitFormula "|" ThfUnitFormula .
+   42 ThfOrFormula: ThfUnitFormula "|" ThfUnitFormula •
 
     $default  reduce using rule 42 (ThfOrFormula)
 
 
 State 437
 
-   38 ThfBinaryNonassoc: ThfUnitFormula NonassocConnective ThfUnitFormula .
+   38 ThfBinaryNonassoc: ThfUnitFormula NonassocConnective ThfUnitFormula •
 
     $default  reduce using rule 38 (ThfBinaryNonassoc)
 
 
 State 438
 
-   74 ThfDefinedAtomic: "(" . ThfConnTerm ")"
-   94 ThfUnitaryTerm: "(" . ThfLogicFormula ")"
+   74 ThfDefinedAtomic: "(" • ThfConnTerm ")"
+   94 ThfUnitaryTerm: "(" • ThfLogicFormula ")"
 
     "&"              shift, and go to state 288
     "$"              shift, and go to state 129
@@ -9005,65 +9005,65 @@ State 438
 
 State 439
 
-   92 ThfUnitaryTerm: ThfAtomicFormula .
+   92 ThfUnitaryTerm: ThfAtomicFormula •
 
     $default  reduce using rule 92 (ThfUnitaryTerm)
 
 
 State 440
 
-   76 ThfDefinedInfix: ThfUnitaryTerm DefinedInfixPred ThfUnitaryTerm .
+   76 ThfDefinedInfix: ThfUnitaryTerm DefinedInfixPred ThfUnitaryTerm •
 
     $default  reduce using rule 76 (ThfDefinedInfix)
 
 
 State 441
 
-   93 ThfUnitaryTerm: Variable .
+   93 ThfUnitaryTerm: Variable •
 
     $default  reduce using rule 93 (ThfUnitaryTerm)
 
 
 State 442
 
-   64 ThfInfixUnary: ThfUnitaryTerm InfixInequality ThfUnitaryTerm .
+   64 ThfInfixUnary: ThfUnitaryTerm InfixInequality ThfUnitaryTerm •
 
     $default  reduce using rule 64 (ThfInfixUnary)
 
 
 State 443
 
-  121 ThfSequent: ThfTuple "-->" ThfTuple .
+  121 ThfSequent: ThfTuple "-->" ThfTuple •
 
     $default  reduce using rule 121 (ThfSequent)
 
 
 State 444
 
-  109 ThfUnitaryType: ThfUnitaryFormula .
+  109 ThfUnitaryType: ThfUnitaryFormula •
 
     $default  reduce using rule 109 (ThfUnitaryType)
 
 
 State 445
 
-  118 ThfUnionType: ThfUnitaryType "+" ThfUnitaryType .
+  118 ThfUnionType: ThfUnitaryType "+" ThfUnitaryType •
 
     $default  reduce using rule 118 (ThfUnionType)
 
 
 State 446
 
-  116 ThfXprodType: ThfUnitaryType "*" ThfUnitaryType .
+  116 ThfXprodType: ThfUnitaryType "*" ThfUnitaryType •
 
     $default  reduce using rule 116 (ThfXprodType)
 
 
 State 447
 
-  114 ThfMappingType: ThfUnitaryType . ">" ThfUnitaryType
-  114               | ThfUnitaryType ">" ThfUnitaryType .
-  115               | ThfUnitaryType . ">" ThfMappingType
+  114 ThfMappingType: ThfUnitaryType • ">" ThfUnitaryType
+  114               | ThfUnitaryType ">" ThfUnitaryType •
+  115               | ThfUnitaryType • ">" ThfMappingType
 
     ">"  shift, and go to state 320
 
@@ -9072,29 +9072,29 @@ State 447
 
 State 448
 
-  115 ThfMappingType: ThfUnitaryType ">" ThfMappingType .
+  115 ThfMappingType: ThfUnitaryType ">" ThfMappingType •
 
     $default  reduce using rule 115 (ThfMappingType)
 
 
 State 449
 
-  117 ThfXprodType: ThfXprodType "*" ThfUnitaryType .
+  117 ThfXprodType: ThfXprodType "*" ThfUnitaryType •
 
     $default  reduce using rule 117 (ThfXprodType)
 
 
 State 450
 
-  119 ThfUnionType: ThfUnionType "+" ThfUnitaryType .
+  119 ThfUnionType: ThfUnionType "+" ThfUnitaryType •
 
     $default  reduce using rule 119 (ThfUnionType)
 
 
 State 451
 
-   57 ThfQuantifiedFormula: ThfQuantifier "[" ThfVariableList . "]" ":" ThfUnitFormula
-   59 ThfVariableList: ThfVariableList . "," ThfTypedVariable
+   57 ThfQuantifiedFormula: ThfQuantifier "[" ThfVariableList • "]" ":" ThfUnitFormula
+   59 ThfVariableList: ThfVariableList • "," ThfTypedVariable
 
     ","  shift, and go to state 558
     "]"  shift, and go to state 559
@@ -9102,29 +9102,29 @@ State 451
 
 State 452
 
-   58 ThfVariableList: ThfTypedVariable .
+   58 ThfVariableList: ThfTypedVariable •
 
     $default  reduce using rule 58 (ThfVariableList)
 
 
 State 453
 
-   60 ThfTypedVariable: Variable . ":" ThfTopLevelType
+   60 ThfTypedVariable: Variable • ":" ThfTopLevelType
 
     ":"  shift, and go to state 560
 
 
 State 454
 
-   56 ThfUnitaryFormula: "(" ThfLogicFormula . ")"
+   56 ThfUnitaryFormula: "(" ThfLogicFormula • ")"
 
     ")"  shift, and go to state 561
 
 
 State 455
 
-   47 ThfApplyFormula: ThfApplyFormula . "@" ThfUnitFormula
-  110 ThfApplyType: ThfApplyFormula .
+   47 ThfApplyFormula: ThfApplyFormula • "@" ThfUnitFormula
+  110 ThfApplyType: ThfApplyFormula •
 
     "@"  shift, and go to state 310
 
@@ -9133,15 +9133,15 @@ State 455
 
 State 456
 
-   46 ThfApplyFormula: ThfUnitFormula . "@" ThfUnitFormula
+   46 ThfApplyFormula: ThfUnitFormula • "@" ThfUnitFormula
 
     "@"  shift, and go to state 311
 
 
 State 457
 
-   48 ThfUnitFormula: ThfUnitaryFormula .
-  109 ThfUnitaryType: ThfUnitaryFormula .
+   48 ThfUnitFormula: ThfUnitaryFormula •
+  109 ThfUnitaryType: ThfUnitaryFormula •
 
     "@"       reduce using rule 48 (ThfUnitFormula)
     $default  reduce using rule 109 (ThfUnitaryType)
@@ -9149,16 +9149,16 @@ State 457
 
 State 458
 
-  104 ThfAtomTyping: UntypedAtom ":" ThfTopLevelType .
+  104 ThfAtomTyping: UntypedAtom ":" ThfTopLevelType •
 
     $default  reduce using rule 104 (ThfAtomTyping)
 
 
 State 459
 
-  106 ThfTopLevelType: ThfUnitaryType .
-  114 ThfMappingType: ThfUnitaryType . ">" ThfUnitaryType
-  115               | ThfUnitaryType . ">" ThfMappingType
+  106 ThfTopLevelType: ThfUnitaryType •
+  114 ThfMappingType: ThfUnitaryType • ">" ThfUnitaryType
+  115               | ThfUnitaryType • ">" ThfMappingType
 
     ">"  shift, and go to state 320
 
@@ -9167,78 +9167,78 @@ State 459
 
 State 460
 
-  108 ThfTopLevelType: ThfApplyType .
+  108 ThfTopLevelType: ThfApplyType •
 
     $default  reduce using rule 108 (ThfTopLevelType)
 
 
 State 461
 
-  107 ThfTopLevelType: ThfMappingType .
+  107 ThfTopLevelType: ThfMappingType •
 
     $default  reduce using rule 107 (ThfTopLevelType)
 
 
 State 462
 
-  120 ThfSubtype: UntypedAtom "<<" Atom .
+  120 ThfSubtype: UntypedAtom "<<" Atom •
 
     $default  reduce using rule 120 (ThfSubtype)
 
 
 State 463
 
-  322 Atom: UntypedAtom .
+  322 Atom: UntypedAtom •
 
     $default  reduce using rule 322 (Atom)
 
 
 State 464
 
-  324 UntypedAtom: Constant .
+  324 UntypedAtom: Constant •
 
     $default  reduce using rule 324 (UntypedAtom)
 
 
 State 465
 
-  329 Constant: Functor .
+  329 Constant: Functor •
 
     $default  reduce using rule 329 (Constant)
 
 
 State 466
 
-  325 UntypedAtom: SystemConstant .
+  325 UntypedAtom: SystemConstant •
 
     $default  reduce using rule 325 (UntypedAtom)
 
 
 State 467
 
-  331 SystemConstant: SystemFunctor .
+  331 SystemConstant: SystemFunctor •
 
     $default  reduce using rule 331 (SystemConstant)
 
 
 State 468
 
-  323 Atom: DefinedConstant .
+  323 Atom: DefinedConstant •
 
     $default  reduce using rule 323 (Atom)
 
 
 State 469
 
-  333 DefinedConstant: DefinedFunctor .
+  333 DefinedConstant: DefinedFunctor •
 
     $default  reduce using rule 333 (DefinedConstant)
 
 
 State 470
 
-   98 ThfFormulaList: ThfFormulaList . "," ThfLogicFormula
-  103 ThfArguments: ThfFormulaList .
+   98 ThfFormulaList: ThfFormulaList • "," ThfLogicFormula
+  103 ThfArguments: ThfFormulaList •
 
     ","  shift, and go to state 424
 
@@ -9247,28 +9247,28 @@ State 470
 
 State 471
 
-   78 ThfFofFunction: Functor "(" ThfArguments . ")"
+   78 ThfFofFunction: Functor "(" ThfArguments • ")"
 
     ")"  shift, and go to state 562
 
 
 State 472
 
-   80 ThfFofFunction: SystemFunctor "(" ThfArguments . ")"
+   80 ThfFofFunction: SystemFunctor "(" ThfArguments • ")"
 
     ")"  shift, and go to state 563
 
 
 State 473
 
-   79 ThfFofFunction: DefinedFunctor "(" ThfArguments . ")"
+   79 ThfFofFunction: DefinedFunctor "(" ThfArguments • ")"
 
     ")"  shift, and go to state 564
 
 
 State 474
 
-  173 TfxConditional: "$" "ite" "(" . TffLogicFormula "," TffTerm "," TffTerm ")"
+  173 TfxConditional: "$" "ite" "(" • TffLogicFormula "," TffTerm "," TffTerm ")"
 
     "$"              shift, and go to state 190
     "$$"             shift, and go to state 70
@@ -9334,7 +9334,7 @@ State 474
 
 State 475
 
-  174 TfxLet: "$" "let" "(" . TfxLetTypes "," TfxLetDefns "," TffTerm ")"
+  174 TfxLet: "$" "let" "(" • TfxLetTypes "," TfxLetDefns "," TffTerm ")"
 
     "$$"             shift, and go to state 70
     "("              shift, and go to state 371
@@ -9358,8 +9358,8 @@ State 475
 
 State 476
 
-  148 TffUnitaryFormula: "(" TffLogicFormula ")" .
-  193 TffUnitaryTerm: "(" TffLogicFormula ")" .
+  148 TffUnitaryFormula: "(" TffLogicFormula ")" •
+  193 TffUnitaryTerm: "(" TffLogicFormula ")" •
 
     "="       reduce using rule 193 (TffUnitaryTerm)
     "!="      reduce using rule 193 (TffUnitaryTerm)
@@ -9368,28 +9368,28 @@ State 476
 
 State 477
 
-  199 TffAtomTyping: "(" TffAtomTyping ")" .
+  199 TffAtomTyping: "(" TffAtomTyping ")" •
 
     $default  reduce using rule 199 (TffAtomTyping)
 
 
 State 478
 
-  224 TfxSequent: "(" TfxSequent ")" .
+  224 TfxSequent: "(" TfxSequent ")" •
 
     $default  reduce using rule 224 (TfxSequent)
 
 
 State 479
 
-  191 TffUnitaryTerm: TfxTuple .
+  191 TffUnitaryTerm: TfxTuple •
 
     $default  reduce using rule 191 (TffUnitaryTerm)
 
 
 State 480
 
-  197 TffArguments: TffArguments "," . TffTerm
+  197 TffArguments: TffArguments "," • TffTerm
 
     "$"              shift, and go to state 190
     "$$"             shift, and go to state 70
@@ -9456,84 +9456,84 @@ State 480
 
 State 481
 
-  195 TfxTuple: "[" TffArguments "]" .
+  195 TfxTuple: "[" TffArguments "]" •
 
     $default  reduce using rule 195 (TfxTuple)
 
 
 State 482
 
-   15 TffAnnotated: "tff" "(" Name "," FormulaRole "," TffFormula "," Annotations . ")" "."
+   15 TffAnnotated: "tff" "(" Name "," FormulaRole "," TffFormula "," Annotations • ")" "."
 
     ")"  shift, and go to state 570
 
 
 State 483
 
-   14 TffAnnotated: "tff" "(" Name "," FormulaRole "," TffFormula ")" "." .
+   14 TffAnnotated: "tff" "(" Name "," FormulaRole "," TffFormula ")" "." •
 
     $default  reduce using rule 14 (TffAnnotated)
 
 
 State 484
 
-  137 TffOrFormula: TffOrFormula "|" TffUnitFormula .
+  137 TffOrFormula: TffOrFormula "|" TffUnitFormula •
 
     $default  reduce using rule 137 (TffOrFormula)
 
 
 State 485
 
-  140 TffUnitFormula: TffUnitaryFormula .
+  140 TffUnitFormula: TffUnitaryFormula •
 
     $default  reduce using rule 140 (TffUnitFormula)
 
 
 State 486
 
-  141 TffUnitFormula: TffUnaryFormula .
+  141 TffUnitFormula: TffUnaryFormula •
 
     $default  reduce using rule 141 (TffUnitFormula)
 
 
 State 487
 
-  142 TffUnitFormula: TffDefinedInfix .
+  142 TffUnitFormula: TffDefinedInfix •
 
     $default  reduce using rule 142 (TffUnitFormula)
 
 
 State 488
 
-  139 TffAndFormula: TffAndFormula "&" TffUnitFormula .
+  139 TffAndFormula: TffAndFormula "&" TffUnitFormula •
 
     $default  reduce using rule 139 (TffAndFormula)
 
 
 State 489
 
-  138 TffAndFormula: TffUnitFormula "&" TffUnitFormula .
+  138 TffAndFormula: TffUnitFormula "&" TffUnitFormula •
 
     $default  reduce using rule 138 (TffAndFormula)
 
 
 State 490
 
-  136 TffOrFormula: TffUnitFormula "|" TffUnitFormula .
+  136 TffOrFormula: TffUnitFormula "|" TffUnitFormula •
 
     $default  reduce using rule 136 (TffOrFormula)
 
 
 State 491
 
-  133 TffBinaryNonassoc: TffUnitFormula NonassocConnective TffUnitFormula .
+  133 TffBinaryNonassoc: TffUnitFormula NonassocConnective TffUnitFormula •
 
     $default  reduce using rule 133 (TffBinaryNonassoc)
 
 
 State 492
 
-  193 TffUnitaryTerm: "(" . TffLogicFormula ")"
+  193 TffUnitaryTerm: "(" • TffLogicFormula ")"
 
     "$"              shift, and go to state 190
     "$$"             shift, and go to state 70
@@ -9599,43 +9599,43 @@ State 492
 
 State 493
 
-  189 TffUnitaryTerm: TffAtomicFormula .
+  189 TffUnitaryTerm: TffAtomicFormula •
 
     $default  reduce using rule 189 (TffUnitaryTerm)
 
 
 State 494
 
-  170 TffDefinedInfix: TffUnitaryTerm DefinedInfixPred TffUnitaryTerm .
+  170 TffDefinedInfix: TffUnitaryTerm DefinedInfixPred TffUnitaryTerm •
 
     $default  reduce using rule 170 (TffDefinedInfix)
 
 
 State 495
 
-  192 TffUnitaryTerm: Variable .
+  192 TffUnitaryTerm: Variable •
 
     $default  reduce using rule 192 (TffUnitaryTerm)
 
 
 State 496
 
-  159 TffInfixUnary: TffUnitaryTerm InfixInequality TffUnitaryTerm .
+  159 TffInfixUnary: TffUnitaryTerm InfixInequality TffUnitaryTerm •
 
     $default  reduce using rule 159 (TffInfixUnary)
 
 
 State 497
 
-  223 TfxSequent: TfxTuple "-->" TfxTuple .
+  223 TfxSequent: TfxTuple "-->" TfxTuple •
 
     $default  reduce using rule 223 (TfxSequent)
 
 
 State 498
 
-  150 TffQuantifiedFormula: FofQuantifier "[" TffVariableList . "]" ":" TffUnitFormula
-  152 TffVariableList: TffVariableList . "," TffVariable
+  150 TffQuantifiedFormula: FofQuantifier "[" TffVariableList • "]" ":" TffUnitFormula
+  152 TffVariableList: TffVariableList • "," TffVariable
 
     ","  shift, and go to state 572
     "]"  shift, and go to state 573
@@ -9643,22 +9643,22 @@ State 498
 
 State 499
 
-  151 TffVariableList: TffVariable .
+  151 TffVariableList: TffVariable •
 
     $default  reduce using rule 151 (TffVariableList)
 
 
 State 500
 
-  153 TffVariable: TffTypedVariable .
+  153 TffVariable: TffTypedVariable •
 
     $default  reduce using rule 153 (TffVariable)
 
 
 State 501
 
-  154 TffVariable: Variable .
-  155 TffTypedVariable: Variable . ":" TffAtomicType
+  154 TffVariable: Variable •
+  155 TffTypedVariable: Variable • ":" TffAtomicType
 
     ":"  shift, and go to state 574
 
@@ -9667,15 +9667,15 @@ State 501
 
 State 502
 
-  148 TffUnitaryFormula: "(" TffLogicFormula . ")"
+  148 TffUnitaryFormula: "(" TffLogicFormula • ")"
 
     ")"  shift, and go to state 575
 
 
 State 503
 
-  203 TffTopLevelType: "(" . TffTopLevelType ")"
-  208 TffUnitaryType: "(" . TffXprodType ")"
+  203 TffTopLevelType: "(" • TffTopLevelType ")"
+  208 TffUnitaryType: "(" • TffXprodType ")"
 
     "$"              shift, and go to state 69
     "("              shift, and go to state 503
@@ -9705,7 +9705,7 @@ State 503
 
 State 504
 
-  219 TfxTupleType: "[" . TffTypeList "]"
+  219 TfxTupleType: "[" • TffTypeList "]"
 
     "$"              shift, and go to state 69
     "("              shift, and go to state 503
@@ -9735,36 +9735,36 @@ State 504
 
 State 505
 
-  204 Tf1QuantifiedType: "!>" . "[" TffVariableList "]" ":" TffMonotype
+  204 Tf1QuantifiedType: "!>" • "[" TffVariableList "]" ":" TffMonotype
 
     "["  shift, and go to state 581
 
 
 State 506
 
-  198 TffAtomTyping: UntypedAtom ":" TffTopLevelType .
+  198 TffAtomTyping: UntypedAtom ":" TffTopLevelType •
 
     $default  reduce using rule 198 (TffAtomTyping)
 
 
 State 507
 
-  202 TffTopLevelType: Tf1QuantifiedType .
+  202 TffTopLevelType: Tf1QuantifiedType •
 
     $default  reduce using rule 202 (TffTopLevelType)
 
 
 State 508
 
-  216 TffMappingType: TffUnitaryType . ">" TffAtomicType
+  216 TffMappingType: TffUnitaryType • ">" TffAtomicType
 
     ">"  shift, and go to state 582
 
 
 State 509
 
-  200 TffTopLevelType: TffAtomicType .
-  207 TffUnitaryType: TffAtomicType .
+  200 TffTopLevelType: TffAtomicType •
+  207 TffUnitaryType: TffAtomicType •
 
     "*"       reduce using rule 207 (TffUnitaryType)
     ">"       reduce using rule 207 (TffUnitaryType)
@@ -9773,29 +9773,29 @@ State 509
 
 State 510
 
-  201 TffTopLevelType: TffMappingType .
+  201 TffTopLevelType: TffMappingType •
 
     $default  reduce using rule 201 (TffTopLevelType)
 
 
 State 511
 
-  213 TffAtomicType: TfxTupleType .
+  213 TffAtomicType: TfxTupleType •
 
     $default  reduce using rule 213 (TffAtomicType)
 
 
 State 512
 
-  209 TffAtomicType: TypeConstant .
+  209 TffAtomicType: TypeConstant •
 
     $default  reduce using rule 209 (TffAtomicType)
 
 
 State 513
 
-  211 TffAtomicType: TypeFunctor . "(" TffTypeArguments ")"
-  319 TypeConstant: TypeFunctor .
+  211 TffAtomicType: TypeFunctor • "(" TffTypeArguments ")"
+  319 TypeConstant: TypeFunctor •
 
     "("  shift, and go to state 583
 
@@ -9804,43 +9804,43 @@ State 513
 
 State 514
 
-  210 TffAtomicType: DefinedType .
+  210 TffAtomicType: DefinedType •
 
     $default  reduce using rule 210 (TffAtomicType)
 
 
 State 515
 
-  320 TypeFunctor: AtomicWord .
+  320 TypeFunctor: AtomicWord •
 
     $default  reduce using rule 320 (TypeFunctor)
 
 
 State 516
 
-  321 DefinedType: AtomicDefinedWord .
+  321 DefinedType: AtomicDefinedWord •
 
     $default  reduce using rule 321 (DefinedType)
 
 
 State 517
 
-  212 TffAtomicType: Variable .
+  212 TffAtomicType: Variable •
 
     $default  reduce using rule 212 (TffAtomicType)
 
 
 State 518
 
-  222 TffSubtype: UntypedAtom "<<" Atom .
+  222 TffSubtype: UntypedAtom "<<" Atom •
 
     $default  reduce using rule 222 (TffSubtype)
 
 
 State 519
 
-  164 TffPlainAtomic: Functor "(" TffArguments . ")"
-  197 TffArguments: TffArguments . "," TffTerm
+  164 TffPlainAtomic: Functor "(" TffArguments • ")"
+  197 TffArguments: TffArguments • "," TffTerm
 
     ","  shift, and go to state 480
     ")"  shift, and go to state 584
@@ -9848,8 +9848,8 @@ State 519
 
 State 520
 
-  172 TffSystemAtomic: SystemFunctor "(" TffArguments . ")"
-  197 TffArguments: TffArguments . "," TffTerm
+  172 TffSystemAtomic: SystemFunctor "(" TffArguments • ")"
+  197 TffArguments: TffArguments • "," TffTerm
 
     ","  shift, and go to state 480
     ")"  shift, and go to state 585
@@ -9857,8 +9857,8 @@ State 520
 
 State 521
 
-  167 TffDefinedPlain: DefinedFunctor "(" TffArguments . ")"
-  197 TffArguments: TffArguments . "," TffTerm
+  167 TffDefinedPlain: DefinedFunctor "(" TffArguments • ")"
+  197 TffArguments: TffArguments • "," TffTerm
 
     ","  shift, and go to state 480
     ")"  shift, and go to state 586
@@ -9866,15 +9866,15 @@ State 521
 
 State 522
 
-  287 CnfFormula: "(" Disjunction ")" .
+  287 CnfFormula: "(" Disjunction ")" •
 
     $default  reduce using rule 287 (CnfFormula)
 
 
 State 523
 
-  152 TffVariableList: TffVariableList . "," TffVariable
-  229 TcfQuantifiedFormula: "!" "[" TffVariableList . "]" ":" CnfFormula
+  152 TffVariableList: TffVariableList • "," TffVariable
+  229 TcfQuantifiedFormula: "!" "[" TffVariableList • "]" ":" CnfFormula
 
     ","  shift, and go to state 572
     "]"  shift, and go to state 587
@@ -9882,113 +9882,113 @@ State 523
 
 State 524
 
-   17 TcfAnnotated: "tcf" "(" Name "," FormulaRole "," TcfFormula "," Annotations . ")" "."
+   17 TcfAnnotated: "tcf" "(" Name "," FormulaRole "," TcfFormula "," Annotations • ")" "."
 
     ")"  shift, and go to state 588
 
 
 State 525
 
-   16 TcfAnnotated: "tcf" "(" Name "," FormulaRole "," TcfFormula ")" "." .
+   16 TcfAnnotated: "tcf" "(" Name "," FormulaRole "," TcfFormula ")" "." •
 
     $default  reduce using rule 16 (TcfAnnotated)
 
 
 State 526
 
-  289 Disjunction: Disjunction "|" Literal .
+  289 Disjunction: Disjunction "|" Literal •
 
     $default  reduce using rule 289 (Disjunction)
 
 
 State 527
 
-   19 FofAnnotated: "fof" "(" Name "," FormulaRole "," FofFormula "," Annotations . ")" "."
+   19 FofAnnotated: "fof" "(" Name "," FormulaRole "," FofFormula "," Annotations • ")" "."
 
     ")"  shift, and go to state 589
 
 
 State 528
 
-   18 FofAnnotated: "fof" "(" Name "," FormulaRole "," FofFormula ")" "." .
+   18 FofAnnotated: "fof" "(" Name "," FormulaRole "," FofFormula ")" "." •
 
     $default  reduce using rule 18 (FofAnnotated)
 
 
 State 529
 
-   21 CnfAnnotated: "cnf" "(" Name "," FormulaRole "," CnfFormula "," Annotations . ")" "."
+   21 CnfAnnotated: "cnf" "(" Name "," FormulaRole "," CnfFormula "," Annotations • ")" "."
 
     ")"  shift, and go to state 590
 
 
 State 530
 
-   20 CnfAnnotated: "cnf" "(" Name "," FormulaRole "," CnfFormula ")" "." .
+   20 CnfAnnotated: "cnf" "(" Name "," FormulaRole "," CnfFormula ")" "." •
 
     $default  reduce using rule 20 (CnfAnnotated)
 
 
 State 531
 
-  285 FofFormulaTupleList: FofFormulaTupleList "," FofLogicFormula .
+  285 FofFormulaTupleList: FofFormulaTupleList "," FofLogicFormula •
 
     $default  reduce using rule 285 (FofFormulaTupleList)
 
 
 State 532
 
-  354 FormulaData: "$" "thf" . "(" ThfFormula ")"
+  354 FormulaData: "$" "thf" • "(" ThfFormula ")"
 
     "("  shift, and go to state 591
 
 
 State 533
 
-  355 FormulaData: "$" "tff" . "(" TffFormula ")"
+  355 FormulaData: "$" "tff" • "(" TffFormula ")"
 
     "("  shift, and go to state 592
 
 
 State 534
 
-  356 FormulaData: "$" "fof" . "(" FofFormula ")"
+  356 FormulaData: "$" "fof" • "(" FofFormula ")"
 
     "("  shift, and go to state 593
 
 
 State 535
 
-  357 FormulaData: "$" "cnf" . "(" CnfFormula ")"
+  357 FormulaData: "$" "cnf" • "(" CnfFormula ")"
 
     "("  shift, and go to state 594
 
 
 State 536
 
-  358 FormulaData: "$" "fot" . "(" FofTerm ")"
+  358 FormulaData: "$" "fot" • "(" FofTerm ")"
 
     "("  shift, and go to state 595
 
 
 State 537
 
-  359 GeneralList: "[" "]" .
+  359 GeneralList: "[" "]" •
 
     $default  reduce using rule 359 (GeneralList)
 
 
 State 538
 
-  352 GeneralTerms: GeneralTerm .
+  352 GeneralTerms: GeneralTerm •
 
     $default  reduce using rule 352 (GeneralTerms)
 
 
 State 539
 
-  353 GeneralTerms: GeneralTerms . "," GeneralTerm
-  360 GeneralList: "[" GeneralTerms . "]"
+  353 GeneralTerms: GeneralTerms • "," GeneralTerm
+  360 GeneralList: "[" GeneralTerms • "]"
 
     ","  shift, and go to state 596
     "]"  shift, and go to state 597
@@ -9996,14 +9996,14 @@ State 539
 
 State 540
 
-   23 TpiAnnotated: "tpi" "(" Name "," FormulaRole "," TpiFormula "," Annotations ")" . "."
+   23 TpiAnnotated: "tpi" "(" Name "," FormulaRole "," TpiFormula "," Annotations ")" • "."
 
     "."  shift, and go to state 598
 
 
 State 541
 
-   25 Annotations: GeneralTerm "," . GeneralList
+   25 Annotations: GeneralTerm "," • GeneralList
 
     "["  shift, and go to state 389
 
@@ -10012,7 +10012,7 @@ State 541
 
 State 542
 
-  343 GeneralTerm: GeneralData ":" . GeneralTerm
+  343 GeneralTerm: GeneralData ":" • GeneralTerm
 
     "$"              shift, and go to state 388
     "["              shift, and go to state 389
@@ -10042,7 +10042,7 @@ State 542
 
 State 543
 
-  351 GeneralFunction: AtomicWord "(" . GeneralTerms ")"
+  351 GeneralFunction: AtomicWord "(" • GeneralTerms ")"
 
     "$"              shift, and go to state 388
     "["              shift, and go to state 389
@@ -10073,7 +10073,7 @@ State 543
 
 State 544
 
-  254 FofVariableList: FofVariableList "," . Variable
+  254 FofVariableList: FofVariableList "," • Variable
 
     "upper_word"  shift, and go to state 80
 
@@ -10082,14 +10082,14 @@ State 544
 
 State 545
 
-  252 FofQuantifiedFormula: FofQuantifier "[" FofVariableList "]" . ":" FofUnitFormula
+  252 FofQuantifiedFormula: FofQuantifier "[" FofVariableList "]" • ":" FofUnitFormula
 
     ":"  shift, and go to state 603
 
 
 State 546
 
-  274 FofArguments: FofArguments "," . FofTerm
+  274 FofArguments: FofArguments "," • FofTerm
 
     "$"              shift, and go to state 69
     "$$"             shift, and go to state 70
@@ -10132,35 +10132,35 @@ State 546
 
 State 547
 
-  265 FofPlainTerm: Functor "(" FofArguments ")" .
+  265 FofPlainTerm: Functor "(" FofArguments ")" •
 
     $default  reduce using rule 265 (FofPlainTerm)
 
 
 State 548
 
-  272 FofSystemTerm: SystemFunctor "(" FofArguments ")" .
+  272 FofSystemTerm: SystemFunctor "(" FofArguments ")" •
 
     $default  reduce using rule 272 (FofSystemTerm)
 
 
 State 549
 
-  270 FofDefinedPlainTerm: DefinedFunctor "(" FofArguments ")" .
+  270 FofDefinedPlainTerm: DefinedFunctor "(" FofArguments ")" •
 
     $default  reduce using rule 270 (FofDefinedPlainTerm)
 
 
 State 550
 
-   81 ThfConditional: "$" "ite" "(" ThfLogicFormula . "," ThfLogicFormula "," ThfLogicFormula ")"
+   81 ThfConditional: "$" "ite" "(" ThfLogicFormula • "," ThfLogicFormula "," ThfLogicFormula ")"
 
     ","  shift, and go to state 605
 
 
 State 551
 
-  105 ThfAtomTyping: "(" . ThfAtomTyping ")"
+  105 ThfAtomTyping: "(" • ThfAtomTyping ")"
 
     "$$"             shift, and go to state 70
     "("              shift, and go to state 551
@@ -10182,7 +10182,7 @@ State 551
 
 State 552
 
-   84 ThfLetTypes: "[" . ThfAtomTypingList "]"
+   84 ThfLetTypes: "[" • ThfAtomTypingList "]"
 
     "$$"             shift, and go to state 70
     "("              shift, and go to state 551
@@ -10205,42 +10205,42 @@ State 552
 
 State 553
 
-   82 ThfLet: "$" "let" "(" ThfLetTypes . "," ThfLetDefns "," ThfFormula ")"
+   82 ThfLet: "$" "let" "(" ThfLetTypes • "," ThfLetDefns "," ThfFormula ")"
 
     ","  shift, and go to state 608
 
 
 State 554
 
-   83 ThfLetTypes: ThfAtomTyping .
+   83 ThfLetTypes: ThfAtomTyping •
 
     $default  reduce using rule 83 (ThfLetTypes)
 
 
 State 555
 
-   98 ThfFormulaList: ThfFormulaList "," ThfLogicFormula .
+   98 ThfFormulaList: ThfFormulaList "," ThfLogicFormula •
 
     $default  reduce using rule 98 (ThfFormulaList)
 
 
 State 556
 
-   13 ThfAnnotated: "thf" "(" Name "," FormulaRole "," ThfFormula "," Annotations ")" . "."
+   13 ThfAnnotated: "thf" "(" Name "," FormulaRole "," ThfFormula "," Annotations ")" • "."
 
     "."  shift, and go to state 609
 
 
 State 557
 
-   94 ThfUnitaryTerm: "(" ThfLogicFormula . ")"
+   94 ThfUnitaryTerm: "(" ThfLogicFormula • ")"
 
     ")"  shift, and go to state 610
 
 
 State 558
 
-   59 ThfVariableList: ThfVariableList "," . ThfTypedVariable
+   59 ThfVariableList: ThfVariableList "," • ThfTypedVariable
 
     "upper_word"  shift, and go to state 80
 
@@ -10250,14 +10250,14 @@ State 558
 
 State 559
 
-   57 ThfQuantifiedFormula: ThfQuantifier "[" ThfVariableList "]" . ":" ThfUnitFormula
+   57 ThfQuantifiedFormula: ThfQuantifier "[" ThfVariableList "]" • ":" ThfUnitFormula
 
     ":"  shift, and go to state 612
 
 
 State 560
 
-   60 ThfTypedVariable: Variable ":" . ThfTopLevelType
+   60 ThfTypedVariable: Variable ":" • ThfTopLevelType
 
     "$"              shift, and go to state 129
     "$$"             shift, and go to state 70
@@ -10336,42 +10336,42 @@ State 560
 
 State 561
 
-   56 ThfUnitaryFormula: "(" ThfLogicFormula ")" .
+   56 ThfUnitaryFormula: "(" ThfLogicFormula ")" •
 
     $default  reduce using rule 56 (ThfUnitaryFormula)
 
 
 State 562
 
-   78 ThfFofFunction: Functor "(" ThfArguments ")" .
+   78 ThfFofFunction: Functor "(" ThfArguments ")" •
 
     $default  reduce using rule 78 (ThfFofFunction)
 
 
 State 563
 
-   80 ThfFofFunction: SystemFunctor "(" ThfArguments ")" .
+   80 ThfFofFunction: SystemFunctor "(" ThfArguments ")" •
 
     $default  reduce using rule 80 (ThfFofFunction)
 
 
 State 564
 
-   79 ThfFofFunction: DefinedFunctor "(" ThfArguments ")" .
+   79 ThfFofFunction: DefinedFunctor "(" ThfArguments ")" •
 
     $default  reduce using rule 79 (ThfFofFunction)
 
 
 State 565
 
-  173 TfxConditional: "$" "ite" "(" TffLogicFormula . "," TffTerm "," TffTerm ")"
+  173 TfxConditional: "$" "ite" "(" TffLogicFormula • "," TffTerm "," TffTerm ")"
 
     ","  shift, and go to state 614
 
 
 State 566
 
-  176 TfxLetTypes: "[" . TffAtomTypingList "]"
+  176 TfxLetTypes: "[" • TffAtomTypingList "]"
 
     "$$"             shift, and go to state 70
     "("              shift, and go to state 371
@@ -10394,42 +10394,42 @@ State 566
 
 State 567
 
-  174 TfxLet: "$" "let" "(" TfxLetTypes . "," TfxLetDefns "," TffTerm ")"
+  174 TfxLet: "$" "let" "(" TfxLetTypes • "," TfxLetDefns "," TffTerm ")"
 
     ","  shift, and go to state 617
 
 
 State 568
 
-  175 TfxLetTypes: TffAtomTyping .
+  175 TfxLetTypes: TffAtomTyping •
 
     $default  reduce using rule 175 (TfxLetTypes)
 
 
 State 569
 
-  197 TffArguments: TffArguments "," TffTerm .
+  197 TffArguments: TffArguments "," TffTerm •
 
     $default  reduce using rule 197 (TffArguments)
 
 
 State 570
 
-   15 TffAnnotated: "tff" "(" Name "," FormulaRole "," TffFormula "," Annotations ")" . "."
+   15 TffAnnotated: "tff" "(" Name "," FormulaRole "," TffFormula "," Annotations ")" • "."
 
     "."  shift, and go to state 618
 
 
 State 571
 
-  193 TffUnitaryTerm: "(" TffLogicFormula . ")"
+  193 TffUnitaryTerm: "(" TffLogicFormula • ")"
 
     ")"  shift, and go to state 619
 
 
 State 572
 
-  152 TffVariableList: TffVariableList "," . TffVariable
+  152 TffVariableList: TffVariableList "," • TffVariable
 
     "upper_word"  shift, and go to state 80
 
@@ -10440,14 +10440,14 @@ State 572
 
 State 573
 
-  150 TffQuantifiedFormula: FofQuantifier "[" TffVariableList "]" . ":" TffUnitFormula
+  150 TffQuantifiedFormula: FofQuantifier "[" TffVariableList "]" • ":" TffUnitFormula
 
     ":"  shift, and go to state 621
 
 
 State 574
 
-  155 TffTypedVariable: Variable ":" . TffAtomicType
+  155 TffTypedVariable: Variable ":" • TffAtomicType
 
     "$"              shift, and go to state 69
     "["              shift, and go to state 504
@@ -10470,22 +10470,22 @@ State 574
 
 State 575
 
-  148 TffUnitaryFormula: "(" TffLogicFormula ")" .
+  148 TffUnitaryFormula: "(" TffLogicFormula ")" •
 
     $default  reduce using rule 148 (TffUnitaryFormula)
 
 
 State 576
 
-  203 TffTopLevelType: "(" TffTopLevelType . ")"
+  203 TffTopLevelType: "(" TffTopLevelType • ")"
 
     ")"  shift, and go to state 623
 
 
 State 577
 
-  216 TffMappingType: TffUnitaryType . ">" TffAtomicType
-  217 TffXprodType: TffUnitaryType . "*" TffAtomicType
+  216 TffMappingType: TffUnitaryType • ">" TffAtomicType
+  217 TffXprodType: TffUnitaryType • "*" TffAtomicType
 
     "*"  shift, and go to state 624
     ">"  shift, and go to state 582
@@ -10493,8 +10493,8 @@ State 577
 
 State 578
 
-  208 TffUnitaryType: "(" TffXprodType . ")"
-  218 TffXprodType: TffXprodType . "*" TffAtomicType
+  208 TffUnitaryType: "(" TffXprodType • ")"
+  218 TffXprodType: TffXprodType • "*" TffAtomicType
 
     ")"  shift, and go to state 625
     "*"  shift, and go to state 626
@@ -10502,15 +10502,15 @@ State 578
 
 State 579
 
-  220 TffTypeList: TffTopLevelType .
+  220 TffTypeList: TffTopLevelType •
 
     $default  reduce using rule 220 (TffTypeList)
 
 
 State 580
 
-  219 TfxTupleType: "[" TffTypeList . "]"
-  221 TffTypeList: TffTypeList . "," TffTopLevelType
+  219 TfxTupleType: "[" TffTypeList • "]"
+  221 TffTypeList: TffTypeList • "," TffTopLevelType
 
     ","  shift, and go to state 627
     "]"  shift, and go to state 628
@@ -10518,7 +10518,7 @@ State 580
 
 State 581
 
-  204 Tf1QuantifiedType: "!>" "[" . TffVariableList "]" ":" TffMonotype
+  204 Tf1QuantifiedType: "!>" "[" • TffVariableList "]" ":" TffMonotype
 
     "upper_word"  shift, and go to state 80
 
@@ -10530,7 +10530,7 @@ State 581
 
 State 582
 
-  216 TffMappingType: TffUnitaryType ">" . TffAtomicType
+  216 TffMappingType: TffUnitaryType ">" • TffAtomicType
 
     "$"              shift, and go to state 69
     "["              shift, and go to state 504
@@ -10553,7 +10553,7 @@ State 582
 
 State 583
 
-  211 TffAtomicType: TypeFunctor "(" . TffTypeArguments ")"
+  211 TffAtomicType: TypeFunctor "(" • TffTypeArguments ")"
 
     "$"              shift, and go to state 69
     "["              shift, and go to state 504
@@ -10577,56 +10577,56 @@ State 583
 
 State 584
 
-  164 TffPlainAtomic: Functor "(" TffArguments ")" .
+  164 TffPlainAtomic: Functor "(" TffArguments ")" •
 
     $default  reduce using rule 164 (TffPlainAtomic)
 
 
 State 585
 
-  172 TffSystemAtomic: SystemFunctor "(" TffArguments ")" .
+  172 TffSystemAtomic: SystemFunctor "(" TffArguments ")" •
 
     $default  reduce using rule 172 (TffSystemAtomic)
 
 
 State 586
 
-  167 TffDefinedPlain: DefinedFunctor "(" TffArguments ")" .
+  167 TffDefinedPlain: DefinedFunctor "(" TffArguments ")" •
 
     $default  reduce using rule 167 (TffDefinedPlain)
 
 
 State 587
 
-  229 TcfQuantifiedFormula: "!" "[" TffVariableList "]" . ":" CnfFormula
+  229 TcfQuantifiedFormula: "!" "[" TffVariableList "]" • ":" CnfFormula
 
     ":"  shift, and go to state 633
 
 
 State 588
 
-   17 TcfAnnotated: "tcf" "(" Name "," FormulaRole "," TcfFormula "," Annotations ")" . "."
+   17 TcfAnnotated: "tcf" "(" Name "," FormulaRole "," TcfFormula "," Annotations ")" • "."
 
     "."  shift, and go to state 634
 
 
 State 589
 
-   19 FofAnnotated: "fof" "(" Name "," FormulaRole "," FofFormula "," Annotations ")" . "."
+   19 FofAnnotated: "fof" "(" Name "," FormulaRole "," FofFormula "," Annotations ")" • "."
 
     "."  shift, and go to state 635
 
 
 State 590
 
-   21 CnfAnnotated: "cnf" "(" Name "," FormulaRole "," CnfFormula "," Annotations ")" . "."
+   21 CnfAnnotated: "cnf" "(" Name "," FormulaRole "," CnfFormula "," Annotations ")" • "."
 
     "."  shift, and go to state 636
 
 
 State 591
 
-  354 FormulaData: "$" "thf" "(" . ThfFormula ")"
+  354 FormulaData: "$" "thf" "(" • ThfFormula ")"
 
     "$"              shift, and go to state 129
     "$$"             shift, and go to state 70
@@ -10717,7 +10717,7 @@ State 591
 
 State 592
 
-  355 FormulaData: "$" "tff" "(" . TffFormula ")"
+  355 FormulaData: "$" "tff" "(" • TffFormula ")"
 
     "$"              shift, and go to state 190
     "$$"             shift, and go to state 70
@@ -10788,7 +10788,7 @@ State 592
 
 State 593
 
-  356 FormulaData: "$" "fof" "(" . FofFormula ")"
+  356 FormulaData: "$" "fof" "(" • FofFormula ")"
 
     "$"              shift, and go to state 69
     "$$"             shift, and go to state 70
@@ -10858,7 +10858,7 @@ State 593
 
 State 594
 
-  357 FormulaData: "$" "cnf" "(" . CnfFormula ")"
+  357 FormulaData: "$" "cnf" "(" • CnfFormula ")"
 
     "$"              shift, and go to state 69
     "$$"             shift, and go to state 70
@@ -10913,7 +10913,7 @@ State 594
 
 State 595
 
-  358 FormulaData: "$" "fot" "(" . FofTerm ")"
+  358 FormulaData: "$" "fot" "(" • FofTerm ")"
 
     "$"              shift, and go to state 69
     "$$"             shift, and go to state 70
@@ -10956,7 +10956,7 @@ State 595
 
 State 596
 
-  353 GeneralTerms: GeneralTerms "," . GeneralTerm
+  353 GeneralTerms: GeneralTerms "," • GeneralTerm
 
     "$"              shift, and go to state 388
     "["              shift, and go to state 389
@@ -10986,36 +10986,36 @@ State 596
 
 State 597
 
-  360 GeneralList: "[" GeneralTerms "]" .
+  360 GeneralList: "[" GeneralTerms "]" •
 
     $default  reduce using rule 360 (GeneralList)
 
 
 State 598
 
-   23 TpiAnnotated: "tpi" "(" Name "," FormulaRole "," TpiFormula "," Annotations ")" "." .
+   23 TpiAnnotated: "tpi" "(" Name "," FormulaRole "," TpiFormula "," Annotations ")" "." •
 
     $default  reduce using rule 23 (TpiAnnotated)
 
 
 State 599
 
-   25 Annotations: GeneralTerm "," GeneralList .
+   25 Annotations: GeneralTerm "," GeneralList •
 
     $default  reduce using rule 25 (Annotations)
 
 
 State 600
 
-  343 GeneralTerm: GeneralData ":" GeneralTerm .
+  343 GeneralTerm: GeneralData ":" GeneralTerm •
 
     $default  reduce using rule 343 (GeneralTerm)
 
 
 State 601
 
-  351 GeneralFunction: AtomicWord "(" GeneralTerms . ")"
-  353 GeneralTerms: GeneralTerms . "," GeneralTerm
+  351 GeneralFunction: AtomicWord "(" GeneralTerms • ")"
+  353 GeneralTerms: GeneralTerms • "," GeneralTerm
 
     ","  shift, and go to state 596
     ")"  shift, and go to state 643
@@ -11023,14 +11023,14 @@ State 601
 
 State 602
 
-  254 FofVariableList: FofVariableList "," Variable .
+  254 FofVariableList: FofVariableList "," Variable •
 
     $default  reduce using rule 254 (FofVariableList)
 
 
 State 603
 
-  252 FofQuantifiedFormula: FofQuantifier "[" FofVariableList "]" ":" . FofUnitFormula
+  252 FofQuantifiedFormula: FofQuantifier "[" FofVariableList "]" ":" • FofUnitFormula
 
     "$"              shift, and go to state 69
     "$$"             shift, and go to state 70
@@ -11090,14 +11090,14 @@ State 603
 
 State 604
 
-  274 FofArguments: FofArguments "," FofTerm .
+  274 FofArguments: FofArguments "," FofTerm •
 
     $default  reduce using rule 274 (FofArguments)
 
 
 State 605
 
-   81 ThfConditional: "$" "ite" "(" ThfLogicFormula "," . ThfLogicFormula "," ThfLogicFormula ")"
+   81 ThfConditional: "$" "ite" "(" ThfLogicFormula "," • ThfLogicFormula "," ThfLogicFormula ")"
 
     "$"              shift, and go to state 129
     "$$"             shift, and go to state 70
@@ -11183,8 +11183,8 @@ State 605
 
 State 606
 
-   84 ThfLetTypes: "[" ThfAtomTypingList . "]"
-   86 ThfAtomTypingList: ThfAtomTypingList . "," ThfAtomTyping
+   84 ThfLetTypes: "[" ThfAtomTypingList • "]"
+   86 ThfAtomTypingList: ThfAtomTypingList • "," ThfAtomTyping
 
     ","  shift, and go to state 646
     "]"  shift, and go to state 647
@@ -11192,14 +11192,14 @@ State 606
 
 State 607
 
-   85 ThfAtomTypingList: ThfAtomTyping .
+   85 ThfAtomTypingList: ThfAtomTyping •
 
     $default  reduce using rule 85 (ThfAtomTypingList)
 
 
 State 608
 
-   82 ThfLet: "$" "let" "(" ThfLetTypes "," . ThfLetDefns "," ThfFormula ")"
+   82 ThfLet: "$" "let" "(" ThfLetTypes "," • ThfLetDefns "," ThfFormula ")"
 
     "$"              shift, and go to state 129
     "$$"             shift, and go to state 70
@@ -11287,28 +11287,28 @@ State 608
 
 State 609
 
-   13 ThfAnnotated: "thf" "(" Name "," FormulaRole "," ThfFormula "," Annotations ")" "." .
+   13 ThfAnnotated: "thf" "(" Name "," FormulaRole "," ThfFormula "," Annotations ")" "." •
 
     $default  reduce using rule 13 (ThfAnnotated)
 
 
 State 610
 
-   94 ThfUnitaryTerm: "(" ThfLogicFormula ")" .
+   94 ThfUnitaryTerm: "(" ThfLogicFormula ")" •
 
     $default  reduce using rule 94 (ThfUnitaryTerm)
 
 
 State 611
 
-   59 ThfVariableList: ThfVariableList "," ThfTypedVariable .
+   59 ThfVariableList: ThfVariableList "," ThfTypedVariable •
 
     $default  reduce using rule 59 (ThfVariableList)
 
 
 State 612
 
-   57 ThfQuantifiedFormula: ThfQuantifier "[" ThfVariableList "]" ":" . ThfUnitFormula
+   57 ThfQuantifiedFormula: ThfQuantifier "[" ThfVariableList "]" ":" • ThfUnitFormula
 
     "$"              shift, and go to state 129
     "$$"             shift, and go to state 70
@@ -11382,14 +11382,14 @@ State 612
 
 State 613
 
-   60 ThfTypedVariable: Variable ":" ThfTopLevelType .
+   60 ThfTypedVariable: Variable ":" ThfTopLevelType •
 
     $default  reduce using rule 60 (ThfTypedVariable)
 
 
 State 614
 
-  173 TfxConditional: "$" "ite" "(" TffLogicFormula "," . TffTerm "," TffTerm ")"
+  173 TfxConditional: "$" "ite" "(" TffLogicFormula "," • TffTerm "," TffTerm ")"
 
     "$"              shift, and go to state 190
     "$$"             shift, and go to state 70
@@ -11456,8 +11456,8 @@ State 614
 
 State 615
 
-  176 TfxLetTypes: "[" TffAtomTypingList . "]"
-  178 TffAtomTypingList: TffAtomTypingList . "," TffAtomTyping
+  176 TfxLetTypes: "[" TffAtomTypingList • "]"
+  178 TffAtomTypingList: TffAtomTypingList • "," TffAtomTyping
 
     ","  shift, and go to state 654
     "]"  shift, and go to state 655
@@ -11465,14 +11465,14 @@ State 615
 
 State 616
 
-  177 TffAtomTypingList: TffAtomTyping .
+  177 TffAtomTypingList: TffAtomTyping •
 
     $default  reduce using rule 177 (TffAtomTypingList)
 
 
 State 617
 
-  174 TfxLet: "$" "let" "(" TfxLetTypes "," . TfxLetDefns "," TffTerm ")"
+  174 TfxLet: "$" "let" "(" TfxLetTypes "," • TfxLetDefns "," TffTerm ")"
 
     "["              shift, and go to state 656
     "lower_word"     shift, and go to state 29
@@ -11492,28 +11492,28 @@ State 617
 
 State 618
 
-   15 TffAnnotated: "tff" "(" Name "," FormulaRole "," TffFormula "," Annotations ")" "." .
+   15 TffAnnotated: "tff" "(" Name "," FormulaRole "," TffFormula "," Annotations ")" "." •
 
     $default  reduce using rule 15 (TffAnnotated)
 
 
 State 619
 
-  193 TffUnitaryTerm: "(" TffLogicFormula ")" .
+  193 TffUnitaryTerm: "(" TffLogicFormula ")" •
 
     $default  reduce using rule 193 (TffUnitaryTerm)
 
 
 State 620
 
-  152 TffVariableList: TffVariableList "," TffVariable .
+  152 TffVariableList: TffVariableList "," TffVariable •
 
     $default  reduce using rule 152 (TffVariableList)
 
 
 State 621
 
-  150 TffQuantifiedFormula: FofQuantifier "[" TffVariableList "]" ":" . TffUnitFormula
+  150 TffQuantifiedFormula: FofQuantifier "[" TffVariableList "]" ":" • TffUnitFormula
 
     "$"              shift, and go to state 190
     "$$"             shift, and go to state 70
@@ -11573,21 +11573,21 @@ State 621
 
 State 622
 
-  155 TffTypedVariable: Variable ":" TffAtomicType .
+  155 TffTypedVariable: Variable ":" TffAtomicType •
 
     $default  reduce using rule 155 (TffTypedVariable)
 
 
 State 623
 
-  203 TffTopLevelType: "(" TffTopLevelType ")" .
+  203 TffTopLevelType: "(" TffTopLevelType ")" •
 
     $default  reduce using rule 203 (TffTopLevelType)
 
 
 State 624
 
-  217 TffXprodType: TffUnitaryType "*" . TffAtomicType
+  217 TffXprodType: TffUnitaryType "*" • TffAtomicType
 
     "$"              shift, and go to state 69
     "["              shift, and go to state 504
@@ -11610,14 +11610,14 @@ State 624
 
 State 625
 
-  208 TffUnitaryType: "(" TffXprodType ")" .
+  208 TffUnitaryType: "(" TffXprodType ")" •
 
     $default  reduce using rule 208 (TffUnitaryType)
 
 
 State 626
 
-  218 TffXprodType: TffXprodType "*" . TffAtomicType
+  218 TffXprodType: TffXprodType "*" • TffAtomicType
 
     "$"              shift, and go to state 69
     "["              shift, and go to state 504
@@ -11640,7 +11640,7 @@ State 626
 
 State 627
 
-  221 TffTypeList: TffTypeList "," . TffTopLevelType
+  221 TffTypeList: TffTypeList "," • TffTopLevelType
 
     "$"              shift, and go to state 69
     "("              shift, and go to state 503
@@ -11669,15 +11669,15 @@ State 627
 
 State 628
 
-  219 TfxTupleType: "[" TffTypeList "]" .
+  219 TfxTupleType: "[" TffTypeList "]" •
 
     $default  reduce using rule 219 (TfxTupleType)
 
 
 State 629
 
-  152 TffVariableList: TffVariableList . "," TffVariable
-  204 Tf1QuantifiedType: "!>" "[" TffVariableList . "]" ":" TffMonotype
+  152 TffVariableList: TffVariableList • "," TffVariable
+  204 Tf1QuantifiedType: "!>" "[" TffVariableList • "]" ":" TffMonotype
 
     ","  shift, and go to state 572
     "]"  shift, and go to state 666
@@ -11685,22 +11685,22 @@ State 629
 
 State 630
 
-  216 TffMappingType: TffUnitaryType ">" TffAtomicType .
+  216 TffMappingType: TffUnitaryType ">" TffAtomicType •
 
     $default  reduce using rule 216 (TffMappingType)
 
 
 State 631
 
-  214 TffTypeArguments: TffAtomicType .
+  214 TffTypeArguments: TffAtomicType •
 
     $default  reduce using rule 214 (TffTypeArguments)
 
 
 State 632
 
-  211 TffAtomicType: TypeFunctor "(" TffTypeArguments . ")"
-  215 TffTypeArguments: TffTypeArguments . "," TffAtomicType
+  211 TffAtomicType: TypeFunctor "(" TffTypeArguments • ")"
+  215 TffTypeArguments: TffTypeArguments • "," TffAtomicType
 
     ","  shift, and go to state 667
     ")"  shift, and go to state 668
@@ -11708,7 +11708,7 @@ State 632
 
 State 633
 
-  229 TcfQuantifiedFormula: "!" "[" TffVariableList "]" ":" . CnfFormula
+  229 TcfQuantifiedFormula: "!" "[" TffVariableList "]" ":" • CnfFormula
 
     "$"              shift, and go to state 69
     "$$"             shift, and go to state 70
@@ -11763,91 +11763,91 @@ State 633
 
 State 634
 
-   17 TcfAnnotated: "tcf" "(" Name "," FormulaRole "," TcfFormula "," Annotations ")" "." .
+   17 TcfAnnotated: "tcf" "(" Name "," FormulaRole "," TcfFormula "," Annotations ")" "." •
 
     $default  reduce using rule 17 (TcfAnnotated)
 
 
 State 635
 
-   19 FofAnnotated: "fof" "(" Name "," FormulaRole "," FofFormula "," Annotations ")" "." .
+   19 FofAnnotated: "fof" "(" Name "," FormulaRole "," FofFormula "," Annotations ")" "." •
 
     $default  reduce using rule 19 (FofAnnotated)
 
 
 State 636
 
-   21 CnfAnnotated: "cnf" "(" Name "," FormulaRole "," CnfFormula "," Annotations ")" "." .
+   21 CnfAnnotated: "cnf" "(" Name "," FormulaRole "," CnfFormula "," Annotations ")" "." •
 
     $default  reduce using rule 21 (CnfAnnotated)
 
 
 State 637
 
-  354 FormulaData: "$" "thf" "(" ThfFormula . ")"
+  354 FormulaData: "$" "thf" "(" ThfFormula • ")"
 
     ")"  shift, and go to state 670
 
 
 State 638
 
-  355 FormulaData: "$" "tff" "(" TffFormula . ")"
+  355 FormulaData: "$" "tff" "(" TffFormula • ")"
 
     ")"  shift, and go to state 671
 
 
 State 639
 
-  356 FormulaData: "$" "fof" "(" FofFormula . ")"
+  356 FormulaData: "$" "fof" "(" FofFormula • ")"
 
     ")"  shift, and go to state 672
 
 
 State 640
 
-  357 FormulaData: "$" "cnf" "(" CnfFormula . ")"
+  357 FormulaData: "$" "cnf" "(" CnfFormula • ")"
 
     ")"  shift, and go to state 673
 
 
 State 641
 
-  358 FormulaData: "$" "fot" "(" FofTerm . ")"
+  358 FormulaData: "$" "fot" "(" FofTerm • ")"
 
     ")"  shift, and go to state 674
 
 
 State 642
 
-  353 GeneralTerms: GeneralTerms "," GeneralTerm .
+  353 GeneralTerms: GeneralTerms "," GeneralTerm •
 
     $default  reduce using rule 353 (GeneralTerms)
 
 
 State 643
 
-  351 GeneralFunction: AtomicWord "(" GeneralTerms ")" .
+  351 GeneralFunction: AtomicWord "(" GeneralTerms ")" •
 
     $default  reduce using rule 351 (GeneralFunction)
 
 
 State 644
 
-  252 FofQuantifiedFormula: FofQuantifier "[" FofVariableList "]" ":" FofUnitFormula .
+  252 FofQuantifiedFormula: FofQuantifier "[" FofVariableList "]" ":" FofUnitFormula •
 
     $default  reduce using rule 252 (FofQuantifiedFormula)
 
 
 State 645
 
-   81 ThfConditional: "$" "ite" "(" ThfLogicFormula "," ThfLogicFormula . "," ThfLogicFormula ")"
+   81 ThfConditional: "$" "ite" "(" ThfLogicFormula "," ThfLogicFormula • "," ThfLogicFormula ")"
 
     ","  shift, and go to state 675
 
 
 State 646
 
-   86 ThfAtomTypingList: ThfAtomTypingList "," . ThfAtomTyping
+   86 ThfAtomTypingList: ThfAtomTypingList "," • ThfAtomTyping
 
     "$$"             shift, and go to state 70
     "("              shift, and go to state 551
@@ -11869,16 +11869,16 @@ State 646
 
 State 647
 
-   84 ThfLetTypes: "[" ThfAtomTypingList "]" .
+   84 ThfLetTypes: "[" ThfAtomTypingList "]" •
 
     $default  reduce using rule 84 (ThfLetTypes)
 
 
 State 648
 
-   88 ThfLetDefns: "[" . ThfLetDefnList "]"
-   95 ThfTuple: "[" . "]"
-   96         | "[" . ThfFormulaList "]"
+   88 ThfLetDefns: "[" • ThfLetDefnList "]"
+   95 ThfTuple: "[" • "]"
+   96         | "[" • ThfFormulaList "]"
 
     "$"              shift, and go to state 129
     "$$"             shift, and go to state 70
@@ -11968,42 +11968,42 @@ State 648
 
 State 649
 
-   89 ThfLetDefn: ThfLogicFormula . ":=" ThfLogicFormula
+   89 ThfLetDefn: ThfLogicFormula • ":=" ThfLogicFormula
 
     ":="  shift, and go to state 680
 
 
 State 650
 
-   82 ThfLet: "$" "let" "(" ThfLetTypes "," ThfLetDefns . "," ThfFormula ")"
+   82 ThfLet: "$" "let" "(" ThfLetTypes "," ThfLetDefns • "," ThfFormula ")"
 
     ","  shift, and go to state 681
 
 
 State 651
 
-   87 ThfLetDefns: ThfLetDefn .
+   87 ThfLetDefns: ThfLetDefn •
 
     $default  reduce using rule 87 (ThfLetDefns)
 
 
 State 652
 
-   57 ThfQuantifiedFormula: ThfQuantifier "[" ThfVariableList "]" ":" ThfUnitFormula .
+   57 ThfQuantifiedFormula: ThfQuantifier "[" ThfVariableList "]" ":" ThfUnitFormula •
 
     $default  reduce using rule 57 (ThfQuantifiedFormula)
 
 
 State 653
 
-  173 TfxConditional: "$" "ite" "(" TffLogicFormula "," TffTerm . "," TffTerm ")"
+  173 TfxConditional: "$" "ite" "(" TffLogicFormula "," TffTerm • "," TffTerm ")"
 
     ","  shift, and go to state 682
 
 
 State 654
 
-  178 TffAtomTypingList: TffAtomTypingList "," . TffAtomTyping
+  178 TffAtomTypingList: TffAtomTypingList "," • TffAtomTyping
 
     "$$"             shift, and go to state 70
     "("              shift, and go to state 371
@@ -12025,16 +12025,16 @@ State 654
 
 State 655
 
-  176 TfxLetTypes: "[" TffAtomTypingList "]" .
+  176 TfxLetTypes: "[" TffAtomTypingList "]" •
 
     $default  reduce using rule 176 (TfxLetTypes)
 
 
 State 656
 
-  180 TfxLetDefns: "[" . TfxLetDefnList "]"
-  194 TfxTuple: "[" . "]"
-  195         | "[" . TffArguments "]"
+  180 TfxLetDefns: "[" • TfxLetDefnList "]"
+  194 TfxTuple: "[" • "]"
+  195         | "[" • TffArguments "]"
 
     "$"              shift, and go to state 190
     "$$"             shift, and go to state 70
@@ -12106,77 +12106,77 @@ State 656
 
 State 657
 
-  182 TfxLetLhs: TffPlainAtomic .
+  182 TfxLetLhs: TffPlainAtomic •
 
     $default  reduce using rule 182 (TfxLetLhs)
 
 
 State 658
 
-  174 TfxLet: "$" "let" "(" TfxLetTypes "," TfxLetDefns . "," TffTerm ")"
+  174 TfxLet: "$" "let" "(" TfxLetTypes "," TfxLetDefns • "," TffTerm ")"
 
     ","  shift, and go to state 688
 
 
 State 659
 
-  179 TfxLetDefns: TfxLetDefn .
+  179 TfxLetDefns: TfxLetDefn •
 
     $default  reduce using rule 179 (TfxLetDefns)
 
 
 State 660
 
-  181 TfxLetDefn: TfxLetLhs . ":=" TffTerm
+  181 TfxLetDefn: TfxLetLhs • ":=" TffTerm
 
     ":="  shift, and go to state 689
 
 
 State 661
 
-  183 TfxLetLhs: TfxTuple .
+  183 TfxLetLhs: TfxTuple •
 
     $default  reduce using rule 183 (TfxLetLhs)
 
 
 State 662
 
-  150 TffQuantifiedFormula: FofQuantifier "[" TffVariableList "]" ":" TffUnitFormula .
+  150 TffQuantifiedFormula: FofQuantifier "[" TffVariableList "]" ":" TffUnitFormula •
 
     $default  reduce using rule 150 (TffQuantifiedFormula)
 
 
 State 663
 
-  217 TffXprodType: TffUnitaryType "*" TffAtomicType .
+  217 TffXprodType: TffUnitaryType "*" TffAtomicType •
 
     $default  reduce using rule 217 (TffXprodType)
 
 
 State 664
 
-  218 TffXprodType: TffXprodType "*" TffAtomicType .
+  218 TffXprodType: TffXprodType "*" TffAtomicType •
 
     $default  reduce using rule 218 (TffXprodType)
 
 
 State 665
 
-  221 TffTypeList: TffTypeList "," TffTopLevelType .
+  221 TffTypeList: TffTypeList "," TffTopLevelType •
 
     $default  reduce using rule 221 (TffTypeList)
 
 
 State 666
 
-  204 Tf1QuantifiedType: "!>" "[" TffVariableList "]" . ":" TffMonotype
+  204 Tf1QuantifiedType: "!>" "[" TffVariableList "]" • ":" TffMonotype
 
     ":"  shift, and go to state 690
 
 
 State 667
 
-  215 TffTypeArguments: TffTypeArguments "," . TffAtomicType
+  215 TffTypeArguments: TffTypeArguments "," • TffAtomicType
 
     "$"              shift, and go to state 69
     "["              shift, and go to state 504
@@ -12199,56 +12199,56 @@ State 667
 
 State 668
 
-  211 TffAtomicType: TypeFunctor "(" TffTypeArguments ")" .
+  211 TffAtomicType: TypeFunctor "(" TffTypeArguments ")" •
 
     $default  reduce using rule 211 (TffAtomicType)
 
 
 State 669
 
-  229 TcfQuantifiedFormula: "!" "[" TffVariableList "]" ":" CnfFormula .
+  229 TcfQuantifiedFormula: "!" "[" TffVariableList "]" ":" CnfFormula •
 
     $default  reduce using rule 229 (TcfQuantifiedFormula)
 
 
 State 670
 
-  354 FormulaData: "$" "thf" "(" ThfFormula ")" .
+  354 FormulaData: "$" "thf" "(" ThfFormula ")" •
 
     $default  reduce using rule 354 (FormulaData)
 
 
 State 671
 
-  355 FormulaData: "$" "tff" "(" TffFormula ")" .
+  355 FormulaData: "$" "tff" "(" TffFormula ")" •
 
     $default  reduce using rule 355 (FormulaData)
 
 
 State 672
 
-  356 FormulaData: "$" "fof" "(" FofFormula ")" .
+  356 FormulaData: "$" "fof" "(" FofFormula ")" •
 
     $default  reduce using rule 356 (FormulaData)
 
 
 State 673
 
-  357 FormulaData: "$" "cnf" "(" CnfFormula ")" .
+  357 FormulaData: "$" "cnf" "(" CnfFormula ")" •
 
     $default  reduce using rule 357 (FormulaData)
 
 
 State 674
 
-  358 FormulaData: "$" "fot" "(" FofTerm ")" .
+  358 FormulaData: "$" "fot" "(" FofTerm ")" •
 
     $default  reduce using rule 358 (FormulaData)
 
 
 State 675
 
-   81 ThfConditional: "$" "ite" "(" ThfLogicFormula "," ThfLogicFormula "," . ThfLogicFormula ")"
+   81 ThfConditional: "$" "ite" "(" ThfLogicFormula "," ThfLogicFormula "," • ThfLogicFormula ")"
 
     "$"              shift, and go to state 129
     "$$"             shift, and go to state 70
@@ -12334,15 +12334,15 @@ State 675
 
 State 676
 
-   86 ThfAtomTypingList: ThfAtomTypingList "," ThfAtomTyping .
+   86 ThfAtomTypingList: ThfAtomTypingList "," ThfAtomTyping •
 
     $default  reduce using rule 86 (ThfAtomTypingList)
 
 
 State 677
 
-   89 ThfLetDefn: ThfLogicFormula . ":=" ThfLogicFormula
-   97 ThfFormulaList: ThfLogicFormula .
+   89 ThfLetDefn: ThfLogicFormula • ":=" ThfLogicFormula
+   97 ThfFormulaList: ThfLogicFormula •
 
     ":="  shift, and go to state 680
 
@@ -12351,15 +12351,15 @@ State 677
 
 State 678
 
-   90 ThfLetDefnList: ThfLetDefn .
+   90 ThfLetDefnList: ThfLetDefn •
 
     $default  reduce using rule 90 (ThfLetDefnList)
 
 
 State 679
 
-   88 ThfLetDefns: "[" ThfLetDefnList . "]"
-   91 ThfLetDefnList: ThfLetDefnList . "," ThfLetDefn
+   88 ThfLetDefns: "[" ThfLetDefnList • "]"
+   91 ThfLetDefnList: ThfLetDefnList • "," ThfLetDefn
 
     ","  shift, and go to state 693
     "]"  shift, and go to state 694
@@ -12367,7 +12367,7 @@ State 679
 
 State 680
 
-   89 ThfLetDefn: ThfLogicFormula ":=" . ThfLogicFormula
+   89 ThfLetDefn: ThfLogicFormula ":=" • ThfLogicFormula
 
     "$"              shift, and go to state 129
     "$$"             shift, and go to state 70
@@ -12453,7 +12453,7 @@ State 680
 
 State 681
 
-   82 ThfLet: "$" "let" "(" ThfLetTypes "," ThfLetDefns "," . ThfFormula ")"
+   82 ThfLet: "$" "let" "(" ThfLetTypes "," ThfLetDefns "," • ThfFormula ")"
 
     "$"              shift, and go to state 129
     "$$"             shift, and go to state 70
@@ -12544,7 +12544,7 @@ State 681
 
 State 682
 
-  173 TfxConditional: "$" "ite" "(" TffLogicFormula "," TffTerm "," . TffTerm ")"
+  173 TfxConditional: "$" "ite" "(" TffLogicFormula "," TffTerm "," • TffTerm ")"
 
     "$"              shift, and go to state 190
     "$$"             shift, and go to state 70
@@ -12611,15 +12611,15 @@ State 682
 
 State 683
 
-  178 TffAtomTypingList: TffAtomTypingList "," TffAtomTyping .
+  178 TffAtomTypingList: TffAtomTypingList "," TffAtomTyping •
 
     $default  reduce using rule 178 (TffAtomTypingList)
 
 
 State 684
 
-  160 TffAtomicFormula: TffPlainAtomic .
-  182 TfxLetLhs: TffPlainAtomic .
+  160 TffAtomicFormula: TffPlainAtomic •
+  182 TfxLetLhs: TffPlainAtomic •
 
     ":="      reduce using rule 182 (TfxLetLhs)
     $default  reduce using rule 160 (TffAtomicFormula)
@@ -12627,15 +12627,15 @@ State 684
 
 State 685
 
-  184 TfxLetDefnList: TfxLetDefn .
+  184 TfxLetDefnList: TfxLetDefn •
 
     $default  reduce using rule 184 (TfxLetDefnList)
 
 
 State 686
 
-  180 TfxLetDefns: "[" TfxLetDefnList . "]"
-  185 TfxLetDefnList: TfxLetDefnList . "," TfxLetDefn
+  180 TfxLetDefns: "[" TfxLetDefnList • "]"
+  185 TfxLetDefnList: TfxLetDefnList • "," TfxLetDefn
 
     ","  shift, and go to state 698
     "]"  shift, and go to state 699
@@ -12643,9 +12643,9 @@ State 686
 
 State 687
 
-  183 TfxLetLhs: TfxTuple .
-  188 TffTerm: TfxTuple .
-  191 TffUnitaryTerm: TfxTuple .
+  183 TfxLetLhs: TfxTuple •
+  188 TffTerm: TfxTuple •
+  191 TffUnitaryTerm: TfxTuple •
 
     "="       reduce using rule 191 (TffUnitaryTerm)
     "!="      reduce using rule 191 (TffUnitaryTerm)
@@ -12655,7 +12655,7 @@ State 687
 
 State 688
 
-  174 TfxLet: "$" "let" "(" TfxLetTypes "," TfxLetDefns "," . TffTerm ")"
+  174 TfxLet: "$" "let" "(" TfxLetTypes "," TfxLetDefns "," • TffTerm ")"
 
     "$"              shift, and go to state 190
     "$$"             shift, and go to state 70
@@ -12722,7 +12722,7 @@ State 688
 
 State 689
 
-  181 TfxLetDefn: TfxLetLhs ":=" . TffTerm
+  181 TfxLetDefn: TfxLetLhs ":=" • TffTerm
 
     "$"              shift, and go to state 190
     "$$"             shift, and go to state 70
@@ -12789,7 +12789,7 @@ State 689
 
 State 690
 
-  204 Tf1QuantifiedType: "!>" "[" TffVariableList "]" ":" . TffMonotype
+  204 Tf1QuantifiedType: "!>" "[" TffVariableList "]" ":" • TffMonotype
 
     "$"              shift, and go to state 69
     "("              shift, and go to state 702
@@ -12814,21 +12814,21 @@ State 690
 
 State 691
 
-  215 TffTypeArguments: TffTypeArguments "," TffAtomicType .
+  215 TffTypeArguments: TffTypeArguments "," TffAtomicType •
 
     $default  reduce using rule 215 (TffTypeArguments)
 
 
 State 692
 
-   81 ThfConditional: "$" "ite" "(" ThfLogicFormula "," ThfLogicFormula "," ThfLogicFormula . ")"
+   81 ThfConditional: "$" "ite" "(" ThfLogicFormula "," ThfLogicFormula "," ThfLogicFormula • ")"
 
     ")"  shift, and go to state 705
 
 
 State 693
 
-   91 ThfLetDefnList: ThfLetDefnList "," . ThfLetDefn
+   91 ThfLetDefnList: ThfLetDefnList "," • ThfLetDefn
 
     "$"              shift, and go to state 129
     "$$"             shift, and go to state 70
@@ -12915,35 +12915,35 @@ State 693
 
 State 694
 
-   88 ThfLetDefns: "[" ThfLetDefnList "]" .
+   88 ThfLetDefns: "[" ThfLetDefnList "]" •
 
     $default  reduce using rule 88 (ThfLetDefns)
 
 
 State 695
 
-   89 ThfLetDefn: ThfLogicFormula ":=" ThfLogicFormula .
+   89 ThfLetDefn: ThfLogicFormula ":=" ThfLogicFormula •
 
     $default  reduce using rule 89 (ThfLetDefn)
 
 
 State 696
 
-   82 ThfLet: "$" "let" "(" ThfLetTypes "," ThfLetDefns "," ThfFormula . ")"
+   82 ThfLet: "$" "let" "(" ThfLetTypes "," ThfLetDefns "," ThfFormula • ")"
 
     ")"  shift, and go to state 707
 
 
 State 697
 
-  173 TfxConditional: "$" "ite" "(" TffLogicFormula "," TffTerm "," TffTerm . ")"
+  173 TfxConditional: "$" "ite" "(" TffLogicFormula "," TffTerm "," TffTerm • ")"
 
     ")"  shift, and go to state 708
 
 
 State 698
 
-  185 TfxLetDefnList: TfxLetDefnList "," . TfxLetDefn
+  185 TfxLetDefnList: TfxLetDefnList "," • TfxLetDefn
 
     "["              shift, and go to state 192
     "lower_word"     shift, and go to state 29
@@ -12962,28 +12962,28 @@ State 698
 
 State 699
 
-  180 TfxLetDefns: "[" TfxLetDefnList "]" .
+  180 TfxLetDefns: "[" TfxLetDefnList "]" •
 
     $default  reduce using rule 180 (TfxLetDefns)
 
 
 State 700
 
-  174 TfxLet: "$" "let" "(" TfxLetTypes "," TfxLetDefns "," TffTerm . ")"
+  174 TfxLet: "$" "let" "(" TfxLetTypes "," TfxLetDefns "," TffTerm • ")"
 
     ")"  shift, and go to state 710
 
 
 State 701
 
-  181 TfxLetDefn: TfxLetLhs ":=" TffTerm .
+  181 TfxLetDefn: TfxLetLhs ":=" TffTerm •
 
     $default  reduce using rule 181 (TfxLetDefn)
 
 
 State 702
 
-  206 TffMonotype: "(" . TffMappingType ")"
+  206 TffMonotype: "(" • TffMappingType ")"
 
     "$"              shift, and go to state 69
     "("              shift, and go to state 711
@@ -13009,63 +13009,63 @@ State 702
 
 State 703
 
-  204 Tf1QuantifiedType: "!>" "[" TffVariableList "]" ":" TffMonotype .
+  204 Tf1QuantifiedType: "!>" "[" TffVariableList "]" ":" TffMonotype •
 
     $default  reduce using rule 204 (Tf1QuantifiedType)
 
 
 State 704
 
-  205 TffMonotype: TffAtomicType .
+  205 TffMonotype: TffAtomicType •
 
     $default  reduce using rule 205 (TffMonotype)
 
 
 State 705
 
-   81 ThfConditional: "$" "ite" "(" ThfLogicFormula "," ThfLogicFormula "," ThfLogicFormula ")" .
+   81 ThfConditional: "$" "ite" "(" ThfLogicFormula "," ThfLogicFormula "," ThfLogicFormula ")" •
 
     $default  reduce using rule 81 (ThfConditional)
 
 
 State 706
 
-   91 ThfLetDefnList: ThfLetDefnList "," ThfLetDefn .
+   91 ThfLetDefnList: ThfLetDefnList "," ThfLetDefn •
 
     $default  reduce using rule 91 (ThfLetDefnList)
 
 
 State 707
 
-   82 ThfLet: "$" "let" "(" ThfLetTypes "," ThfLetDefns "," ThfFormula ")" .
+   82 ThfLet: "$" "let" "(" ThfLetTypes "," ThfLetDefns "," ThfFormula ")" •
 
     $default  reduce using rule 82 (ThfLet)
 
 
 State 708
 
-  173 TfxConditional: "$" "ite" "(" TffLogicFormula "," TffTerm "," TffTerm ")" .
+  173 TfxConditional: "$" "ite" "(" TffLogicFormula "," TffTerm "," TffTerm ")" •
 
     $default  reduce using rule 173 (TfxConditional)
 
 
 State 709
 
-  185 TfxLetDefnList: TfxLetDefnList "," TfxLetDefn .
+  185 TfxLetDefnList: TfxLetDefnList "," TfxLetDefn •
 
     $default  reduce using rule 185 (TfxLetDefnList)
 
 
 State 710
 
-  174 TfxLet: "$" "let" "(" TfxLetTypes "," TfxLetDefns "," TffTerm ")" .
+  174 TfxLet: "$" "let" "(" TfxLetTypes "," TfxLetDefns "," TffTerm ")" •
 
     $default  reduce using rule 174 (TfxLet)
 
 
 State 711
 
-  208 TffUnitaryType: "(" . TffXprodType ")"
+  208 TffUnitaryType: "(" • TffXprodType ")"
 
     "$"              shift, and go to state 69
     "("              shift, and go to state 711
@@ -13091,27 +13091,27 @@ State 711
 
 State 712
 
-  207 TffUnitaryType: TffAtomicType .
+  207 TffUnitaryType: TffAtomicType •
 
     $default  reduce using rule 207 (TffUnitaryType)
 
 
 State 713
 
-  206 TffMonotype: "(" TffMappingType . ")"
+  206 TffMonotype: "(" TffMappingType • ")"
 
     ")"  shift, and go to state 715
 
 
 State 714
 
-  217 TffXprodType: TffUnitaryType . "*" TffAtomicType
+  217 TffXprodType: TffUnitaryType • "*" TffAtomicType
 
     "*"  shift, and go to state 624
 
 
 State 715
 
-  206 TffMonotype: "(" TffMappingType ")" .
+  206 TffMonotype: "(" TffMappingType ")" •
 
     $default  reduce using rule 206 (TffMonotype)
