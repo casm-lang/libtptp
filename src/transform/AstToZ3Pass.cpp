@@ -1039,6 +1039,8 @@ void AstToZ3Visitor::visit( SequentLogic& node )
 
 void AstToZ3Visitor::visit( VariableTerm& node )
 {
+    // TODO: @moosbruggerj if quantifier over $tType, generate exhaustive formula with each type
+    // instantation
     z3::expr var( m_context );
     z3::sort sort( m_context );
     std::string name = node.name()->normalizedName();
@@ -1500,6 +1502,9 @@ void AstToZ3Visitor::visit( NamedType& node )
 
 void AstToZ3Visitor::visit( FunctorType& node )
 {
+    // TODO: @moosbruggerj: catch functor types with $tType as argument, semantically impossible, as
+    // a functor type can only defined with 'type($tType)', therefore $tType is not allowed in
+    // instantiation, however the BNF grammer would allow it
     std::string name = node.name()->normalizedName();
     z3::sort_vector args( m_context );
     for( auto arg : *node.arguments() )
