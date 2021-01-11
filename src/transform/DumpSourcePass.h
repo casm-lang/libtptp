@@ -48,6 +48,8 @@
 #include <libpass/PassUsage>
 
 #include <libtptp/transform/SourceToAstPass>
+#include <memory>
+#include <sstream>
 
 /**
    @brief  Dumps source from Ast pass
@@ -59,6 +61,25 @@ namespace libtptp
     {
       public:
         using Input = SourceToAstPass::Output;
+
+        class Output : public libpass::PassData
+        {
+            std::stringstream m_stream;
+
+          public:
+            using Ptr = std::shared_ptr< Output >;
+
+            Output( std::stringstream&& file )
+            : m_stream( std::move( file ) )
+            {
+            }
+
+            const std::stringstream& stream() const
+            {
+                return m_stream;
+            }
+        };
+
         static char id;
 
         void usage( libpass::PassUsage& pu ) override;

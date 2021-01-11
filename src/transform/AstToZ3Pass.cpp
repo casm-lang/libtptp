@@ -54,6 +54,7 @@
 #include <z3++.h>
 
 #include <map>
+#include <sstream>
 
 using namespace libtptp;
 
@@ -1930,31 +1931,37 @@ u1 AstToZ3Pass::run( libpass::PassResult& pr )
     auto& solver = visitor.solver();
     auto result = solver.check();
 
+    std::stringstream stream;
     switch( result )
     {
         case z3::check_result::sat:
+            stream << solver.get_model();
             if( visitor.hasConjecture() )
             {
-                std::cout << "unsat\n";
+                pr.setOutput< AstToZ3Pass >( Output::Result::UNSATISFIABLE, stream.str() );
+                // std::cout << "unsat\n";
             }
             else
             {
-                std::cout << "sat\n";
+                pr.setOutput< AstToZ3Pass >( Output::Result::SATISFIABLE, stream.str() );
+                // std::cout << "sat\n";
             }
-            std::cout << solver.get_model() << std::endl;
             break;
         case z3::check_result::unsat:
             if( visitor.hasConjecture() )
             {
-                std::cout << "sat\n";
+                pr.setOutput< AstToZ3Pass >( Output::Result::SATISFIABLE );
+                // std::cout << "sat\n";
             }
             else
             {
-                std::cout << "unsat\n";
+                pr.setOutput< AstToZ3Pass >( Output::Result::UNSATISFIABLE );
+                // std::cout << "unsat\n";
             }
             break;
         case z3::check_result::unknown:
-            std::cout << "unknown\n";
+            pr.setOutput< AstToZ3Pass >( Output::Result::UNKNOWN );
+            // std::cout << "unknown\n";
             break;
     }
 

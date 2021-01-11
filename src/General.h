@@ -167,6 +167,7 @@ namespace libtptp
         const GeneralTerm::Ptr& source( void ) const;
         const libstdhl::Optional< const GeneralList::Ptr >& usefulInfo( void ) const;
         const Token::Ptr& comma( void ) const;
+        const Token::Ptr& delimiter( void ) const;
         void setDelimiter( const Token::Ptr& delimiter );
 
         void accept( Visitor& visitor ) override final;

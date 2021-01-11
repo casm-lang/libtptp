@@ -56,6 +56,7 @@
 #include <libpass/PassRegistry>
 
 #include <iostream>
+#include <sstream>
 
 using namespace libtptp;
 
@@ -165,8 +166,12 @@ u1 DumpSourcePass::run( libpass::PassResult& pr )
 
     const auto data = pr.output< SourceToAstPass >();
 
-    DumpSourceVisitor visitor{ std::cout };
+    std::stringstream stream;
+
+    DumpSourceVisitor visitor{ stream };
     data->specification()->accept( visitor );
+
+    pr.setOutput< DumpSourcePass >( std::move(stream) );
 
     return true;
 }

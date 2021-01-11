@@ -47,6 +47,7 @@
 #include <libpass/PassResult>
 #include <libpass/PassUsage>
 #include <libtptp/transform/SourceToAstPass>
+#include <memory>
 
 namespace libtptp
 {
@@ -58,6 +59,42 @@ namespace libtptp
     {
       public:
         using Input = SourceToAstPass::Output;
+
+        class Output : public libpass::PassData
+        {
+          public:
+            using Ptr = std::shared_ptr< Output >;
+            enum class Result
+            {
+                UNKNOWN,
+                SATISFIABLE,
+                UNSATISFIABLE,
+            };
+
+            Output( Result result, const std::string& model )
+            : m_result( result )
+            , m_model( model )
+            {
+            }
+
+            Output( Result result )
+            : Output( result, "" )
+            {
+            }
+
+            Result result( void )
+            {
+                return m_result;
+            }
+            const std::string& model()
+            {
+                return m_model;
+            }
+
+          private:
+            Result m_result;
+            std::string m_model;
+        };
 
         static char id;
 

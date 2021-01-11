@@ -202,6 +202,11 @@ const Token::Ptr& Annotation::comma( void ) const
     return m_comma;
 }
 
+const Token::Ptr& Annotation::delimiter( void ) const
+{
+    return m_delimiter;
+}
+
 void Annotation::setDelimiter( const Token::Ptr& delimiter )
 {
     m_delimiter = delimiter;

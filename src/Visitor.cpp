@@ -159,7 +159,9 @@ void RecursiveVisitor::visit( QuantifiedLogic& node )
 {
     node.leftDelimiter()->accept( *this );
     node.quantifierToken()->accept( *this );
+    node.leftParen()->accept( *this );
     node.variables()->accept( *this );
+    node.rightParen()->accept( *this );
     node.colon()->accept( *this );
     node.logic()->accept( *this );
     node.rightDelimiter()->accept( *this );
@@ -455,6 +457,7 @@ void RecursiveVisitor::visit( GeneralFunction& node )
 
 void RecursiveVisitor::visit( Annotation& node )
 {
+    node.delimiter()->accept( *this );
     node.source()->accept( *this );
     node.comma()->accept( *this );
     if( node.usefulInfo() )
