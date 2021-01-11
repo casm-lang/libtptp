@@ -46,7 +46,7 @@
         libpass::PassManager pm;                                                                  \
         libstdhl::Logger log( pm.stream() );                                                      \
         log.setSource( libstdhl::Memory::make< libstdhl::Log::Source >( TEST_NAME, TEST_NAME ) ); \
-        auto flush = [&pm]() {                                                                    \
+        auto flush = [ &pm ]() {                                                                  \
             libstdhl::Log::ApplicationFormatter f( TEST_NAME );                                   \
             libstdhl::Log::OutputStreamSink c( std::cerr, f );                                    \
             pm.stream().flush( c );                                                               \
@@ -58,7 +58,7 @@
         EXPECT_EQ( libstdhl::File::exists( filename ), true );                                    \
                                                                                                   \
         pm.setDefaultPass< PASS >();                                                              \
-        pm.set< libtptp::PASS >( [&]( libtptp::PASS& pass ) { CONFIG } );                         \
+        pm.set< libtptp::PASS >( [ & ]( libtptp::PASS& pass ) { CONFIG } );                       \
                                                                                                   \
         libpass::PassResult pr;                                                                   \
         const auto input = libstdhl::Memory::make< libpass::LoadFilePass::Input >( filename );    \
@@ -66,6 +66,100 @@
         pm.setDefaultResult( pr );                                                                \
                                                                                                   \
         EXPECT_EQ( pm.run( flush ), STATUS );                                                     \
+                                                                                                  \
+        pm.result().output< libpass::LoadFilePass >()->close();                                   \
+        libstdhl::File::remove( filename );                                                       \
+        EXPECT_EQ( libstdhl::File::exists( filename ), false );                                   \
+    }
+
+#define SOURCE_TEST_Z3( SCOPE, PASS, CONTENT, STATUS, DESCRIPTION, CONFIG, RESULT )               \
+    TEST( libtptp, SCOPE##_##PASS##DESCRIPTION )                                                  \
+    {                                                                                             \
+        libpass::PassManager pm;                                                                  \
+        libstdhl::Logger log( pm.stream() );                                                      \
+        log.setSource( libstdhl::Memory::make< libstdhl::Log::Source >( TEST_NAME, TEST_NAME ) ); \
+        auto flush = [ &pm ]() {                                                                  \
+            libstdhl::Log::ApplicationFormatter f( TEST_NAME );                                   \
+            libstdhl::Log::OutputStreamSink c( std::cerr, f );                                    \
+            pm.stream().flush( c );                                                               \
+        };                                                                                        \
+        const std::string filename = TEST_NAME + ".tptp";                                         \
+        auto file = libstdhl::File::open( filename, std::fstream::out );                          \
+        file << CONTENT;                                                                          \
+        file.close();                                                                             \
+        EXPECT_EQ( libstdhl::File::exists( filename ), true );                                    \
+                                                                                                  \
+        pm.setDefaultPass< PASS >();                                                              \
+        pm.set< libtptp::PASS >( [ & ]( libtptp::PASS& pass ) { CONFIG } );                       \
+                                                                                                  \
+        libpass::PassResult pr;                                                                   \
+        const auto input = libstdhl::Memory::make< libpass::LoadFilePass::Input >( filename );    \
+        pr.setInputData< libpass::LoadFilePass >( input );                                        \
+        pm.setDefaultResult( pr );                                                                \
+                                                                                                  \
+        EXPECT_EQ( pm.run( flush ), STATUS );                                                     \
+        auto result = pm.result().output< libtptp::PASS >()->result();                            \
+        EXPECT_EQ( result, RESULT );                                                              \
+        switch( result )                                                                          \
+        {                                                                                         \
+            case libtptp::PASS::Output::Result::SATISFIABLE:                                      \
+            {                                                                                     \
+                log.info( "sat" );                                                                \
+                break;                                                                            \
+            }                                                                                     \
+            case libtptp::PASS::Output::Result::UNSATISFIABLE:                                    \
+            {                                                                                     \
+                log.info( "unsat" );                                                              \
+                break;                                                                            \
+            }                                                                                     \
+            case libtptp::PASS::Output::Result::UNKNOWN:                                          \
+            {                                                                                     \
+                log.info( "unknown" );                                                            \
+                break;                                                                            \
+            }                                                                                     \
+        }                                                                                         \
+        auto model = pm.result().output< libtptp::PASS >()->model();                              \
+        if( model != "" )                                                                         \
+        {                                                                                         \
+            log.info( model );                                                                    \
+        }                                                                                         \
+                                                                                                  \
+        pm.result().output< libpass::LoadFilePass >()->close();                                   \
+        libstdhl::File::remove( filename );                                                       \
+        EXPECT_EQ( libstdhl::File::exists( filename ), false );                                   \
+    }
+
+#define SOURCE_COMPARE_TEST( SCOPE, PASS, CONTENT, STATUS, DESCRIPTION, CONFIG )                  \
+    TEST( libtptp, SCOPE##_##CONTENT##DESCRIPTION )                                               \
+    {                                                                                             \
+        libpass::PassManager pm;                                                                  \
+        libstdhl::Logger log( pm.stream() );                                                      \
+        log.setSource( libstdhl::Memory::make< libstdhl::Log::Source >( TEST_NAME, TEST_NAME ) ); \
+        auto flush = [ &pm ]() {                                                                  \
+            libstdhl::Log::ApplicationFormatter f( TEST_NAME );                                   \
+            libstdhl::Log::OutputStreamSink c( std::cerr, f );                                    \
+            pm.stream().flush( c );                                                               \
+        };                                                                                        \
+        const std::string filename = TEST_NAME + ".tptp";                                         \
+        auto file = libstdhl::File::open( filename, std::fstream::out );                          \
+        file << CONTENT;                                                                          \
+        file.close();                                                                             \
+        EXPECT_EQ( libstdhl::File::exists( filename ), true );                                    \
+                                                                                                  \
+        pm.add< SourceToAstPass >();                                                              \
+        pm.setDefaultPass< libtptp::PASS >();                                                     \
+                                                                                                  \
+        const auto input = libstdhl::Memory::make< libpass::LoadFilePass::Input >( filename );    \
+                                                                                                  \
+        libpass::PassResult pr;                                                                   \
+        pr.setInputData< libpass::LoadFilePass >( input );                                        \
+        pm.setDefaultResult( pr );                                                                \
+                                                                                                  \
+        EXPECT_EQ( pm.run( flush ), STATUS );                                                     \
+        EXPECT_EQ(                                                                                \
+            TestHelper::compareTPTPFiles(                                                         \
+                CONTENT, pm.result().output< libtptp::PASS >()->stream().str() ),                 \
+            true );                                                                               \
                                                                                                   \
         pm.result().output< libpass::LoadFilePass >()->close();                                   \
         libstdhl::File::remove( filename );                                                       \

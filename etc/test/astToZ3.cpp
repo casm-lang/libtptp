@@ -85,22 +85,71 @@ tff(func_pol, type, fi: pol($int, $i, $o) > $o).
 tff(use, type, fi(ii)).
 )***";
 
-SOURCE_TEST( z3, AstToZ3Pass, source_fof_constant, true, _fof_constant, );
+SOURCE_TEST_Z3(
+    z3,
+    AstToZ3Pass,
+    source_fof_constant,
+    true,
+    _fof_constant,
+    ,
+    AstToZ3Pass::Output::Result::SATISFIABLE );
 
-SOURCE_TEST( z3, AstToZ3Pass, source_fof_de_morgan, true, _fof_de_morgan, );
+SOURCE_TEST_Z3(
+    z3,
+    AstToZ3Pass,
+    source_fof_de_morgan,
+    true,
+    _fof_de_morgan,
+    ,
+    AstToZ3Pass::Output::Result::SATISFIABLE );
 
-SOURCE_TEST( z3, AstToZ3Pass, source_tff_quantified, true, _tff_quantified, );
+SOURCE_TEST_Z3(
+    z3,
+    AstToZ3Pass,
+    source_tff_quantified,
+    true,
+    _tff_quantified,
+    ,
+    AstToZ3Pass::Output::Result::SATISFIABLE );
 
-SOURCE_TEST( z3, AstToZ3Pass, source_tff_basic_function, true, _tff_basic_function, );
+SOURCE_TEST_Z3(
+    z3,
+    AstToZ3Pass,
+    source_tff_basic_function,
+    true,
+    _tff_basic_function,
+    ,
+    AstToZ3Pass::Output::Result::SATISFIABLE );
 
-SOURCE_TEST( z3, AstToZ3Pass, tff_small_example, true, _tff_small, );
+SOURCE_TEST_Z3(
+    z3,
+    AstToZ3Pass,
+    tff_small_example,
+    true,
+    _tff_small,
+    ,
+    AstToZ3Pass::Output::Result::SATISFIABLE );
 
-SOURCE_TEST( z3, AstToZ3Pass, tff_test_basic, true, _tff_basic, );
+SOURCE_TEST_Z3(
+    z3, AstToZ3Pass, tff_test_basic, true, _tff_basic, , AstToZ3Pass::Output::Result::SATISFIABLE );
 
-SOURCE_TEST( z3, AstToZ3Pass, source_tff_polymorphic_types, true, _tff_polymorph, );
+SOURCE_TEST_Z3(
+    z3,
+    AstToZ3Pass,
+    source_tff_polymorphic_types,
+    true,
+    _tff_polymorph,
+    ,
+    AstToZ3Pass::Output::Result::SATISFIABLE );
 
-SOURCE_TEST(
-    z3, AstToZ3Pass, source_tff_multiple_polymorphic_types, true, _tff_multiple_polymorph, );
+SOURCE_TEST_Z3(
+    z3,
+    AstToZ3Pass,
+    source_tff_multiple_polymorphic_types,
+    true,
+    _tff_multiple_polymorph,
+    ,
+    AstToZ3Pass::Output::Result::SATISFIABLE );
 
 // SOURCE_TEST( z3, AstToZ3Pass, tff_test_tf1, true, _tff_tf1, );
 

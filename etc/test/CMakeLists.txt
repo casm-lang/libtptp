@@ -57,6 +57,7 @@ add_library( ${PROJECT}-test OBJECT
   example.cpp
   fof.cpp
   general.cpp
+  testhelper.cpp
   tff.cpp
   thf.cpp
   tpi.cpp

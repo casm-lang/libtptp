@@ -40,29 +40,58 @@
 //  statement from your version.
 //
 
-#include <libstdhl/Test>
-
-#include <libpass/libpass>
-
-#include "main.h"
-#include "resources/tff_formula.cpp"
 #include "testhelper.h"
-#include "macros.cpp"
+
+#include <cctype>
 
 using namespace libtptp;
-using namespace libpass;
 
-SOURCE_COMPARE_TEST(libtptp, DumpSourcePass, tff_test_basic, true, , )
+size_t nextChar( const std::string& str, size_t offset )
+{
+    bool inComment = false;
+    for( int i = offset; i < str.size(); ++i )
+    {
+        char c = str[ i ];
+        if( c == '%' )
+        {
+            inComment = true;
+        }
+        if( c == '\n' )
+        {
+            inComment = false;
+        }
+        if( inComment || std::isspace( c ) )
+        {
+            continue;
+        }
+        return i;
+    }
+    return str.size();
+}
 
+bool TestHelper::compareTPTPFiles( const std::string& expected, const std::string& actual )
+{
+    size_t expected_offset = nextChar( expected, 0 );
+    size_t actual_offset = nextChar( actual, 0 );
 
-SOURCE_COMPARE_TEST(libtptp, DumpSourcePass, tff_test_tf1, true, , )
-
-//
-//  Local variables:
-//  mode: c++
-//  indent-tabs-mode: nil
-//  c-basic-offset: 4
-//  tab-width: 4
-//  End:
-//  vim:noexpandtab:sw=4:ts=4:
-//
+    while( expected_offset < expected.size() && actual_offset < actual.size() )
+    {
+        expected_offset = nextChar( expected, expected_offset + 1);
+        actual_offset = nextChar( actual, actual_offset + 1);
+        if( expected_offset < expected.size() && actual_offset < actual.size() )
+        {
+            if( expected[ expected_offset ] != actual[ actual_offset ] )
+            {
+                return false;
+            }
+        }
+        else
+        {
+            if( expected_offset < expected.size() || actual_offset < actual.size() )
+            {
+                return false;
+            }
+        }
+    }
+    return true;
+}
