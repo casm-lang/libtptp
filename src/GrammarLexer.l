@@ -84,7 +84,7 @@ using namespace libtptp;
 	//real: make eiter the dot or the exponent mandatory, both are possible
 	//below shortened rule, which doesn't enforce eiter a dot or exponent to be present,
 	//therefore it collides with the integer rule
-	//[+-]?[0-9]*\.?[0-9]+([0-9][eE][-+]?[0-9]+)?
+	//[+-]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?
 	return Parser::make_REAL( yytext, m_loc );
 }
 
