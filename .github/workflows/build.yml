@@ -157,10 +157,10 @@ jobs:
         choco install ninja 
         make ci-tools
     - name: Install
-      uses: pavpanchekha/setup-z3@v1.2
+      uses: ppaulweber/github-action-setup-z3@bug/url_fix
       with:
-        version: 4.8.9
-        architecture: x64
+        version: 4.8.10
+        architecture: x64-win
     - name: Fetching
       env:
         ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
