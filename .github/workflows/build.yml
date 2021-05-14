@@ -157,7 +157,7 @@ jobs:
         choco install ninja 
         make ci-tools
     - name: Install
-      uses: pavpanchekha/setup-z3@1.2
+      uses: pavpanchekha/setup-z3@v1.2
       with:
         version: 4.8.10
         architecture: x64
