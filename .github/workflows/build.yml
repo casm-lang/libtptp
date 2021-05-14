@@ -154,12 +154,12 @@ jobs:
     - name: Setup
       run: |
         make info
-        choco install ninja
+        choco install ninja 
         make ci-tools
     - name: Install
       uses: pavpanchekha/setup-z3@1.2.2
       with:
-        version: 4.8.10
+        version: 4.8.9
         architecture: x64
     - name: Fetching
       env:
