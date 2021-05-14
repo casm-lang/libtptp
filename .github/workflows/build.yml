@@ -48,7 +48,7 @@ on: [push]
 
 jobs:
   linux-x86_64:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     strategy:
       matrix:
         tool:
@@ -97,7 +97,7 @@ jobs:
         ./bash
 
   darwin-x86_64:
-    runs-on: macos-latest
+    runs-on: macos-10.15
     strategy:
       matrix:
         tool:
