@@ -159,7 +159,9 @@ void RecursiveVisitor::visit( QuantifiedLogic& node )
 {
     node.leftDelimiter()->accept( *this );
     node.quantifierToken()->accept( *this );
+    node.leftParen()->accept( *this );
     node.variables()->accept( *this );
+    node.rightParen()->accept( *this );
     node.colon()->accept( *this );
     node.logic()->accept( *this );
     node.rightDelimiter()->accept( *this );
@@ -189,13 +191,6 @@ void RecursiveVisitor::visit( SequentLogic& node )
     node.left()->accept( *this );
     node.connectiveToken()->accept( *this );
     node.right()->accept( *this );
-    node.rightDelimiter()->accept( *this );
-}
-
-void RecursiveVisitor::visit( FunctionTerm& node )
-{
-    node.leftDelimiter()->accept( *this );
-    node.atom()->accept( *this );
     node.rightDelimiter()->accept( *this );
 }
 
@@ -284,10 +279,45 @@ void RecursiveVisitor::visit( ConnectiveAtom& node )
     node.rightDelimiter()->accept( *this );
 }
 
-void RecursiveVisitor::visit( AtomType& node )
+void RecursiveVisitor::visit( TypeAtom& node )
 {
     node.leftDelimiter()->accept( *this );
     node.atom()->accept( *this );
+    node.colon()->accept( *this );
+    node.type()->accept( *this );
+    node.rightDelimiter()->accept( *this );
+}
+
+void RecursiveVisitor::visit( TupleAtom& node )
+{
+    node.leftDelimiter()->accept( *this );
+    node.leftParen()->accept( *this );
+    node.atoms()->accept( *this );
+    node.rightParen()->accept( *this );
+    node.rightDelimiter()->accept( *this );
+}
+
+void RecursiveVisitor::visit( ApplyType& node )
+{
+    node.leftDelimiter()->accept( *this );
+    node.atom()->accept( *this );
+    node.rightDelimiter()->accept( *this );
+}
+
+void RecursiveVisitor::visit( NamedType& node )
+{
+    node.leftDelimiter()->accept( *this );
+    node.name()->accept( *this );
+    node.rightDelimiter()->accept( *this );
+}
+
+void RecursiveVisitor::visit( FunctorType& node )
+{
+    node.leftDelimiter()->accept( *this );
+    node.name()->accept( *this );
+    node.leftParen()->accept( *this );
+    node.arguments()->accept( *this );
+    node.rightParen()->accept( *this );
     node.rightDelimiter()->accept( *this );
 }
 
@@ -297,15 +327,6 @@ void RecursiveVisitor::visit( BinaryType& node )
     node.left()->accept( *this );
     node.connectiveToken()->accept( *this );
     node.right()->accept( *this );
-    node.rightDelimiter()->accept( *this );
-}
-
-void RecursiveVisitor::visit( TypedAtom& node )
-{
-    node.leftDelimiter()->accept( *this );
-    node.atom()->accept( *this );
-    node.colon()->accept( *this );
-    node.type()->accept( *this );
     node.rightDelimiter()->accept( *this );
 }
 
@@ -336,6 +357,20 @@ void RecursiveVisitor::visit( SubType& node )
     node.leftAtom()->accept( *this );
     node.subTypeSign()->accept( *this );
     node.rightAtom()->accept( *this );
+    node.rightDelimiter()->accept( *this );
+}
+
+void RecursiveVisitor::visit( RelationType& node )
+{
+    node.leftDelimiter()->accept( *this );
+    node.elements()->accept( *this );
+    node.rightDelimiter()->accept( *this );
+}
+
+void RecursiveVisitor::visit( VariableType& node )
+{
+    node.leftDelimiter()->accept( *this );
+    node.variable()->accept( *this );
     node.rightDelimiter()->accept( *this );
 }
 
@@ -422,6 +457,7 @@ void RecursiveVisitor::visit( GeneralFunction& node )
 
 void RecursiveVisitor::visit( Annotation& node )
 {
+    node.delimiter()->accept( *this );
     node.source()->accept( *this );
     node.comma()->accept( *this );
     if( node.usefulInfo() )
@@ -541,11 +577,6 @@ void TraversalVisitor::visit( SequentLogic& node )
     handle( node );
 }
 
-void TraversalVisitor::visit( FunctionTerm& node )
-{
-    handle( node );
-}
-
 void TraversalVisitor::visit( VariableTerm& node )
 {
     handle( node );
@@ -586,17 +617,32 @@ void TraversalVisitor::visit( ConnectiveAtom& node )
     handle( node );
 }
 
-void TraversalVisitor::visit( AtomType& node )
+void TraversalVisitor::visit( TypeAtom& node )
+{
+    handle( node );
+}
+
+void TraversalVisitor::visit( TupleAtom& node )
+{
+    handle( node );
+}
+
+void TraversalVisitor::visit( ApplyType& node )
+{
+    handle( node );
+}
+
+void TraversalVisitor::visit( NamedType& node )
+{
+    handle( node );
+}
+
+void TraversalVisitor::visit( FunctorType& node )
 {
     handle( node );
 }
 
 void TraversalVisitor::visit( BinaryType& node )
-{
-    handle( node );
-}
-
-void TraversalVisitor::visit( TypedAtom& node )
 {
     handle( node );
 }
@@ -612,6 +658,16 @@ void TraversalVisitor::visit( QuantifiedType& node )
 }
 
 void TraversalVisitor::visit( SubType& node )
+{
+    handle( node );
+}
+
+void TraversalVisitor::visit( RelationType& node )
+{
+    handle( node );
+}
+
+void TraversalVisitor::visit( VariableType& node )
 {
     handle( node );
 }

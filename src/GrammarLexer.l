@@ -80,7 +80,7 @@ using namespace libtptp;
     m_loc.step();
 %}
 
-[+-]?[0-9]*((\.[0-9]+([eE][-+]?[0-9]+)?)|([eE][-+]?[0-9]+)) {
+[+-]?[0-9]*((\.[0-9]+([eE][-+]?[0-9]+)?)|([0-9][eE][-+]?[0-9]+)) {
 	//real: make eiter the dot or the exponent mandatory, both are possible
 	//below shortened rule, which doesn't enforce eiter a dot or exponent to be present,
 	//therefore it collides with the integer rule
@@ -171,6 +171,7 @@ using namespace libtptp;
 
 \' { // Single quoted strings
     m_strbuf.clear();
+    m_strbuf.append( yytext );
     BEGIN( SQUOTED );
 }
 <SQUOTED>[^\\'\n]* { /* eat all tokens */
@@ -197,12 +198,14 @@ using namespace libtptp;
     yyterminate();
 }
 <SQUOTED>\' {
+    m_strbuf.append( yytext );
     BEGIN( INITIAL );
     return Parser::make_SINGLE_QUOTED( m_strbuf, m_loc );
 }
 
 \" { // strings
     m_strbuf.clear();
+    m_strbuf.append( yytext );
     BEGIN( DQUOTED );
 }
 <DQUOTED>[\40-\41\43-\133\135-\176]* { /* eat all tokens from space to ~, except " and \ */
@@ -227,6 +230,7 @@ using namespace libtptp;
     yyterminate();
 }
 <DQUOTED>\" {
+    m_strbuf.append( yytext );
     BEGIN( INITIAL );
     return Parser::make_DQUOTED( m_strbuf, m_loc );
 }

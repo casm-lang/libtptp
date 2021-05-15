@@ -2794,7 +2794,7 @@
       <nonterminal symbol-number="84" name="ThfPreunitFormula" type="Logic::Ptr" usefulness="useful"/>
       <nonterminal symbol-number="85" name="ThfUnitaryFormula" type="Logic::Ptr" usefulness="useful"/>
       <nonterminal symbol-number="86" name="ThfQuantifiedFormula" type="QuantifiedLogic::Ptr" usefulness="useful"/>
-      <nonterminal symbol-number="87" name="ThfVariableList" type="ListNodeElements::Ptr" usefulness="useful"/>
+      <nonterminal symbol-number="87" name="ThfVariableList" type="ListVariableElements::Ptr" usefulness="useful"/>
       <nonterminal symbol-number="88" name="ThfTypedVariable" type="VariableTerm::Ptr" usefulness="useful"/>
       <nonterminal symbol-number="89" name="ThfUnaryFormula" type="Logic::Ptr" usefulness="useful"/>
       <nonterminal symbol-number="90" name="ThfPrefixUnary" type="UnaryLogic::Ptr" usefulness="useful"/>
@@ -2807,23 +2807,23 @@
       <nonterminal symbol-number="97" name="ThfFofFunction" type="FunctorAtom::Ptr" usefulness="useful"/>
       <nonterminal symbol-number="98" name="ThfConditional" type="ConditionalTerm::Ptr" usefulness="useful"/>
       <nonterminal symbol-number="99" name="ThfLet" type="DefinitionTerm::Ptr" usefulness="useful"/>
-      <nonterminal symbol-number="100" name="ThfLetTypes" type="Type::Ptr" usefulness="useful"/>
-      <nonterminal symbol-number="101" name="ThfAtomTypingList" type="ListTypeElements::Ptr" usefulness="useful"/>
-      <nonterminal symbol-number="102" name="ThfLetDefns" type="Logic::Ptr" usefulness="useful"/>
+      <nonterminal symbol-number="100" name="ThfLetTypes" type="Atom::Ptr" usefulness="useful"/>
+      <nonterminal symbol-number="101" name="ThfAtomTypingList" type="ListAtomElements::Ptr" usefulness="useful"/>
+      <nonterminal symbol-number="102" name="ThfLetDefns" type="Atom::Ptr" usefulness="useful"/>
       <nonterminal symbol-number="103" name="ThfLetDefn" type="DefinitionAtom::Ptr" usefulness="useful"/>
-      <nonterminal symbol-number="104" name="ThfLetDefnList" type="ListLogicElements::Ptr" usefulness="useful"/>
+      <nonterminal symbol-number="104" name="ThfLetDefnList" type="ListAtomElements::Ptr" usefulness="useful"/>
       <nonterminal symbol-number="105" name="ThfUnitaryTerm" type="Logic::Ptr" usefulness="useful"/>
       <nonterminal symbol-number="106" name="ThfTuple" type="LogicTuple::Ptr" usefulness="useful"/>
       <nonterminal symbol-number="107" name="ThfFormulaList" type="ListLogicElements::Ptr" usefulness="useful"/>
       <nonterminal symbol-number="108" name="ThfConnTerm" type="ConnectiveAtom::Ptr" usefulness="useful"/>
       <nonterminal symbol-number="109" name="ThfArguments" type="ListLogicElements::Ptr" usefulness="useful"/>
-      <nonterminal symbol-number="110" name="ThfAtomTyping" type="TypedAtom::Ptr" usefulness="useful"/>
+      <nonterminal symbol-number="110" name="ThfAtomTyping" type="TypeAtom::Ptr" usefulness="useful"/>
       <nonterminal symbol-number="111" name="ThfTopLevelType" type="Type::Ptr" usefulness="useful"/>
-      <nonterminal symbol-number="112" name="ThfUnitaryType" type="AtomType::Ptr" usefulness="useful"/>
-      <nonterminal symbol-number="113" name="ThfApplyType" type="AtomType::Ptr" usefulness="useful"/>
-      <nonterminal symbol-number="114" name="ThfBinaryType" type="BinaryType::Ptr" usefulness="useful"/>
+      <nonterminal symbol-number="112" name="ThfUnitaryType" type="ApplyType::Ptr" usefulness="useful"/>
+      <nonterminal symbol-number="113" name="ThfApplyType" type="ApplyType::Ptr" usefulness="useful"/>
+      <nonterminal symbol-number="114" name="ThfBinaryType" type="Type::Ptr" usefulness="useful"/>
       <nonterminal symbol-number="115" name="ThfMappingType" type="BinaryType::Ptr" usefulness="useful"/>
-      <nonterminal symbol-number="116" name="ThfXprodType" type="BinaryType::Ptr" usefulness="useful"/>
+      <nonterminal symbol-number="116" name="ThfXprodType" type="RelationType::Ptr" usefulness="useful"/>
       <nonterminal symbol-number="117" name="ThfUnionType" type="BinaryType::Ptr" usefulness="useful"/>
       <nonterminal symbol-number="118" name="ThfSubtype" type="SubType::Ptr" usefulness="useful"/>
       <nonterminal symbol-number="119" name="ThfSequent" type="SequentLogic::Ptr" usefulness="useful"/>
@@ -2839,7 +2839,7 @@
       <nonterminal symbol-number="129" name="TffUnitaryFormula" type="Logic::Ptr" usefulness="useful"/>
       <nonterminal symbol-number="130" name="TfxUnitaryFormula" type="VariableTerm::Ptr" usefulness="useful"/>
       <nonterminal symbol-number="131" name="TffQuantifiedFormula" type="QuantifiedLogic::Ptr" usefulness="useful"/>
-      <nonterminal symbol-number="132" name="TffVariableList" type="ListNodeElements::Ptr" usefulness="useful"/>
+      <nonterminal symbol-number="132" name="TffVariableList" type="ListVariableElements::Ptr" usefulness="useful"/>
       <nonterminal symbol-number="133" name="TffVariable" type="VariableTerm::Ptr" usefulness="useful"/>
       <nonterminal symbol-number="134" name="TffTypedVariable" type="VariableTerm::Ptr" usefulness="useful"/>
       <nonterminal symbol-number="135" name="TffUnaryFormula" type="Logic::Ptr" usefulness="useful"/>
@@ -2853,27 +2853,27 @@
       <nonterminal symbol-number="143" name="TffSystemAtomic" type="Atom::Ptr" usefulness="useful"/>
       <nonterminal symbol-number="144" name="TfxConditional" type="ConditionalTerm::Ptr" usefulness="useful"/>
       <nonterminal symbol-number="145" name="TfxLet" type="DefinitionTerm::Ptr" usefulness="useful"/>
-      <nonterminal symbol-number="146" name="TfxLetTypes" type="Type::Ptr" usefulness="useful"/>
-      <nonterminal symbol-number="147" name="TffAtomTypingList" type="ListTypeElements::Ptr" usefulness="useful"/>
-      <nonterminal symbol-number="148" name="TfxLetDefns" type="Logic::Ptr" usefulness="useful"/>
+      <nonterminal symbol-number="146" name="TfxLetTypes" type="Atom::Ptr" usefulness="useful"/>
+      <nonterminal symbol-number="147" name="TffAtomTypingList" type="ListAtomElements::Ptr" usefulness="useful"/>
+      <nonterminal symbol-number="148" name="TfxLetDefns" type="Atom::Ptr" usefulness="useful"/>
       <nonterminal symbol-number="149" name="TfxLetDefn" type="DefinitionAtom::Ptr" usefulness="useful"/>
       <nonterminal symbol-number="150" name="TfxLetLhs" type="Logic::Ptr" usefulness="useful"/>
-      <nonterminal symbol-number="151" name="TfxLetDefnList" type="ListLogicElements::Ptr" usefulness="useful"/>
+      <nonterminal symbol-number="151" name="TfxLetDefnList" type="ListAtomElements::Ptr" usefulness="useful"/>
       <nonterminal symbol-number="152" name="TffTerm" type="Logic::Ptr" usefulness="useful"/>
       <nonterminal symbol-number="153" name="TffUnitaryTerm" type="Logic::Ptr" usefulness="useful"/>
       <nonterminal symbol-number="154" name="TfxTuple" type="LogicTuple::Ptr" usefulness="useful"/>
       <nonterminal symbol-number="155" name="TffArguments" type="ListLogicElements::Ptr" usefulness="useful"/>
-      <nonterminal symbol-number="156" name="TffAtomTyping" type="TypedAtom::Ptr" usefulness="useful"/>
+      <nonterminal symbol-number="156" name="TffAtomTyping" type="TypeAtom::Ptr" usefulness="useful"/>
       <nonterminal symbol-number="157" name="TffTopLevelType" type="Type::Ptr" usefulness="useful"/>
       <nonterminal symbol-number="158" name="Tf1QuantifiedType" type="QuantifiedType::Ptr" usefulness="useful"/>
       <nonterminal symbol-number="159" name="TffMonotype" type="Type::Ptr" usefulness="useful"/>
       <nonterminal symbol-number="160" name="TffUnitaryType" type="Type::Ptr" usefulness="useful"/>
-      <nonterminal symbol-number="161" name="TffAtomicType" type="AtomType::Ptr" usefulness="useful"/>
-      <nonterminal symbol-number="162" name="TffTypeArguments" type="ListLogicElements::Ptr" usefulness="useful"/>
+      <nonterminal symbol-number="161" name="TffAtomicType" type="Type::Ptr" usefulness="useful"/>
+      <nonterminal symbol-number="162" name="TffTypeArguments" type="ListTypeElements&lt;&gt;::Ptr" usefulness="useful"/>
       <nonterminal symbol-number="163" name="TffMappingType" type="BinaryType::Ptr" usefulness="useful"/>
-      <nonterminal symbol-number="164" name="TffXprodType" type="BinaryType::Ptr" usefulness="useful"/>
+      <nonterminal symbol-number="164" name="TffXprodType" type="RelationType::Ptr" usefulness="useful"/>
       <nonterminal symbol-number="165" name="TfxTupleType" type="TupleType::Ptr" usefulness="useful"/>
-      <nonterminal symbol-number="166" name="TffTypeList" type="ListTypeElements::Ptr" usefulness="useful"/>
+      <nonterminal symbol-number="166" name="TffTypeList" type="ListTypeElements&lt;&gt;::Ptr" usefulness="useful"/>
       <nonterminal symbol-number="167" name="TffSubtype" type="SubType::Ptr" usefulness="useful"/>
       <nonterminal symbol-number="168" name="TfxSequent" type="SequentLogic::Ptr" usefulness="useful"/>
       <nonterminal symbol-number="169" name="TcfFormula" type="Logic::Ptr" usefulness="useful"/>
@@ -2891,7 +2891,7 @@
       <nonterminal symbol-number="181" name="FofUnitFormula" type="Logic::Ptr" usefulness="useful"/>
       <nonterminal symbol-number="182" name="FofUnitaryFormula" type="Logic::Ptr" usefulness="useful"/>
       <nonterminal symbol-number="183" name="FofQuantifiedFormula" type="QuantifiedLogic::Ptr" usefulness="useful"/>
-      <nonterminal symbol-number="184" name="FofVariableList" type="ListNodeElements::Ptr" usefulness="useful"/>
+      <nonterminal symbol-number="184" name="FofVariableList" type="ListVariableElements::Ptr" usefulness="useful"/>
       <nonterminal symbol-number="185" name="FofAtomicFormula" type="Logic::Ptr" usefulness="useful"/>
       <nonterminal symbol-number="186" name="FofPlainAtomicFormula" type="Term::Ptr" usefulness="useful"/>
       <nonterminal symbol-number="187" name="FofDefinedAtomicFormula" type="Logic::Ptr" usefulness="useful"/>

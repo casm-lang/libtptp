@@ -50,11 +50,13 @@
 #include <libtptp/Node>
 #include <libtptp/Specification>
 #include <libtptp/Term>
+#include <libtptp/Visitor>
 
 #include <libpass/PassLogger>
 #include <libpass/PassRegistry>
 
 #include <iostream>
+#include <sstream>
 
 using namespace libtptp;
 
@@ -66,21 +68,28 @@ static libpass::PassRegistration< DumpSourcePass > PASS(
     "tptp-dump",
     0 );
 
-void DumpSourcePass::usage( libpass::PassUsage& pu )
+namespace libtptp
 {
-}
+    class DumpSourceVisitor final : public RecursiveVisitor
+    {
+      public:
+        DumpSourceVisitor( std::ostream& stream );
 
-u1 DumpSourcePass::run( libpass::PassResult& pr )
-{
-    libpass::PassLogger log( &id, stream() );
+        void visit( Specification& node ) override;
+        void visit( FormulaDefinition& node ) override;  // TODO: @moosbruggerj remove me
 
-    // const auto data = pr.result< X >();
-    // const auto tptp = data->tptp();
+        void visit( Identifier& node ) override;
 
-    DumpSourceVisitor visitor{ std::cout };
-    // data->specification()->accept( visitor );
+        void visit( IntegerLiteral& node ) override;
+        void visit( RationalLiteral& node ) override;
+        void visit( RealLiteral& node ) override;
+        void visit( DistinctObjectLiteral& node ) override;
 
-    return true;
+        void visit( Token& node ) override;
+
+      private:
+        std::ostream& m_stream;
+    };
 }
 
 //
@@ -97,6 +106,12 @@ void DumpSourceVisitor::visit( Specification& node )
     m_stream << "% " << node.description() << ": " << node.name() << "\n";
 
     node.definitions()->accept( *this );
+}
+
+void DumpSourceVisitor::visit( FormulaDefinition& node )
+{
+    RecursiveVisitor::visit( node );
+    m_stream << '\n';
 }
 
 void DumpSourceVisitor::visit( Identifier& node )
@@ -138,6 +153,27 @@ void DumpSourceVisitor::visit( Token& node )
     {
         m_stream << node.tokenString();
     }
+}
+
+void DumpSourcePass::usage( libpass::PassUsage& pu )
+{
+    pu.require< SourceToAstPass >();
+}
+
+u1 DumpSourcePass::run( libpass::PassResult& pr )
+{
+    libpass::PassLogger log( &id, stream() );
+
+    const auto data = pr.output< SourceToAstPass >();
+
+    std::stringstream stream;
+
+    DumpSourceVisitor visitor{ stream };
+    data->specification()->accept( visitor );
+
+    pr.setOutput< DumpSourcePass >( std::move(stream) );
+
+    return true;
 }
 //
 //  Local variables:

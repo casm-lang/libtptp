@@ -133,6 +133,11 @@ GeneralFunction::GeneralFunction(
 {
 }
 
+GeneralFunction::GeneralFunction( const std::string& name, const ListNodeElements::Ptr& arguments )
+: GeneralFunction( std::make_shared< Identifier >( name ), arguments )
+{
+}
+
 const Identifier::Ptr& GeneralFunction::name( void ) const
 {
     return m_name;
@@ -195,6 +200,11 @@ const libstdhl::Optional< const GeneralList::Ptr >& Annotation::usefulInfo( void
 const Token::Ptr& Annotation::comma( void ) const
 {
     return m_comma;
+}
+
+const Token::Ptr& Annotation::delimiter( void ) const
+{
+    return m_delimiter;
 }
 
 void Annotation::setDelimiter( const Token::Ptr& delimiter )

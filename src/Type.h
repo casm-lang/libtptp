@@ -55,14 +55,16 @@ namespace libtptp
     };
 
     using Types = NodeList< Type >;
-    using ListTypeElements = ListElements< Type >;
 
-    class AtomType final : public Type
+	template <builderFunction func = TokenBuilder::COMMA>
+    using ListTypeElements = ListElements< Type, func >;
+
+    class ApplyType final : public Type
     {
       public:
-        using Ptr = std::shared_ptr< AtomType >;
+        using Ptr = std::shared_ptr< ApplyType >;
 
-        explicit AtomType( const Node::Ptr& atom );
+        explicit ApplyType( const Node::Ptr& atom );
 
         const Node::Ptr& atom( void ) const;
 
@@ -72,7 +74,56 @@ namespace libtptp
         const Node::Ptr m_atom;
     };
 
-    using AtomTypes = NodeList< AtomType >;
+    using ApplyTypes = NodeList< ApplyType >;
+
+    class NamedType final : public Type
+    {
+      public:
+        using Ptr = std::shared_ptr< NamedType >;
+
+        explicit NamedType( const Identifier::Ptr& name );
+        explicit NamedType( const std::string& name );
+
+        const Identifier::Ptr& name( void ) const;
+
+        void accept( Visitor& visitor ) override final;
+
+      private:
+        const Identifier::Ptr m_name;
+    };
+
+    using NamedTypes = NodeList< NamedType >;
+
+    class FunctorType final : public Type
+    {
+      public:
+        using Ptr = std::shared_ptr< FunctorType >;
+
+        explicit FunctorType(
+            const Identifier::Ptr& name,
+            const Token::Ptr& leftParen,
+            const ListTypeElements<>::Ptr& arguments,
+            const Token::Ptr& rightParen );
+        explicit FunctorType( const Identifier::Ptr& name, const ListTypeElements<>::Ptr& arguments );
+        explicit FunctorType( const std::string& name, const ListTypeElements<>::Ptr& arguments );
+        explicit FunctorType(
+            const std::string& name, const std::initializer_list< Type::Ptr >& arguments );
+
+        const Identifier::Ptr& name( void ) const;
+        const Token::Ptr& leftParen( void ) const;
+        const ListTypeElements<>::Ptr& arguments( void ) const;
+        const Token::Ptr& rightParen( void ) const;
+
+        void accept( Visitor& visitor ) override final;
+
+      private:
+        const Identifier::Ptr m_name;
+        const Token::Ptr m_leftParen;
+        const ListTypeElements<>::Ptr m_arguments;
+        const Token::Ptr m_rightParen;
+    };
+
+    using FunctorTypes = NodeList< FunctorType >;
 
     class BinaryType final : public Type
     {
@@ -80,7 +131,6 @@ namespace libtptp
         enum class Kind
         {
             MAPPING,
-            XPROD,
             UNION,
         };
 
@@ -110,28 +160,23 @@ namespace libtptp
 
     using BinaryTypes = NodeList< BinaryType >;
 
-    class TypedAtom final : public Type
+    class RelationType final : public Type
     {
       public:
-        using Ptr = std::shared_ptr< TypedAtom >;
+        using Ptr = std::shared_ptr< RelationType >;
 
-        explicit TypedAtom(
-            const Identifier::Ptr& atom, const Token::Ptr& colon, const Type::Ptr& type );
-        explicit TypedAtom( const Identifier::Ptr& atom, const Type::Ptr& type );
+        explicit RelationType( const ListTypeElements<TokenBuilder::STAR>::Ptr& elements );
+        explicit RelationType( const std::initializer_list< Type::Ptr >& elements );
 
-        const Type::Ptr& type( void ) const;
-        const Token::Ptr& colon( void ) const;
-        const Identifier::Ptr& atom( void ) const;
+        const ListTypeElements<TokenBuilder::STAR>::Ptr& elements( void ) const;
 
         void accept( Visitor& visitor ) override final;
 
       private:
-        const Identifier::Ptr m_atom;
-        const Token::Ptr m_colon;
-        const Type::Ptr& m_type;
+        const ListTypeElements<TokenBuilder::STAR>::Ptr m_elements;
     };
 
-    using TypedAtoms = NodeList< TypedAtom >;
+    using RelationTypes = NodeList< RelationType >;
 
     class TupleType final : public Type
     {
@@ -140,20 +185,21 @@ namespace libtptp
 
         explicit TupleType(
             const Token::Ptr& leftBraceToken,
-            const ListTypeElements::Ptr& tuples,
+            const ListTypeElements<>::Ptr& tuples,
             const Token::Ptr& rightBraceToken );
 
-        explicit TupleType( const ListTypeElements::Ptr& tuples );
+        explicit TupleType( const ListTypeElements<>::Ptr& tuples );
+        explicit TupleType( const std::initializer_list< Type::Ptr >& tuples );
 
         const Token::Ptr& leftBraceToken( void ) const;
-        const ListTypeElements::Ptr& tuples( void ) const;
+        const ListTypeElements<>::Ptr& tuples( void ) const;
         const Token::Ptr& rightBraceToken( void ) const;
 
         void accept( Visitor& visitor ) override final;
 
       private:
         const Token::Ptr m_leftBraceToken;
-        const ListTypeElements::Ptr m_tuples;
+        const ListTypeElements<>::Ptr m_tuples;
         const Token::Ptr m_rightBraceToken;
     };
 
@@ -167,16 +213,19 @@ namespace libtptp
         explicit QuantifiedType(
             const Token::Ptr& quantifierToken,
             const Token::Ptr& leftParen,
-            const ListNodeElements::Ptr& variables,
+            const ListVariableElements::Ptr& variables,
             const Token::Ptr& rightParen,
             const Token::Ptr& colon,
             const Type::Ptr& type );
 
-        explicit QuantifiedType( const ListNodeElements::Ptr& variables, const Type::Ptr& type );
+        explicit QuantifiedType(
+            const ListVariableElements::Ptr& variables, const Type::Ptr& type );
+        explicit QuantifiedType(
+            const std::initializer_list< VariableTerm::Ptr >& variables, const Type::Ptr& type );
 
         const Token::Ptr& quantifierToken( void ) const;
         const Token::Ptr& leftParen( void ) const;
-        const ListNodeElements::Ptr& variables( void ) const;
+        const ListVariableElements::Ptr& variables( void ) const;
         const Token::Ptr& rightParen( void ) const;
         const Token::Ptr& colon( void ) const;
         const Type::Ptr& type( void ) const;
@@ -186,13 +235,30 @@ namespace libtptp
       private:
         const Token::Ptr m_quantifierToken;
         const Token::Ptr m_leftParen;
-        const ListNodeElements::Ptr m_variables;
+        const ListVariableElements::Ptr m_variables;
         const Token::Ptr m_rightParen;
         const Token::Ptr m_colon;
         const Type::Ptr m_type;
     };
 
     using QuantifiedTypes = NodeList< QuantifiedType >;
+
+    class VariableType final : public Type
+    {
+      public:
+        using Ptr = std::shared_ptr< VariableType >;
+
+        explicit VariableType( const VariableTerm::Ptr& variable );
+
+        const VariableTerm::Ptr& variable( void ) const;
+
+        void accept( Visitor& visitor ) override final;
+
+      private:
+        const VariableTerm::Ptr m_variable;
+    };
+
+    using VariableTypes = NodeList< VariableType >;
 
     class SubType final : public Type
     {
@@ -205,6 +271,7 @@ namespace libtptp
             const Identifier::Ptr& rightAtom );
 
         explicit SubType( const Identifier::Ptr& leftAtom, const Identifier::Ptr& rightAtom );
+        explicit SubType( const std::string& leftAtom, const std::string& rightAtom );
 
         const Identifier::Ptr& leftAtom( void ) const;
         const Token::Ptr& subTypeSign( void ) const;

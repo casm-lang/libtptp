@@ -58,6 +58,9 @@ namespace libtptp
             TPI,
             CNF,
             TCF,
+            CREATE_BOUND,
+            NEEDS_NEGATION,
+            DISCARD_TUPLE,
         };
 
         using FormulaFlags = libstdhl::Enum::Flags< FormulaFlag >;
@@ -65,6 +68,7 @@ namespace libtptp
         explicit Context( const FormulaFlags& flags );
         virtual ~Context() = default;
 
+        FormulaFlags& flags( void );
         const FormulaFlags& flags( void ) const;
 
         static const Context fof( void );
@@ -75,7 +79,7 @@ namespace libtptp
         static const Context tcf( void );
 
       private:
-        const FormulaFlags m_flags;
+        FormulaFlags m_flags;
     };
 }
 

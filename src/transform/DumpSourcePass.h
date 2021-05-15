@@ -47,12 +47,12 @@
 #include <libpass/PassResult>
 #include <libpass/PassUsage>
 
-#include <libtptp/Visitor>
+#include <libtptp/transform/SourceToAstPass>
+#include <memory>
+#include <sstream>
 
 /**
-   @brief    TODO
-
-   TODO
+   @brief  Dumps source from Ast pass
 */
 
 namespace libtptp
@@ -60,31 +60,31 @@ namespace libtptp
     class DumpSourcePass final : public libpass::Pass
     {
       public:
+        using Input = SourceToAstPass::Output;
+
+        class Output : public libpass::PassData
+        {
+            std::stringstream m_stream;
+
+          public:
+            using Ptr = std::shared_ptr< Output >;
+
+            Output( std::stringstream&& file )
+            : m_stream( std::move( file ) )
+            {
+            }
+
+            const std::stringstream& stream() const
+            {
+                return m_stream;
+            }
+        };
+
         static char id;
 
         void usage( libpass::PassUsage& pu ) override;
 
         u1 run( libpass::PassResult& pr ) override;
-    };
-
-    class DumpSourceVisitor final : public RecursiveVisitor
-    {
-      public:
-        DumpSourceVisitor( std::ostream& stream );
-
-        void visit( Specification& node ) override;
-
-        void visit( Identifier& node ) override;
-
-        void visit( IntegerLiteral& node ) override;
-        void visit( RationalLiteral& node ) override;
-        void visit( RealLiteral& node ) override;
-        void visit( DistinctObjectLiteral& node ) override;
-
-        void visit( Token& node ) override;
-
-      private:
-        std::ostream& m_stream;
     };
 }
 

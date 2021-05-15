@@ -62,103 +62,105 @@ static libpass::PassRegistration< AstDumpDotPass > PASS(
     "ast-dump",
     0 );
 
-class AstDumpDotVisitor : public RecursiveVisitor
+namespace libtptp
 {
-  private:
-    /**
-     * @brief RAII dot link
-     */
-    class DotLink
+    class AstDumpDotVisitor : public RecursiveVisitor
     {
-      public:
-        DotLink( AstDumpDotVisitor* visitor, void* node )
-        : m_visitor( visitor )
+      private:
+        /**
+         * @brief RAII dot link
+         */
+        class DotLink
         {
-            if( not visitor->m_parentNodes.empty() )
+          public:
+            DotLink( AstDumpDotVisitor* visitor, void* node )
+            : m_visitor( visitor )
             {
-                auto parentNode = visitor->m_parentNodes.top();
-                visitor->dumpLink( parentNode, node );
+                if( not visitor->m_parentNodes.empty() )
+                {
+                    auto parentNode = visitor->m_parentNodes.top();
+                    visitor->dumpLink( parentNode, node );
+                }
+                visitor->m_parentNodes.push( node );
             }
-            visitor->m_parentNodes.push( node );
-        }
 
-        ~DotLink()
-        {
-            m_visitor->m_parentNodes.pop();
-        }
+            ~DotLink()
+            {
+                m_visitor->m_parentNodes.pop();
+            }
+
+          private:
+            AstDumpDotVisitor* m_visitor;
+        };
+
+      public:
+        AstDumpDotVisitor( std::ostream& stream );
 
       private:
-        AstDumpDotVisitor* m_visitor;
+        std::ostream& m_stream;
+        std::stack< void* > m_parentNodes; /**< holds the parent nodes of DotLink */
+
+        template < class T >
+        void handle( T& node, const std::string& label = "", const std::string& attributes = "" );
+        void dumpLink( void* parent, void* node );
+        void dumpNode( Node& node, const std::string& label, const std::string& attributes );
+
+      public:
+        void visit( Specification& node ) override;
+
+        void visit( FirstOrderFormula& node ) override;
+        void visit( TypedFirstOrderFormula& node ) override;
+        void visit( TypedHigherOrderFormula& node ) override;
+        void visit( TPTPProcessInstructionFormula& node ) override;
+        void visit( ClauseNormalFormFormula& node ) override;
+        void visit( TheoryComputableFunctionalsFormula& node ) override;
+        void visit( FormulaData& node ) override;
+        void visit( Role& node ) override;
+
+        void visit( UnaryLogic& node ) override;
+        void visit( BinaryLogic& node ) override;
+        void visit( QuantifiedLogic& node ) override;
+        void visit( InfixLogic& node ) override;
+        void visit( LogicTuple& node ) override;
+        void visit( SequentLogic& node ) override;
+
+        void visit( VariableTerm& node ) override;
+        void visit( ConditionalTerm& node ) override;
+        void visit( DefinitionTerm& node ) override;
+
+        void visit( FunctorAtom& node ) override;
+        void visit( ConstantAtom& node ) override;
+        void visit( DefinedAtom& node ) override;
+        void visit( DefinitionAtom& node ) override;
+        void visit( ConnectiveAtom& node ) override;
+
+        void visit( ApplyType& node ) override;
+        void visit( BinaryType& node ) override;
+        void visit( TypeAtom& node ) override;
+        void visit( TupleType& node ) override;
+        void visit( QuantifiedType& node ) override;
+        void visit( SubType& node ) override;
+
+        void visit( Identifier& node ) override;
+
+        void visit( IntegerLiteral& node ) override;
+        void visit( RationalLiteral& node ) override;
+        void visit( RealLiteral& node ) override;
+        void visit( DistinctObjectLiteral& node ) override;
+        void visit( ListLiteral& node ) override;
+
+        void visit( Token& node ) override;
+
+        void visit( IncludeDefinition& node ) override;
+        void visit( FormulaDefinition& node ) override;
+
+        void visit( GeneralData& node ) override;
+        void visit( GeneralList& node ) override;
+        void visit( GeneralAggregator& node ) override;
+        void visit( GeneralFunction& node ) override;
+        void visit( Annotation& node ) override;
     };
-
-  public:
-    AstDumpDotVisitor( std::ostream& stream );
-
-  private:
-    std::ostream& m_stream;
-    std::stack< void* > m_parentNodes; /**< holds the parent nodes of DotLink */
-
-    template < class T >
-    void handle( T& node, const std::string& label = "", const std::string& attributes = "" );
-    void dumpLink( void* parent, void* node );
-    void dumpNode( Node& node, const std::string& label, const std::string& attributes );
-
-  public:
-    void visit( Specification& node ) override;
-
-    void visit( FirstOrderFormula& node ) override;
-    void visit( TypedFirstOrderFormula& node ) override;
-    void visit( TypedHigherOrderFormula& node ) override;
-    void visit( TPTPProcessInstructionFormula& node ) override;
-    void visit( ClauseNormalFormFormula& node ) override;
-    void visit( TheoryComputableFunctionalsFormula& node ) override;
-    void visit( FormulaData& node ) override;
-    void visit( Role& node ) override;
-
-    void visit( UnaryLogic& node ) override;
-    void visit( BinaryLogic& node ) override;
-    void visit( QuantifiedLogic& node ) override;
-    void visit( InfixLogic& node ) override;
-    void visit( LogicTuple& node ) override;
-    void visit( SequentLogic& node ) override;
-
-    void visit( FunctionTerm& node ) override;
-    void visit( VariableTerm& node ) override;
-    void visit( ConditionalTerm& node ) override;
-    void visit( DefinitionTerm& node ) override;
-
-    void visit( FunctorAtom& node ) override;
-    void visit( ConstantAtom& node ) override;
-    void visit( DefinedAtom& node ) override;
-    void visit( DefinitionAtom& node ) override;
-    void visit( ConnectiveAtom& node ) override;
-
-    void visit( AtomType& node ) override;
-    void visit( BinaryType& node ) override;
-    void visit( TypedAtom& node ) override;
-    void visit( TupleType& node ) override;
-    void visit( QuantifiedType& node ) override;
-    void visit( SubType& node ) override;
-
-    void visit( Identifier& node ) override;
-
-    void visit( IntegerLiteral& node ) override;
-    void visit( RationalLiteral& node ) override;
-    void visit( RealLiteral& node ) override;
-    void visit( DistinctObjectLiteral& node ) override;
-    void visit( ListLiteral& node ) override;
-
-    void visit( Token& node ) override;
-
-    void visit( IncludeDefinition& node ) override;
-    void visit( FormulaDefinition& node ) override;
-
-    void visit( GeneralData& node ) override;
-    void visit( GeneralList& node ) override;
-    void visit( GeneralAggregator& node ) override;
-    void visit( GeneralFunction& node ) override;
-    void visit( Annotation& node ) override;
-};
+}
 
 AstDumpDotVisitor::AstDumpDotVisitor( std::ostream& stream )
 : m_stream( stream )
@@ -273,11 +275,6 @@ void AstDumpDotVisitor::visit( SequentLogic& node )
     handle( node );
 }
 
-void AstDumpDotVisitor::visit( FunctionTerm& node )
-{
-    handle( node );
-}
-
 void AstDumpDotVisitor::visit( VariableTerm& node )
 {
     handle( node );
@@ -318,7 +315,7 @@ void AstDumpDotVisitor::visit( ConnectiveAtom& node )
     handle( node );
 }
 
-void AstDumpDotVisitor::visit( AtomType& node )
+void AstDumpDotVisitor::visit( ApplyType& node )
 {
     handle( node );
 }
@@ -328,7 +325,7 @@ void AstDumpDotVisitor::visit( BinaryType& node )
     handle( node );
 }
 
-void AstDumpDotVisitor::visit( TypedAtom& node )
+void AstDumpDotVisitor::visit( TypeAtom& node )
 {
     handle( node );
 }
@@ -432,7 +429,6 @@ void AstDumpDotVisitor::visit( Annotation& node )
 void AstDumpDotPass::usage( libpass::PassUsage& pu )
 {
     pu.require< SourceToAstPass >();
-    // pu.repeatUntil< ConsistencyCheckPass >();
 }
 
 u1 AstDumpDotPass::run( libpass::PassResult& pr )

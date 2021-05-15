@@ -1,5 +1,5 @@
 //
-//  Copyright (C) 2017-2021 CASM Organization <https://casm-lang.org>
+//  Copyright (C) 2017-2019 CASM Organization <https://casm-lang.org>
 //  All rights reserved.
 //
 //  Developed by: Philipp Paulweber
@@ -40,22 +40,73 @@
 //  statement from your version.
 //
 
-#include <libstdhl/Test>
+#ifndef _LIBTPTP_AST_TO_Z3_PASS_H_
+#define _LIBTPTP_AST_TO_Z3_PASS_H_
 
-#include <libpass/libpass>
+#include <libpass/Pass>
+#include <libpass/PassResult>
+#include <libpass/PassUsage>
+#include <libtptp/transform/SourceToAstPass>
+#include <memory>
 
-#include "main.h"
-#include "resources/tff_formula.cpp"
-#include "testhelper.h"
-#include "macros.cpp"
+namespace libtptp
+{
+    /**
+     * @brief
+     */
 
-using namespace libtptp;
-using namespace libpass;
+    class AstToZ3Pass final : public libpass::Pass
+    {
+      public:
+        using Input = SourceToAstPass::Output;
 
-SOURCE_COMPARE_TEST(libtptp, DumpSourcePass, tff_test_basic, true, , )
+        class Output : public libpass::PassData
+        {
+          public:
+            using Ptr = std::shared_ptr< Output >;
+            enum class Result
+            {
+                UNKNOWN,
+                SATISFIABLE,
+                UNSATISFIABLE,
+            };
 
+            Output( Result result, const std::string& model )
+            : m_result( result )
+            , m_model( model )
+            {
+            }
 
-SOURCE_COMPARE_TEST(libtptp, DumpSourcePass, tff_test_tf1, true, , )
+            Output( Result result )
+            : Output( result, "" )
+            {
+            }
+
+            Result result( void )
+            {
+                return m_result;
+            }
+            const std::string& model()
+            {
+                return m_model;
+            }
+
+          private:
+            Result m_result;
+            std::string m_model;
+        };
+
+        static char id;
+
+        void usage( libpass::PassUsage& pu ) override;
+
+        u1 run( libpass::PassResult& pr ) override;
+
+      private:
+    };
+}
+
+#endif  // _LIBTPTP_AST_TO_Z3_PASS_H_
 
 //
 //  Local variables:

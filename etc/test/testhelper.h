@@ -40,29 +40,13 @@
 //  statement from your version.
 //
 
-#include <libstdhl/Test>
+#include <string>
 
-#include <libpass/libpass>
-
-#include "main.h"
-#include "resources/tff_formula.cpp"
-#include "testhelper.h"
-#include "macros.cpp"
-
-using namespace libtptp;
-using namespace libpass;
-
-SOURCE_COMPARE_TEST(libtptp, DumpSourcePass, tff_test_basic, true, , )
-
-
-SOURCE_COMPARE_TEST(libtptp, DumpSourcePass, tff_test_tf1, true, , )
-
-//
-//  Local variables:
-//  mode: c++
-//  indent-tabs-mode: nil
-//  c-basic-offset: 4
-//  tab-width: 4
-//  End:
-//  vim:noexpandtab:sw=4:ts=4:
-//
+namespace libtptp
+{
+    class TestHelper
+    {
+      public:
+        static bool compareTPTPFiles( const std::string& expected, const std::string& actual );
+    };
+};

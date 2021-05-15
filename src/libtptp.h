@@ -51,8 +51,10 @@
 #include <libtptp/Term>
 #include <libtptp/Version>
 #include <libtptp/Visitor>
+#include <libtptp/analyze/ConsistencyCheckPass>
 #include <libtptp/analyze/DumpDebugPass>
 #include <libtptp/transform/AstDumpDotPass>
+#include <libtptp/transform/AstToZ3Pass>
 #include <libtptp/transform/DumpSourcePass>
 #include <libtptp/transform/SourceToAstPass>
 

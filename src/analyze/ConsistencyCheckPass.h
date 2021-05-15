@@ -1,5 +1,5 @@
 //
-//  Copyright (C) 2017-2021 CASM Organization <https://casm-lang.org>
+//  Copyright (C) 2017-2019 CASM Organization <https://casm-lang.org>
 //  All rights reserved.
 //
 //  Developed by: Philipp Paulweber
@@ -40,22 +40,39 @@
 //  statement from your version.
 //
 
-#include <libstdhl/Test>
+#ifndef _LIBTPTP_CONSISTENCY_CHECK_PASS_H_
+#define _LIBTPTP_CONSISTENCY_CHECK_PASS_H_
 
-#include <libpass/libpass>
+#include <libpass/Pass>
+#include <libpass/PassResult>
+#include <libpass/PassUsage>
 
-#include "main.h"
-#include "resources/tff_formula.cpp"
-#include "testhelper.h"
-#include "macros.cpp"
+#include <libtptp/Visitor>
+#include <libtptp/transform/SourceToAstPass>
 
-using namespace libtptp;
-using namespace libpass;
+/**
+   @brief    TODO
 
-SOURCE_COMPARE_TEST(libtptp, DumpSourcePass, tff_test_basic, true, , )
+   TODO
+*/
 
+namespace libtptp
+{
+    class ConsistencyCheckPass final : public libpass::Pass
+    {
+      public:
+        static char id;
 
-SOURCE_COMPARE_TEST(libtptp, DumpSourcePass, tff_test_tf1, true, , )
+        void usage( libpass::PassUsage& pu ) override;
+
+        u1 run( libpass::PassResult& pr ) override;
+
+      public:
+        using Output = SourceToAstPass::Output;
+    };
+}
+
+#endif  // _LIBTPTP_CONSISTENCY_CHECK_PASS_H_
 
 //
 //  Local variables:

@@ -43,6 +43,7 @@
 #ifndef _LIBTPTP_HELPER_H_
 #define _LIBTPTP_HELPER_H_
 
+#include <functional>
 #include <libtptp/Node>
 #include <libtptp/Token>
 
@@ -82,14 +83,39 @@ namespace libtptp
         const typename T::Ptr m_element;
     };
 
-    template < class T >
+    using builderFunction = const Token::Ptr&( void );
+    template < class T, builderFunction delimiterConstructor = TokenBuilder::COMMA >
     class ListElements final : public NodeList< ListElement< T > >
     {
       public:
-        using Ptr = std::shared_ptr< ListElements< T > >;
+        using Ptr = std::shared_ptr< ListElements< T, delimiterConstructor > >;
 
         explicit ListElements( void )
         : NodeList< ListElement< T > >()
+        {
+        }
+
+        ListElements( const std::initializer_list< typename T::Ptr > list )
+        : NodeList< ListElement< T > >()
+        {
+            for( auto& el : list )
+            {
+                add( el );
+            }
+        }
+
+        explicit ListElements( const std::initializer_list< typename ListElement< T >::Ptr > list )
+        : NodeList< ListElement< T > >()
+        {
+            for( auto& el : list )
+            {
+                NodeList< ListElement< T > >::add( el );
+            }
+        }
+
+        template < builderFunction U >
+        ListElements( const ListElements< T, U >& other )
+        : NodeList< ListElement< T > >( other )
         {
         }
 
@@ -108,8 +134,20 @@ namespace libtptp
             else
             {
                 NodeList< ListElement< T > >::add(
-                    std::make_shared< ListElement< T > >( TokenBuilder::COMMA(), element ) );
+                    std::make_shared< ListElement< T > >( delimiterConstructor(), element ) );
             }
+        }
+
+        template < builderFunction U >
+        operator ListElements< T, U >( void ) const
+        {
+            return static_cast< ListElements< T, U > >( *this );
+        }
+
+        template < builderFunction U >
+        operator const ListElements< T, U >( void ) const
+        {
+            return static_cast< const ListElements< T, U > >( *this );
         }
     };
 
@@ -117,7 +155,7 @@ namespace libtptp
 
 }
 #endif  // _LIBTPTP_HELPER_H_
-//
+
 //  Local variables:
 //  mode: c++
 //  indent-tabs-mode: nil

@@ -46,111 +46,17 @@
 
 #include "main.h"
 #include "resources/fof_formula.cpp"
+#include "testhelper.h"
+#include "macros.cpp"
 
 using namespace libtptp;
 using namespace libpass;
 
-TEST( libtptp, fof_depth )
-{
-    PassManager pm;
+SOURCE_COMPARE_TEST(libtptp, DumpSourcePass, fof_test_depth, true, , )
 
-    libstdhl::Logger log( pm.stream() );
-    log.setSource( libstdhl::Memory::make< libstdhl::Log::Source >( TEST_NAME, TEST_NAME ) );
+SOURCE_COMPARE_TEST(libtptp, DumpSourcePass, fof_test_variables, true, , )
 
-    auto flush = [&pm]() {
-        libstdhl::Log::ApplicationFormatter f( TEST_NAME );
-        libstdhl::Log::OutputStreamSink c( std::cerr, f );
-        pm.stream().flush( c );
-    };
-
-    pm.add< SourceToAstPass >();
-    pm.setDefaultPass< SourceToAstPass >();
-
-    const std::string filename = TEST_NAME + ".tptp";
-    auto file = libstdhl::File::open( filename, std::fstream::out );
-    file << fof_test_depth;
-
-    file.close();
-
-    const auto input = libstdhl::Memory::make< LoadFilePass::Input >( filename );
-    PassResult pr;
-    pr.setInputData< LoadFilePass >( input );
-    pm.setDefaultResult( pr );
-
-    EXPECT_EQ( pm.run( flush ), true );
-
-    pm.result().output< LoadFilePass >()->close();
-    libstdhl::File::remove( filename );
-    EXPECT_EQ( libstdhl::File::exists( filename ), false );
-}
-
-TEST( libtptp, fof_variable )
-{
-    PassManager pm;
-
-    libstdhl::Logger log( pm.stream() );
-    log.setSource( libstdhl::Memory::make< libstdhl::Log::Source >( TEST_NAME, TEST_NAME ) );
-
-    auto flush = [&pm]() {
-        libstdhl::Log::ApplicationFormatter f( TEST_NAME );
-        libstdhl::Log::OutputStreamSink c( std::cerr, f );
-        pm.stream().flush( c );
-    };
-
-    pm.add< SourceToAstPass >();
-    pm.setDefaultPass< SourceToAstPass >();
-
-    const std::string filename = TEST_NAME + ".tptp";
-    auto file = libstdhl::File::open( filename, std::fstream::out );
-    file << fof_test_variables;
-
-    file.close();
-
-    const auto input = libstdhl::Memory::make< LoadFilePass::Input >( filename );
-    PassResult pr;
-    pr.setInputData< LoadFilePass >( input );
-    pm.setDefaultResult( pr );
-
-    EXPECT_EQ( pm.run( flush ), true );
-
-    pm.result().output< LoadFilePass >()->close();
-    libstdhl::File::remove( filename );
-    EXPECT_EQ( libstdhl::File::exists( filename ), false );
-}
-
-TEST( libtptp, fof_existential )
-{
-    PassManager pm;
-
-    libstdhl::Logger log( pm.stream() );
-    log.setSource( libstdhl::Memory::make< libstdhl::Log::Source >( TEST_NAME, TEST_NAME ) );
-
-    auto flush = [&pm]() {
-        libstdhl::Log::ApplicationFormatter f( TEST_NAME );
-        libstdhl::Log::OutputStreamSink c( std::cerr, f );
-        pm.stream().flush( c );
-    };
-
-    pm.add< SourceToAstPass >();
-    pm.setDefaultPass< SourceToAstPass >();
-
-    const std::string filename = TEST_NAME + ".tptp";
-    auto file = libstdhl::File::open( filename, std::fstream::out );
-    file << fof_test_existential;
-
-    file.close();
-
-    const auto input = libstdhl::Memory::make< LoadFilePass::Input >( filename );
-    PassResult pr;
-    pr.setInputData< LoadFilePass >( input );
-    pm.setDefaultResult( pr );
-
-    EXPECT_EQ( pm.run( flush ), true );
-
-    pm.result().output< LoadFilePass >()->close();
-    libstdhl::File::remove( filename );
-    EXPECT_EQ( libstdhl::File::exists( filename ), false );
-}
+SOURCE_COMPARE_TEST(libtptp, DumpSourcePass, fof_test_existential, true, , )
 
 //
 //  Local variables:

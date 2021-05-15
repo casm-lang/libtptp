@@ -46,6 +46,7 @@
 #include <libpass/Pass>
 #include <libpass/PassResult>
 #include <libpass/PassUsage>
+#include <libtptp/transform/SourceToAstPass>
 
 namespace libtptp
 {
@@ -56,6 +57,8 @@ namespace libtptp
     class AstDumpDotPass final : public libpass::Pass
     {
       public:
+        using Input = SourceToAstPass::Output;
+
         static char id;
 
         void usage( libpass::PassUsage& pu ) override;

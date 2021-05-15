@@ -160,7 +160,8 @@ END       0 "end of file"
 %type <GeneralData::Ptr> GeneralData
 %type <GeneralList::Ptr> GeneralList
 %type <GeneralFunction::Ptr> GeneralFunction
-%type <ListNodeElements::Ptr> GeneralTerms FofVariableList
+%type <ListNodeElements::Ptr> GeneralTerms
+%type <ListVariableElements::Ptr> FofVariableList
 
 %type <UnaryConnective_t> UnaryConnective
 %type <BinaryConnective_t> AssocConnective NonassocConnective
@@ -168,7 +169,7 @@ END       0 "end of file"
 %type <InfixConnective_t> InfixInequality DefinedInfixPred InfixEquality
 
 //Tff
-%type <Logic::Ptr> TffFormula TffLogicFormula TffUnitFormula TffPreunitFormula TffUnitaryFormula TffUnaryFormula TfxLetDefns TfxLetLhs TffTerm TffUnitaryTerm
+%type <Logic::Ptr> TffFormula TffLogicFormula TffUnitFormula TffPreunitFormula TffUnitaryFormula TffUnaryFormula TfxLetLhs TffTerm TffUnitaryTerm
 %type <BinaryLogic::Ptr> TffBinaryFormula TffBinaryNonassoc TffBinaryAssoc TffOrFormula TffAndFormula
 %type <VariableTerm::Ptr> TfxUnitaryFormula TffVariable TffTypedVariable
 %type <QuantifiedLogic::Ptr> TffQuantifiedFormula
@@ -176,54 +177,57 @@ END       0 "end of file"
 %type <InfixLogic::Ptr> TffInfixUnary TffDefinedInfix
 %type <LogicTuple::Ptr> TfxTuple
 %type <SequentLogic::Ptr> TfxSequent
-%type <ListLogicElements::Ptr> TfxLetDefnList TffArguments TffTypeArguments
+%type <ListLogicElements::Ptr> TffArguments
 
 %type <Term::Ptr> TffAtomicFormula TffDefinedAtomic TffDefinedPlain
 %type <ConditionalTerm::Ptr> TfxConditional
 %type <DefinitionTerm::Ptr> TfxLet
 
-%type <Atom::Ptr> TffPlainAtomic TffSystemAtomic
+%type <Atom::Ptr> TfxLetTypes TffPlainAtomic TfxLetDefns TffSystemAtomic
 %type <DefinitionAtom::Ptr> TfxLetDefn
+%type <TypeAtom::Ptr> TffAtomTyping
+%type <ListAtomElements::Ptr> TfxLetDefnList TffAtomTypingList
 
-%type <Type::Ptr> TfxLetTypes TffTopLevelType TffMonotype TffUnitaryType
-%type <TypedAtom::Ptr> TffAtomTyping
+%type <Type::Ptr> TffAtomicType TffTopLevelType TffMonotype TffUnitaryType
 %type <QuantifiedType::Ptr> Tf1QuantifiedType
-%type <AtomType::Ptr> TffAtomicType
-%type <BinaryType::Ptr> TffMappingType TffXprodType
+%type <BinaryType::Ptr> TffMappingType
+%type <RelationType::Ptr> TffXprodType
 %type <TupleType::Ptr> TfxTupleType
 %type <SubType::Ptr> TffSubtype
-%type <ListTypeElements::Ptr> TffAtomTypingList TffTypeList
+%type <ListTypeElements<>::Ptr> TffTypeList TffTypeArguments
 
-%type <ListNodeElements::Ptr> TffVariableList
+%type <ListVariableElements::Ptr> TffVariableList
 
 //THF
-%type <Logic::Ptr> ThfFormula ThfLogicFormula  ThfBinaryFormula ThfUnitFormula ThfPreunitFormula ThfUnitaryFormula ThfUnaryFormula ThfAtomicFormula ThfPlainAtomic ThfLetDefns ThfUnitaryTerm
+%type <Logic::Ptr> ThfFormula ThfLogicFormula  ThfBinaryFormula ThfUnitFormula ThfPreunitFormula ThfUnitaryFormula ThfUnaryFormula ThfAtomicFormula ThfPlainAtomic ThfUnitaryTerm
 %type <BinaryLogic::Ptr> ThfBinaryNonassoc ThfBinaryAssoc ThfOrFormula ThfAndFormula ThfApplyFormula
 %type <QuantifiedLogic::Ptr> ThfQuantifiedFormula
 %type <UnaryLogic::Ptr> ThfPrefixUnary
 %type <InfixLogic::Ptr> ThfInfixUnary ThfDefinedInfix
 %type <LogicTuple::Ptr> ThfTuple
 %type <SequentLogic::Ptr> ThfSequent
-%type <ListLogicElements::Ptr> ThfLetDefnList ThfFormulaList ThfArguments
+%type <ListLogicElements::Ptr> ThfFormulaList ThfArguments
 
 %type <Term::Ptr> ThfDefinedAtomic
 %type <VariableTerm::Ptr> ThfTypedVariable
 %type <ConditionalTerm::Ptr> ThfConditional
 %type <DefinitionTerm::Ptr> ThfLet
 
+%type <Atom::Ptr> ThfLetTypes ThfLetDefns
 %type <ConstantAtom::Ptr> ThfSystemAtomic
 %type <FunctorAtom::Ptr> ThfFofFunction
 %type <DefinitionAtom::Ptr> ThfLetDefn
 %type <ConnectiveAtom::Ptr> ThfConnTerm
-%type <TypedAtom::Ptr> ThfAtomTyping
+%type <TypeAtom::Ptr> ThfAtomTyping
+%type <ListAtomElements::Ptr> ThfAtomTypingList ThfLetDefnList
 
-%type <Type::Ptr> ThfLetTypes ThfTopLevelType
-%type <AtomType::Ptr> ThfUnitaryType ThfApplyType
-%type <BinaryType::Ptr> ThfBinaryType ThfMappingType ThfXprodType ThfUnionType
+%type <Type::Ptr> ThfBinaryType ThfTopLevelType
+%type <ApplyType::Ptr> ThfUnitaryType ThfApplyType
+%type <BinaryType::Ptr> ThfMappingType ThfUnionType
+%type <RelationType::Ptr> ThfXprodType
 %type <SubType::Ptr> ThfSubtype
-%type <ListTypeElements::Ptr> ThfAtomTypingList
 
-%type <ListNodeElements::Ptr> ThfVariableList
+%type <ListVariableElements::Ptr> ThfVariableList
 
 %type <UnaryConnective_t> ThfUnaryConnective Th1UnaryConnective
 %type <QuantifiedQuantifier_t> Th0Quantifier Th1Quantifier ThfQuantifier
@@ -582,15 +586,14 @@ ThfUnitaryFormula
 ThfQuantifiedFormula
 : ThfQuantifier LSQPAREN ThfVariableList RSQPAREN COLON ThfUnitFormula
   {
-	auto variables = libtptp::make< ListLiteral >(@$, $2, $3, $4);
-	$$ = libtptp::make< QuantifiedLogic >(@$, $1, variables, $5, $6);
+	$$ = libtptp::make< QuantifiedLogic >(@$, $1, $2, $3, $4, $5, $6);
   }
 ;
 
 ThfVariableList
 : ThfTypedVariable
   {
-	auto list = libtptp::make< ListNodeElements >(@$);
+	auto list = libtptp::make< ListVariableElements >(@$);
 	list->add($1);
 	$$ = list;
   }
@@ -743,14 +746,14 @@ ThfLetTypes
   }
 | LSQPAREN ThfAtomTypingList RSQPAREN
   {
-	$$ = libtptp::make< TupleType >(@$, $1, $2, $3);
+	$$ = libtptp::make< TupleAtom >(@$, $1, $2, $3);
   }
 ;
 
 ThfAtomTypingList
 : ThfAtomTyping
   {
-	auto list = libtptp::make< ListTypeElements >(@$);
+	auto list = libtptp::make< ListAtomElements >(@$);
 	list->add($1);
 	$$ = list;
   }
@@ -769,7 +772,7 @@ ThfLetDefns
   }
 | LSQPAREN ThfLetDefnList RSQPAREN
   {
-	$$ = libtptp::make< LogicTuple >(@$, $1, $2, $3);
+	$$ = libtptp::make< TupleAtom >(@$, $1, $2, $3);
   }
 ;
 
@@ -784,7 +787,7 @@ ThfLetDefnList
 : ThfLetDefn
   {
 	//could be of type DefinitionAtoms, but Logics is expected
-	auto list = libtptp::make< ListLogicElements >(@$);
+	auto list = libtptp::make< ListAtomElements >(@$);
 	list->add($1);
 	$$ = list;
   }
@@ -873,7 +876,7 @@ ThfArguments
 ThfAtomTyping
 : UntypedAtom COLON ThfTopLevelType
   {
-	$$ = libtptp::make< TypedAtom >(@$, $1, $2, $3);
+	$$ = libtptp::make< TypeAtom >(@$, $1, $2, $3);
   }
 | LPAREN ThfAtomTyping RPAREN
   {
@@ -899,17 +902,20 @@ ThfTopLevelType
   }
 ;
 
+
 ThfUnitaryType
 : ThfUnitaryFormula
   {
-	$$ = libtptp::make< AtomType >(@$, $1);
+	//TODO: @moosbruggerj implement
+	//$$ = libtptp::make< AtomType >(@$, $1);
   }
 ;
+
 
 ThfApplyType
 : ThfApplyFormula
   {
-	$$ = libtptp::make< AtomType >(@$, $1);
+	$$ = libtptp::make< ApplyType >(@$, $1);
   }
 ;
 
@@ -944,11 +950,16 @@ ThfMappingType
 ThfXprodType
 : ThfUnitaryType STAR ThfUnitaryType
   {
-	$$ = libtptp::make< BinaryType >(@$, $1, $2, $3, BinaryType::Kind::XPROD);
+	auto list = libtptp::make< ListTypeElements<TokenBuilder::STAR> >(@$);
+	list->add($1);
+	list->add($2, $3);
+	$$ = libtptp::make< RelationType >(@$, list);
   }
 | ThfXprodType STAR ThfUnitaryType
   {
-	$$ = libtptp::make< BinaryType >(@$, $1, $2, $3, BinaryType::Kind::XPROD);
+	auto type = $1;
+	type->elements()->add($2, $3);
+	$$ = type;
   }
 ;
 
@@ -1137,16 +1148,14 @@ TfxUnitaryFormula
 TffQuantifiedFormula
 : FofQuantifier LSQPAREN TffVariableList RSQPAREN COLON TffUnitFormula
   {
-	auto list = libtptp::make< ListLiteral >(@3, $2, $3, $4);
-	$$ = libtptp::make< QuantifiedLogic >(@$, $1, list, $5, $6);
+	$$ = libtptp::make< QuantifiedLogic >(@$, $1, $2, $3, $4, $5, $6);
   }
 ;
 
 TffVariableList
 : TffVariable
   {
-	//TODO: @moosbruggerj use correct type
-	auto list = libtptp::make< ListNodeElements >(@$);
+	auto list = libtptp::make< ListVariableElements >(@$);
 	list->add($1);
 	$$ = list;
   }
@@ -1296,14 +1305,14 @@ TfxLetTypes
   }
 | LSQPAREN TffAtomTypingList RSQPAREN
   {
-	$$ = libtptp::make< TupleType >(@$, $1, $2, $3);
+	$$ = libtptp::make< TupleAtom >(@$, $1, $2, $3);
   }
 ;
 
 TffAtomTypingList
 : TffAtomTyping
   {
-	auto list = libtptp::make< ListTypeElements >(@$);
+	auto list = libtptp::make< ListAtomElements >(@$);
 	list->add($1);
 	$$ = list;
   }
@@ -1322,7 +1331,7 @@ TfxLetDefns
   }
 | LSQPAREN TfxLetDefnList RSQPAREN
   {
-	$$ = libtptp::make< LogicTuple >(@$, $1, $2, $3);
+	$$ = libtptp::make< TupleAtom >(@$, $1, $2, $3);
   }
 ;
 
@@ -1347,7 +1356,7 @@ TfxLetLhs
 TfxLetDefnList
 : TfxLetDefn
   {
-	auto list = libtptp::make< ListLogicElements >(@$);
+	auto list = libtptp::make< ListAtomElements >(@$);
 	list->add($1);
 	$$ = list;
   }
@@ -1429,7 +1438,7 @@ TffArguments
 TffAtomTyping
 : UntypedAtom COLON TffTopLevelType
   {
-	$$ = libtptp::make< TypedAtom >(@$, $1, $2, $3);
+	$$ = libtptp::make< TypeAtom >(@$, $1, $2, $3);
   }
 | LPAREN TffAtomTyping RPAREN
   {
@@ -1500,31 +1509,30 @@ TffUnitaryType
 TffAtomicType
 : TypeConstant
   {
-	$$ = libtptp::make< AtomType >(@$, $1);
+	$$ = libtptp::make< NamedType >(@$, $1);
   }
 | DefinedType
   {
-	$$ = libtptp::make< AtomType >(@$, $1);
+	$$ = libtptp::make< NamedType >(@$, $1);
   }
 | TypeFunctor LPAREN TffTypeArguments RPAREN
   {
-	auto functor = libtptp::make< FunctorAtom >(@$, $1, $2, $3, $4, Atom::Kind::TYPE);
-	$$ = libtptp::make< AtomType >(@$, functor);
+	$$ = libtptp::make< FunctorType >(@$, $1, $2, $3, $4);
   }
 | Variable
   {
-	$$ = libtptp::make< AtomType >(@$, $1);
+	$$ = libtptp::make< VariableType >(@$, $1);
   }
 | TfxTupleType
   {
-	$$ = libtptp::make< AtomType >(@$, $1);
+	$$ = $1;
   }
 ;
 
 TffTypeArguments
 : TffAtomicType
   {
-	auto list = libtptp::make< ListLogicElements >(@$);
+	auto list = libtptp::make< ListTypeElements<> >(@$);
 	list->add($1);
 	$$ = list;
   }
@@ -1546,11 +1554,16 @@ TffMappingType
 TffXprodType
 : TffUnitaryType STAR TffAtomicType
   {
-	$$ = libtptp::make< BinaryType >(@$, $1, $2, $3, BinaryType::Kind::XPROD);
+	auto list = libtptp::make< ListTypeElements<TokenBuilder::STAR> >(@$);
+	list->add($1);
+	list->add($2, $3);
+	$$ = libtptp::make< RelationType >(@$, list);
   }
 | TffXprodType STAR TffAtomicType
   {
-	$$ = libtptp::make< BinaryType >(@$, $1, $2, $3, BinaryType::Kind::XPROD);
+	auto type = $1;
+	type->elements()->add($2, $3);
+	$$ = type;
   }
 ;
 
@@ -1564,7 +1577,7 @@ TfxTupleType
 TffTypeList
 : TffTopLevelType
   {
-	auto list = libtptp::make< ListTypeElements >(@$);
+	auto list = libtptp::make< ListTypeElements<> >(@$);
 	list->add($1);
 	$$ = list;
   }
@@ -1624,8 +1637,7 @@ TcfQuantifiedFormula
 : EXCLAMATION LSQPAREN TffVariableList RSQPAREN COLON CnfFormula
   {
 	auto op = std::make_pair($1, QuantifiedLogic::Quantifier::UNIVERSAL);
-	auto list = libtptp::make< ListLiteral >(@$, $2, $3, $4);
-	$$ = libtptp::make< QuantifiedLogic >(@$, op, list, $5, $6);
+	$$ = libtptp::make< QuantifiedLogic >(@$, op, $2, $3, $4, $5, $6);
   }
 ;
 
@@ -1762,16 +1774,14 @@ FofUnitaryFormula
 FofQuantifiedFormula
 : FofQuantifier LSQPAREN FofVariableList RSQPAREN COLON FofUnitFormula
   {
-	auto variables = libtptp::make< ListLiteral >(@$, $2, $3, $4);
-	$$ = libtptp::make< QuantifiedLogic >(@$, $1, variables, $5, $6);
+	$$ = libtptp::make< QuantifiedLogic >(@$, $1, $2, $3, $4, $5, $6);
   }
 ;
 
 FofVariableList
 : Variable
   {
-	//TODO: @moosbruggerj make variableTerms list
-	auto variables = libtptp::make< ListNodeElements >(@$);
+	auto variables = libtptp::make< ListVariableElements >(@$);
 	variables->add($1);
 	$$ = variables;
   }
@@ -2092,7 +2102,7 @@ FofQuantifier
   }
 | QUESTIONMARK
   {
-	$$ = std::make_pair($1, QuantifiedLogic::Quantifier::UNIVERSAL);
+	$$ = std::make_pair($1, QuantifiedLogic::Quantifier::EXISTENTIAL);
   }
 ;
 

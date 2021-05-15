@@ -41,7 +41,7 @@
 //
 
 #include "Logic.h"
-#include "Term.h"
+#include <libtptp/Term>
 
 using namespace libtptp;
 
@@ -327,12 +327,16 @@ const Token::Ptr quantifierTokenFromQuantifier( QuantifiedLogic::Quantifier quan
 
 QuantifiedLogic::QuantifiedLogic(
     const std::pair< const Token::Ptr&, const Quantifier > quantifier,
-    const ListLiteral::Ptr& variables,
+    const Token::Ptr& leftParen,
+    const ListVariableElements::Ptr& variables,
+    const Token::Ptr& rightParen,
     const Token::Ptr& colon,
     const Logic::Ptr& logic )
 : Logic( Node::ID::QUANTIFIED_LOGIC )
 , m_quantifierToken( quantifier.first )
+, m_leftParen( leftParen )
 , m_variables( variables )
+, m_rightParen( rightParen )
 , m_colon( colon )
 , m_logic( logic )
 , m_quantifier( quantifier.second )
@@ -340,12 +344,24 @@ QuantifiedLogic::QuantifiedLogic(
 }
 
 QuantifiedLogic::QuantifiedLogic(
-    const Quantifier quantifier, const ListLiteral::Ptr& variables, const Logic::Ptr& logic )
+    const Quantifier quantifier,
+    const ListVariableElements::Ptr& variables,
+    const Logic::Ptr& logic )
 : QuantifiedLogic(
       std::make_pair( quantifierTokenFromQuantifier( quantifier ), quantifier ),
+      TokenBuilder::LSQPAREN(),
       variables,
+      TokenBuilder::RSQPAREN(),
       TokenBuilder::COLON(),
       logic )
+{
+}
+
+QuantifiedLogic::QuantifiedLogic(
+    const Quantifier quantifier,
+    const std::initializer_list< VariableTerm::Ptr >& variables,
+    const Logic::Ptr& logic )
+: QuantifiedLogic( quantifier, std::make_shared< ListVariableElements >( variables ), logic )
 {
 }
 
@@ -354,9 +370,19 @@ const Token::Ptr& QuantifiedLogic::quantifierToken( void ) const
     return m_quantifierToken;
 }
 
-const ListLiteral::Ptr& QuantifiedLogic::variables( void ) const
+const Token::Ptr& QuantifiedLogic::leftParen( void ) const
+{
+    return m_leftParen;
+}
+
+const ListVariableElements::Ptr& QuantifiedLogic::variables( void ) const
 {
     return m_variables;
+}
+
+const Token::Ptr& QuantifiedLogic::rightParen( void ) const
+{
+    return m_rightParen;
 }
 
 const Token::Ptr& QuantifiedLogic::colon( void ) const
@@ -472,10 +498,17 @@ const Logic::Ptr& InfixLogic::lhs( void ) const
 {
     return m_lhs;
 }
+
 const Token::Ptr& InfixLogic::connectiveToken( void ) const
 {
     return m_connectiveToken;
 }
+
+InfixLogic::Connective InfixLogic::connective( void ) const
+{
+    return m_connective;
+}
+
 const Logic::Ptr& InfixLogic::rhs( void ) const
 {
     return m_rhs;
@@ -520,6 +553,11 @@ LogicTuple::LogicTuple( const Token::Ptr& leftBraceToken, const Token::Ptr& righ
 
 LogicTuple::LogicTuple( const Context& context, const ListLogicElements::Ptr& tuples )
 : LogicTuple( bracesFromContext( context ).first, tuples, bracesFromContext( context ).second )
+{
+}
+
+LogicTuple::LogicTuple( const Context& context, const std::initializer_list< Logic::Ptr >& tuples )
+: LogicTuple( context, std::make_shared< ListLogicElements >( tuples ) )
 {
 }
 

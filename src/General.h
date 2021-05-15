@@ -132,6 +132,8 @@ namespace libtptp
         explicit GeneralFunction(
             const Identifier::Ptr& name, const ListNodeElements::Ptr& arguments );
 
+        explicit GeneralFunction( const std::string& name, const ListNodeElements::Ptr& arguments );
+
         const Identifier::Ptr& name( void ) const;
         const Token::Ptr& leftParen( void ) const;
         const ListNodeElements::Ptr& arguments( void ) const;
@@ -165,6 +167,7 @@ namespace libtptp
         const GeneralTerm::Ptr& source( void ) const;
         const libstdhl::Optional< const GeneralList::Ptr >& usefulInfo( void ) const;
         const Token::Ptr& comma( void ) const;
+        const Token::Ptr& delimiter( void ) const;
         void setDelimiter( const Token::Ptr& delimiter );
 
         void accept( Visitor& visitor ) override final;

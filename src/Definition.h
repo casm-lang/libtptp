@@ -87,6 +87,7 @@ namespace libtptp
 
         IncludeDefinition(
             const Identifier::Ptr& filename, const ListLiteral::Ptr& formulaSelection );
+        IncludeDefinition( const std::string& filename, const ListLiteral::Ptr& formulaSelection );
 
         const Token::Ptr& includeToken( void ) const;
         const Token::Ptr& leftParenToken( void ) const;
@@ -126,6 +127,8 @@ namespace libtptp
 
         explicit FormulaDefinition(
             const Identifier::Ptr& name, const Role::Ptr& role, const Formula::Ptr& formula );
+        explicit FormulaDefinition(
+            const std::string& name, const Role::Ptr& role, const Formula::Ptr& formula );
 
         const Token::Ptr& keyword( void ) const;
         const Token::Ptr& leftParen( void ) const;

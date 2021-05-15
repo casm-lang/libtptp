@@ -53,10 +53,7 @@ static const auto uToken = std::make_shared< Token >( Grammar::Token::UNRESOLVED
 
 TEST( libtptp, example )
 {
-    DumpDebugVisitor dbg{ std::cout };
-    DumpSourceVisitor src{ std::cout };
-
-    auto t = Specification();
+    const auto specification = libstdhl::Memory::make< Specification >();
 
     auto x = std::make_shared< Identifier >( "x" );
     auto v = std::make_shared< ConstantAtom >( x, Atom::Kind::PLAIN );
@@ -64,10 +61,24 @@ TEST( libtptp, example )
     auto y = std::make_shared< Identifier >( "y" );
     auto f = std::make_shared< FirstOrderFormula >( v );
 
-    t.add< FormulaDefinition >( y, Role::axiom(), f );
+    specification->add< FormulaDefinition >( y, Role::axiom(), f );
 
-    t.accept( dbg );
-    t.accept( src );
+    PassManager pm;
+    libstdhl::Logger log( pm.stream() );
+    log.setSource( libstdhl::Memory::make< libstdhl::Log::Source >( TEST_NAME, TEST_NAME ) );
+
+    auto flush = [&pm]() {
+        libstdhl::Log::ApplicationFormatter f( TEST_NAME );
+        libstdhl::Log::OutputStreamSink c( std::cerr, f );
+        pm.stream().flush( c );
+    };
+
+    PassResult pr;
+    pr.setOutput< SourceToAstPass >( specification );
+    pm.setDefaultResult( pr );
+    pm.setDefaultPass< AstToZ3Pass >();
+
+    EXPECT_EQ( pm.run( flush ), true );
 }
 
 TEST( libtptp, include_file )

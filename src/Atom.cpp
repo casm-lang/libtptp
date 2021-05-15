@@ -41,6 +41,9 @@
 //
 
 #include "Atom.h"
+#include <initializer_list>
+#include <libtptp/Literal>
+#include <libtptp/Type>
 
 using namespace libtptp;
 
@@ -78,6 +81,18 @@ FunctorAtom::FunctorAtom(
 {
 }
 
+FunctorAtom::FunctorAtom(
+    const std::string& name, const ListLogicElements::Ptr& arguments, const Kind kind )
+: FunctorAtom( std::make_shared< Identifier >( name ), arguments, kind )
+{
+}
+
+FunctorAtom::FunctorAtom(
+    const std::string& name, const std::initializer_list< Logic::Ptr >& arguments, const Kind kind )
+: FunctorAtom( name, std::make_shared< ListLogicElements >( arguments ), kind )
+{
+}
+
 const Identifier::Ptr& FunctorAtom::name( void ) const
 {
     return m_name;
@@ -103,6 +118,30 @@ const FunctorAtom::Kind FunctorAtom::kind( void ) const
     return m_kind;
 }
 
+FunctorAtom::Ptr FunctorAtom::less( const Logic::Ptr& lhs, const Logic::Ptr& rhs )
+{
+    return std::make_shared< FunctorAtom >(
+        "$less", std::initializer_list< Logic::Ptr >{ lhs, rhs }, Kind::DEFINED );
+}
+
+FunctorAtom::Ptr FunctorAtom::less_eq( const Logic::Ptr& lhs, const Logic::Ptr& rhs )
+{
+    return std::make_shared< FunctorAtom >(
+        "$lesseq", std::initializer_list< Logic::Ptr >{ lhs, rhs }, Kind::DEFINED );
+}
+
+FunctorAtom::Ptr FunctorAtom::greater( const Logic::Ptr& lhs, const Logic::Ptr& rhs )
+{
+    return std::make_shared< FunctorAtom >(
+        "$greater", std::initializer_list< Logic::Ptr >{ lhs, rhs }, Kind::DEFINED );
+}
+
+FunctorAtom::Ptr FunctorAtom::greater_eq( const Logic::Ptr& lhs, const Logic::Ptr& rhs )
+{
+    return std::make_shared< FunctorAtom >(
+        "$greatereq", std::initializer_list< Logic::Ptr >{ lhs, rhs }, Kind::DEFINED );
+}
+
 void FunctorAtom::accept( Visitor& visitor )
 {
     visitor.visit( *this );
@@ -112,6 +151,11 @@ ConstantAtom::ConstantAtom( const Identifier::Ptr& constant, const Kind kind )
 : Atom( Node::ID::CONSTANT_ATOM )
 , m_constant( constant )
 , m_kind( kind )
+{
+}
+
+ConstantAtom::ConstantAtom( const std::string& constant, const Kind kind )
+: ConstantAtom( std::make_shared< Identifier >( constant ), kind )
 {
 }
 
@@ -133,6 +177,16 @@ void ConstantAtom::accept( Visitor& visitor )
 DefinedAtom::DefinedAtom( const Literal::Ptr& literal )
 : Atom( Node::ID::DEFINED_ATOM )
 , m_literal( literal )
+{
+}
+
+DefinedAtom::DefinedAtom( const std::string& literal )
+: DefinedAtom( std::make_shared< DistinctObjectLiteral >( literal ) )
+{
+}
+
+DefinedAtom::DefinedAtom( int literal )
+: DefinedAtom( std::make_shared< IntegerLiteral >( literal ) )
 {
 }
 
@@ -194,6 +248,91 @@ void ConnectiveAtom::accept( Visitor& visitor )
 const Token::Ptr& ConnectiveAtom::connective( void )
 {
     return m_connective;
+}
+
+//
+// TypeAtom
+//
+
+TypeAtom::TypeAtom( const Identifier::Ptr& atom, const Token::Ptr& colon, const Type::Ptr& type )
+: Atom( Node::ID::TYPE_ATOM )
+, m_atom( atom )
+, m_colon( colon )
+, m_type( type )
+{
+}
+
+TypeAtom::TypeAtom( const std::string& atom, const std::shared_ptr< Type >& type )
+: TypeAtom( std::make_shared< Identifier >( atom ), type )
+{
+}
+
+TypeAtom::TypeAtom( const Identifier::Ptr& atom, const Type::Ptr& type )
+: TypeAtom( atom, TokenBuilder::COLON(), type )
+{
+}
+
+const Type::Ptr& TypeAtom::type( void ) const
+{
+    return m_type;
+}
+
+const Token::Ptr& TypeAtom::colon( void ) const
+{
+    return m_colon;
+}
+
+const Identifier::Ptr& TypeAtom::atom( void ) const
+{
+    return m_atom;
+}
+
+void TypeAtom::accept( Visitor& visitor )
+{
+    visitor.visit( *this );
+}
+
+//
+// TupleAtom
+//
+
+TupleAtom::TupleAtom(
+    const Token::Ptr& leftParen, const ListAtomElements::Ptr& atoms, const Token::Ptr& rightParen )
+: Atom( Node::ID::TUPLE_ATOM )
+, m_leftParen( leftParen )
+, m_atoms( atoms )
+, m_rightParen( rightParen )
+{
+}
+
+TupleAtom::TupleAtom( const ListAtomElements::Ptr& atoms )
+: TupleAtom( TokenBuilder::LSQPAREN(), atoms, TokenBuilder::RSQPAREN() )
+{
+}
+
+TupleAtom::TupleAtom( const std::initializer_list< Atom::Ptr >& atoms )
+: TupleAtom( std::make_shared< ListAtomElements >( atoms ) )
+{
+}
+
+const Token::Ptr& TupleAtom::leftParen( void ) const
+{
+    return m_leftParen;
+}
+
+const ListAtomElements::Ptr& TupleAtom::atoms( void ) const
+{
+    return m_atoms;
+}
+
+const Token::Ptr& TupleAtom::rightParen( void ) const
+{
+    return m_rightParen;
+}
+
+void TupleAtom::accept( Visitor& visitor )
+{
+    visitor.visit( *this );
 }
 
 //

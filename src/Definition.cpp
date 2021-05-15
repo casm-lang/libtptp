@@ -90,6 +90,12 @@ IncludeDefinition::IncludeDefinition(
 {
 }
 
+IncludeDefinition::IncludeDefinition(
+    const std::string& filename, const ListLiteral::Ptr& formulaSelection )
+: IncludeDefinition( std::make_shared< Identifier >( filename ), formulaSelection )
+{
+}
+
 const Token::Ptr& IncludeDefinition::includeToken( void ) const
 {
     return m_includeToken;
@@ -161,6 +167,12 @@ FormulaDefinition::FormulaDefinition(
       formula,
       TokenBuilder::RPAREN(),
       TokenBuilder::DOT() )
+{
+}
+
+FormulaDefinition::FormulaDefinition(
+    const std::string& name, const Role::Ptr& role, const Formula::Ptr& formula )
+: FormulaDefinition( std::make_shared< Identifier >( name ), role, formula )
 {
 }
 

@@ -67,25 +67,7 @@ namespace libtptp
 
     using Terms = NodeList< Term >;
 
-    class Atom;
     class Type;
-
-    // <fof_function_term> ::= <fof_plain_term> | <fof_defined_term> |
-    // <fof_system_term>
-    class FunctionTerm final : public Term
-    {
-      public:
-        using Ptr = std::shared_ptr< FunctionTerm >;
-
-        FunctionTerm( const std::shared_ptr< Atom >& atom );
-
-        const std::shared_ptr< Atom >& atom( void ) const;
-
-        void accept( Visitor& visitor ) override;
-
-      private:
-        const std::shared_ptr< Atom > m_atom;
-    };
 
     // <variable> ::= <upper_word>
     class VariableTerm final : public Term
@@ -94,6 +76,9 @@ namespace libtptp
         using Ptr = std::shared_ptr< VariableTerm >;
 
         VariableTerm( const Identifier::Ptr& name );
+        VariableTerm( const std::string& name );
+        VariableTerm( const Identifier::Ptr& name, const std::shared_ptr< Type >& type );
+        VariableTerm( const std::string& name, const std::shared_ptr< Type >& type );
 
         const Identifier::Ptr& name( void ) const;
 
@@ -109,6 +94,9 @@ namespace libtptp
         libstdhl::Optional< Token::Ptr > m_colon;
         libstdhl::Optional< std::shared_ptr< Type > > m_type;
     };
+
+    using VariableTerms = NodeList< VariableTerm >;
+    using ListVariableElements = ListElements< VariableTerm >;
 
     // <tff_conditional_term> ::=
     // $ite_t(<tff_logic_formula>,<fof_term>,<fof_term>)
@@ -159,7 +147,7 @@ namespace libtptp
 
     using ConditionalTerms = NodeList< ConditionalTerm >;
 
-    class Type;
+    class Atom;
     class DefinitionTerm final : public Term
     {
       public:
@@ -169,24 +157,24 @@ namespace libtptp
             const Token::Ptr& dollar,
             const Token::Ptr& let,
             const Token::Ptr& leftParen,
-            const std::shared_ptr< Type >& types,
+            const std::shared_ptr< Atom >& types,
             const Token::Ptr& commaLeft,
-            const Logic::Ptr& definitions,
+            const std::shared_ptr< Atom >& definitions,
             const Token::Ptr& commaRight,
             const Logic::Ptr& term,
             const Token::Ptr& rightParen );
 
         explicit DefinitionTerm(
-            const std::shared_ptr< Type >& types,
-            const Logic::Ptr& definitions,
+            const std::shared_ptr< Atom >& types,
+            const std::shared_ptr< Atom >& definitions,
             const Logic::Ptr& term );
 
         const Token::Ptr& dollar( void ) const;
         const Token::Ptr& let( void ) const;
         const Token::Ptr& leftParen( void ) const;
-        const std::shared_ptr< Type >& types( void ) const;
+        const std::shared_ptr< Atom >& types( void ) const;
         const Token::Ptr& commaLeft( void ) const;
-        const Logic::Ptr& definitions( void ) const;
+        const std::shared_ptr< Atom >& definitions( void ) const;
         const Token::Ptr& commaRight( void ) const;
         const Logic::Ptr& term( void ) const;
         const Token::Ptr& rightParen( void ) const;
@@ -197,9 +185,9 @@ namespace libtptp
         const Token::Ptr m_dollar;
         const Token::Ptr m_let;
         const Token::Ptr m_leftParen;
-        const std::shared_ptr< Type > m_types;
+        const std::shared_ptr< Atom > m_types;
         const Token::Ptr m_commaLeft;
-        const Logic::Ptr m_definitions;
+        const std::shared_ptr< Atom > m_definitions;
         const Token::Ptr m_commaRight;
         const Logic::Ptr m_term;
         const Token::Ptr m_rightParen;

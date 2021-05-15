@@ -54,6 +54,19 @@ Specification::Specification( void )
 {
 }
 
+void Specification::add( const Definition::Ptr& definition )
+{
+    m_definitions->add( definition );
+}
+
+void Specification::add( const Definitions::Ptr& definitions )
+{
+    for( auto& def : *definitions )
+    {
+        m_definitions->add( def );
+    }
+}
+
 void Specification::setDefinitions( const Definitions::Ptr& defintions )
 {
     m_definitions = defintions;

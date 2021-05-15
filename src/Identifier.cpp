@@ -75,6 +75,51 @@ const Identifier::Kind Identifier::kind( void ) const
     return m_kind;
 }
 
+const std::string Identifier::normalizedName( void ) const
+{
+    std::string tmpName;
+    if( kind() == Kind::NUMBER )
+    {
+        tmpName = name();
+    }
+    else if( kind() == Kind::WORD )
+    {
+        if( m_name[ 0 ] == '\'' )
+        {
+            bool normalizable = true;
+            for( int i = 1; i < m_name.size() - 1; ++i )
+            {
+                if( !( std::isalnum( m_name[ i ] ) || m_name[ i ] == '_' ) )
+                {
+                    normalizable = false;
+                    break;
+                }
+            }
+            if( normalizable )
+            {
+                tmpName = m_name.substr( 1, m_name.size() - 2 );
+            }
+            else
+            {
+                tmpName = m_name;
+            }
+        }
+        else
+        {
+            tmpName = name();
+        }
+    }
+    else
+    {
+        throw std::logic_error( "invalid kind" );
+    }
+    if( modifier()->token() != TokenBuilder::UNRESOLVED()->token() )
+    {
+        tmpName = modifier()->tokenString() + tmpName;
+    }
+    return tmpName;
+}
+
 void Identifier::accept( Visitor& visitor )
 {
     visitor.visit( *this );

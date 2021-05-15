@@ -188,6 +188,14 @@ std::string Node::description( void ) const
         {
             return "definition atom";
         }
+        case ID::TYPE_ATOM:
+        {
+            return "typed atom";
+        }
+        case ID::TUPLE_ATOM:
+        {
+            return "tuple atom";
+        }
 
         // token
         case ID::TOKEN:
@@ -250,9 +258,17 @@ std::string Node::description( void ) const
         {
             return "annotation";
         }
-        case ID::ATOM_TYPE:
+        case ID::APPLY_TYPE:
         {
-            return "atom type";
+            return "apply type";
+        }
+        case ID::NAMED_TYPE:
+        {
+            return "named type";
+        }
+        case ID::FUNCTOR_TYPE:
+        {
+            return "functor type";
         }
         case ID::SUB_TYPE:
         {
@@ -266,13 +282,17 @@ std::string Node::description( void ) const
         {
             return "tuple type";
         }
-        case ID::TYPED_ATOM:
-        {
-            return "typed atom";
-        }
         case ID::BINARY_TYPE:
         {
             return "binary type";
+        }
+        case ID::RELATION_TYPE:
+        {
+            return "relation type";
+        }
+        case ID::VARIABLE_TYPE:
+        {
+            return "variable type";
         }
     }
 

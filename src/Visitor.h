@@ -69,7 +69,6 @@ namespace libtptp
     class LogicTuple;
     class SequentLogic;
 
-    class FunctionTerm;
     class VariableTerm;
     class ConditionalTerm;
     class DefinitionTerm;
@@ -79,13 +78,19 @@ namespace libtptp
     class DefinedAtom;
     class DefinitionAtom;
     class ConnectiveAtom;
+    class TypeAtom;
+    class TupleAtom;
 
-    class AtomType;
+    class ApplyType;
+    class NamedType;
+    class FunctorType;
     class BinaryType;
-    class TypedAtom;
     class TupleType;
     class QuantifiedType;
     class SubType;
+    class RelationType;
+    class VariableType;
+    ;
 
     class Identifier;
 
@@ -139,7 +144,6 @@ namespace libtptp
         virtual void visit( LogicTuple& node ) = 0;
         virtual void visit( SequentLogic& node ) = 0;
 
-        virtual void visit( FunctionTerm& node ) = 0;
         virtual void visit( VariableTerm& node ) = 0;
         virtual void visit( ConditionalTerm& node ) = 0;
         virtual void visit( DefinitionTerm& node ) = 0;
@@ -149,13 +153,18 @@ namespace libtptp
         virtual void visit( DefinedAtom& node ) = 0;
         virtual void visit( DefinitionAtom& node ) = 0;
         virtual void visit( ConnectiveAtom& node ) = 0;
+        virtual void visit( TypeAtom& node ) = 0;
+        virtual void visit( TupleAtom& node ) = 0;
 
-        virtual void visit( AtomType& node ) = 0;
+        virtual void visit( ApplyType& node ) = 0;
+        virtual void visit( NamedType& node ) = 0;
+        virtual void visit( FunctorType& node ) = 0;
         virtual void visit( BinaryType& node ) = 0;
-        virtual void visit( TypedAtom& node ) = 0;
         virtual void visit( TupleType& node ) = 0;
         virtual void visit( QuantifiedType& node ) = 0;
         virtual void visit( SubType& node ) = 0;
+        virtual void visit( RelationType& node ) = 0;
+        virtual void visit( VariableType& node ) = 0;
 
         virtual void visit( Identifier& node ) = 0;
 
@@ -199,7 +208,6 @@ namespace libtptp
         void visit( LogicTuple& node ) override;
         void visit( SequentLogic& node ) override;
 
-        void visit( FunctionTerm& node ) override;
         void visit( VariableTerm& node ) override;
         void visit( ConditionalTerm& node ) override;
         void visit( DefinitionTerm& node ) override;
@@ -209,13 +217,18 @@ namespace libtptp
         void visit( DefinedAtom& node ) override;
         void visit( DefinitionAtom& node ) override;
         void visit( ConnectiveAtom& node ) override;
+        void visit( TypeAtom& node ) override;
+        void visit( TupleAtom& node ) override;
 
-        void visit( AtomType& node ) override;
+        void visit( ApplyType& node ) override;
+        void visit( NamedType& node ) override;
+        void visit( FunctorType& node ) override;
         void visit( BinaryType& node ) override;
-        void visit( TypedAtom& node ) override;
         void visit( TupleType& node ) override;
         void visit( QuantifiedType& node ) override;
         void visit( SubType& node ) override;
+        void visit( RelationType& node ) override;
+        void visit( VariableType& node ) override;
 
         void visit( Identifier& node ) override;
 
@@ -273,7 +286,6 @@ namespace libtptp
         void visit( LogicTuple& node ) override;
         void visit( SequentLogic& node ) override;
 
-        void visit( FunctionTerm& node ) override;
         void visit( VariableTerm& node ) override;
         void visit( ConditionalTerm& node ) override;
         void visit( DefinitionTerm& node ) override;
@@ -283,13 +295,18 @@ namespace libtptp
         void visit( DefinedAtom& node ) override;
         void visit( DefinitionAtom& node ) override;
         void visit( ConnectiveAtom& node ) override;
+        void visit( TypeAtom& node ) override;
+        void visit( TupleAtom& node ) override;
 
-        void visit( AtomType& node ) override;
+        void visit( ApplyType& node ) override;
+        void visit( NamedType& node ) override;
+        void visit( FunctorType& node ) override;
         void visit( BinaryType& node ) override;
-        void visit( TypedAtom& node ) override;
         void visit( TupleType& node ) override;
         void visit( QuantifiedType& node ) override;
         void visit( SubType& node ) override;
+        void visit( RelationType& node ) override;
+        void visit( VariableType& node ) override;
 
         void visit( Identifier& node ) override;
 

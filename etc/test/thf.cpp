@@ -46,9 +46,13 @@
 
 #include "main.h"
 #include "resources/thf_formula.cpp"
+#include "testhelper.h"
+#include "macros.cpp"
 
 using namespace libtptp;
 using namespace libpass;
+
+//SOURCE_COMPARE_TEST(libtptp, DumpSourcePass, thf_test_basics, true, , )
 
 TEST( libtptp, thf_basic )
 {
@@ -84,6 +88,8 @@ TEST( libtptp, thf_basic )
     EXPECT_EQ( libstdhl::File::exists( filename ), false );
 }
 
+//SOURCE_COMPARE_TEST(libtptp, DumpSourcePass, thf_test_depth, true, , )
+
 TEST( libtptp, thf_depth )
 {
     PassManager pm;
@@ -118,6 +124,7 @@ TEST( libtptp, thf_depth )
     EXPECT_EQ( libstdhl::File::exists( filename ), false );
 }
 
+//SOURCE_COMPARE_TEST(libtptp, DumpSourcePass, thf_test_th1, true, , )
 TEST( libtptp, thf_th1 )
 {
     PassManager pm;

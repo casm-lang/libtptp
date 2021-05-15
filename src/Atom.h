@@ -64,7 +64,6 @@ namespace libtptp
             PLAIN,
             DEFINED,
             SYSTEM,
-            TYPE,
         };
 
         using Ptr = std::shared_ptr< Atom >;
@@ -104,12 +103,25 @@ namespace libtptp
 
         FunctorAtom(
             const Identifier::Ptr& name, const ListLogicElements::Ptr& arguments, const Kind kind );
+        FunctorAtom(
+            const std::string& name, const ListLogicElements::Ptr& arguments, const Kind kind );
+
+        FunctorAtom(
+            const std::string& name,
+            const std::initializer_list< Logic::Ptr >& arguments,
+            const Kind kind );
 
         const Identifier::Ptr& name( void ) const;
         const Token::Ptr& leftParen( void ) const;
         const ListLogicElements::Ptr& arguments( void ) const;
         const Token::Ptr& rightParen( void ) const;
         const Kind kind( void ) const;
+
+        static FunctorAtom::Ptr less( const Logic::Ptr& lhs, const Logic::Ptr& rhs );
+        static FunctorAtom::Ptr less_eq( const Logic::Ptr& lhs, const Logic::Ptr& rhs );
+        static FunctorAtom::Ptr greater( const Logic::Ptr& lhs, const Logic::Ptr& rhs );
+        static FunctorAtom::Ptr greater_eq( const Logic::Ptr& lhs, const Logic::Ptr& rhs );
+        // TODO: other predefined functors
 
       private:
         const Identifier::Ptr m_name;
@@ -128,6 +140,7 @@ namespace libtptp
         using Ptr = std::shared_ptr< ConstantAtom >;
 
         explicit ConstantAtom( const Identifier::Ptr& constant, const Kind kind );
+        explicit ConstantAtom( const std::string& constant, const Kind kind );
 
         const Identifier::Ptr& constant( void ) const;
         const Kind kind( void ) const;
@@ -147,6 +160,8 @@ namespace libtptp
         using Ptr = std::shared_ptr< DefinedAtom >;
 
         explicit DefinedAtom( const Literal::Ptr& literal );
+        explicit DefinedAtom( const std::string& literal );
+        explicit DefinedAtom( int literal );
 
         const Literal::Ptr& literal( void ) const;
 
@@ -198,6 +213,62 @@ namespace libtptp
     };
 
     using ConnectiveAtoms = NodeList< ConnectiveAtom >;
+
+    class Type;
+
+    class TypeAtom final : public Atom
+    {
+      public:
+        using Ptr = std::shared_ptr< TypeAtom >;
+
+        explicit TypeAtom(
+            const Identifier::Ptr& atom,
+            const Token::Ptr& colon,
+            const std::shared_ptr< Type >& type );
+        explicit TypeAtom( const Identifier::Ptr& atom, const std::shared_ptr< Type >& type );
+        explicit TypeAtom( const std::string& atom, const std::shared_ptr< Type >& type );
+
+        const std::shared_ptr< Type >& type( void ) const;
+        const Token::Ptr& colon( void ) const;
+        const Identifier::Ptr& atom( void ) const;
+
+        void accept( Visitor& visitor ) override final;
+
+      private:
+        const Identifier::Ptr m_atom;
+        const Token::Ptr m_colon;
+        const std::shared_ptr< Type > m_type;
+    };
+
+    using TypeAtoms = NodeList< TypeAtom >;
+
+    using ListAtomElements = ListElements< Atom >;
+
+    class TupleAtom final : public Atom
+    {
+      public:
+        using Ptr = std::shared_ptr< TupleAtom >;
+
+        explicit TupleAtom(
+            const Token::Ptr& leftParen,
+            const ListAtomElements::Ptr& atoms,
+            const Token::Ptr& rightParen );
+        explicit TupleAtom( const ListAtomElements::Ptr& atoms );
+        explicit TupleAtom( const std::initializer_list< Atom::Ptr >& atoms );
+
+        const Token::Ptr& leftParen( void ) const;
+        const ListAtomElements::Ptr& atoms( void ) const;
+        const Token::Ptr& rightParen( void ) const;
+
+        void accept( Visitor& visitor ) override final;
+
+      private:
+        const Token::Ptr m_leftParen;
+        const ListAtomElements::Ptr m_atoms;
+        const Token::Ptr m_rightParen;
+    };
+
+    using TupleAtoms = NodeList< TupleAtom >;
 
 }
 

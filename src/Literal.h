@@ -87,6 +87,7 @@ namespace libtptp
         using Ptr = std::shared_ptr< IntegerLiteral >;
 
         explicit IntegerLiteral( const std::string& integer );
+        explicit IntegerLiteral( int integer );
 
         void accept( Visitor& visitor ) override final;
     };

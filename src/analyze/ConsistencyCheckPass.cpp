@@ -1,5 +1,5 @@
 //
-//  Copyright (C) 2017-2021 CASM Organization <https://casm-lang.org>
+//  Copyright (C) 2017-2019 CASM Organization <https://casm-lang.org>
 //  All rights reserved.
 //
 //  Developed by: Philipp Paulweber
@@ -40,22 +40,71 @@
 //  statement from your version.
 //
 
-#include <libstdhl/Test>
+#include "ConsistencyCheckPass.h"
 
-#include <libpass/libpass>
+#include <libtptp/Atom>
+#include <libtptp/Formula>
+#include <libtptp/Logic>
+#include <libtptp/Node>
+#include <libtptp/Specification>
+#include <libtptp/Term>
 
-#include "main.h"
-#include "resources/tff_formula.cpp"
-#include "testhelper.h"
-#include "macros.cpp"
+#include <libpass/PassLogger>
+#include <libpass/PassRegistry>
+
+#include <iostream>
 
 using namespace libtptp;
-using namespace libpass;
 
-SOURCE_COMPARE_TEST(libtptp, DumpSourcePass, tff_test_basic, true, , )
+char ConsistencyCheckPass::id = 0;
 
+static libpass::PassRegistration< ConsistencyCheckPass > PASS(
+    "ConsistencyCheckPass", "TBA", "tptp-cc", 0 );
 
-SOURCE_COMPARE_TEST(libtptp, DumpSourcePass, tff_test_tf1, true, , )
+//
+//
+// ConsistencyCheckVisitor
+//
+
+class ConsistencyCheckVisitor final : public RecursiveVisitor
+{
+  public:
+    ConsistencyCheckVisitor( void );
+};
+
+ConsistencyCheckVisitor::ConsistencyCheckVisitor( void )
+{
+}
+
+//
+//
+// ConsistencyCheckPass
+//
+
+void ConsistencyCheckPass::usage( libpass::PassUsage& pu )
+{
+    pu.require< SourceToAstPass >();
+}
+
+u1 ConsistencyCheckPass::run( libpass::PassResult& pr )
+{
+    libpass::PassLogger log( &id, stream() );
+
+    const auto data = pr.output< SourceToAstPass >();
+    const auto specification = data->specification();
+
+    ConsistencyCheckVisitor visitor{};
+    specification->accept( visitor );
+
+    if( log.errors() > 0 )
+    {
+        return false;
+    }
+
+    pr.setOutput< ConsistencyCheckPass >( specification );
+
+    return true;
+}
 
 //
 //  Local variables:
