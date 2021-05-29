@@ -44,9 +44,9 @@
 
 #include <libpass/libpass>
 
+#include "macros.cpp"
 #include "main.h"
 #include "testhelper.h"
-#include "macros.cpp"
 
 using namespace libtptp;
 using namespace libpass;
@@ -67,7 +67,7 @@ fof(formula_annotation, axiom, functor, $fot(Variable)).
 )***";
 
 // enable as soon as Decimal is fixed
-//SOURCE_COMPARE_TEST(libtptp, DumpSourcePass, annotation_source_general_term, true, , )
+// SOURCE_COMPARE_TEST(libtptp, DumpSourcePass, annotation_source_general_term, true, , )
 
 std::string annotation_useful_info_general_list = R"***(
 fof(empty_list, axiom, functor, general_data_word, []).
@@ -76,10 +76,8 @@ fof(mixed_types_list, axiom, functor, general_data_word, [0, 1.4, 2/3, Variable,
 fof(recursive_list, axiom, functor, general_data_word, [[], [[0, 1], ab:a], Variable]).
 )***";
 
-
 // enable as soon as Decimal is fixed
-//SOURCE_COMPARE_TEST(libtptp, DumpSourcePass, annotation_useful_info_general_list, true, , )
-
+// SOURCE_COMPARE_TEST(libtptp, DumpSourcePass, annotation_useful_info_general_list, true, , )
 
 //
 //  Local variables:

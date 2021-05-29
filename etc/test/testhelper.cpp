@@ -76,8 +76,8 @@ bool TestHelper::compareTPTPFiles( const std::string& expected, const std::strin
 
     while( expected_offset < expected.size() && actual_offset < actual.size() )
     {
-        expected_offset = nextChar( expected, expected_offset + 1);
-        actual_offset = nextChar( actual, actual_offset + 1);
+        expected_offset = nextChar( expected, expected_offset + 1 );
+        actual_offset = nextChar( actual, actual_offset + 1 );
         if( expected_offset < expected.size() && actual_offset < actual.size() )
         {
             if( expected[ expected_offset ] != actual[ actual_offset ] )

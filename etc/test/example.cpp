@@ -67,7 +67,7 @@ TEST( libtptp, example )
     libstdhl::Logger log( pm.stream() );
     log.setSource( libstdhl::Memory::make< libstdhl::Log::Source >( TEST_NAME, TEST_NAME ) );
 
-    auto flush = [&pm]() {
+    auto flush = [ &pm ]() {
         libstdhl::Log::ApplicationFormatter f( TEST_NAME );
         libstdhl::Log::OutputStreamSink c( std::cerr, f );
         pm.stream().flush( c );
@@ -88,7 +88,7 @@ TEST( libtptp, include_file )
     libstdhl::Logger log( pm.stream() );
     log.setSource( libstdhl::Memory::make< libstdhl::Log::Source >( TEST_NAME, TEST_NAME ) );
 
-    auto flush = [&pm]() {
+    auto flush = [ &pm ]() {
         libstdhl::Log::ApplicationFormatter f( TEST_NAME );
         libstdhl::Log::OutputStreamSink c( std::cerr, f );
         pm.stream().flush( c );

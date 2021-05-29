@@ -44,17 +44,17 @@
 
 #include <libpass/libpass>
 
-#include "main.h"
-#include "testhelper.h"
-#include "resources/cnf_formula.cpp"
 #include "macros.cpp"
+#include "main.h"
+#include "resources/cnf_formula.cpp"
+#include "testhelper.h"
 
 using namespace libtptp;
 using namespace libpass;
 
-SOURCE_COMPARE_TEST(libtptp, DumpSourcePass, cnf_test_basic, true, , )
+SOURCE_COMPARE_TEST( libtptp, DumpSourcePass, cnf_test_basic, true, , )
 
-SOURCE_COMPARE_TEST(libtptp, DumpSourcePass, cnf_test_predicates, true, , )
+SOURCE_COMPARE_TEST( libtptp, DumpSourcePass, cnf_test_predicates, true, , )
 //
 //  Local variables:
 //  mode: c++

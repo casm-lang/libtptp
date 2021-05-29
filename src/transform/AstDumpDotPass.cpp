@@ -440,7 +440,7 @@ u1 AstDumpDotPass::run( libpass::PassResult& pr )
 
     // const u1 dumpNodeLocation = true;  // TODO: add command-line switch
 
-    const auto printDotGraph = [&]( std::ostream& out ) {
+    const auto printDotGraph = [ & ]( std::ostream& out ) {
         out << "digraph \"main\" {\n";
 
         AstDumpDotVisitor visitor{ out };

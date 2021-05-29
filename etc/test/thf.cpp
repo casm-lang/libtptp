@@ -44,15 +44,15 @@
 
 #include <libpass/libpass>
 
+#include "macros.cpp"
 #include "main.h"
 #include "resources/thf_formula.cpp"
 #include "testhelper.h"
-#include "macros.cpp"
 
 using namespace libtptp;
 using namespace libpass;
 
-//SOURCE_COMPARE_TEST(libtptp, DumpSourcePass, thf_test_basics, true, , )
+// SOURCE_COMPARE_TEST(libtptp, DumpSourcePass, thf_test_basics, true, , )
 
 TEST( libtptp, thf_basic )
 {
@@ -61,7 +61,7 @@ TEST( libtptp, thf_basic )
     libstdhl::Logger log( pm.stream() );
     log.setSource( libstdhl::Memory::make< libstdhl::Log::Source >( TEST_NAME, TEST_NAME ) );
 
-    auto flush = [&pm]() {
+    auto flush = [ &pm ]() {
         libstdhl::Log::ApplicationFormatter f( TEST_NAME );
         libstdhl::Log::OutputStreamSink c( std::cerr, f );
         pm.stream().flush( c );
@@ -88,7 +88,7 @@ TEST( libtptp, thf_basic )
     EXPECT_EQ( libstdhl::File::exists( filename ), false );
 }
 
-//SOURCE_COMPARE_TEST(libtptp, DumpSourcePass, thf_test_depth, true, , )
+// SOURCE_COMPARE_TEST(libtptp, DumpSourcePass, thf_test_depth, true, , )
 
 TEST( libtptp, thf_depth )
 {
@@ -97,7 +97,7 @@ TEST( libtptp, thf_depth )
     libstdhl::Logger log( pm.stream() );
     log.setSource( libstdhl::Memory::make< libstdhl::Log::Source >( TEST_NAME, TEST_NAME ) );
 
-    auto flush = [&pm]() {
+    auto flush = [ &pm ]() {
         libstdhl::Log::ApplicationFormatter f( TEST_NAME );
         libstdhl::Log::OutputStreamSink c( std::cerr, f );
         pm.stream().flush( c );
@@ -124,7 +124,7 @@ TEST( libtptp, thf_depth )
     EXPECT_EQ( libstdhl::File::exists( filename ), false );
 }
 
-//SOURCE_COMPARE_TEST(libtptp, DumpSourcePass, thf_test_th1, true, , )
+// SOURCE_COMPARE_TEST(libtptp, DumpSourcePass, thf_test_th1, true, , )
 TEST( libtptp, thf_th1 )
 {
     PassManager pm;
@@ -132,7 +132,7 @@ TEST( libtptp, thf_th1 )
     libstdhl::Logger log( pm.stream() );
     log.setSource( libstdhl::Memory::make< libstdhl::Log::Source >( TEST_NAME, TEST_NAME ) );
 
-    auto flush = [&pm]() {
+    auto flush = [ &pm ]() {
         libstdhl::Log::ApplicationFormatter f( TEST_NAME );
         libstdhl::Log::OutputStreamSink c( std::cerr, f );
         pm.stream().flush( c );

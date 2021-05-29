@@ -44,15 +44,15 @@
 
 #include <libpass/libpass>
 
+#include "macros.cpp"
 #include "main.h"
 #include "resources/tpi_formula.cpp"
 #include "testhelper.h"
-#include "macros.cpp"
 
 using namespace libtptp;
 using namespace libpass;
 
-SOURCE_COMPARE_TEST(libtptp, DumpSourcePass, tpi_test_example, true, , )
+SOURCE_COMPARE_TEST( libtptp, DumpSourcePass, tpi_test_example, true, , )
 
 //
 //  Local variables:

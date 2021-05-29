@@ -171,7 +171,7 @@ u1 DumpSourcePass::run( libpass::PassResult& pr )
     DumpSourceVisitor visitor{ stream };
     data->specification()->accept( visitor );
 
-    pr.setOutput< DumpSourcePass >( std::move(stream) );
+    pr.setOutput< DumpSourcePass >( std::move( stream ) );
 
     return true;
 }
