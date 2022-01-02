@@ -536,12 +536,12 @@ static const flex_int16_t yy_chk[305] =
 #define YY_RESTORE_YY_MORE_OFFSET
 #line 1 "obj/src/GrammarLexer.l"
 #line 2 "obj/src/GrammarLexer.l"
-//  Copyright (C) 2017-2021 CASM Organization <https://casm-lang.org>
+//
+//  Copyright (C) 2017-2022 CASM Organization <https://casm-lang.org>
 //  All rights reserved.
 //
-//  Developed by: Philipp Paulweber
-//                Jakob Moosbrugger
-//                <https://github.com/casm-lang/libtptp>
+//  Developed by: Philipp Paulweber et al.
+//                <https://github.com/casm-lang/libtptp/graphs/contributors>
 //
 //  This file is part of libtptp.
 //
