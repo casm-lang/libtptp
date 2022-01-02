@@ -1,10 +1,9 @@
 //
-//  Copyright (C) 2017-2021 CASM Organization <https://casm-lang.org>
+//  Copyright (C) 2017-2022 CASM Organization <https://casm-lang.org>
 //  All rights reserved.
 //
-//  Developed by: Philipp Paulweber
-//                Jakob Moosbrugger
-//                <https://github.com/casm-lang/libtptp>
+//  Developed by: Philipp Paulweber et al.
+//                <https://github.com/casm-lang/libtptp/graphs/contributors>
 //
 //  This file is part of libtptp.
 //

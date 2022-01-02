@@ -1,10 +1,9 @@
 #
-#   Copyright (C) 2017-2021 CASM Organization <https://casm-lang.org>
+#   Copyright (C) 2017-2022 CASM Organization <https://casm-lang.org>
 #   All rights reserved.
 #
-#   Developed by: Philipp Paulweber
-#                 Jakob Moosbrugger
-#                 <https://github.com/casm-lang/libtptp>
+#   Developed by: Philipp Paulweber et al.
+#                 <https://github.com/casm-lang/libtptp/graphs/contributors>
 #
 #   This file is part of libtptp.
 #
@@ -90,7 +89,7 @@ src/various/GrammarLexer.cpp: src/GrammarLexer.l src/GrammarToken.hpp
 	mkdir -p "`dirname $@`"
 	cp -f $< $@
 
-src/various/GrammarParser.cpp: src/GrammarParser.yy src/GrammarToken.hpp
+src/various/GrammarParser.cpp: src/GrammarParser.y src/GrammarToken.hpp
 	etc/script.sh generate-parser "`pwd`/$<" "`pwd`/obj/$< $(filter %.hpp,$^)"
 	cd src/various && $(YC) $(YF) -b src/various/ --output GrammarParser.cpp --defines=GrammarParser.tab.h ../../obj/$<
 
