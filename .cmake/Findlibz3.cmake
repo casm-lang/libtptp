@@ -53,13 +53,12 @@ find_path( LIBZ3_INCLUDE_DIR
   )
 
 find_library( LIBZ3_LIBRARY
-  NAMES libz3.so libz3.dylib libz3.a libz3.dll libz3.lib liblibz3.a
-  PATHS ${LIBZ3_PKGCONF_LIBRARY_DIRS}
+   NAMES libz3.so libz3.dylib libz3.dll libz3.a
+   PATHS ${LIBZ3_PKGCONF_LIBRARY_DIRS}
   )
 
 set( LIBZ3_PROCESS_INCLUDES LIBZ3_INCLUDE_DIR )
 set( LIBZ3_PROCESS_LIBS     LIBZ3_LIBRARY )
-set( LIBZ3_ARCHIVE          ${LIBZ3_LIBRARY} PARENT_SCOPE )
 
 libfind_process( LIBZ3 )
 
