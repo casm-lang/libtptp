@@ -65,7 +65,7 @@ IntegerLiteral::IntegerLiteral( const std::string& integer )
 }
 
 IntegerLiteral::IntegerLiteral( int integer )
-: ValueLiteral( Node::ID::INTEGER_LITERAL, libstdhl::Type::createInteger( (i64)integer ) )
+: ValueLiteral( Node::ID::INTEGER_LITERAL, libstdhl::Type::createInteger( integer ) )
 {
 }
 
