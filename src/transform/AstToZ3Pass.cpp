@@ -1806,7 +1806,7 @@ void AstToZ3Visitor::visit( Identifier& node )
 void AstToZ3Visitor::visit( IntegerLiteral& node )
 {
     auto val = static_cast< const libstdhl::Type::Integer& >( node.value() );
-    auto z3_val = m_context.int_val( val.value() );
+    auto z3_val = m_context.int_val( static_cast< int >( val.value() ) ); // TODO: @ppaulweber: 'std::size_t' cast to 'int' without respecting the 'sign' bit, is this intended @moosbruggerj?
     m_stack.push( z3_val );
 }
 
