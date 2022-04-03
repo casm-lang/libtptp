@@ -53,7 +53,7 @@ find_path( LIBZ3_INCLUDE_DIR
   )
 
 find_library( LIBZ3_LIBRARY
-  NAMES libz3.a z3
+  NAMES libz3.a liblibz3.a libz3 z3
   PATHS ${LIBZ3_PKGCONF_LIBRARY_DIRS}
   )
 
