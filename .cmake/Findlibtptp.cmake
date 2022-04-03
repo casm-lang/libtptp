@@ -53,7 +53,7 @@ find_path( LIBTPTP_INCLUDE_DIR
   )
 
 find_library( LIBTPTP_LIBRARY
-  NAMES libtptp.a libtptp.so libtptp.dylib libtptp.dll
+  NAMES libtptp.so libtptp.dylib libtptp.dll libtptp.a
   PATHS ${LIBTPTP_PKGCONF_LIBRARY_DIRS}
   )
 
